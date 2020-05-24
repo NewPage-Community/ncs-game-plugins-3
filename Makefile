@@ -3,6 +3,7 @@
 
 SOURCEMOD_VERSION ?= 1.10
 SOURCEMOD_BUILD_DIR = ./addons/sourcemod/scripting
+COMMIT_COUNT = `git rev-list --all --count`
 
 .PHONY:all
 all: env build
@@ -16,8 +17,7 @@ env:
 
 .PHONY:build
 build:
-	@COUNT=$(git rev-list --all --count)
-	@sed -i "s%<commit_count>%$$COUNT%g" include/ncs.inc
+	@sed -i "s%<commit_count>%$(COMMIT_COUNT)%g" include/ncs.inc
 	@test -e compiled || mkdir compiled
 	@for sourcefile in *.sp; \
 	do \

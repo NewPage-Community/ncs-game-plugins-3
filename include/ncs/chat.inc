@@ -1,3 +1,8 @@
+#if defined _NCS_Chat_
+	#endinput
+#endif
+#define _NCS_Chat_
+
 #define CHAT_SYS_PREFIX "[系统提示]"
 #define CLIENT_ALL 0
 

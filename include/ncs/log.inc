@@ -10,7 +10,7 @@ public void CheckLogsDirectory()
 
 stock void NCS_LogError(const char[] module = "Global", const char[] func = "Invalid Function", const char[] msg, any ...)
 {
-    CheckLogsDirectory();
+	CheckLogsDirectory();
 
 	char error[2048];
 	VFormat(error, 2048, msg, 4);
@@ -23,8 +23,8 @@ stock void NCS_LogError(const char[] module = "Global", const char[] func = "Inv
 
 stock void NCS_LogMessage(const char[] module = "Global", const char[] func = "Invalid Function", const char[] msg, any ...)
 {
-    CheckLogsDirectory();
-    
+	CheckLogsDirectory();
+	
 	char message[2048];
 	VFormat(message, 2048, msg, 4);
 	

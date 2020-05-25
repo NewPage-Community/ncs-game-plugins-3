@@ -2,6 +2,8 @@
 
 HTTPClient httpClient;
 
+Handle onLoaded = INVALID_HANDLE;
+
 methodmap ServerInfo < JSONObject
 {
 	// Constructor

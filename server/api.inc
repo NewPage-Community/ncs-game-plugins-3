@@ -1,11 +1,5 @@
 #define Server_Service "server/info"
 
-int ServerID = 0,
-	ModID = 0,
-	GameID = 0;
-
-Handle onLoaded = INVALID_HANDLE;
-
 HTTPClient httpClient;
 
 methodmap ServerInfo < JSONObject
@@ -80,17 +74,20 @@ void ReqServerInfo()
 	httpClient.Post(Server_Service, new ServerInfo(), LoadServerInfo);
 }
 
-public void LoadServerInfo(HTTPResponse response, any value)
+public void LoadServerInfo(HTTPResponse response, any value, const char[] error)
 {
+	bool Loaded = false;
 	ServerInfo info;
 
 	if (response.Status != HTTPStatus_OK || response.Data == null)
 	{
 		info = new ServerInfo()
+		PrintToServer("[NCS] Server - Faild to load info (%s)", error);
 	}
 	else
 	{
 		info = view_as<ServerInfo>(response.Data);
+		Loaded = true;
 	}
 
 	// Load info data
@@ -102,7 +99,8 @@ public void LoadServerInfo(HTTPResponse response, any value)
 	// Set Hostname
 	info.SetHostname();
 
-	PrintToServer("[NCS] Server - Loaded!");
+	if (Loaded)
+		PrintToServer("[NCS] Server - Loaded!");
 
 	// Call global forward
 	Call_StartForward(onLoaded);

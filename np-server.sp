@@ -1,3 +1,6 @@
+// for dev
+//#define DEV
+
 #include <ncs>
 
 // Module

@@ -2,10 +2,15 @@
 #include <ripext>
 #undef REQUIRE_EXTENSIONS
 
-#define API_URL "https://api.new-page.xyz/ncs3"
+#if defined DEV
+	#define API_URL "http://127.0.0.1:8080"
+#else
+    #define API_URL "https://api.new-page.xyz/ncs3"
+#endif
 
-// NEWPAGECORESYSTEMAPI
-#define TOKEN "TkVXUEFHRUNPUkVTWVNURU1BUEk="
+
+// NEWPAGE:API
+#define TOKEN "TkVXUEFHRTpBUEk="
 
 stock HTTPClient NewNCSAPI()
 {

@@ -2,16 +2,17 @@
 
 HTTPClient httpClient;
 
-Handle onLoaded = INVALID_HANDLE;
+GlobalForward onLoaded;
 
 void InitAPI()
 {
 	httpClient = NewNCSAPI();
+	RegAPIForward();
 }
 
-void RegForward()
+void RegAPIForward()
 {
-	onLoaded = CreateGlobalForward("NCS_Account_OnLoaded",  ET_Ignore, Param_Cell, Param_Cell);
+	onLoaded = new GlobalForward("NCS_Account_OnLoaded",  ET_Ignore, Param_Cell, Param_Cell);
 }
 
 void ReqAccountUID(const char[] steamid, bool notify = false)
@@ -32,7 +33,7 @@ void ReqAccountUID(const char[] steamid, bool notify = false)
 	dp.WriteCell(notify, false);
 
 	char path[128];
-	Format(path, sizeof(path), "%s/GetUID/%s", Server_Service, steamid);
+	Format(path, sizeof(path), "%s/UID/%s", Server_Service, steamid);
 	httpClient.Get(path, LoadAccountUID, dp);
 }
 
@@ -57,9 +58,7 @@ public void LoadAccountUID(HTTPResponse response, DataPack dp, const char[] erro
 	if (client == 0)
 		return;
 
-	g_Accounts[client].index = client;
-	g_Accounts[client].uid = data.GetInt("uid");
-	g_Accounts[client].SetSteamID(steamid);
+	g_Accounts[client].Init(client, data.GetInt("uid"), steamid);
 
 	// Call global forward
 	Call_StartForward(onLoaded);
@@ -69,4 +68,18 @@ public void LoadAccountUID(HTTPResponse response, DataPack dp, const char[] erro
 
 	if (notify)
 		NCS_Chat(client, _, "{blue}你的用户数据已加载成功！");
+}
+
+void UpdateAccountName(int client)
+{
+	if (!g_Accounts[client].Valid())
+		return;
+
+	JSONObject data = new JSONObject();
+	data.SetInt("uid", g_Accounts[client].uid);
+	data.SetString("username", g_Accounts[client].name);
+
+	char path[128];
+	Format(path, sizeof(path), "%s/ChangeName", Server_Service);
+	httpClient.Post(path, data, BlankCallback);
 }

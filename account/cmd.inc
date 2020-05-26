@@ -1,5 +1,10 @@
 #include <ncs/chat>
 
+void InitCmd()
+{
+	RegCmd();
+}
+
 void RegCmd()
 {
 	RegConsoleCmd("sm_reload_account", Command_ReloadAccount, "[NCS] 重载用户数据");

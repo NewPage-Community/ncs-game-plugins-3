@@ -11,19 +11,19 @@ methodmap ServerInfo < JSONObject
 	{
 		JSONObject s = new JSONObject();
 
-		s.SetInt("ServerID", 0);
-		s.SetInt("ModID", 0);
-		s.SetInt("GameID", 0);
-		s.SetString("Rcon", "RCONPASSWORD");
-		s.SetString("Hostname", "NewPage Server");
+		s.SetInt("server_id", 0);
+		s.SetInt("mod_id", 0);
+		s.SetInt("game_id", 0);
+		s.SetString("rcon", "RCONPASSWORD");
+		s.SetString("hostname", "NewPage Server");
 
 		// IP & Port
 		ConVar hostip = FindConVar("hostip"), hostport = FindConVar("hostport");
 		int ip = hostip.IntValue;
 		char c_ip[24];
 		FormatEx(c_ip, 24, "%d.%d.%d.%d", ((ip & 0xFF000000) >> 24) & 0xFF, ((ip & 0x00FF0000) >> 16) & 0xFF, ((ip & 0x0000FF00) >>  8) & 0xFF, ((ip & 0x000000FF) >>  0) & 0xFF);
-		s.SetString("IP", c_ip);
-		s.SetInt("Port", hostport.IntValue);
+		s.SetString("ip", c_ip);
+		s.SetInt("port", hostport.IntValue);
 		delete hostip;
 		delete hostport;
 
@@ -34,7 +34,7 @@ methodmap ServerInfo < JSONObject
 	{
 		ConVar rcon = FindConVar("rcon_password");
 		char c_rcon[128];
-		this.GetString("Rcon", c_rcon, sizeof(c_rcon));
+		this.GetString("rcon", c_rcon, sizeof(c_rcon));
 		rcon.SetString(c_rcon, false, false);
 		delete rcon;
 	}
@@ -43,21 +43,21 @@ methodmap ServerInfo < JSONObject
 	{
 		ConVar hostname = FindConVar("hostname");
 		char c_hostname[128];
-		this.GetString("Hostname", c_hostname, sizeof(c_hostname));
+		this.GetString("hostname", c_hostname, sizeof(c_hostname));
 		hostname.SetString(c_hostname, false, false);
 		delete hostname;
 	}
 
 	property int ServerID {
-		public get() { return this.GetInt("ServerID"); }
+		public get() { return this.GetInt("server_id"); }
 	}
 
 	property int ModID {
-		public get() { return this.GetInt("ModID"); }
+		public get() { return this.GetInt("mod_id"); }
 	}
 
 	property int GameID {
-		public get() { return this.GetInt("GameID"); }
+		public get() { return this.GetInt("game_id"); }
 	}
 };
 
@@ -84,7 +84,7 @@ public void LoadServerInfo(HTTPResponse response, any value, const char[] error)
 	if (response.Status != HTTPStatus_OK || response.Data == null)
 	{
 		info = new ServerInfo()
-		PrintToServer("[NCS] Server - Faild to load info (%s)", error);
+		PrintToServer("[NCS] Server - Faild to load info %d (%s)", response.Status, error);
 	}
 	else
 	{

@@ -2,7 +2,7 @@
 
 HTTPClient httpClient;
 
-Handle onLoaded = INVALID_HANDLE;
+GlobalForward onLoaded;
 
 methodmap ServerInfo < JSONObject
 {
@@ -68,7 +68,7 @@ void InitAPI()
 
 void RegForward()
 {
-	onLoaded = CreateGlobalForward("NCS_Server_OnLoaded",  ET_Ignore);
+	onLoaded = new GlobalForward("NCS_Server_OnLoaded",  ET_Ignore);
 }
 
 void ReqServerInfo()

@@ -6,9 +6,11 @@ enum struct account
 	char steamid[32];
 
 	bool Valid() {
+		if (this.index == 0 || this.uid <= 0)
+			return false;
 		char steamid[32];
 		GetClientAuthId(this.index, AuthId_SteamID64, steamid, sizeof(steamid), true);
-		return IsValidClient(this.index) && this.uid > 0 && StrEqual(steamid, this.steamid)
+		return IsValidClient(this.index) && StrEqual(steamid, this.steamid)
 	}
 
 	void SetSteamID(const char[] s) {

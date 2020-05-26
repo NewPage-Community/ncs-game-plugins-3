@@ -1,3 +1,8 @@
+#if defined _NCS_Server_
+	#endinput
+#endif
+#define _NCS_Server_
+
 // Call when server on initialized
 forward void NCS_Server_OnLoaded();
 

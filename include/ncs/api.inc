@@ -26,3 +26,9 @@ stock HTTPClient NewNCSAPI()
 
     return c
 }
+
+public void BlankCallback(HTTPResponse response, any value, const char[] error)
+{
+    if (response.Status != HTTPStatus_OK)
+		NCS_LogError("API", "BlankCallback", "Faild to request %d (%s)", response.Status, error);
+}

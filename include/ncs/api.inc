@@ -5,7 +5,7 @@
 #if defined DEV
 	#define API_URL "http://127.0.0.1:8080"
 #else
-    #define API_URL "https://api.new-page.xyz/ncs3"
+    #define API_URL "https://api.new-page.xyz/ncs/v3"
 #endif
 
 

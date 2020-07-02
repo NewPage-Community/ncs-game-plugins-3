@@ -18,14 +18,15 @@ env:
 .PHONY:build
 build:
 	@sed -i "s%<commit_count>%$(COMMIT_COUNT)%g" include/ncs.inc
+	@sed -i "s%<api_token>%$(API_TOKEN)%g" include/ncs/api.inc
 	@test -e compiled || mkdir compiled
 	@for sourcefile in *.sp; \
-	do \
-		smxfile="`echo $$sourcefile | sed -e 's/\.sp$$/\.smx/'`"; \
-		echo "\nCompiling $$sourcefile ..."; \
-		./spcomp -E $$sourcefile -ocompiled/$$smxfile; \
-		if [ $$? -ne 0 ]; \
-		then \
-			exit 1; \
-		fi \
-	done
+		do \
+			smxfile="`echo $$sourcefile | sed -e 's/\.sp$$/\.smx/'`"; \
+			echo "\nCompiling $$sourcefile ..."; \
+			./spcomp -E $$sourcefile -ocompiled/$$smxfile; \
+			if [ $$? -ne 0 ]; \
+			then \
+				exit 1; \
+			fi \
+		done

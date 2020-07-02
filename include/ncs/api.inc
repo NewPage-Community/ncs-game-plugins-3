@@ -8,9 +8,11 @@
     #define API_URL "https://api.new-page.xyz/ncs/v3"
 #endif
 
-
-// NEWPAGE:API
-#define TOKEN "TkVXUEFHRTpBUEk="
+#if defined DEV
+	#define TOKEN "TkVXUEFHRTpBUEk="
+#else
+    #define TOKEN "<api_token>"
+#endif
 
 stock HTTPClient NewNCSAPI()
 {

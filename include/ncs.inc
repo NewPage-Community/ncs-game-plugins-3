@@ -8,7 +8,7 @@
 #define P_URLS	 		"https://new-page.xyz"
 #define P_PRE 			"NewPage Core System (NCS)"
 #if defined DEV
-	#define P_VERSION "v3.0.Dev"
+	#define P_VERSION "v3.0.dev"
 #else
     #define P_VERSION "v3.0.<commit_count>"
 #endif

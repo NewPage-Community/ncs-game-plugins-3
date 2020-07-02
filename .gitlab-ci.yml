@@ -4,14 +4,14 @@ image: newpagecommunity/sourcemod-builder:latest
 before_script:
   - make env
 
-build-dev:
+build-dev-1.11:
   stage: build
   variables:
     SOURCEMOD_VERSION: "1.11"
   script:
     - make build
 
-build:
+build-1.10:
   stage: build
   script:
     - make build

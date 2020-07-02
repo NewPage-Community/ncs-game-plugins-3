@@ -44,7 +44,7 @@ void ReqAccountUID(const char[] steamid, bool notify = false)
 
 	char path[128];
 	Format(path, sizeof(path), "%s/game/playerconnect", Server_Service);
-	httpClient.Post(path, LoadAccountUID, dp);
+	httpClient.Post(path, data, LoadAccountUID, dp);
 }
 
 public void LoadAccountUID(HTTPResponse response, DataPack dp, const char[] error)

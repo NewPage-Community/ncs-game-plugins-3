@@ -1,13 +1,26 @@
 // Encoding flags
-#define JSON_MAX_INDENT         0x1F		/**< Maximum indentation */
-#define JSON_INDENT(%1)         ((%1) & JSON_MAX_INDENT)		/**< Pretty-print the result and indent with n spaces */
-#define JSON_COMPACT            0x20		/**< Compact representation */
-#define JSON_ENSURE_ASCII       0x40		/**< Escape all Unicode characters outside the ASCII range */
-#define JSON_SORT_KEYS          0x80		/**< Sort object keys */
-#define JSON_ENCODE_ANY         0x200		/**< Encode any value */
-#define JSON_ESCAPE_SLASH       0x400		/**< Escape / with \/ */
-#define JSON_REAL_PRECISION(%1) (((%1) & 0x1F) << 11)		/**< Output floats with at most n digits of precision */
-#define JSON_EMBED              0x10000		/**< Omit opening and closing braces of the top-level object */
+enum
+{
+	JSON_MAX_INDENT   = 0x1F,		/**< Maximum indentation */
+	JSON_COMPACT      = 0x20,		/**< Compact representation */
+	JSON_ENSURE_ASCII = 0x40,		/**< Escape all Unicode characters outside the ASCII range */
+	JSON_SORT_KEYS    = 0x80,		/**< Sort object keys */
+	JSON_ENCODE_ANY   = 0x200,		/**< Encode any value */
+	JSON_ESCAPE_SLASH = 0x400,		/**< Escape / with \/ */
+	JSON_EMBED        = 0x10000		/**< Omit opening and closing braces of the top-level object */
+};
+
+// Pretty-print the result and indent with n spaces
+stock int JSON_INDENT(int n)
+{
+	return n & JSON_MAX_INDENT;
+}
+
+// Output floats with at most n digits of precision
+stock int JSON_REAL_PRECISION(int n)
+{
+	return (n & 0x1F) << 11;
+}
 
 // Generic type for encoding JSON.
 methodmap JSON < Handle
@@ -17,7 +30,7 @@ methodmap JSON < Handle
 	// @param file       File to write to.
 	// @param flags      Encoding flags.
 	// @return           True on success, false on failure.
-	public native bool ToFile(const char[] file, int flags = JSON_INDENT(4));
+	public native bool ToFile(const char[] file, int flags = 0);
 
 	// Retrieves the JSON string representation of the object.
 	//
@@ -52,6 +65,8 @@ methodmap JSONObject < JSON
 
 	// Retrieves an array or object value from the object.
 	//
+	// The JSON must be freed via delete or CloseHandle().
+	//
 	// @param key        Key string.
 	// @return           Value read.
 	// @error            Invalid key.
@@ -77,6 +92,14 @@ methodmap JSONObject < JSON
 	// @return           Value read.
 	// @error            Invalid key.
 	public native int GetInt(const char[] key);
+
+	// Retrieves a 64-bit integer value from the object.
+	//
+	// @param key        Key string.
+	// @param buffer     String buffer to store value.
+	// @param maxlength  Maximum length of the string buffer.
+	// @return           True on success. False if the key was not found.
+	public native bool GetInt64(const char[] key, char[] buffer, int maxlength);
 
 	// Retrieves a string value from the object.
 	//
@@ -127,6 +150,13 @@ methodmap JSONObject < JSON
 	// @return           True on success, false on failure.
 	public native bool SetInt(const char[] key, int value);
 
+	// Sets a 64-bit integer value in the object, either inserting a new entry or replacing an old one.
+	//
+	// @param key        Key string.
+	// @param value      Value to store at this key.
+	// @return           True on success, false on failure.
+	public native bool SetInt64(const char[] key, const char[] value);
+
 	// Sets a null value in the object, either inserting a new entry or replacing an old one.
 	//
 	// @param key        Key string.
@@ -150,10 +180,28 @@ methodmap JSONObject < JSON
 	// @return           True on success, false on failure.
 	public native bool Clear();
 
+	// Returns an iterator for the object's keys. See JSONObjectKeys.
+	public native JSONObjectKeys Keys();
+
 	// Retrieves the size of the object.
 	property int Size {
 		public native get();
 	}
+};
+
+/**
+ * A JSONObjectKeys is created via JSONObject.Keys(). It allows the keys of an
+ * object to be iterated. The JSONObjectKeys must be freed with delete or
+ * CloseHandle().
+ */
+methodmap JSONObjectKeys < Handle
+{
+	// Reads an object key, then advances to the next key if any.
+	//
+	// @param buffer     String buffer to store key.
+	// @param maxlength  Maximum length of the string buffer.
+	// @return           True on success, false if there are no more keys.
+	public native bool ReadKey(char[] buffer, int maxlength);
 };
 
 methodmap JSONArray < JSON
@@ -178,6 +226,8 @@ methodmap JSONArray < JSON
 	public static native JSONArray FromString(const char[] buffer);
 
 	// Retrieves an array or object value from the array.
+	//
+	// The JSON must be freed via delete or CloseHandle().
 	//
 	// @param index      Index in the array.
 	// @return           Value read.
@@ -204,6 +254,15 @@ methodmap JSONArray < JSON
 	// @return           Value read.
 	// @error            Invalid index.
 	public native int GetInt(int index);
+
+	// Retrieves an 64-bit integer value from the array.
+	//
+	// @param index      Index in the array.
+	// @param buffer     Buffer to copy to.
+	// @param maxlength  Maximum size of the buffer.
+	// @return           True on success, false if the index out of range.
+	// @error            Invalid index.
+	public native bool GetInt64(int index, char[] buffer, int maxlength);
 
 	// Retrieves a string value from the array.
 	//
@@ -248,6 +307,13 @@ methodmap JSONArray < JSON
 	// @param value      Value to set.
 	// @return           True on success, false on failure.
 	public native bool SetInt(int index, int value);
+
+	// Sets a 64 bit integer value in the array.
+	//
+	// @param index      Index in the array.
+	// @param value      64-bit integer value to set.
+	// @return           True on success, false on failure.
+	public native bool SetString(int index, const char[] value);
 
 	// Sets a null value in the array.
 	//

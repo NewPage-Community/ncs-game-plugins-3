@@ -36,6 +36,11 @@ public void OnPluginStart()
 	RegForward();
 }
 
+public void OnPluginEnd()
+{
+	CloseAPI();
+}
+
 public void OnMapStart()
 {
 	ReqServerInfo();

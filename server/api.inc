@@ -1,4 +1,4 @@
-#define Server_Service "server/info"
+#define Server_Service "server"
 
 HTTPClient httpClient;
 
@@ -10,22 +10,15 @@ methodmap ServerInfo < JSONObject
 	public ServerInfo()
 	{
 		JSONObject s = new JSONObject();
+		// Random rcon
+		char random_rcon[32];
+		GenerateRandomString(random_rcon, sizeof(random_rcon));
 
 		s.SetInt("server_id", 0);
 		s.SetInt("mod_id", 0);
 		s.SetInt("game_id", 0);
-		s.SetString("rcon", "RCONPASSWORD");
+		s.SetString("rcon", random_rcon);
 		s.SetString("hostname", "NewPage Server");
-
-		// IP & Port
-		ConVar hostip = FindConVar("hostip"), hostport = FindConVar("hostport");
-		int ip = hostip.IntValue;
-		char c_ip[24];
-		FormatEx(c_ip, 24, "%d.%d.%d.%d", ((ip & 0xFF000000) >> 24) & 0xFF, ((ip & 0x00FF0000) >> 16) & 0xFF, ((ip & 0x0000FF00) >>  8) & 0xFF, ((ip & 0x000000FF) >>  0) & 0xFF);
-		s.SetString("ip", c_ip);
-		s.SetInt("port", hostport.IntValue);
-		delete hostip;
-		delete hostport;
 
 		return view_as<ServerInfo>(s);
 	}
@@ -71,9 +64,23 @@ void RegForward()
 	onLoaded = new GlobalForward("NCS_Server_OnLoaded",  ET_Ignore);
 }
 
+void CloseAPI()
+{
+	delete httpClient;
+}
+
 void ReqServerInfo()
 {
-	httpClient.Post(Server_Service, new ServerInfo(), LoadServerInfo);
+	// IP & Port
+	ConVar hostip = FindConVar("hostip"), hostport = FindConVar("hostport");
+	int ip = hostip.IntValue;
+	char c_ip[24];
+	char url[64];
+	FormatEx(c_ip, 24, "%d.%d.%d.%d", ((ip & 0xFF000000) >> 24) & 0xFF, ((ip & 0x00FF0000) >> 16) & 0xFF, ((ip & 0x0000FF00) >>  8) & 0xFF, ((ip & 0x000000FF) >>  0) & 0xFF);
+	Format(url, sizeof(url), "%s/%s/%d", Server_Service, c_ip, hostport.IntValue);
+	httpClient.Get(url, LoadServerInfo);
+	delete hostip;
+	delete hostport;
 }
 
 public void LoadServerInfo(HTTPResponse response, any value, const char[] error)

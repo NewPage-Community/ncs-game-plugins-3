@@ -36,6 +36,11 @@ public void OnPluginStart()
 	InitName();
 }
 
+public void OnPluginEnd()
+{
+	CloseAPI();
+}
+
 public void OnClientAuthorized(int client, const char[] auth)
 {
 	if(strcmp(auth, "BOT") == 0 || IsFakeClient(client) || IsClientSourceTV(client))

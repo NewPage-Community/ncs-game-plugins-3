@@ -90,3 +90,33 @@ stock void ChineseTime(char[] ctime, int size)
 	else
 		Format(ctime, size, "晚上");
 }
+
+stock void GenerateRandomString(char[] buffer, int maxLen)
+{
+	// terminator
+	maxLen--;
+
+	char random[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234556789";
+	int randlen = strlen(random) - 1;
+
+	int n = 0;
+	int c = 0;
+
+	while(n < maxLen)
+	{
+		if(random[0] == '\0')
+		{
+			c = GetRandomInt(33, 126);
+			buffer[n] = c;
+		}
+		else
+		{
+			c = GetRandomInt(0, randlen);
+			buffer[n] = random[c];
+		}
+
+		n++;
+	}
+
+	buffer[maxLen] = '\0';
+}

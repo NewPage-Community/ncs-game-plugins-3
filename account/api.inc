@@ -15,6 +15,11 @@ void RegAPIForward()
 	onLoaded = new GlobalForward("NCS_Account_OnLoaded",  ET_Ignore, Param_Cell, Param_Cell);
 }
 
+void CloseAPI()
+{
+	delete httpClient;
+}
+
 void ReqAccountUID(const char[] steamid, bool notify = false)
 {
 	if (strlen(steamid) <= 0)
@@ -32,9 +37,14 @@ void ReqAccountUID(const char[] steamid, bool notify = false)
 	dp.WriteString(steamid, false);
 	dp.WriteCell(notify, false);
 
+	// JSON data
+	JSONObject data = new JSONObject();
+	data.SetInt64("steam_id", steamid);
+	data.SetString("username", g_Accounts[client].name);
+
 	char path[128];
-	Format(path, sizeof(path), "%s/UID/%s", Server_Service, steamid);
-	httpClient.Get(path, LoadAccountUID, dp);
+	Format(path, sizeof(path), "%s/game/playerconnect", Server_Service);
+	httpClient.Post(path, LoadAccountUID, dp);
 }
 
 public void LoadAccountUID(HTTPResponse response, DataPack dp, const char[] error)
@@ -76,10 +86,9 @@ void UpdateAccountName(int client)
 		return;
 
 	JSONObject data = new JSONObject();
-	data.SetInt("uid", g_Accounts[client].uid);
 	data.SetString("username", g_Accounts[client].name);
 
 	char path[128];
-	Format(path, sizeof(path), "%s/ChangeName", Server_Service);
-	httpClient.Post(path, data, BlankCallback);
+	Format(path, sizeof(path), "%s/%d", Server_Service, g_Accounts[client].uid);
+	httpClient.Put(path, data, BlankCallback);
 }

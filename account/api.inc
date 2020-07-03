@@ -2,7 +2,7 @@
 
 HTTPClient httpClient;
 
-GlobalForward onLoaded;
+GlobalForward onUserLoaded;
 
 void InitAPI()
 {
@@ -12,7 +12,7 @@ void InitAPI()
 
 void RegAPIForward()
 {
-	onLoaded = new GlobalForward("NCS_Account_OnLoaded",  ET_Ignore, Param_Cell, Param_Cell);
+	onUserLoaded = new GlobalForward("NCS_Account_OnUserLoaded",  ET_Ignore, Param_Cell, Param_Cell);
 }
 
 void CloseAPI()
@@ -71,7 +71,7 @@ public void LoadAccountUID(HTTPResponse response, DataPack dp, const char[] erro
 	g_Accounts[client].Init(client, data.GetInt("uid"), steamid);
 
 	// Call global forward
-	Call_StartForward(onLoaded);
+	Call_StartForward(onUserLoaded);
 	Call_PushCell(client);
 	Call_PushCell(g_Accounts[client].uid);
 	Call_Finish();

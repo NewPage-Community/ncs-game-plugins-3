@@ -4,7 +4,7 @@
 #define _NCS_Account_
 
 // Call when server on initialized
-forward void NCS_Account_OnLoaded(int client, int uid);
+forward void NCS_Account_OnUserLoaded(int client, int uid);
 // Safety change name event
 forward void NCS_Account_OnChangeName(int client, const char[] newname);
 

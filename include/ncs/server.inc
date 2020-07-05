@@ -12,10 +12,13 @@ native int NCS_Server_GetID();
 // Get Server's ModID
 // return 0 = invalid
 native int NCS_Server_GetModID();
+// Get Server's GameID
+// return 0 = invalid
+native int NCS_Server_GetGameID();
 
 public SharedPlugin __pl_ncs_server = 
 {
-    name = "NCS-Server",
-    file = "np-server.smx",
-    required = 1,
+	name = "NCS-Server",
+	file = "np-server.smx",
+	required = 1,
 };

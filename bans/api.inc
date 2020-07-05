@@ -53,7 +53,7 @@ public void LoadBanInfo(HTTPResponse response, DataPack dp, const char[] error)
 	// JSON
 	char banReason[64], expireTime[20];
 	JSONObject data = view_as<JSONObject>(response.Data);
-	JSONObject info = data.Get("info");
+	JSONObject info = view_as<JSONObject>(data.Get("info"));
 
 	// Check UID is valid
 	if (info.GetInt("uid") != uid)
@@ -66,7 +66,7 @@ public void LoadBanInfo(HTTPResponse response, DataPack dp, const char[] error)
 
 	// Format expire time
 	char time[64];
-	FormatTime(time, sizeof(time), "%Y 年 %m 月 %d 日 %H:%M:%S", expireTime);
+	FormatTime(time, sizeof(time), "%Y 年 %m 月 %d 日 %H:%M:%S", StringToInt(expireTime));
 
 	// Ban client
 	char kickReason[256];

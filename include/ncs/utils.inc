@@ -132,7 +132,7 @@ stock bool Int64Sum(int target[2], int add[2])
 	target[1] += add[1];
 
 	int tmp = INT_MAX - target[0];
-	if (tmp < t2[0])
+	if (tmp < add[0])
 	{
 		if (INT_MAX - target[1] == 0)
 			return false;

@@ -81,9 +81,10 @@ void ReqBanClient(int client, int type, int length, const char[] reason)
 	if (uid == 0)
 		return;
 	
-	int iExpireTime[2];
+	int iExpireTime[2], iLength[2];
+	iLength[1] = length;
 	GetTime(iExpireTime);
-	Int64Sum(iExpireTime, {0, length});
+	Int64Sum(iExpireTime, iLength);
 
 	char sExpireTime[20];
 	Format(sExpireTime, sizeof(sExpireTime), "%d%d", iExpireTime[1], iExpireTime[0]);
@@ -93,9 +94,9 @@ void ReqBanClient(int client, int type, int length, const char[] reason)
 	info.SetInt("uid", uid);
 	info.SetInt64("expire_time", sExpireTime);
 	info.SetInt("type", type);
-	info.SetInt("server_id", NCS_Server_GetID);
-	info.SetInt("mod_id", NCS_Server_GetModID);
-	info.SetInt("game_id", NCS_Server_GetGameID);
+	info.SetInt("server_id", NCS_Server_GetID());
+	info.SetInt("mod_id", NCS_Server_GetModID());
+	info.SetInt("game_id", NCS_Server_GetGameID());
 	info.SetString("reason", reason);
 
 	JSONObject data = new JSONObject();

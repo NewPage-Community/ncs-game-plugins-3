@@ -82,7 +82,7 @@ public void OnPluginStart()
 	LoadTranslations("basebans.phrases");
 	LoadTranslations("core.phrases");
 
-	RegAdminCmd("sm_ban", Command_Ban, ADMFLAG_BAN, "sm_ban <#userid|name> <minutes|0> [reason]");
+	RegAdminCmd("sm_ban", Command_Ban, ADMFLAG_BAN, "sm_ban <#userid|name> <type|0> <minutes|0> [reason]");
 	
 	//This to manage custom ban reason messages
 	RegConsoleCmd("sm_abortban", Command_AbortBan, "sm_abortban");

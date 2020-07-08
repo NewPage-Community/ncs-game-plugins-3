@@ -84,7 +84,7 @@ void ReqBanClient(int client, int type, int length, const char[] reason)
 		return;
 	
 	int iExpireTime[2], iLength[2];
-	iLength[1] = length;
+	iLength[0] = length;
 	GetTime(iExpireTime);
 	Int64Sum(iExpireTime, iLength);
 

@@ -81,11 +81,11 @@ void PrepareBan(int client, int target, int type, int time, const char[] reason)
 
 	if (reason[0] == '\0')
 	{
-		NCS_Ban_BanClient(target, type, time, "Banned");
+		NCS_Ban_BanClient(target, type, time * 60, "Banned");
 	}
 	else
 	{
-		NCS_Ban_BanClient(target, type, time, reason);
+		NCS_Ban_BanClient(target, type, time * 60, reason);
 	}
 }
 

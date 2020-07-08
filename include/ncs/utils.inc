@@ -1,3 +1,5 @@
+#define INT_MAX 2147483647
+
 // Get day format(YYYYMMDD)
 stock int GetDay(int today = 0)
 {
@@ -119,4 +121,25 @@ stock void GenerateRandomString(char[] buffer, int maxLen)
 	}
 
 	buffer[maxLen] = '\0';
+}
+
+// result out of range will return false
+stock bool Int64Sum(int[2] target, int[2] add)
+{
+	if (INT_MAX - target[1] < add[1])
+		return false;
+
+	target[1] += add[1];
+	
+	int tmp = INT_MAX - target[0];
+	if (tmp < t2[0])
+	{
+		target[1]++;
+		target[0] = add[0] - tmp;
+	}
+	else
+	{
+		target[0] += add[0];
+	}
+	return true;
 }

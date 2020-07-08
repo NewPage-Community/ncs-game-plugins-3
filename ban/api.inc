@@ -13,7 +13,7 @@ void CloseAPI()
 	delete httpClient;
 }
 
-void ReqBanInfo(int client, int uid)
+void ReqBanCheck(int client, int uid)
 {
 	// Datapack to pass to callback
 	DataPack dp = new DataPack();
@@ -29,10 +29,10 @@ void ReqBanInfo(int client, int uid)
 
 	char path[128];
 	Format(path, sizeof(path), "%s/check/%d", Server_Service, uid);
-	httpClient.Post(path, data, LoadBanInfo, dp);
+	httpClient.Post(path, data, LoadBanCheck, dp);
 }
 
-public void LoadBanInfo(HTTPResponse response, DataPack dp, const char[] error)
+public void LoadBanCheck(HTTPResponse response, DataPack dp, const char[] error)
 {
 	// Ban recode not found
 	if (response.Status == HTTPStatus_NotFound)
@@ -73,4 +73,36 @@ public void LoadBanInfo(HTTPResponse response, DataPack dp, const char[] error)
 	FormatEx(kickReason, sizeof(kickReason), "您已被服务器封锁,禁止进入游戏! 请联系管理员\n封禁类型: %s 封禁原因: %s\n到期时间: %s", g_banType[banType], banReason, time);
 	BanClient(client, 10, BANFLAG_AUTHID, kickReason, kickReason);
 	return;
+}
+
+void ReqBanClient(int client, int type, int length, const char[] reason)
+{
+	int uid = NCS_Account_GetUID(client);
+	if (uid == 0)
+		return;
+	
+	int iExpireTime[2];
+	GetTime(iExpireTime);
+	Int64Sum(iExpireTime, {0, length});
+
+	char sExpireTime[20];
+	Format(sExpireTime, sizeof(sExpireTime), "%d%d", iExpireTime[1], iExpireTime[0]);
+	
+	// JSON
+	JSONObject info = new JSONObject();
+	info.SetInt("uid", uid);
+	info.SetInt64("expire_time", sExpireTime);
+	info.SetInt("type", type);
+	info.SetInt("server_id", NCS_Server_GetID);
+	info.SetInt("mod_id", NCS_Server_GetModID);
+	info.SetInt("game_id", NCS_Server_GetGameID);
+	info.SetString("reason", reason);
+
+	JSONObject data = new JSONObject();
+	data.Set("info", info);
+	delete info;
+
+	char path[128];
+	Format(path, sizeof(path), "%s/add", Server_Service);
+	httpClient.Post(path, data, BlankCallback);
 }

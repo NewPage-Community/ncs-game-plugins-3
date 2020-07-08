@@ -5,7 +5,7 @@
 #include <ncs/account>
 
 // Module
-#include "bans/ban"
+#include "ban/ban"
 
 #define P_NAME P_PRE ... " - Bans"
 #define P_DESC "Bans management plugin"
@@ -21,6 +21,8 @@ public Plugin myinfo =
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
+	InitNative();
+
 	// lib
 	RegPluginLibrary("NCS-Bans");
 
@@ -39,5 +41,6 @@ public void OnPluginEnd()
 
 public void NCS_Account_OnUserLoaded(int client, int uid)
 {
-	ReqBanInfo(client, uid);
+	// Check ban information when player loaded
+	ReqBanCheck(client, uid);
 }

@@ -1,5 +1,5 @@
 #include <ncs/server>
-#define Server_Service "user/ban"
+#define Ban_Service "user/ban"
 
 HTTPClient httpClient;
 
@@ -13,22 +13,21 @@ void CloseAPI()
 	delete httpClient;
 }
 
-void ReqBanCheck(int client, int uid)
+void ReqBanCheck(int client, const char[] uid)
 {
 	// Datapack to pass to callback
 	DataPack dp = new DataPack();
 	dp.WriteCell(client, false);
-	dp.WriteCell(uid, false);
+	dp.WriteString(uid, false);
 
 	// JSON
 	JSONObject data = new JSONObject();
-	data.SetInt("uid", uid);
 	data.SetInt("server_id", NCS_Server_GetID());
 	data.SetInt("mod_id", NCS_Server_GetModID());
 	data.SetInt("game_id", NCS_Server_GetGameID());
 
 	char path[128];
-	Format(path, sizeof(path), "%s/check/%d", Server_Service, uid);
+	Format(path, sizeof(path), "%s/check/%s", Ban_Service, uid);
 	httpClient.Post(path, data, LoadBanCheck, dp);
 }
 
@@ -47,16 +46,18 @@ public void LoadBanCheck(HTTPResponse response, DataPack dp, const char[] error)
 	// DataPack
 	dp.Reset();
 	int client = dp.ReadCell();
-	int uid = dp.ReadCell();
+	char uid[INT64_LENGTH];
+	dp.ReadString(uid, sizeof(uid));
 	dp.Close()
 
 	// JSON
-	char banReason[64], expireTime[20];
+	char banReason[64], expireTime[20], iUID[INT64_LENGTH];
 	JSONObject data = view_as<JSONObject>(response.Data);
 	JSONObject info = view_as<JSONObject>(data.Get("info"));
 
 	// Check UID is valid
-	if (info.GetInt("uid") != uid)
+	info.GetString("uid", iUID, sizeof(iUID));
+	if (!StrEqual(iUID, uid))
 		return;
 
 	// Get ban information
@@ -77,8 +78,9 @@ public void LoadBanCheck(HTTPResponse response, DataPack dp, const char[] error)
 
 void ReqBanClient(int client, int type, int length, const char[] reason)
 {
-	int uid = NCS_Account_GetUID(client);
-	if (uid == 0)
+	char uid[MAX_UID_LENGTH];
+	NCS_Account_GetUID(client, uid, sizeof(uid));
+	if (uid[0] == '0')
 		return;
 	
 	int iExpireTime[2], iLength[2];
@@ -91,7 +93,7 @@ void ReqBanClient(int client, int type, int length, const char[] reason)
 	
 	// JSON
 	JSONObject info = new JSONObject();
-	info.SetInt("uid", uid);
+	info.SetInt64("uid", uid);
 	info.SetInt64("expire_time", sExpireTime);
 	info.SetInt("type", type);
 	info.SetInt("server_id", NCS_Server_GetID());
@@ -104,6 +106,6 @@ void ReqBanClient(int client, int type, int length, const char[] reason)
 	delete info;
 
 	char path[128];
-	Format(path, sizeof(path), "%s/add", Server_Service);
+	Format(path, sizeof(path), "%s/add", Ban_Service);
 	httpClient.Post(path, data, BlankCallback);
 }

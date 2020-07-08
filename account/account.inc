@@ -1,23 +1,24 @@
-#define MAX_STEAMID_LENGTH 32
+#define MAX_STEAMID_LENGTH INT64_LENGTH
+#define MAX_UID_LENGTH INT64_LENGTH
 
 enum struct account
 {
 	int index;
-	int uid;
+	char uid[MAX_UID_LENGTH];
 	char steamid[MAX_STEAMID_LENGTH];
 	char name[MAX_NAME_LENGTH];
 
 	bool Valid() {
-		if (this.index == 0 || this.uid <= 0)
+		if (this.index == 0 || this.uid[0] == '0')
 			return false;
 		char steamid[MAX_STEAMID_LENGTH];
 		GetClientAuthId(this.index, AuthId_SteamID64, steamid, sizeof(steamid), true);
 		return IsValidClient(this.index) && StrEqual(steamid, this.steamid)
 	}
 
-	void Init(int index, int uid, const char[] steamid) {
+	void Init(int index, const char[] uid, const char[] steamid) {
 		this.index = index;
-		this.uid = uid;
+		strcopy(this.uid, MAX_UID_LENGTH, uid);
 		strcopy(this.steamid, MAX_STEAMID_LENGTH, steamid);
 		GetClientName(index, this.name, MAX_NAME_LENGTH);
 	}
@@ -30,7 +31,7 @@ enum struct account
 
 	bool Clean() {
 		this.index = 0;
-		this.uid = 0;
+		this.uid = "0";
 		this.steamid = "";
 		this.name = "";
 	}

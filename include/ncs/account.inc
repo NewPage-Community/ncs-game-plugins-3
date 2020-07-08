@@ -3,14 +3,16 @@
 #endif
 #define _NCS_Account_
 
+#define MAX_UID_LENGTH 20
+
 // Call when server on initialized
-forward void NCS_Account_OnUserLoaded(int client, int uid);
+forward void NCS_Account_OnUserLoaded(int client, const char[] uid);
 // Safety change name event
 forward void NCS_Account_OnChangeName(int client, const char[] newname);
 
 // NCS_Account_GetUID get uid
 // return 0 = invalid
-native int NCS_Account_GetUID(int client);
+native int NCS_Account_GetUID(int client, char[] uid, int size);
 // NCS_Account_ChangeName safety way to change name
 native void NCS_Account_ChangeName(int client, const char[] name);
 

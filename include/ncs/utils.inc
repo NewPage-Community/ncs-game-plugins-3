@@ -1,4 +1,5 @@
 #define INT_MAX 2147483647
+#define INT64_LENGTH 20
 
 // Get day format(YYYYMMDD)
 stock int GetDay(int today = 0)

@@ -18,7 +18,9 @@ public OnPluginStart()
 public Action Command_test(int client, int args)
 {
     // Account
-    PrintToChat(client, "uid: %d", NCS_Account_GetUID(client));
+    char uid[MAX_UID_LENGTH];
+    NCS_Account_GetUID(client, uid, sizeof(uid));
+    PrintToChat(client, "uid: %s", uid);
     NCS_Account_ChangeName(client, "Test");
 
     // Server

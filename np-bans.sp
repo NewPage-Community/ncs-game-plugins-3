@@ -39,7 +39,7 @@ public void OnPluginEnd()
 	CloseAPI();
 }
 
-public void NCS_Account_OnUserLoaded(int client, int uid)
+public void NCS_Account_OnUserLoaded(int client, const char[] uid)
 {
 	// Check ban information when player loaded
 	ReqBanCheck(client, uid);

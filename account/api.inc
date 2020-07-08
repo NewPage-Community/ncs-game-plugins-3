@@ -12,7 +12,7 @@ void InitAPI()
 
 void RegAPIForward()
 {
-	onUserLoaded = new GlobalForward("NCS_Account_OnUserLoaded",  ET_Ignore, Param_Cell, Param_Cell);
+	onUserLoaded = new GlobalForward("NCS_Account_OnUserLoaded",  ET_Ignore, Param_Cell, Param_String);
 }
 
 void CloseAPI()
@@ -72,12 +72,14 @@ public void LoadAccountUID(HTTPResponse response, DataPack dp, const char[] erro
 	if (client == 0)
 		return;
 
-	g_Accounts[client].Init(client, data.GetInt("uid"), steamid);
+	char uid[MAX_UID_LENGTH];
+	data.GetString("uid", uid, sizeof(uid));
+	g_Accounts[client].Init(client, uid, steamid);
 
 	// Call global forward
 	Call_StartForward(onUserLoaded);
 	Call_PushCell(client);
-	Call_PushCell(g_Accounts[client].uid);
+	Call_PushString(uid);
 	Call_Finish();
 
 	if (notify)
@@ -93,6 +95,6 @@ void UpdateAccountName(int client)
 	data.SetString("username", g_Accounts[client].name);
 
 	char path[128];
-	Format(path, sizeof(path), "%s/%d", Server_Service, g_Accounts[client].uid);
+	Format(path, sizeof(path), "%s/%s", Server_Service, g_Accounts[client].uid);
 	httpClient.Put(path, data, BlankCallback);
 }

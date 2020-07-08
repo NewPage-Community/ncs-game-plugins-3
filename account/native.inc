@@ -7,7 +7,9 @@ void RegNative()
 public int Native_GetUID(Handle plugin, int numParams)
 {
 	int client = GetNativeCell(1);
-	return g_Accounts[client].Valid() ? g_Accounts[client].uid : 0;
+	if (!g_Accounts[client].Valid())
+		return 0;
+	return SetNativeString(2, g_Accounts[client].uid, GetNativeCell(3));
 }
 
 public int Native_ChangeName(Handle plugin, int numParams)

@@ -25,12 +25,13 @@ public Action Command_test(int client, int args)
 
     // Server
     PrintToChat(client, "server_id: %d", NCS_Server_GetID());
-    PrintToChat(client, "mod_id: %d", NCS_Server_GetModID()); 
+    PrintToChat(client, "mod_id: %d", NCS_Server_GetModID());
+    PrintToChat(client, "game_id: %d", NCS_Server_GetGameID());
 }
 
-public void NCS_Account_OnLoaded(int client, int uid)
+public void NCS_Account_OnUserLoaded(int client, const char[] uid)
 {
-    PrintToServer("NCS_Account_OnLoaded(client:%d, uid:%d)", client, uid);
+    PrintToServer("NCS_Account_OnLoaded(client:%d, uid:%s)", client, uid);
 }
 
 public void NCS_Account_OnChangeName(int client, const char[] newname)

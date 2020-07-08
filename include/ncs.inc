@@ -3,6 +3,8 @@
 #endif
 #define _NCS_Include_
 
+#pragma newdecls required
+
 // Pluing info
 #define P_AUTHOR 		"NewPage Dev-Team"
 #define P_URLS	 		"https://new-page.xyz"

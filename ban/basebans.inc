@@ -339,7 +339,7 @@ public Action Command_Ban(int client, int args)
 		return Plugin_Handled;
 	}
 
-    char s_type[1];
+	char s_type[1];
 	if ((next_len = BreakString(Arguments[len], s_type, sizeof(s_type))) != -1)
 	{
 		len += next_len;
@@ -363,7 +363,7 @@ public Action Command_Ban(int client, int args)
 
 	playerinfo[client].banTargetUserId = GetClientUserId(target);
 
-    int type = StringToInt(s_type);
+	int type = StringToInt(s_type);
 	int time = StringToInt(s_time);
 	PrepareBan(client, target, time, type, Arguments[len]);
 

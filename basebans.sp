@@ -60,7 +60,7 @@ enum struct PlayerInfo {
 	int banTarget;
 	int banTargetUserId;
 	int banTime;
-    int banType;
+	int banType;
 	int isWaitingForChatReason;
 }
 

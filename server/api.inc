@@ -95,7 +95,8 @@ public void LoadServerInfo(HTTPResponse response, any value, const char[] error)
 	}
 	else
 	{
-		info = view_as<ServerInfo>(response.Data);
+		JSONObject data = view_as<JSONObject>(response.Data);
+		info = view_as<ServerInfo>(data.Get("info"));
 		Loaded = true;
 	}
 
@@ -114,4 +115,6 @@ public void LoadServerInfo(HTTPResponse response, any value, const char[] error)
 	// Call global forward
 	Call_StartForward(onLoaded);
 	Call_Finish();
+
+	delete info;
 }

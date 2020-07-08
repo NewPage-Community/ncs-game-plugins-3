@@ -25,6 +25,7 @@ stock HTTPClient NewNCSAPI()
     char auth[64];
     Format(auth, sizeof(auth), "Basic %s", TOKEN);
     c.SetHeader("Authorization", auth);
+    c.SetHeader("X-B3-Sampled", "1");
 
     return c
 }

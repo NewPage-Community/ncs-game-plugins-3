@@ -12,7 +12,7 @@ public int Native_BanClient(Handle plugin, int numParams)
     int reasonLength;
     GetNativeStringLength(4, reasonLength);
     char[] reason = new char[reasonLength+1];
-    GetNativeString(4, reason, reasonLength);
+    GetNativeString(4, reason, reasonLength+1);
 
     ReqBanClient(client, type, length, reason);
 }

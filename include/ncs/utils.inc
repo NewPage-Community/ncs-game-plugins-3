@@ -124,7 +124,7 @@ stock void GenerateRandomString(char[] buffer, int maxLen)
 }
 
 // result out of range will return false
-stock bool Int64Sum(int[2] target, int[2] add)
+stock bool Int64Sum(int target[2], int add[2])
 {
 	if (INT_MAX - target[1] < add[1])
 		return false;

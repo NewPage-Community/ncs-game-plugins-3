@@ -32,6 +32,10 @@ void ReqAccountUID(const char[] steamid, bool notify = false)
 	// Clean
 	g_Accounts[client].Clean();
 
+	// Username
+	char username[MAX_NAME_LENGTH];
+	GetClientName(client, username, MAX_NAME_LENGTH);
+
 	// Datapack to pass to callback
 	DataPack dp = new DataPack();
 	dp.WriteString(steamid, false);
@@ -40,7 +44,7 @@ void ReqAccountUID(const char[] steamid, bool notify = false)
 	// JSON data
 	JSONObject data = new JSONObject();
 	data.SetInt64("steam_id", steamid);
-	data.SetString("username", g_Accounts[client].name);
+	data.SetString("username", username);
 
 	char path[128];
 	Format(path, sizeof(path), "%s/game/playerconnect", Server_Service);

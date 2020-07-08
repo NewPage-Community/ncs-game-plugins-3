@@ -19,6 +19,7 @@ enum struct account
 		this.index = index;
 		this.uid = uid;
 		strcopy(this.steamid, MAX_STEAMID_LENGTH, steamid);
+		GetClientName(index, this.name, MAX_NAME_LENGTH);
 	}
 
 	void UpdateName(const char[] username) {

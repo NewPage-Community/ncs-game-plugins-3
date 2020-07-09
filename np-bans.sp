@@ -4,9 +4,6 @@
 #include <ncs>
 #include <ncs/account>
 
-// Module
-#include "ban/ban"
-
 #define P_NAME P_PRE ... " - Bans"
 #define P_DESC "Bans management plugin"
 
@@ -18,6 +15,9 @@ public Plugin myinfo =
 	version     = P_VERSION,
 	url         = P_URLS
 };
+
+// Module
+#include "ban/ban"
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {

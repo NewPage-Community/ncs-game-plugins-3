@@ -1,4 +1,4 @@
-#define Server_Service "user/account"
+#define Account_Service "user/account"
 
 HTTPClient httpClient;
 
@@ -47,7 +47,7 @@ void ReqAccountUID(const char[] steamid, bool notify = false)
 	data.SetString("username", username);
 
 	char path[128];
-	Format(path, sizeof(path), "%s/game/playerconnect", Server_Service);
+	Format(path, sizeof(path), "%s/game/playerconnect", Account_Service);
 	httpClient.Post(path, data, LoadAccountUID, dp);
 }
 
@@ -95,6 +95,6 @@ void UpdateAccountName(int client)
 	data.SetString("username", g_Accounts[client].name);
 
 	char path[128];
-	Format(path, sizeof(path), "%s/%s", Server_Service, g_Accounts[client].uid);
+	Format(path, sizeof(path), "%s/%s", Account_Service, g_Accounts[client].uid);
 	httpClient.Put(path, data, BlankCallback);
 }

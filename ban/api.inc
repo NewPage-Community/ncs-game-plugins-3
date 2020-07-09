@@ -33,7 +33,7 @@ void ReqBanCheck(int client, const char[] uid)
 
 public void LoadBanCheck(HTTPResponse response, DataPack dp, const char[] error)
 {
-	// Ban recode not found
+	// Ban record not found
 	if (response.Status == HTTPStatus_NotFound)
 		return;
 

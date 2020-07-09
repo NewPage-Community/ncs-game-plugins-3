@@ -2,9 +2,10 @@
 //#define DEV
 
 #include <ncs>
+#include <ncs/account>
 
-#define P_NAME P_PRE ... " - Server"
-#define P_DESC "Server management plugin"
+#define P_NAME P_PRE ... " - Admin"
+#define P_DESC "Admin management plugin"
 
 public Plugin myinfo = 
 {
@@ -16,15 +17,12 @@ public Plugin myinfo =
 };
 
 // Module
-#include "server/server"
+#include "admin/admin"
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
-	// core
-	RegNative();
-
 	// lib
-	RegPluginLibrary("NCS-Server");
+	RegPluginLibrary("NCS-Admin");
 
 	return APLRes_Success;
 }
@@ -32,8 +30,6 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 public void OnPluginStart()
 {
 	InitAPI();
-	RegCmd();
-	RegForward();
 }
 
 public void OnPluginEnd()
@@ -41,7 +37,7 @@ public void OnPluginEnd()
 	CloseAPI();
 }
 
-public void OnMapStart()
+public void NCS_Account_OnUserLoaded(int client, const char[] uid)
 {
-	ReqServerInfo();
+	ReqAdmin(client, uid);
 }

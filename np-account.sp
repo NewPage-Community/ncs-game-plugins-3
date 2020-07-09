@@ -3,9 +3,6 @@
 
 #include <ncs>
 
-// Module
-#include "account/account"
-
 #define P_NAME P_PRE ... " - Account"
 #define P_DESC "Account management plugin"
 
@@ -17,6 +14,9 @@ public Plugin myinfo =
 	version     = P_VERSION,
 	url         = P_URLS
 };
+
+// Module
+#include "account/account"
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {

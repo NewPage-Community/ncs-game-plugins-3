@@ -6,7 +6,7 @@
 // NCS_Ban_BanClient
 native void NCS_Ban_BanClient(int client, int type, int length, const char[] reason);
 
-public SharedPlugin __pl_ncs_account = 
+public SharedPlugin __pl_ncs_ban = 
 {
     name = "NCS-Bans",
     file = "np-bans.smx",

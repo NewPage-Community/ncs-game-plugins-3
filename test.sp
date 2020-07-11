@@ -1,6 +1,7 @@
 #include <ncs/server>
 #include <ncs/account>
 #include <ncs/vip>
+#include <ncs/sign>
 
 public Plugin myinfo = 
 {
@@ -54,4 +55,9 @@ public void NCS_Account_OnChangeName(int client, const char[] newname)
 public void NCS_Server_OnLoaded()
 {
     PrintToServer("NCS_Server_OnLoaded()");
+}
+
+public void NCS_Sign_OnUserSigned(int client)
+{
+    PrintToServer("NCS_Sign_OnUserSigned(client:%d)", client);
 }

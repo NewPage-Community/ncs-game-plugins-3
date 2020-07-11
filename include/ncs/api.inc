@@ -27,7 +27,7 @@ stock HTTPClient NewNCSAPI()
     c.SetHeader("Authorization", auth);
     c.SetHeader("X-B3-Sampled", "1");
 
-    return c
+    return c;
 }
 
 public void BlankCallback(HTTPResponse response, any value, const char[] error)

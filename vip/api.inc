@@ -84,7 +84,7 @@ public void AddPointCallback(HTTPResponse response, DataPack dp, const char[] er
 	// DataPack
 	dp.Reset();
 	int client = dp.ReadCell();
-	char uid[INT64_LENGTH];
+	char uid[MAX_UID_LENGTH];
 	dp.ReadString(uid, sizeof(uid));
 	int addPoint = dp.ReadCell();
 	dp.Close()
@@ -130,7 +130,7 @@ public void RenewalCallback(HTTPResponse response, DataPack dp, const char[] err
 	// DataPack
 	dp.Reset();
 	int client = dp.ReadCell();
-	char uid[INT64_LENGTH];
+	char uid[MAX_UID_LENGTH];
 	dp.ReadString(uid, sizeof(uid));
 	int length = dp.ReadCell();
 	dp.Close()

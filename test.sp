@@ -26,8 +26,8 @@ public Action Command_testall(int client, int args)
     NCS_Account_ChangeName(client, "Test");
 
     // VIP
-    PrintToChat(client, "Is VIP: %s", NCS_VIP_IsVIP(client));
-    PrintToChat(client, "VIP level: %s", NCS_VIP_Level(client));
+    PrintToChat(client, "Is VIP: %d", NCS_VIP_IsVIP(client));
+    PrintToChat(client, "VIP level: %d", NCS_VIP_Level(client));
 
     // Server
     PrintToChat(client, "server_id: %d", NCS_Server_GetID());

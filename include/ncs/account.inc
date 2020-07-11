@@ -11,8 +11,8 @@ forward void NCS_Account_OnUserLoaded(int client, const char[] uid);
 forward void NCS_Account_OnChangeName(int client, const char[] newname);
 
 // NCS_Account_GetUID get uid
-// return 0 = invalid
-native int NCS_Account_GetUID(int client, char[] uid, int size);
+// return false = invalid
+native bool NCS_Account_GetUID(int client, char[] uid, int size);
 // NCS_Account_ChangeName safety way to change name
 native void NCS_Account_ChangeName(int client, const char[] name);
 

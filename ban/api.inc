@@ -79,8 +79,7 @@ public void LoadBanCheck(HTTPResponse response, DataPack dp, const char[] error)
 void ReqBanClient(int client, int type, int length, const char[] reason)
 {
 	char uid[MAX_UID_LENGTH];
-	NCS_Account_GetUID(client, uid, sizeof(uid));
-	if (uid[0] == '0')
+	if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
 		return;
 	
 	int iExpireTime[2], iLength[2];

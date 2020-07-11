@@ -61,7 +61,7 @@ public void LoadVIPInfo(HTTPResponse response, DataPack dp, const char[] error)
 void AddPoint(int client, int addPoint)
 {
 	char uid[MAX_UID_LENGTH];
-	if (NCS_Account_GetUID(client, uid, sizeof(uid)) == 0)
+	if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
 		return;
 
 	// Datapack to pass to callback
@@ -106,7 +106,7 @@ public void AddPointCallback(HTTPResponse response, DataPack dp, const char[] er
 void Renewal(int client, int length)
 {
 	char uid[MAX_UID_LENGTH];
-	if (NCS_Account_GetUID(client, uid, sizeof(uid)) == 0)
+	if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
 		return;
 
 	// Datapack to pass to callback

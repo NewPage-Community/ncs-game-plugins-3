@@ -30,7 +30,7 @@ void CloseAPIForward()
 void Sign(int client)
 {
 	char uid[MAX_UID_LENGTH];
-	if (NCS_Account_GetUID(client, uid, sizeof(uid)) == 0)
+	if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
 	{
 		NCS_Chat(client, _, "{blue}您的用户数据尚未加载，请重试！");
 		return;

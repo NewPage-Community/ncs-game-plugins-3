@@ -9,7 +9,7 @@ public int Native_GetUID(Handle plugin, int numParams)
 	int client = GetNativeCell(1);
 	if (!g_Accounts[client].Valid())
 		return 0;
-	return SetNativeString(2, g_Accounts[client].uid, GetNativeCell(3));
+	return (SetNativeString(2, g_Accounts[client].uid, GetNativeCell(3)) == 0);
 }
 
 public int Native_ChangeName(Handle plugin, int numParams)

@@ -122,7 +122,7 @@ void Renewal(int client, int length)
 
 	char path[128];
 	Format(path, sizeof(path), "%s/renewal", VIP_Service);
-	httpClient.Put(path, data, RenewalCallback, dp);
+	httpClient.Post(path, data, RenewalCallback, dp);
 }
 
 public void RenewalCallback(HTTPResponse response, DataPack dp, const char[] error)

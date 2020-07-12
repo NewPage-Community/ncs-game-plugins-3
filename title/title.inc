@@ -41,7 +41,6 @@ Action Set_Title(int client, int args){
         
     GetCmdArg(1, arg, sizeof(arg));
     SetTitle(client,arg);
-    Title_set(client,2,arg)
 
     return Plugin_Handled;
 

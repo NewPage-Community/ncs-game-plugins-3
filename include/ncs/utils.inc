@@ -146,3 +146,14 @@ stock bool Int64Sum(int target[2], int add[2])
 	}
 	return true;
 }
+
+// Get int64 timestamp
+stock void GetTimeStamp(char[] time, int size)
+{
+	int stamp[2];
+	GetTime(stamp);
+	if (stamp[1] == 0)
+		Format(time, size, "%d", stamp[0]);
+	else
+		Format(time, size, "%d%d", stamp[1], stamp[0]);
+}

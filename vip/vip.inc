@@ -19,11 +19,9 @@ enum struct vip
     bool IsVIP() {
         if (!this.IsValid())
             return false;
-        int iNow[2];
-        char cNow[INT64_LENGTH];
-        GetTime(iNow);
-        Format(cNow, sizeof(cNow), "%d%d", iNow[1], iNow[0]);
-        return (strcmp(cNow, this.expireDate) == -1);
+        char now[INT64_LENGTH];
+        GetTimeStamp(now, sizeof(now))
+        return (strcmp(now, this.expireDate) == -1);
     }
 
     void Init(int index, int point, const char[] expireDate) {

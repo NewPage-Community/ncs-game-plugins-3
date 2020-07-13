@@ -15,6 +15,8 @@ forward void NCS_Account_OnChangeName(int client, const char[] newname);
 native bool NCS_Account_GetUID(int client, char[] uid, int size);
 // NCS_Account_ChangeName safety way to change name
 native void NCS_Account_ChangeName(int client, const char[] name);
+// NCS_Account_GetName safety way to get name
+native void NCS_Account_GetName(int client, char[] buffer, int size);
 
 public SharedPlugin __pl_ncs_account = 
 {

@@ -2,6 +2,7 @@ void RegNative()
 {
 	CreateNative("NCS_Account_GetUID", Native_GetUID);
 	CreateNative("NCS_Account_ChangeName", Native_ChangeName);
+	CreateNative("NCS_Account_GetName", Native_GetName);
 }
 
 public int Native_GetUID(Handle plugin, int numParams)
@@ -20,4 +21,12 @@ public int Native_ChangeName(Handle plugin, int numParams)
 
 	ChangeName(client, name);
 	return 1;
+}
+
+public int Native_GetName(Handle plugin, int numParams)
+{
+	int client = GetNativeCell(1);
+	if (!g_Accounts[client].Valid())
+		return 0;
+	return (SetNativeString(2, g_Accounts[client].name, GetNativeCell(3)) == 0);
 }

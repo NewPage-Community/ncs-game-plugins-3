@@ -72,9 +72,14 @@ public void LoadAccountUID(HTTPResponse response, DataPack dp, const char[] erro
 	if (client == 0)
 		return;
 
-	char uid[MAX_UID_LENGTH];
+	char uid[MAX_UID_LENGTH], username[MAX_NAME_LENGTH];
 	data.GetString("uid", uid, sizeof(uid));
+
+	// Init user
 	g_Accounts[client].Init(client, uid, steamid);
+	// Update username
+	GetClientName(client, username, sizeof(username));
+	g_Accounts[client].UpdateName(username);
 
 	// Call global forward
 	Call_StartForward(onUserLoaded);

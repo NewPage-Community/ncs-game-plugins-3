@@ -7,7 +7,7 @@ COMMIT_COUNT = `git rev-list --all --count`
 
 # This command is under a Creative Commons Zero license, Enjoy!                                                                                                           
 # Written by Nios34<nios34@foxmail.com> using GNU Emacs. Feel free to delete it.
-SOURCEMOD_BUILD_PATH = $(shell curl -IsS 'https://www.sourcemod.net/latest.php?version=$(SOURCEMOD_VERSION)&os=linux' | ggrep -oP '$(SOURCEMOD_VERSION)/sourcemod-.*')
+SOURCEMOD_BUILD_PATH = $(shell curl -IsS 'https://www.sourcemod.net/latest.php?version=$(SOURCEMOD_VERSION)&os=linux' | grep -oP '$(SOURCEMOD_VERSION)/sourcemod-.*')
 SOURCEMOD_DOWNLOAD_URL = http://nexus3.nexus3:8081/repository/sourcemod/
 
 .PHONY:all

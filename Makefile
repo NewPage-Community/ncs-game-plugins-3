@@ -5,13 +5,18 @@ SOURCEMOD_VERSION ?= 1.10
 SOURCEMOD_BUILD_DIR = ./addons/sourcemod/scripting
 COMMIT_COUNT = `git rev-list --all --count`
 
+# This command is under a Creative Commons Zero license, Enjoy!                                                                                                           
+# Written by Nios34<nios34@foxmail.com> using GNU Emacs. Feel free to delete it.
+SOURCEMOD_BUILD_PATH = $(shell curl -IsS 'https://www.sourcemod.net/latest.php?version=$(SOURCEMOD_VERSION)&os=linux' | ggrep -oP '$(SOURCEMOD_VERSION)/sourcemod-.*')
+SOURCEMOD_DOWNLOAD_URL = http://nexus3.nexus3:8081/repository/sourcemod/
+
 .PHONY:all
 all: env build
 
 .PHONY:env
 env: 
 	@echo "\nSetting sourcemod $(SOURCEMOD_VERSION) environment..."
-	@wget "http://www.sourcemod.net/latest.php?version=$(SOURCEMOD_VERSION)&os=linux" -q -O sourcemod.tar.gz
+	@curl -sS --output sourcemod.tar.gz "$(SOURCEMOD_DOWNLOAD_URL)$(SOURCEMOD_BUILD_PATH)"
 	@tar -xzf sourcemod.tar.gz
 	@cp -rf $(SOURCEMOD_BUILD_DIR)/include ./ && cp -f $(SOURCEMOD_BUILD_DIR)/spcomp ./ && cp -f $(SOURCEMOD_BUILD_DIR)/compile.sh ./ && chmod +x spcomp
 

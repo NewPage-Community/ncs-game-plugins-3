@@ -1,0 +1,69 @@
+// for dev
+//#define DEV
+
+#include <ncs>
+#include <ncs/account>
+#include <sdkhooks>
+#include <sdktools>
+
+#define P_NAME P_PRE ... " - Skin"
+#define P_DESC "Skin management plugin"
+
+public Plugin myinfo = 
+{
+    name        = P_NAME,
+    author      = P_AUTHOR,
+    description = P_DESC,
+    version     = P_VERSION,
+    url         = P_URLS
+};
+
+// Module
+#include "skin/skin"
+
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
+{
+    // lib
+    RegPluginLibrary("NCS-Skin");
+
+    return APLRes_Success;
+}
+
+public void OnPluginStart()
+{
+    InitAPI();
+    InitCmd();
+    HookEvent("player_spawn", Event_PlayerSpawn, EventHookMode_Post);
+}
+
+public void OnPluginEnd()
+{
+    CloseAPI();
+}
+
+public void OnMapStart()
+{
+    LoadSkins();
+}
+
+public void NCS_Account_OnUserLoaded(int client, const char[] uid)
+{
+    ReqUserSkinInfo(client, uid);
+}
+
+public Action Event_PlayerSpawn(Event event, const char[] name1, bool dontBroadcast)
+{
+    int client = GetClientOfUserId(GetEventInt(event, "userid"));
+    if (client < 1 || client > MaxClients || !IsClientInGame(client) || GetClientTeam(client) < 2)
+        return Plugin_Continue;
+
+    Model_PlayerSpawn(client);
+    Preview_PlayerSpawn(client);
+
+    return Plugin_Continue;
+}
+
+public void NCS_Store_Preview(int client, int itemID)
+{
+    PreviewSkin(client, itemID);
+}

@@ -77,25 +77,25 @@ void RequreTitle_Resp(HTTPResponse response, DataPack dp, const char[] error){
 	TitleBeSet(client, customTitle[client].type);
 }
 
-void SetTitle(int client , char[] newtitle){
-	if (!IsValidClient(client))
-		return ;
+// void SetTitle(int client , char[] newtitle){
+// 	if (!IsValidClient(client))
+// 		return ;
 
 
-	char uid[MAX_UID_LENGTH];
-	char path[128];
+// 	char uid[MAX_UID_LENGTH];
+// 	char path[128];
 	
-	NCS_Account_GetUID(client, uid, sizeof(uid));
+// 	NCS_Account_GetUID(client, uid, sizeof(uid));
 
-	JSONObject data = new JSONObject();
-	JSONObject info = new JSONObject();
-	data.SetInt("uid", StringToInt(uid));
-	data.SetString("custom_title", newtitle);
-	data.SetInt("title_type",1);
+// 	JSONObject data = new JSONObject();
+// 	JSONObject info = new JSONObject();
+// 	data.SetInt("uid", StringToInt(uid));
+// 	data.SetString("custom_title", newtitle);
+// 	data.SetInt("title_type",1);
 
-	info.Set("info", data);
+// 	info.Set("info", data);
 
-	Format(path, sizeof(path), "%s/%s", Title_Service, uid);
-	httpClient.Put(path, info, BlankCallback);
+// 	Format(path, sizeof(path), "%s/%s", Title_Service, uid);
+// 	httpClient.Put(path, info, BlankCallback);
 
-}
+// }

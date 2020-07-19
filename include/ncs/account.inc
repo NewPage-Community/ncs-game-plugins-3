@@ -18,6 +18,22 @@ native void NCS_Account_ChangeName(int client, const char[] name);
 // NCS_Account_GetName safety way to get name
 native void NCS_Account_GetName(int client, char[] buffer, int size);
 
+stock int GetClientFromUID(const char[] uid)
+{
+    for (int i = 1; i < MAXPLAYERS+1; i++)
+    {
+        int index = i;
+        if (index > 0 && index <= MaxClients && IsClientConnected(index) && !IsFakeClient(index) && !IsClientSourceTV(index))
+        {
+            char tUID[MAX_UID_LENGTH];
+            NCS_Account_GetUID(index, tUID, sizeof(tUID));
+            if (StrEqual(tUID, uid))
+                return index;
+        }
+    }
+    return 0;
+}
+
 public SharedPlugin __pl_ncs_account = 
 {
     name = "NCS-Account",

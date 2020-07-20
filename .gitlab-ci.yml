@@ -28,9 +28,10 @@ merge-check:
   stage: build
   variables:
     SOURCEMOD_VERSION: "1.11"
-  script:
+  before_script:
     - git checkout -B master origin/master
-    - git merge $CI_COMMIT_REF_NAME
+    - git merge $CI_COMMIT_SHA
+  script:
     - *build_script
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'

@@ -29,6 +29,8 @@ merge-check:
   variables:
     SOURCEMOD_VERSION: "1.11"
   script:
+    - git config --global user.email "runner@gitlab.com"
+    - git config --global user.name "Runner"
     - git pull origin master
     - *build_script
   rules:

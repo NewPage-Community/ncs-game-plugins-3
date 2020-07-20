@@ -28,8 +28,6 @@ merge-check:
   stage: build
   variables:
     SOURCEMOD_VERSION: "1.11"
-    GIT_STRATEGY: clone
-    GIT_CHECKOUT: "false"
   script:
     - git checkout -B master origin/master
     - git merge $CI_COMMIT_REF_NAME

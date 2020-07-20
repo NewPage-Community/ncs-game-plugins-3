@@ -9,7 +9,7 @@ enum struct TitleData
 	int type;
 }
 
-TitleData customTitle[];
+TitleData customTitle[MAX_NAME_LENGTH+1];
 
 
 void InitAPI()

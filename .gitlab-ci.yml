@@ -1,15 +1,15 @@
 # This file is a template, and might need editing before it works on your project.
 image: registry.new-page.xyz/newpage/sourcemod-builder:latest
 
-before_script:
-  - make env
+.build_script: &build_script
+  - make all
 
 build-dev-1.11:
   stage: build
   variables:
     SOURCEMOD_VERSION: "1.11"
   script:
-    - make build
+    - *build_script
   artifacts:
     expire_in: 1 week
     paths:
@@ -18,8 +18,20 @@ build-dev-1.11:
 build-1.10:
   stage: build
   script:
-    - make build
+    - *build_script
   artifacts:
     expire_in: 1 week
     paths:
       - compiled/*
+
+merge-check:
+  stage: build
+  variables:
+    SOURCEMOD_VERSION: "1.11"
+  script:
+    - git config --global user.email "runner@gitlab.com"
+    - git config --global user.name "Runner"
+    - git pull origin master
+    - *build_script
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'

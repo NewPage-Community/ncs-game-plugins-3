@@ -1,4 +1,4 @@
-#define Server_Service "server"
+#define Server_Service "game/server"
 
 HTTPClient httpClient;
 

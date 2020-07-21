@@ -75,10 +75,16 @@ void ReqServerInfo()
 	ConVar hostip = FindConVar("hostip"), hostport = FindConVar("hostport");
 	int ip = hostip.IntValue;
 	char c_ip[24];
-	char url[64];
 	FormatEx(c_ip, 24, "%d.%d.%d.%d", ((ip & 0xFF000000) >> 24) & 0xFF, ((ip & 0x00FF0000) >> 16) & 0xFF, ((ip & 0x0000FF00) >>  8) & 0xFF, ((ip & 0x000000FF) >>  0) & 0xFF);
-	Format(url, sizeof(url), "%s/%s/%d", Server_Service, c_ip, hostport.IntValue);
-	httpClient.Get(url, LoadServerInfo);
+	
+	// JSON
+	JSONObject data = new JSONObject();
+	data.SetString("address", c_ip);
+	data.SetInt("port", hostport.IntValue);
+	
+	char url[64];
+	Format(url, sizeof(url), "%s/init", Server_Service);
+	httpClient.Post(url, data, LoadServerInfo);
 	delete hostip;
 	delete hostport;
 }

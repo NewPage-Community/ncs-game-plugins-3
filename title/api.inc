@@ -1,16 +1,6 @@
 #define  Title_Service "user/title"
-#include <ncs/account>
-#include <clients>
+
 HTTPClient httpClient;
-
-enum struct TitleData
-{
-	char title[MAX_NAME_LENGTH];
-	int type;
-}
-
-TitleData customTitle[MAX_NAME_LENGTH+1];
-
 
 void InitAPI()
 {
@@ -26,10 +16,11 @@ void RequreTitle(int client, const char[] uid){
 	if (!IsValidClient(client))
 		return ;
 
+	playerTitle[client].type = 0;
+	playerTitle[client].isWaitingForplayerTitle = false;
 
 	// Datapack to pass to callback
 	DataPack dp = new DataPack();
-
 	dp.WriteCell(client, false);
 	dp.WriteString(uid, false);
 
@@ -51,7 +42,6 @@ void RequreTitle_Resp(HTTPResponse response, DataPack dp, const char[] error){
 	dp.Reset();
 	int client = dp.ReadCell();
 	char uid[INT64_LENGTH];
-	// char customTitle[MAX_NAME_LENGTH];
 	dp.ReadString(uid, sizeof(uid));
 	dp.Close();
 
@@ -66,36 +56,30 @@ void RequreTitle_Resp(HTTPResponse response, DataPack dp, const char[] error){
 		return;
 	}
 
-	char title[MAX_NAME_LENGTH] ;
-	
+	char title[MAX_NAME_LENGTH];
 	info.GetString("custom_title", title, sizeof(title));
-	customTitle[client].type = info.GetInt("title_type");
+	playerTitle[client].type = info.GetInt("title_type");
+	playerTitle[client].title = title;
 
-	customTitle[client].title = title;
-
-	
-	TitleBeSet(client, customTitle[client].type);
+	TitleBeSet(client, playerTitle[client].type);
 }
 
-// void SetTitle(int client , char[] newtitle){
-// 	if (!IsValidClient(client))
-// 		return ;
-
-
-// 	char uid[MAX_UID_LENGTH];
-// 	char path[128];
+void SetTitle(int client)
+{
+	char uid[MAX_UID_LENGTH];
+	if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
+		return;
 	
-// 	NCS_Account_GetUID(client, uid, sizeof(uid));
+	// JSON
+	JSONObject info = new JSONObject();
+	info.SetString("custom_title", playerTitle[client].title);
+	info.SetInt("title_type", playerTitle[client].type);
 
-// 	JSONObject data = new JSONObject();
-// 	JSONObject info = new JSONObject();
-// 	data.SetInt("uid", StringToInt(uid));
-// 	data.SetString("custom_title", newtitle);
-// 	data.SetInt("title_type",1);
+	JSONObject data = new JSONObject();
+	data.Set("info", info);
+	delete info;
 
-// 	info.Set("info", data);
-
-// 	Format(path, sizeof(path), "%s/%s", Title_Service, uid);
-// 	httpClient.Put(path, info, BlankCallback);
-
-// }
+	char path[128];
+	Format(path, sizeof(path), "%s/%s", Title_Service, uid);
+	httpClient.Put(path, data, BlankCallback);
+}

@@ -1,10 +1,7 @@
 #pragma semicolon 1
 
-#include <sourcemod>
 #include <ncs>
 #include <ncs/account>
-#include "title/title"
-
 
 #define P_NAME P_PRE ... " - Title"
 #define P_DESC "Title management plugin"
@@ -18,6 +15,7 @@ public Plugin myinfo =
 	url         = P_URLS
 };
 
+#include "title/title"
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
@@ -30,7 +28,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 public void OnPluginStart()
 {
 	InitAPI();
-	RegConsoleCmd("sm_prefix", Command_Prefix, "sm_prefix <prefix>");
+	InitCmd();
 }
 
 public void OnPluginEnd()
@@ -45,6 +43,22 @@ public void NCS_Account_OnUserLoaded(int client, const char[] uid)
 
 public void NCS_Account_OnChangeName(int client, const char[] newname)
 {
-	TitleBeSet(client, customTitle[client].type);
+	TitleBeSet(client, playerTitle[client].type);
 	return;
+}
+
+public Action OnClientSayCommand(int client, const char[] command, const char[] sArgs)
+{
+	if(playerTitle[client].isWaitingForplayerTitle)
+	{
+		playerTitle[client].isWaitingForplayerTitle = false;
+		SetplayerTitle(client, sArgs);
+		return Plugin_Stop;
+	}
+	return Plugin_Continue;
+}
+
+public void OnClientDisconnect(int client)
+{
+	playerTitle[client].isWaitingForplayerTitle = false;
 }

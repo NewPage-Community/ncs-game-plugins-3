@@ -63,7 +63,7 @@ void DisplayItemMenu(int client, int type)
         Item item;
         playerStoreList[client].Get(i, item);
 
-        if (item.type != 1)
+        if (item.type != type)
             continue;
 
         char info[8], desc[16];
@@ -125,10 +125,8 @@ void BuyItemMenu(int client, Item item)
     switch (item.type)
     {
         case 1:
-        {
             if (LibraryExists("NCS-Skin"))
                 menu.AddItem(info, "预览模型(准星位置生成模型)");
-        }
     }
     
     menu.Display(client, 60);
@@ -145,18 +143,22 @@ public int BuyItemHandle(Menu menu, MenuAction action, int client, int slot)
         char itemID[8];
         menu.GetItem(slot, itemID, sizeof(itemID), _, _, _);
 
-        // Preview skin
-        if (slot == 1)
-        {
-            NCS_Skin_Preview(client, StringToInt(itemID));
-            menu.Display(client, 60);
-            return;
-        }
-
         Item item;
         int index = playerStoreList[client].Find(StringToInt(itemID));
         if (index == 0)
             return;
-        BuyItem(client, item);
+
+        // Preview
+        if (slot == 1)
+        {
+            switch (item.type)
+            {
+                case 1:
+                    NCS_Skin_Preview(client, item.id);
+            }
+            menu.Display(client, 60);
+        }
+        else
+            BuyItem(client, item);
     }
 }

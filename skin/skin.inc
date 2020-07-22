@@ -74,3 +74,4 @@ int g_UsersUsedSkin[MAXPLAYERS+1];
 #include "skin/preview"
 #include "skin/menu"
 #include "skin/cmd"
+#include "skin/native"

@@ -23,6 +23,8 @@ public Plugin myinfo =
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
+    InitNative();
+
     // lib
     RegPluginLibrary("NCS-Skin");
 
@@ -61,9 +63,4 @@ public Action Event_PlayerSpawn(Event event, const char[] name1, bool dontBroadc
     Preview_PlayerSpawn(client);
 
     return Plugin_Continue;
-}
-
-public void NCS_Store_Preview(int client, int itemID)
-{
-    PreviewSkin(client, itemID);
 }

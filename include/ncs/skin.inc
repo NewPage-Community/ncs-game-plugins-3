@@ -5,7 +5,7 @@
 
 native void NCS_Skin_Preview(int client, int skinID);
 
-public SharedPlugin __pl_ncs_ban = 
+public SharedPlugin __pl_ncs_skin = 
 {
     name = "NCS-Skin",
     file = "np-skin.smx",

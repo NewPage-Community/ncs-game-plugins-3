@@ -18,20 +18,29 @@ env:
 	@echo "\nSetting sourcemod $(SOURCEMOD_VERSION) environment..."
 	@curl -sS --output sourcemod.tar.gz "$(SOURCEMOD_DOWNLOAD_URL)$(SOURCEMOD_BUILD_PATH)"
 	@tar -xzf sourcemod.tar.gz
-	@cp -rf $(SOURCEMOD_BUILD_DIR)/include ./ && cp -f $(SOURCEMOD_BUILD_DIR)/spcomp ./ && cp -f $(SOURCEMOD_BUILD_DIR)/compile.sh ./ && chmod +x spcomp
+	@cp -rf $(SOURCEMOD_BUILD_DIR)/include ./ && cp -f $(SOURCEMOD_BUILD_DIR)/spcomp ./ && chmod +x spcomp
 
 .PHONY:build
 build:
 	@sed -i "s%<commit_count>%$(COMMIT_COUNT)%g" include/ncs.inc
 	@sed -i "s%<api_token>%$(API_TOKEN)%g" include/ncs/api.inc
 	@test -e compiled || mkdir compiled
+	@test -e compiled/newpage || mkdir compiled/newpage
+	@test -e compiled/stats || mkdir compiled/stats
 	@for sourcefile in *.sp; \
 		do \
 			smxfile="`echo $$sourcefile | sed -e 's/\.sp$$/\.smx/'`"; \
 			echo "\nCompiling $$sourcefile ..."; \
+			if [[ "$$smxfile" =~ "np-" ]]; \
+			then \
+				smxfile="newpage/$$smxfile"; \
+			elif [[ "$$smxfile" =~ "stats-" ]]; \
+			then \
+				smxfile="stats/$$smxfile"; \
+			fi; \
 			./spcomp -E $$sourcefile -ocompiled/$$smxfile; \
-			if [ $$? -ne 0 ]; \
+			if [[ $$? -ne 0 ]]; \
 			then \
 				exit 1; \
-			fi \
+			fi; \
 		done

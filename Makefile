@@ -31,7 +31,7 @@ build:
 	@for sourcefile in *.sp; \
 		do \
 			smxfile="`echo $$sourcefile | sed -e 's/\.sp$$/\.smx/'`"; \
-			echo "\nCompiling $$sourcefile ..."; \
+			printf "\nCompiling $$sourcefile ...\n"; \
 			if [[ "$$smxfile" =~ "np-" ]]; \
 			then \
 				smxfile="newpage/$$smxfile"; \

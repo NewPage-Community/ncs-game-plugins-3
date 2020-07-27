@@ -1,6 +1,7 @@
 # Makefile for the Sourcemod plugin
 # NewPage Dev Team
 
+SHELL:=/bin/bash
 SOURCEMOD_VERSION ?= 1.10
 SOURCEMOD_BUILD_DIR = ./addons/sourcemod/scripting
 COMMIT_COUNT = `git rev-list --all --count`

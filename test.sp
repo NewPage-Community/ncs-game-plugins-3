@@ -1,21 +1,27 @@
+#include <ncs>
 #include <ncs/server>
 #include <ncs/account>
 #include <ncs/vip>
 #include <ncs/sign>
+#include <ncs/backpack>
+#include <ncs/chat>
+#include <ncs/stats>
+
+#define P_NAME P_PRE ... " - Test"
+#define P_DESC "Test plugin"
 
 public Plugin myinfo = 
 {
-    name        = "P_NAME",
-    author      = "P_AUTHOR",
-    description = "P_DESC",
-    version     = "P_VERSION",
-    url         = "P_URLS"
+	name        = P_NAME,
+	author      = P_AUTHOR,
+	description = P_DESC,
+	version     = P_VERSION,
+	url         = P_URLS
 };
 
-public OnPluginStart()
+public void OnPluginStart()
 {
     RegConsoleCmd("sm_testall", Command_testall);
-    RegConsoleCmd("sm_testvip", Command_testvip);
 }
 
 public Action Command_testall(int client, int args)
@@ -23,23 +29,38 @@ public Action Command_testall(int client, int args)
     // Account
     char uid[MAX_UID_LENGTH];
     NCS_Account_GetUID(client, uid, sizeof(uid));
-    PrintToChat(client, "uid: %s", uid);
+    NCS_Chat(client, "TEST", "uid: %s", uid);
     NCS_Account_ChangeName(client, "Test");
 
     // VIP
-    PrintToChat(client, "Is VIP: %d", NCS_VIP_IsVIP(client));
-    PrintToChat(client, "VIP level: %d", NCS_VIP_Level(client));
-
-    // Server
-    PrintToChat(client, "server_id: %d", NCS_Server_GetID());
-    PrintToChat(client, "mod_id: %d", NCS_Server_GetModID());
-    PrintToChat(client, "game_id: %d", NCS_Server_GetGameID());
-}
-
-public Action Command_testvip(int client, int args)
-{
+    NCS_Chat(client, "TEST", "Is VIP: %d", NCS_VIP_IsVIP(client));
+    NCS_Chat(client, "TEST", "VIP level: %d", NCS_VIP_Level(client));
+    NCS_Chat(client, "TEST", "Now add 1 point and renewal 1 day");
     NCS_VIP_AddPoint(client, 1);
     NCS_VIP_Renewal(client, 3600 * 24);
+    NCS_Chat(client, "TEST", "Is VIP: %d", NCS_VIP_IsVIP(client));
+    NCS_Chat(client, "TEST", "VIP level: %d", NCS_VIP_Level(client));
+
+    // Server
+    NCS_Chat(client, "TEST", "server_id: %d", NCS_Server_GetID());
+    NCS_Chat(client, "TEST", "mod_id: %d", NCS_Server_GetModID());
+    NCS_Chat(client, "TEST", "game_id: %d", NCS_Server_GetGameID());
+
+    // Backpack
+    Item item;
+    item.id = 1;
+    item.amount = 1;
+    Items items = new Items();
+    items.Add(item);
+    NCS_Backpack_AddItems(client, items);
+    delete items;
+
+    // Chat
+    NCS_Chat_SetTitle(client, "test", "{red}");
+    NCS_Chat_SetNameColor(client, "{red}");
+
+    // Stats
+    NCS_Stats_Add(client, "all", "test", "v1", 1);
 }
 
 public void NCS_Account_OnUserLoaded(int client, const char[] uid)

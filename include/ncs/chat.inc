@@ -23,7 +23,7 @@ stock void NCS_Chat(int client = CLIENT_ALL, char[] prefix = CHAT_SYS_PREFIX, ch
 native void NCS_Chat_SetTitle(int client, const char[] title, const char[] titleColor);
 native void NCS_Chat_SetNameColor(int client, const char[] nameColor);
 
-public SharedPlugin __pl_ncs_skin = 
+public SharedPlugin __pl_ncs_chat = 
 {
     name = "NCS-Chat",
     file = "np-chat.smx",

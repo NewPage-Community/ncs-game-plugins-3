@@ -1,6 +1,9 @@
 #include <sdktools>
 #include <ncs/vip>
+
+#define REQUIRE_PLUGIN
 #include <ncs/chat>
+#undef REQUIRE_PLUGIN
 
 enum struct TitleData
 {
@@ -20,8 +23,8 @@ void TitleBeSet(int client, int type)
     if (!IsValidClient(client))
         return;
 
-    char playerName[MAX_NAME_LENGTH];
-    GetClientName(client, playerName, sizeof(playerName));
+    char playerName[MAX_NAME_LENGTH], title[MAX_TITLE_LENGTH], titleColor[MAX_COLOR_LENGTH];
+    NCS_Account_GetName(client, playerName, sizeof(playerName));
 
     switch (type)
     {
@@ -32,22 +35,38 @@ void TitleBeSet(int client, int type)
         case 1:
         {
             if (NCS_VIP_IsVIP(client))
-                Format(playerName, sizeof(playerName),"<%s> %s", playerTitle[client].title, playerName);
+            {
+                Format(title, sizeof(title), "<%s>", playerTitle[client].title);
+                strcopy(titleColor, sizeof(titleColor), "{blue}");
+                Format(playerName, sizeof(playerName),"%s %s", title, playerName);
+            }
         }
         case 2:
         {
             if (NCS_VIP_IsVIP(client))
-                Format(playerName, sizeof(playerName),"<VIP> %s", playerName);
+            {
+                strcopy(title, sizeof(title), "<VIP>");
+                strcopy(titleColor, sizeof(titleColor), "{red}");
+                Format(playerName, sizeof(playerName),"%s %s", title, playerName);
+            }
         }
         case 3:
         {
             if (IsOwner(client))
-                Format(playerName, sizeof(playerName),"<服主> %s", playerName);
+            {
+                strcopy(title, sizeof(title), "<服主>");
+                strcopy(titleColor, sizeof(titleColor), "{purple}");
+                Format(playerName, sizeof(playerName),"%s %s", title, playerName);
+            }
         }
         case 4:
         {
             if (IsAdmin(client))
-                Format(playerName, sizeof(playerName),"<管理> %s", playerName);
+            {
+                strcopy(title, sizeof(title), "<管理>");
+                strcopy(titleColor, sizeof(titleColor), "{green}");
+                Format(playerName, sizeof(playerName),"%s %s", title, playerName);
+            }
         }
         default:
         {
@@ -56,6 +75,7 @@ void TitleBeSet(int client, int type)
     }
     
     NCS_Account_ChangeName(client, playerName);
+    NCS_Chat_SetTitle(client, title, titleColor);
 }
 
 void SetplayerTitle(int client, const char[] title)

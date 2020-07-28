@@ -1,3 +1,5 @@
+#define MAX_COLOR_LENGTH 16
+
 // Chat Color code
 
 stock void ProcessColorString(char[] message, int maxLen, int team = 0)

@@ -23,7 +23,7 @@ methodmap Items < ArrayList
 {
     public Items(JSONArray items)
     {
-        ArrayList list = new ArrayList(1, 0);
+        ArrayList list = new ArrayList(sizeof(Item), 0);
         for (int i = 0; i < items.Length; i++)
         {
             Item item;

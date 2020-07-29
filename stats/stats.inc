@@ -18,7 +18,7 @@ methodmap Stats < ArrayList
 {
     public Stats()
     {
-        return view_as<Stats>(new ArrayList(1, 0));
+        return view_as<Stats>(new ArrayList(sizeof(StatsInfo), 0));
     }
 
     public int Add(StatsInfo data)

@@ -15,7 +15,7 @@ enum struct Item
 
     int GetPrice()
     {
-        return view_as<int>(this.price * this.discount);
+        return RoundToNearest(this.price * this.discount);
     }
 }
 

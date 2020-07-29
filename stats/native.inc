@@ -10,7 +10,7 @@ public int Native_Add(Handle plugin, int numParams)
 
     if (!NCS_Account_GetUID(client, stats.uid, MAX_UID_LENGTH))
         return;
-    stats.increment = view_as<float>(GetNativeCell(5));
+    stats.increment = GetNativeCell(5);
     GetNativeString(2, stats.range, 8);
     GetNativeString(3, stats.stats_name, 8);
     GetNativeString(4, stats.version, 8);

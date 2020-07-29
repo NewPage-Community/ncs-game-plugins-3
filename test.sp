@@ -60,7 +60,7 @@ public Action Command_testall(int client, int args)
     NCS_Chat_SetNameColor(client, "{red}");
 
     // Stats
-    NCS_Stats_Add(client, "all", "test", "v1", 1);
+    NCS_Stats_Add(client, "all", "test", "v1", 1.0);
 }
 
 public void NCS_Account_OnUserLoaded(int client, const char[] uid)

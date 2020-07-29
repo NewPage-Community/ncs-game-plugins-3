@@ -9,7 +9,7 @@ methodmap Items < ArrayList
 {
     public Items()
     {
-        return view_as<Items>(new ArrayList(0, 1));
+        return view_as<Items>(new ArrayList(1, 0));
     }
 
     public int Add(const Item item)

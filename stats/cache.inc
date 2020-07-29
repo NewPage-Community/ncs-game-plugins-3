@@ -6,12 +6,15 @@ static Handle cache;
 void InitCache()
 {
     BuildPath(Path_SM, cacheFile, PLATFORM_MAX_PATH, CachePath);
-    JSONObject data = JSONObject.FromFile(cacheFile);
 
-    char path[128];
-    Format(path, sizeof(path), "%s/user/incrs", Stats_Service);
-    httpClient.Post(path, data, BlankCallback);
-
+    if (FileExists(cacheFile))
+    {
+        char path[128];
+        JSONObject data = JSONObject.FromFile(cacheFile);
+        Format(path, sizeof(path), "%s/user/incrs", Stats_Service);
+        httpClient.Post(path, data, BlankCallback);
+    }
+    
     cache = CreateTimer(1.0, Timer_Cache, 0, TIMER_REPEAT);
 }
 

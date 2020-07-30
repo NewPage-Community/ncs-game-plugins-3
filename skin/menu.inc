@@ -65,9 +65,11 @@ public void UserSkinsCallback(HTTPResponse response, DataPack dp, const char[] e
             continue;
         
         char desc[64];
-        int day = StringToInt(exprTime) / 86400;
-        int hour = (StringToInt(exprTime) % 86400) / 3600;
-        Format(desc, sizeof(desc), "%s(%d天%d小时)", s.name, day, hour);
+        int left = StringToInt(exprTime) - GetTime();
+        if (left > 0)
+            Format(desc, sizeof(desc), "%s(%d天%d小时)", s.name, left / 86400, (left % 86400) / 3600);
+        else
+            Format(desc, sizeof(desc), "%s", s.name);
         menu.AddItem(skinID, desc);
     }
     menu.Display(client, MENU_TIME_FOREVER);

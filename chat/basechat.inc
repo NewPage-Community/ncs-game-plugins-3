@@ -76,7 +76,8 @@ public Action OnSayText2(UserMsg msg_id, BfRead msg, const int[] players, int pl
     }
 
     //Get tag name.
-    player[iSender].GetChatName(sName, sizeof(sName));
+    if (player[iSender].IsValid())
+        player[iSender].GetChatName(sName, sizeof(sName));
 
     DataPack hPack = new DataPack();
     hPack.WriteCell(iSender);

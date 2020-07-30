@@ -40,7 +40,7 @@ methodmap Items < ArrayList
             item.alreadyHave = data.GetBool("already_have");
             list.PushArray(item, sizeof(item));
             // Fix discount
-            if (item.discount == 0.0)
+            if (FloatCompare(0.0, item.discount) == 0)
                 item.discount = 1.0;
         }
         return view_as<Items>(list);

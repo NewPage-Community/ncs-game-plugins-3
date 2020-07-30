@@ -3,7 +3,7 @@
 #endif
 #define _NCS_Chat_
 
-#define MAX_TITLE_LENGTH 16
+#define MAX_TITLE_LENGTH 32
 #define CHAT_SYS_PREFIX "[系统提示]"
 #define CLIENT_ALL 0
 

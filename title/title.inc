@@ -5,9 +5,11 @@
 #include <ncs/chat>
 #undef REQUIRE_PLUGIN
 
+#define MAX_CUSTOM_TITLE_LENGTH MAX_TITLE_LENGTH - 8
+
 enum struct TitleData
 {
-    char title[MAX_TITLE_LENGTH];
+    char title[MAX_CUSTOM_TITLE_LENGTH];
     int type;
     bool isWaitingForplayerTitle;
 }
@@ -80,7 +82,7 @@ void TitleBeSet(int client, int type)
 
 void SetplayerTitle(int client, const char[] title)
 {
-    strcopy(playerTitle[client].title, MAX_TITLE_LENGTH - 2, title);
+    strcopy(playerTitle[client].title, MAX_CUSTOM_TITLE_LENGTH, title);
     TitleBeSet(client, 1);
     // Save
     SetTitle(client);

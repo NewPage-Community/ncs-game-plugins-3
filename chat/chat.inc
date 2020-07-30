@@ -1,6 +1,6 @@
 #include <ncs/account>
 
-#define MAX_TITLE_LENGTH 16
+#define MAX_TITLE_LENGTH 32
 
 enum struct PlayerInfo
 {

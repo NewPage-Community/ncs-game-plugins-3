@@ -34,7 +34,6 @@ public void OnPluginStart()
 	InitAPI();
 	RegCmd();
 	RegForward();
-	ReqServerInfo();
 }
 
 public void OnPluginEnd()

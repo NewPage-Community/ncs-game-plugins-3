@@ -17,6 +17,15 @@ enum struct Item
     {
         return RoundToNearest(this.price * this.discount);
     }
+
+    void GetMenuItem(char[] info, int info_size, char[] desc, int desc_size)
+    {
+        IntToString(this.id, info, info_size);
+        if (FloatCompare(1.0, this.discount) == 1)
+            Format(desc, desc_size, "%s (%1.1f折)", this.name, this.discount * 10.0);
+        else
+            Format(desc, desc_size, "%s", this.name);
+    }
 }
 
 methodmap Items < ArrayList
@@ -74,6 +83,9 @@ methodmap Items < ArrayList
 Items playerStoreList[MAXPLAYERS+1];
 
 char typeName[][] = {"", "皮肤", "拖尾", "喷漆", "投掷物轨迹"};
+char passTypeName[][] = {"", "高级通行证", "终极通行证"};
+char passTypeDesc[][] = {"", "- 解锁高级版等级奖励", "- 解锁高级版等级奖励\n- 通行证等级增加20级"};
+int passTypePrice[] = {0, 6888, 9888};
 
 #include "store/api"
 #include "store/menu"

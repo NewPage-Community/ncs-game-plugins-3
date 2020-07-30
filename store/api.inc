@@ -29,7 +29,7 @@ void BuyItem(int client, Item item)
     data.SetInt("price", item.GetPrice());
     
     char path[128];
-    Format(path, sizeof(path), "%s/buy", Store_Service, uid);
+    Format(path, sizeof(path), "%s/buy", Store_Service);
     httpClient.Post(path, data, BuyItemCallback, dp);
 }
 
@@ -54,4 +54,26 @@ public void BuyItemCallback(HTTPResponse response, DataPack dp, const char[] err
 
     if (IsValidClient(client))
         NCS_Chat(client, _, "{blue}购买 {green}%s{blue} 成功！", itemName);
+}
+
+void BuyAdvPass(int client, int type)
+{
+    char uid[MAX_UID_LENGTH];
+    if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
+        return;
+
+    // Datapack to pass to callback
+    DataPack dp = new DataPack();
+    dp.WriteCell(client, false);
+    dp.WriteString(uid, false);
+    dp.WriteString(passTypeName[type], false);
+
+    // JSON
+    JSONObject data = new JSONObject();
+    data.SetInt64("uid", uid);
+    data.SetInt("type", type);
+    
+    char path[128];
+    Format(path, sizeof(path), "%s/buy/pass", Store_Service);
+    httpClient.Post(path, data, BuyItemCallback, dp);
 }

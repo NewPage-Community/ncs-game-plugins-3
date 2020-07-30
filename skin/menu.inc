@@ -64,10 +64,13 @@ public void UserSkinsCallback(HTTPResponse response, DataPack dp, const char[] e
         if (!g_Skins.Get(item.GetInt("id"), s))
             continue;
         
-        menu.AddItem(skinID, s.name);
-        
+        char desc[64];
+        int day = StringToInt(exprTime) / 86400;
+        int hour = (StringToInt(exprTime) % 86400) / 3600;
+        Format(desc, sizeof(desc), "%s(%d天%d小时)", s.name, day, hour);
+        menu.AddItem(skinID, desc);
     }
-    menu.Display(client, 60);
+    menu.Display(client, MENU_TIME_FOREVER);
 }
 
 public int Menu_SkinSelected(Menu menu, MenuAction action, int client, int slot)

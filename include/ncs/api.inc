@@ -2,11 +2,7 @@
 #include <ripext>
 #undef REQUIRE_EXTENSIONS
 
-#if defined DEV
-	#define API_URL "http://127.0.0.1:8080"
-#else
-    #define API_URL "https://api.new-page.xyz/ncs/v3"
-#endif
+#define API_URL "https://api.new-page.xyz/ncs/v3"
 
 #if defined DEV
 	#define TOKEN "TkVXUEFHRTpBUEk="

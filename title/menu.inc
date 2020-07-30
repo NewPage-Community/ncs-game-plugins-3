@@ -41,8 +41,8 @@ public int MenuHandler_Prefix(Menu menu, MenuAction action, int client, int slot
     }
     else if (action == MenuAction_Select)
     {
-        char type[2];
-        menu.GetItem(slot, type, 2, _, _, _);
+        char type[8];
+        menu.GetItem(slot, type, sizeof(type), _, _, _);
         int itype = StringToInt(type);
         if (itype == -1)
         {

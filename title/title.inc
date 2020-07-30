@@ -7,12 +7,12 @@
 
 enum struct TitleData
 {
-    char title[MAX_NAME_LENGTH];
+    char title[MAX_TITLE_LENGTH];
     int type;
     bool isWaitingForplayerTitle;
 }
 
-TitleData playerTitle[MAX_NAME_LENGTH+1];
+TitleData playerTitle[MAXPLAYERS+1];
 
 #include "title/utils"
 #include "title/api"
@@ -80,7 +80,7 @@ void TitleBeSet(int client, int type)
 
 void SetplayerTitle(int client, const char[] title)
 {
-    strcopy(playerTitle[client].title, MAX_NAME_LENGTH, title);
+    strcopy(playerTitle[client].title, MAX_TITLE_LENGTH - 2, title);
     TitleBeSet(client, 1);
     // Save
     SetTitle(client);

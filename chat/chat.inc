@@ -1,6 +1,6 @@
 #include <ncs/account>
 
-#define MAX_TITLE_LENGTH 8
+#define MAX_TITLE_LENGTH 16
 
 enum struct PlayerInfo
 {
@@ -19,6 +19,9 @@ enum struct PlayerInfo
     void GetChatName(char[] buffer, int size)
     {
         NCS_Account_GetName(this.index, buffer, size);
+        // Default name color
+        if (this.nameColor[0] == '\0')
+            this.nameColor = "{name}";
         Format(buffer, size, "%s%s %s%s", this.titleColor, this.title, this.nameColor, buffer);
     }
 

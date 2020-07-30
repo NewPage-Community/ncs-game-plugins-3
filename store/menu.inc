@@ -31,12 +31,12 @@ public void LoadUserStoreList(HTTPResponse response, int client, const char[] er
     playerMoney[client] = data.GetInt("money");
 
     Menu menu = new Menu(UserStoreListHandle); 
-    menu.SetTitle("商店\n软妹币:%d", playerMoney[client]);
+    menu.SetTitle("商店\n软妹币: %d", playerMoney[client]);
     menu.AddItem("1", "皮肤");
     menu.AddItem("2", "拖尾");
     menu.AddItem("3", "喷漆");
     menu.AddItem("4", "投掷物轨迹");
-    menu.Display(client, 60);
+    menu.Display(client, MENU_TIME_FOREVER);
 }
 
 public int UserStoreListHandle(Menu menu, MenuAction action, int client, int slot)
@@ -55,7 +55,7 @@ void DisplayItemMenu(int client, int type)
         return;
     
     Menu menu = new Menu(ItemMenuHandle);
-    menu.SetTitle("购买%s\n软妹币:%d", typeName[type], playerMoney[client]);
+    menu.SetTitle("购买%s\n软妹币: %d", typeName[type], playerMoney[client]);
 
     int length = playerStoreList[client].Length;
     for (int i = 0; i < length; i++)
@@ -76,7 +76,7 @@ void DisplayItemMenu(int client, int type)
     }
 
     menu.ExitBackButton = true;
-    menu.Display(client, 60);
+    menu.Display(client, MENU_TIME_FOREVER);
 
     playerLastMenu[client] = menu;
 }
@@ -98,10 +98,8 @@ public int ItemMenuHandle(Menu menu, MenuAction action, int client, int slot)
         menu.GetItem(slot, itemID, sizeof(itemID), _, _, _);
 
         Item item;
-        int index = playerStoreList[client].Find(StringToInt(itemID));
-        if (index == 0)
+        if (playerStoreList[client].Find(StringToInt(itemID), item) == -1)
             return;
-        playerStoreList[client].Get(index, item);
         BuyItemMenu(client, item);
     }
 }
@@ -113,24 +111,26 @@ void BuyItemMenu(int client, Item item)
 
     Menu menu = new Menu(BuyItemHandle);
     if (FloatCompare(1.0, item.discount) == 1)
-        menu.SetTitle("购买 - %s\n现有软妹币:%d\n价格:%d(%1.1f折)", item.name, playerMoney[client], item.price, item.discount * 10.0);
+        menu.SetTitle("购买 - %s\n现有软妹币: %d\n价格: %d(%1.1f折)\n ", item.name, playerMoney[client], item.price, item.discount * 10.0);
     else
-        menu.SetTitle("购买 - %s\n现有软妹币:%d\n价格:%d", item.name, playerMoney[client], item.price);
+        menu.SetTitle("购买 - %s\n现有软妹币: %d\n价格: %d\n ", item.name, playerMoney[client], item.price);
 
     char info[8], desc[64];
     IntToString(item.id, info, sizeof(info));
-    Format(desc, sizeof(desc), "购买\n(支付 %d 软妹币)", item.GetPrice());
+    Format(desc, sizeof(desc), "购买\n(支付 %d 软妹币)\n ", item.GetPrice());
     menu.AddItem(info, desc, (item.available && !item.alreadyHave && playerMoney[client] >= item.GetPrice()) ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
 
     switch (item.type)
     {
         case 1:
+        {
             if (LibraryExists("NCS-Skin"))
-                menu.AddItem(info, "预览模型(准星位置生成模型)");
+                menu.AddItem(info, "预览模型\n(准星位置生成模型)");
+        }
     }
     
     menu.ExitBackButton = true;
-    menu.Display(client, 60);
+    menu.Display(client, MENU_TIME_FOREVER);
 }
 
 public int BuyItemHandle(Menu menu, MenuAction action, int client, int slot)
@@ -138,15 +138,14 @@ public int BuyItemHandle(Menu menu, MenuAction action, int client, int slot)
     if (action == MenuAction_End)
         delete menu;
     else if (action == MenuAction_Cancel && slot == MenuCancel_ExitBack)
-        playerLastMenu[client].Display(client, 60);
+        playerLastMenu[client].Display(client, MENU_TIME_FOREVER);
     else if (action == MenuAction_Select)
     {
         char itemID[8];
         menu.GetItem(slot, itemID, sizeof(itemID), _, _, _);
 
         Item item;
-        int index = playerStoreList[client].Find(StringToInt(itemID));
-        if (index == 0)
+        if (playerStoreList[client].Find(StringToInt(itemID), item) == -1)
             return;
 
         // Preview
@@ -157,7 +156,7 @@ public int BuyItemHandle(Menu menu, MenuAction action, int client, int slot)
                 case 1:
                     NCS_Skin_Preview(client, item.id);
             }
-            menu.Display(client, 60);
+            BuyItemMenu(client, item);
         }
         else
             BuyItem(client, item);

@@ -53,7 +53,8 @@ methodmap Items < ArrayList
         return this.GetArray(index, buffer, sizeof(buffer));
     }
 
-    public int Find(int id)
+    // not found return -1
+    public int Find(int id, Item buffer)
     {
         int length = this.Length;
         for (int i = 0; i < length; i++)
@@ -61,9 +62,12 @@ methodmap Items < ArrayList
             Item item;
             this.Get(i, item);
             if (item.id == id)
+            {
+                buffer = item;
                 return i;
+            }
         }
-        return 0;
+        return -1;
     }
 }
 

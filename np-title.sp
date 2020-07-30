@@ -51,6 +51,11 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 {
 	if(playerTitle[client].isWaitingForplayerTitle)
 	{
+		if (strlen(sArgs) > 4)
+		{
+			NCS_Chat(client, _, "{blue}自定义头衔最大长度为4，请重新输入！");
+			return Plugin_Stop;
+		}
 		playerTitle[client].isWaitingForplayerTitle = false;
 		SetplayerTitle(client, sArgs);
 		return Plugin_Stop;

@@ -56,7 +56,7 @@ void RequreTitle_Resp(HTTPResponse response, DataPack dp, const char[] error){
 		return;
 	}
 
-	char title[MAX_NAME_LENGTH];
+	char title[MAX_TITLE_LENGTH];
 	info.GetString("custom_title", title, sizeof(title));
 	playerTitle[client].type = info.GetInt("title_type");
 	playerTitle[client].title = title;

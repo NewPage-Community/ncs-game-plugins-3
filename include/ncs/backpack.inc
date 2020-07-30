@@ -14,7 +14,8 @@ methodmap Items < ArrayList
 {
     public Items()
     {
-        return view_as<Items>(new ArrayList(sizeof(Item), 0));
+        Item t;
+        return view_as<Items>(new ArrayList(sizeof(t), 0));
     }
 
     public int Add(const Item item)

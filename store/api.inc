@@ -30,7 +30,7 @@ void BuyItem(int client, Item item)
     
     char path[128];
     Format(path, sizeof(path), "%s/buy", Store_Service, uid);
-    httpClient.Post(path, data, BuyItemCallback, client);
+    httpClient.Post(path, data, BuyItemCallback, dp);
 }
 
 public void BuyItemCallback(HTTPResponse response, DataPack dp, const char[] error)

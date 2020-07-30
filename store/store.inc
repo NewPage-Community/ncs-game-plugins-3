@@ -23,8 +23,10 @@ methodmap Items < ArrayList
 {
     public Items(JSONArray items)
     {
-        ArrayList list = new ArrayList(sizeof(Item), 0);
-        for (int i = 0; i < items.Length; i++)
+        Item t;
+        ArrayList list = new ArrayList(sizeof(t), 0);
+        int length = items.Length;
+        for (int i = 0; i < length; i++)
         {
             Item item;
             JSONObject data = view_as<JSONObject>(items.Get(i));

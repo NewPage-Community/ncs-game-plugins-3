@@ -66,9 +66,9 @@ void DisplayItemMenu(int client, int type)
         if (item.type != type)
             continue;
 
-        char info[8], desc[16];
+        char info[8], desc[64];
         IntToString(item.id, info, sizeof(info));
-        if (FloatCompare(1.0, item.discount))
+        if (item.discount < 1.0)
             Format(desc, sizeof(desc), "%s (%f1.1折)", item.name, item.discount * 10.0);
         else
             Format(desc, sizeof(desc), "%s", item.name);
@@ -112,17 +112,15 @@ void BuyItemMenu(int client, Item item)
         return;
 
     Menu menu = new Menu(BuyItemHandle);
-    if (FloatCompare(1.0, item.discount))
+    if (item.discount < 1.0)
         menu.SetTitle("购买 - %s\n现有软妹币:%d\n价格:%d(%f1.1折)", item.name, playerMoney[client], item.price, item.discount * 10.0);
     else
         menu.SetTitle("购买 - %s\n现有软妹币:%d\n价格:%d", item.name, playerMoney[client], item.price);
 
-    char info[8], desc[16];
+    char info[8], desc[64];
     IntToString(item.id, info, sizeof(info));
-    Format(desc, sizeof(desc), "购买");
+    Format(desc, sizeof(desc), "购买\n(支付 %d 软妹币)", item.GetPrice());
     menu.AddItem(info, desc, (item.available && !item.alreadyHave && playerMoney[client] >= item.GetPrice()) ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
-    Format(desc, sizeof(desc), "(支付 %d 软妹币)", item.GetPrice());
-    menu.AddItem("", desc, ITEMDRAW_DISABLED);
 
     switch (item.type)
     {

@@ -21,6 +21,10 @@ void CloseAPI()
 
 void UpdateStatsData()
 {
+    // Do not send empty data
+    if (StatsList.Length == 0)
+        return;
+
     JSONObject data = StatsList.JSON();
     StatsList.Clear();
 

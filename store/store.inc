@@ -38,10 +38,12 @@ methodmap Items < ArrayList
             item.discount = data.GetFloat("discount");
             item.available = data.GetBool("available");
             item.alreadyHave = data.GetBool("already_have");
-            list.PushArray(item, sizeof(item));
+            
             // Fix discount
             if (FloatCompare(0.0, item.discount) == 0)
                 item.discount = 1.0;
+
+            list.PushArray(item, sizeof(item));
         }
         return view_as<Items>(list);
     }

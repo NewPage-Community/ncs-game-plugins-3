@@ -1,6 +1,5 @@
 #define INT_MAX 2147483647
 #define INT64_LENGTH 20
-#define CHINESE_CHAR_LENGTH 4
 
 // Get day format(YYYYMMDD)
 stock int GetDay(int today = 0)
@@ -158,3 +157,17 @@ stock void GetTimeStamp(char[] time, int size)
 	else
 		Format(time, size, "%d%d", stamp[1], stamp[0]);
 }
+
+stock int StrLenMB(const char[] str)
+{
+    
+    int len = strlen(str);
+    int count;
+    
+    for (int i; i < len; i++)
+    {
+        count += ((str[i] & 0xc0) != 0x80) ? 1 : 0;
+    }
+    
+    return count;
+}  

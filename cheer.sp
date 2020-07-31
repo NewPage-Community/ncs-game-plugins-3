@@ -8,7 +8,6 @@
 #include <sdktools>
 
 #define MAXCHEERS 32
-#define MAXLENGTH_NAME 128
 #define MAX_CHEER_TYPE 2
 
 enum CheerType
@@ -179,11 +178,11 @@ public Action CommandCheer(int client, int args)
     int cheerCount, jeerCount;
     SetRandomSeed(GetTime());
 
-    char name[MAXLENGTH_NAME];
+    char name[MAX_NAME_LENGTH];
     if (LibraryExists("NCS-Chat"))
-        NCS_Chat_GetChatName(client, name, MAXLENGTH_NAME);
+        NCS_Chat_GetChatName(client, name, MAX_NAME_LENGTH);
     else
-        GetClientName(client, name, MAXLENGTH_NAME);
+        GetClientName(client, name, MAX_NAME_LENGTH);
 
     cheerCount = g_cClientMaxCheers.IntValue;
     jeerCount = g_cClientMaxJeers.IntValue;

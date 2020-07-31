@@ -1,4 +1,5 @@
 static Menu playerLastMenu[MAXPLAYERS+1];
+static int playerLastItem[MAXPLAYERS+1];
 
 void DisplayStoreMenu(int client)
 {
@@ -82,6 +83,8 @@ public int ItemMenuHandle(Menu menu, MenuAction action, int client, int slot)
     }
     else if (action == MenuAction_Select)
     {
+        playerLastItem[client] = slot;
+
         char itemID[8];
         menu.GetItem(slot, itemID, sizeof(itemID), _, _, _);
 
@@ -123,10 +126,13 @@ void BuyItemMenu(int client, Item item)
 
 public int BuyItemHandle(Menu menu, MenuAction action, int client, int slot)
 {
+    Menu lastMenu = playerLastMenu[client];
+    int lastPage = (playerLastItem[client]/lastMenu.Pagination)*lastMenu.Pagination;
+
     if (action == MenuAction_End)
         delete menu;
     else if (action == MenuAction_Cancel && slot == MenuCancel_ExitBack)
-        playerLastMenu[client].Display(client, MENU_TIME_FOREVER);
+        playerLastMenu[client].DisplayAt(client, lastPage, MENU_TIME_FOREVER);
     else if (action == MenuAction_Select)
     {
         char itemID[8];
@@ -149,7 +155,7 @@ public int BuyItemHandle(Menu menu, MenuAction action, int client, int slot)
         else
         {
             BuyItem(client, item);
-            playerLastMenu[client].Display(client, MENU_TIME_FOREVER);
+            playerLastMenu[client].DisplayAt(client, lastPage, MENU_TIME_FOREVER);
         }
     }
 }
@@ -254,10 +260,13 @@ void BuyAdvPassConfirm(int client, int type)
 
 public int BuyAdvPassConfirmHandle(Menu menu, MenuAction action, int client, int slot)
 {
+    Menu lastMenu = playerLastMenu[client];
+    int lastPage = (playerLastItem[client]/lastMenu.Pagination)*lastMenu.Pagination;
+
     if (action == MenuAction_End)
         delete menu;
     else if (action == MenuAction_Cancel && slot == MenuCancel_ExitBack)
-        playerLastMenu[client].Display(client, MENU_TIME_FOREVER);
+        playerLastMenu[client].DisplayAt(client, lastPage, MENU_TIME_FOREVER);
     else if (action == MenuAction_Select)
     {
         char type[8];

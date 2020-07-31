@@ -132,7 +132,7 @@ public int BuyItemHandle(Menu menu, MenuAction action, int client, int slot)
     if (action == MenuAction_End)
         delete menu;
     else if (action == MenuAction_Cancel && slot == MenuCancel_ExitBack)
-        playerLastMenu[client].DisplayAt(client, lastPage, MENU_TIME_FOREVER);
+        lastMenu.DisplayAt(client, lastPage, MENU_TIME_FOREVER);
     else if (action == MenuAction_Select)
     {
         char itemID[8];
@@ -155,7 +155,7 @@ public int BuyItemHandle(Menu menu, MenuAction action, int client, int slot)
         else
         {
             BuyItem(client, item);
-            playerLastMenu[client].DisplayAt(client, lastPage, MENU_TIME_FOREVER);
+            lastMenu.DisplayAt(client, lastPage, MENU_TIME_FOREVER);
         }
     }
 }
@@ -266,7 +266,7 @@ public int BuyAdvPassConfirmHandle(Menu menu, MenuAction action, int client, int
     if (action == MenuAction_End)
         delete menu;
     else if (action == MenuAction_Cancel && slot == MenuCancel_ExitBack)
-        playerLastMenu[client].DisplayAt(client, lastPage, MENU_TIME_FOREVER);
+        lastMenu.DisplayAt(client, lastPage, MENU_TIME_FOREVER);
     else if (action == MenuAction_Select)
     {
         char type[8];

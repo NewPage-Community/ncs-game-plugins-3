@@ -21,10 +21,12 @@ public Action Timer_UpdatePoint(Handle timer, int client)
     JSONObject data = new JSONObject();
     JSONArray array = new JSONArray();
 
+    int count = 0;
     if (client != 0)
     {
         player[client].PushJSONArray(array);
         player[client].point = 0;
+        count++;
     }
     else
     {
@@ -32,7 +34,10 @@ public Action Timer_UpdatePoint(Handle timer, int client)
         for (int i = 0; i < length; i++)
         {
             if (player[i].IsValid() && player[i].point > 0)
+            {
                 player[i].PushJSONArray(array);
+                count++;
+            }
             player[i].point = 0;
         }
     }
@@ -40,8 +45,15 @@ public Action Timer_UpdatePoint(Handle timer, int client)
     data.Set("add", array);
     delete array;
 
-    char path[128];
-    Format(path, sizeof(path), "%s/addpoints", PassUser_Service);
-    httpClient.Post(path, data, BlankCallback);
+    // Do not send empty data
+    if (count > 0)
+    {
+        char path[128];
+        Format(path, sizeof(path), "%s/addpoints", PassUser_Service);
+        httpClient.Post(path, data, BlankCallback);
+    }
+    else
+        delete data;
+    
     return Plugin_Continue;
 }

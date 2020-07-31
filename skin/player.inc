@@ -37,6 +37,7 @@ public Action ModelCheck(Handle timer, int client)
         GetEntPropString(client, Prop_Data, "m_ModelName", sModelPath, sizeof(sModelPath));
         if (StrContains(sModelPath, s.skinPath, true) == -1)
         {
+            RequestFrame(SetModel, client);
         }
     }
 

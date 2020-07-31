@@ -39,3 +39,8 @@ public void OnPluginEnd()
 {
 	CloseAPI();
 }
+
+public void NCS_Account_OnUserLoaded(int client, const char[] uid)
+{
+	LoadUserStoreList(client);
+}

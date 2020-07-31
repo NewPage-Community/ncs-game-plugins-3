@@ -12,5 +12,19 @@ public SharedPlugin __pl_ncs_vip =
 {
     name = "NCS-VIP",
     file = "np-vip.smx",
+#if defined REQUIRE_PLUGIN
     required = 1,
+#else
+    required = 0,
+#endif
 };
+
+#if !defined REQUIRE_PLUGIN
+public void __pl_ircrelay_SetNTVOptional()
+{
+    MarkNativeAsOptional("NCS_VIP_IsVIP");
+	MarkNativeAsOptional("NCS_VIP_Level");
+	MarkNativeAsOptional("NCS_VIP_AddPoint");
+    MarkNativeAsOptional("NCS_VIP_Renewal");
+}
+#endif

@@ -23,11 +23,15 @@ env:
 
 .PHONY:build
 build:
+ifdef CI
 	@sed -i "s%<commit_count>%$(COMMIT_COUNT)%g" include/ncs.inc
 	@sed -i "s%<api_token>%$(API_TOKEN)%g" include/ncs/api.inc
+endif
 	@test -e compiled || mkdir compiled
 	@test -e compiled/newpage || mkdir compiled/newpage
 	@test -e compiled/stats || mkdir compiled/stats
+	@test -e compiled/test || mkdir compiled/test
+	@test -e compiled/ins || mkdir compiled/ins
 	@for sourcefile in *.sp; \
 		do \
 			smxfile="`echo $$sourcefile | sed -e 's/\.sp$$/\.smx/'`"; \
@@ -38,6 +42,12 @@ build:
 			elif [[ "$$smxfile" =~ "stats-" ]]; \
 			then \
 				smxfile="stats/$$smxfile"; \
+			elif [[ "$$smxfile" =~ "test-" ]]; \
+			then \
+				smxfile="test/$$smxfile"; \
+			elif [[ "$$smxfile" =~ "ins-" ]]; \
+			then \
+				smxfile="ins/$$smxfile"; \
 			fi; \
 			./spcomp -E $$sourcefile -ocompiled/$$smxfile; \
 			if [[ $$? -ne 0 ]]; \

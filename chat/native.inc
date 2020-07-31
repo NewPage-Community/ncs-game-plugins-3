@@ -2,6 +2,7 @@ void InitNative()
 {
     CreateNative("NCS_Chat_SetTitle", Native_SetTitle);
     CreateNative("NCS_Chat_SetNameColor", Native_SetNameColor);
+    CreateNative("NCS_Chat_GetChatName", Native_GetChatName);
 }
 
 public int Native_SetTitle(Handle plugin, int numParams)
@@ -28,5 +29,18 @@ public int Native_SetNameColor(Handle plugin, int numParams)
     GetNativeString(2, nameColor, sizeof(nameColor));
 
     player[client].SetNameColor(nameColor);
+    return 1;
+}
+
+public int Native_GetChatName(Handle plugin, int numParams)
+{
+    int client = GetNativeCell(1);
+    int size = GetNativeCell(3);
+    if (!player[client].IsValid())
+        return 1;
+
+    char name[MAX_NAME_LENGTH];
+    player[client].GetChatName(name, sizeof(name));
+    SetNativeString(2, name, size);
     return 1;
 }

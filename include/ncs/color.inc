@@ -1,3 +1,8 @@
+#if defined _NCS_Color_
+	#endinput
+#endif
+#define _NCS_Color_
+
 #define MAX_COLOR_LENGTH 16
 
 // Chat Color code

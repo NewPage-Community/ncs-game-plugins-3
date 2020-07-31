@@ -3,6 +3,8 @@
 #endif
 #define _NCS_Chat_
 
+#include <ncs/color>
+
 #define MAX_TITLE_LENGTH 32
 #define CHAT_SYS_PREFIX "[系统提示]"
 #define CLIENT_ALL 0
@@ -22,6 +24,7 @@ stock void NCS_Chat(int client = CLIENT_ALL, char[] prefix = CHAT_SYS_PREFIX, ch
 
 native void NCS_Chat_SetTitle(int client, const char[] title, const char[] titleColor);
 native void NCS_Chat_SetNameColor(int client, const char[] nameColor);
+native void NCS_Chat_GetChatName(int client, char[] buffer, int size);
 
 public SharedPlugin __pl_ncs_chat = 
 {
@@ -39,5 +42,6 @@ public void __pl_ircrelay_SetNTVOptional()
 {
     MarkNativeAsOptional("NCS_Chat_SetTitle");
 	MarkNativeAsOptional("NCS_Chat_SetNameColor");
+	MarkNativeAsOptional("NCS_Chat_GetChatName");
 }
 #endif

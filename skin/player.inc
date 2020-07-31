@@ -30,13 +30,14 @@ public Action ModelCheck(Handle timer, int client)
     Skin s;
     char sModelPath[PLATFORM_MAX_PATH];
     int skinID = g_UsersUsedSkin[client];
-    if (!g_Skins.Get(skinID, s))
-        return Plugin_Stop;
-
-    GetEntPropString(client, Prop_Data, "m_ModelName", sModelPath, sizeof(sModelPath));
-    if (StrContains(sModelPath, s.skinPath, true) == -1)
+    if (skinID > 0)
     {
-        RequestFrame(SetModel, client);
+        if (!g_Skins.Get(skinID, s))
+            return Plugin_Continue;
+        GetEntPropString(client, Prop_Data, "m_ModelName", sModelPath, sizeof(sModelPath));
+        if (StrContains(sModelPath, s.skinPath, true) == -1)
+        {
+        }
     }
 
     return Plugin_Continue;

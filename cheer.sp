@@ -1,5 +1,6 @@
 #pragma semicolon 1
 
+#include <ncs/client>
 #include <ncs/color>
 #include <ncs/vip>
 #include <ncs/chat>
@@ -147,6 +148,9 @@ void LoadSounds()
 
 void PlaySound(int client, CheerType type)
 {
+    if (!IsValidClient(client))
+        return;
+
     switch (view_as<int>(type))
     {
         case 0:

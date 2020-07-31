@@ -12,9 +12,10 @@ void CloseAPI()
 	delete httpClient;
 }
 
-void RequreTitle(int client, const char[] uid){
+void RequreTitle(int client, const char[] uid)
+{
 	if (!IsValidClient(client))
-		return ;
+		return;
 
 	playerTitle[client].type = 0;
 	playerTitle[client].isWaitingForplayerTitle = false;
@@ -41,27 +42,26 @@ void RequreTitle_Resp(HTTPResponse response, DataPack dp, const char[] error){
 	// DataPack
 	dp.Reset();
 	int client = dp.ReadCell();
-	char uid[INT64_LENGTH];
+	char uid[MAX_UID_LENGTH];
 	dp.ReadString(uid, sizeof(uid));
 	dp.Close();
 
 	// JSON
-	char iUID[INT64_LENGTH];
+	char iUID[MAX_UID_LENGTH];
 	JSONObject data = view_as<JSONObject>(response.Data);
 	JSONObject info = view_as<JSONObject>(data.Get("info"));
 
 	// Check UID is valid
 	info.GetString("uid", iUID, sizeof(iUID));
-	if (!StrEqual(iUID, uid)){
+	if (!StrEqual(iUID, uid))
 		return;
-	}
 
 	char title[MAX_TITLE_LENGTH];
 	info.GetString("custom_title", title, sizeof(title));
 	playerTitle[client].type = info.GetInt("title_type");
 	playerTitle[client].title = title;
 
-	TitleBeSet(client, playerTitle[client].type);
+	CreateTimer(1.0, FirstTitleSet, client);
 
 	delete info;
 }
@@ -84,4 +84,10 @@ void SetTitle(int client)
 	char path[128];
 	Format(path, sizeof(path), "%s/%s", Title_Service, uid);
 	httpClient.Put(path, data, BlankCallback);
+}
+
+public Action FirstTitleSet(Handle timer, int client)
+{
+	TitleBeSet(client, playerTitle[client].type);
+	return Plugin_Stop;
 }

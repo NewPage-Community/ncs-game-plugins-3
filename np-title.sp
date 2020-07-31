@@ -1,3 +1,4 @@
+//#define DEV
 #pragma semicolon 1
 
 #include <ncs>
@@ -44,7 +45,6 @@ public void NCS_Account_OnUserLoaded(int client, const char[] uid)
 public void NCS_Account_OnChangeName(int client, const char[] newname)
 {
 	TitleBeSet(client, playerTitle[client].type);
-	return;
 }
 
 public Action OnClientSayCommand(int client, const char[] command, const char[] sArgs)

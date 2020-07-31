@@ -1,6 +1,7 @@
 void InitCmd()
 {
-    RegConsoleCmd("sm_prefix", Command_Prefix, "sm_prefix <prefix>");
+    RegConsoleCmd("sm_prefix", Command_Prefix, "[NCS] 头衔设置");
+    RegConsoleCmd("sm_title", Command_Prefix, "[NCS] 头衔设置");
 }
 
 public Action Command_Prefix(int client, int args)

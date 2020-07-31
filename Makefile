@@ -16,7 +16,7 @@ all: env build
 
 .PHONY:env
 env: 
-	@echo "\nSetting sourcemod $(SOURCEMOD_VERSION) environment..."
+	@printf "\nSetting sourcemod $(SOURCEMOD_VERSION) environment..."
 	@curl -sS --output sourcemod.tar.gz "$(SOURCEMOD_DOWNLOAD_URL)$(SOURCEMOD_BUILD_PATH)"
 	@tar -xzf sourcemod.tar.gz
 	@cp -rf $(SOURCEMOD_BUILD_DIR)/include ./ && cp -f $(SOURCEMOD_BUILD_DIR)/spcomp ./ && chmod +x spcomp

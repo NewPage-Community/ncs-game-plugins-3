@@ -7,6 +7,7 @@
 #include <ncs/chat>
 #include <ncs/stats>
 #include <ncs/pass>
+#include <ncs/money>
 
 #define P_NAME P_PRE ... " - Test"
 #define P_DESC "Test plugin"
@@ -65,6 +66,9 @@ public Action Command_testall(int client, int args)
 
     // Pass
     NCS_Pass_AddPoint(client, 100);
+
+    // Money
+    NCS_Money_Give(client, 100, "test");
 }
 
 public void NCS_Account_OnUserLoaded(int client, const char[] uid)

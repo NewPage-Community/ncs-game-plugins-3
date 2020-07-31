@@ -4,7 +4,6 @@ HTTPClient httpClient;
 
 static Handle updatePointTimer;
 
-
 void InitAPI()
 {
     httpClient = NewNCSAPI();

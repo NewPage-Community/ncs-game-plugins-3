@@ -10,6 +10,41 @@ void CloseAPI()
     delete httpClient;
 }
 
+void LoadUserStoreList(int client)
+{
+    char uid[MAX_UID_LENGTH];
+    if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
+        return;
+
+    char path[128];
+    Format(path, sizeof(path), "%s/list/%s", Store_Service, uid);
+    httpClient.Get(path, LoadUserStoreListCallback, client);
+}
+
+public void LoadUserStoreListCallback(HTTPResponse response, int client, const char[] error)
+{
+    if (response.Status != HTTPStatus_OK || response.Data == null)
+    {
+        NCS_LogError("Store", "LoadUserStoreListCallback", "Faild to load info %d (%s)", response.Status, error);
+        return;
+    }
+
+    if (!IsValidClient(client))
+        return;
+
+    // JSON data
+    JSONObject data = view_as<JSONObject>(response.Data);
+    if (playerStoreList[client] != INVALID_HANDLE)
+        delete playerStoreList[client];
+    
+    JSONArray array = view_as<JSONArray>(data.Get("items"));
+    playerStoreList[client] = new Items(array);
+    delete array;
+
+    playerMoney[client] = data.GetInt("money");
+    playerPass[client] = data.GetInt("pass_type");
+}
+
 void BuyItem(int client, Item item)
 {
     char uid[MAX_UID_LENGTH];
@@ -53,7 +88,10 @@ public void BuyItemCallback(HTTPResponse response, DataPack dp, const char[] err
     }
 
     if (IsValidClient(client))
+    {
+        LoadUserStoreList(client);
         NCS_Chat(client, _, "{blue}购买 {green}%s{blue} 成功！", itemName);
+    }
 }
 
 void BuyAdvPass(int client, int type)

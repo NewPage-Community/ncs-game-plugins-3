@@ -1,37 +1,8 @@
 static Menu playerLastMenu[MAXPLAYERS+1];
-static int playerMoney[MAXPLAYERS+1];
-static int playerPass[MAXPLAYERS+1];
 
 void DisplayStoreMenu(int client)
 {
-    char uid[MAX_UID_LENGTH];
-    if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
-        return;
-    
-    char path[128];
-    Format(path, sizeof(path), "%s/list/%s", Store_Service, uid);
-    httpClient.Get(path, LoadUserStoreList, client);
-}
-
-public void LoadUserStoreList(HTTPResponse response, int client, const char[] error)
-{
-    if (response.Status != HTTPStatus_OK || response.Data == null)
-    {
-        NCS_LogError("Store", "LoadUserStoreList", "Faild to load info %d (%s)", response.Status, error);
-        return;
-    }
-
-    if (!IsValidClient(client))
-        return;
-
-    // JSON data
-    JSONObject data = view_as<JSONObject>(response.Data);
-    if (playerStoreList[client] != INVALID_HANDLE)
-        delete playerStoreList[client];
-    playerStoreList[client] = new Items(view_as<JSONArray>(data.Get("items")));
-    playerMoney[client] = data.GetInt("money");
-    playerPass[client] = data.GetInt("pass_type");
-
+    LoadUserStoreList(client);
     Menu menu = new Menu(UserStoreListHandle); 
     menu.SetTitle("商店\n软妹币: %d", playerMoney[client]);
     menu.AddItem("0", "热门推荐")
@@ -227,6 +198,8 @@ public void LoadHotSaleList(HTTPResponse response, int client, const char[] erro
     menu.Display(client, MENU_TIME_FOREVER);
 
     playerLastMenu[client] = menu;
+
+    delete array;
 }
 
 void BuyAdvPassMenu(int client)

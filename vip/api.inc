@@ -56,6 +56,8 @@ public void LoadVIPInfo(HTTPResponse response, DataPack dp, const char[] error)
 	info.GetString("expire_date", expireDate, sizeof(expireDate));
 
 	g_VIPs[client].Init(client, point, expireDate);
+
+	delete info;
 }
 
 void AddPoint(int client, int addPoint)

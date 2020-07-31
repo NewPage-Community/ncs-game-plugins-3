@@ -39,6 +39,8 @@ public void LoadSkinsInfo(HTTPResponse response, DataPack dp, const char[] error
 
     for (int i = 0; i < length; i++)
         g_Skins.Add(view_as<JSONObject>(skins.Get(i)));
+    
+    delete skins;
 }
 
 void ReqUserSkinInfo(int client, const char[] uid)

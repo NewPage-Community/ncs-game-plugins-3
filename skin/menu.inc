@@ -73,6 +73,8 @@ public void UserSkinsCallback(HTTPResponse response, DataPack dp, const char[] e
         menu.AddItem(skinID, desc);
     }
     menu.Display(client, MENU_TIME_FOREVER);
+
+    delete items;
 }
 
 public int Menu_SkinSelected(Menu menu, MenuAction action, int client, int slot)

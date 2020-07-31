@@ -62,6 +62,8 @@ void RequreTitle_Resp(HTTPResponse response, DataPack dp, const char[] error){
 	playerTitle[client].title = title;
 
 	TitleBeSet(client, playerTitle[client].type);
+
+	delete info;
 }
 
 void SetTitle(int client)

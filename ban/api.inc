@@ -73,7 +73,8 @@ public void LoadBanCheck(HTTPResponse response, DataPack dp, const char[] error)
 	char kickReason[256];
 	FormatEx(kickReason, sizeof(kickReason), "您已被服务器封锁,禁止进入游戏! 请联系管理员\n封禁类型: %s 封禁原因: %s\n到期时间: %s", g_banType[banType], banReason, time);
 	BanClient(client, 10, BANFLAG_AUTHID, kickReason, kickReason);
-	return;
+
+	delete info;
 }
 
 void ReqBanClient(int client, int type, int length, const char[] reason)

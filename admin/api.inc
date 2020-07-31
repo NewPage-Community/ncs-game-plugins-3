@@ -57,4 +57,6 @@ public void LoadAdminInfo(HTTPResponse response, DataPack dp, const char[] error
 	int immunity = info.GetInt("immunity");
 
 	LoadAdmin(client, flagbits, immunity);
+
+	delete info;
 }

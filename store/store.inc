@@ -81,6 +81,8 @@ methodmap Items < ArrayList
 }
 
 Items playerStoreList[MAXPLAYERS+1];
+int playerMoney[MAXPLAYERS+1];
+int playerPass[MAXPLAYERS+1];
 
 char typeName[][] = {"", "皮肤", "拖尾", "喷漆", "投掷物轨迹"};
 char passTypeName[][] = {"", "高级通行证", "终极通行证"};

@@ -37,7 +37,7 @@ enum struct vip
     void Clean() {
         this.index = 0;
         this.point = 0;
-        this.expireDate = "";
+        this.expireDate[0] = '\0';
     }
 }
 

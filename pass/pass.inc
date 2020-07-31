@@ -20,7 +20,7 @@ enum struct PassInfo
 
     void Clear()
     {
-        this.uid = "\0";
+        this.uid[0] = '\0';
         this.index = 0;
         this.point = 0;
     }

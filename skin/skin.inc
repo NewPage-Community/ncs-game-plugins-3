@@ -27,9 +27,9 @@ enum struct Skin
     void Clean()
     {
         this.id = 0;
-        this.name = "";
-        this.skinPath = "";
-        this.armPath = "";
+        this.name[0] = '\0';
+        this.skinPath[0] = '\0';
+        this.armPath[0] = '\0';
         this.price = 0;
     }
 }

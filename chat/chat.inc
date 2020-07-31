@@ -22,7 +22,10 @@ enum struct PlayerInfo
         // Default name color
         if (this.nameColor[0] == '\0')
             this.nameColor = "{name}";
-        Format(buffer, size, "%s%s %s%s", this.titleColor, this.title, this.nameColor, buffer);
+        if (this.title[0] == '\0')
+            Format(buffer, size, "%s%s", this.nameColor, buffer);
+        else
+            Format(buffer, size, "%s%s %s%s", this.titleColor, this.title, this.nameColor, buffer);
     }
 
     void SetTitle(const char[] title, const char[] titleColor)
@@ -39,9 +42,9 @@ enum struct PlayerInfo
     void Clear()
     {
         this.index = 0;
-        this.title = "";
-        this.titleColor = "";
-        this.nameColor = "";
+        this.title[0] = '\0';
+        this.titleColor[0] = '\0';
+        this.nameColor[0] = '\0';
     }
 }
 

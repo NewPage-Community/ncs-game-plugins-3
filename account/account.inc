@@ -9,7 +9,7 @@ enum struct account
 	char name[MAX_NAME_LENGTH];
 
 	bool Valid() {
-		if (this.index == 0 || this.uid[0] == '0')
+		if (this.index == 0 || this.uid[0] == '\0')
 			return false;
 		char steamid[MAX_STEAMID_LENGTH];
 		GetClientAuthId(this.index, AuthId_SteamID64, steamid, sizeof(steamid), true);
@@ -31,9 +31,9 @@ enum struct account
 
 	bool Clean() {
 		this.index = 0;
-		this.uid = "0";
-		this.steamid = "";
-		this.name = "";
+		this.uid[0] = '\0';
+		this.steamid[0] = '\0';
+		this.name[0] = '\0';
 	}
 }
 

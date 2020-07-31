@@ -6,7 +6,7 @@ enum struct PassInfo
 
     bool IsValid()
     {
-        if (this.index == 0)
+        if (this.index == 0 || this.uid[0] == '\0')
             return false;
         return IsValidClient(this.index);
     }
@@ -20,7 +20,7 @@ enum struct PassInfo
 
     void Clear()
     {
-        this.uid = "";
+        this.uid = "\0";
         this.index = 0;
         this.point = 0;
     }

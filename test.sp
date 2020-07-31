@@ -6,6 +6,7 @@
 #include <ncs/backpack>
 #include <ncs/chat>
 #include <ncs/stats>
+#include <ncs/pass>
 
 #define P_NAME P_PRE ... " - Test"
 #define P_DESC "Test plugin"
@@ -61,6 +62,9 @@ public Action Command_testall(int client, int args)
 
     // Stats
     NCS_Stats_Add(client, "all", "test", "v1", 1.0);
+
+    // Pass
+    NCS_Pass_AddPoint(client, 100);
 }
 
 public void NCS_Account_OnUserLoaded(int client, const char[] uid)

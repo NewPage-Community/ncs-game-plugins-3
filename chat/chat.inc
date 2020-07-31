@@ -13,7 +13,7 @@ enum struct PlayerInfo
     {
 		if (this.index == 0)
 			return false;
-		return true;
+		return IsValidClient(this.index);
 	}
 
     void GetChatName(char[] buffer, int size)

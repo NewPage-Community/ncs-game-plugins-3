@@ -148,13 +148,13 @@ void LoadSounds()
 
 void PlaySound(int client, CheerType type)
 {
-    if (!IsValidClient(client))
-        return;
-
     switch (view_as<int>(type))
     {
         case 0:
         {
+            if (!IsValidClient(client))
+                return;
+            
             float vec[3];
             int rand = GetRandomInt(0, g_iCheerListNum[Cheer] - 1);
             GetClientEyePosition(client, vec);
@@ -164,8 +164,9 @@ void PlaySound(int client, CheerType type)
         {
             int rand = GetRandomInt(0, g_iCheerListNum[Jeer] - 1);
             for (int i = 1; i <= MAXPLAYERS; i++)
-                if(IsClientInGame(i) && !IsFakeClient(i))
-                    EmitSoundToClient(i, g_cCheerList[Jeer][rand], _, _, _, _, g_cSoundVolume.FloatValue);
+                if (IsValidClient(i))
+                    if(IsClientInGame(i))
+                        EmitSoundToClient(i, g_cCheerList[Jeer][rand], _, _, _, _, g_cSoundVolume.FloatValue);
         }
     }
 }

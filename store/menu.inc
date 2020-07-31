@@ -126,15 +126,18 @@ void BuyItemMenu(int client, Item item)
 
 public int BuyItemHandle(Menu menu, MenuAction action, int client, int slot)
 {
-    Menu lastMenu = playerLastMenu[client];
-    int lastPage = (playerLastItem[client]/lastMenu.Pagination)*lastMenu.Pagination;
-
     if (action == MenuAction_End)
         delete menu;
     else if (action == MenuAction_Cancel && slot == MenuCancel_ExitBack)
+    {
+        Menu lastMenu = playerLastMenu[client];
+        int lastPage = (playerLastItem[client]/lastMenu.Pagination)*lastMenu.Pagination;
         lastMenu.DisplayAt(client, lastPage, MENU_TIME_FOREVER);
+    }
     else if (action == MenuAction_Select)
     {
+        Menu lastMenu = playerLastMenu[client];
+        int lastPage = (playerLastItem[client]/lastMenu.Pagination)*lastMenu.Pagination;
         char itemID[8];
         menu.GetItem(slot, itemID, sizeof(itemID), _, _, _);
 
@@ -260,13 +263,14 @@ void BuyAdvPassConfirm(int client, int type)
 
 public int BuyAdvPassConfirmHandle(Menu menu, MenuAction action, int client, int slot)
 {
-    Menu lastMenu = playerLastMenu[client];
-    int lastPage = (playerLastItem[client]/lastMenu.Pagination)*lastMenu.Pagination;
-
     if (action == MenuAction_End)
         delete menu;
     else if (action == MenuAction_Cancel && slot == MenuCancel_ExitBack)
+    {
+        Menu lastMenu = playerLastMenu[client];
+        int lastPage = (playerLastItem[client]/lastMenu.Pagination)*lastMenu.Pagination;
         lastMenu.DisplayAt(client, lastPage, MENU_TIME_FOREVER);
+    }
     else if (action == MenuAction_Select)
     {
         char type[8];

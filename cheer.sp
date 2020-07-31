@@ -184,18 +184,16 @@ public Action CommandCheer(int client, int args)
     else
         GetClientName(client, name, MAXLENGTH_NAME);
 
+    cheerCount = g_cClientMaxCheers.IntValue;
+    jeerCount = g_cClientMaxJeers.IntValue;
+
     if (LibraryExists("NCS-VIP"))
     {
         if (NCS_VIP_IsVIP(client))
         {
-            cheerCount = g_cClientMaxCheers.IntValue + g_cVIPCheersAdd.IntValue;
-            jeerCount = g_cClientMaxJeers.IntValue + g_cVIPJeersAdd.IntValue;
+            cheerCount += g_cVIPCheersAdd.IntValue;
+            jeerCount += g_cVIPJeersAdd.IntValue;
         }
-    }
-    else
-    {
-        cheerCount = g_cClientMaxCheers.IntValue;
-        jeerCount = g_cClientMaxJeers.IntValue;
     }
 
     if(IsPlayerAlive(client))

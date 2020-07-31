@@ -12,7 +12,7 @@
 #if defined DEV
 	#define P_VERSION "v3.0.dev"
 #else
-    #define P_VERSION "v3.0.<commit_count>"
+    #define P_VERSION "v3.0.<pipeline_iid>"
 #endif
 
 // Core Include

@@ -4,7 +4,6 @@
 SHELL:=/bin/bash
 SOURCEMOD_VERSION ?= 1.10
 SOURCEMOD_BUILD_DIR = ./addons/sourcemod/scripting
-COMMIT_COUNT = $(shell git rev-list --all --count)
 
 # This command is under a Creative Commons Zero license, Enjoy!                                                                                                           
 # Written by Nios34<nios34@foxmail.com> using GNU Emacs. Feel free to delete it.
@@ -24,7 +23,7 @@ env:
 .PHONY:build
 build:
 ifdef CI
-	@sed -i "s%<commit_count>%$(COMMIT_COUNT)%g" include/ncs.inc
+	@sed -i "s%<pipeline_iid>%$(CI_PIPELINE_IID)%g" include/ncs.inc
 	@sed -i "s%<api_token>%$(API_TOKEN)%g" include/ncs/api.inc
 endif
 	@test -e compiled || mkdir compiled

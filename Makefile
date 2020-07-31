@@ -4,7 +4,7 @@
 SHELL:=/bin/bash
 SOURCEMOD_VERSION ?= 1.10
 SOURCEMOD_BUILD_DIR = ./addons/sourcemod/scripting
-COMMIT_COUNT = `git rev-list --all --count`
+COMMIT_COUNT = $(shell git rev-list --all --count)
 
 # This command is under a Creative Commons Zero license, Enjoy!                                                                                                           
 # Written by Nios34<nios34@foxmail.com> using GNU Emacs. Feel free to delete it.

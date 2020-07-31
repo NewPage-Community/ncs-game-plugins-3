@@ -33,7 +33,7 @@ public void OnConfigsExecuted()
     ChatConfig();
 }
 
-public void NCS_Account_OnUserLoaded(int client, const char[] uid)
+public void OnClientConnected(int client)
 {
 	player[client].index = client;
 }

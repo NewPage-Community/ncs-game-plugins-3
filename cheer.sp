@@ -147,7 +147,7 @@ void LoadSounds()
 
 void PlaySound(int client, CheerType type)
 {
-    switch(type)
+    switch (view_as<int>(type))
     {
         case 0:
         {

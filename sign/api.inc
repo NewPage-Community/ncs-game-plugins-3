@@ -55,7 +55,7 @@ public void SignCallback(HTTPResponse response, DataPack dp, const char[] error)
 	// DataPack
 	dp.Reset();
 	int client = dp.ReadCell();
-	char uid[INT64_LENGTH];
+	char uid[MAX_UID_LENGTH];
 	dp.ReadString(uid, sizeof(uid));
 	dp.Close()
 

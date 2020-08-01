@@ -66,12 +66,12 @@ public void LoadUserSkinInfo(HTTPResponse response, DataPack dp, const char[] er
     // DataPack
     dp.Reset();
     int client = dp.ReadCell();
-    char uid[INT64_LENGTH];
+    char uid[MAX_UID_LENGTH];
     dp.ReadString(uid, sizeof(uid));
     dp.Close();
 
     // JSON
-    char iUID[INT64_LENGTH];
+    char iUID[MAX_UID_LENGTH];
     JSONObject data = view_as<JSONObject>(response.Data);
 
     // Check UID is valid

@@ -73,7 +73,7 @@ public void BuyItemCallback(HTTPResponse response, DataPack dp, const char[] err
     // DataPack
     dp.Reset();
     int client = dp.ReadCell();
-    char uid[INT64_LENGTH], itemName[MAX_ITEM_NAME_LENGTH];
+    char uid[MAX_UID_LENGTH], itemName[MAX_ITEM_NAME_LENGTH];
     dp.ReadString(uid, sizeof(uid));
     dp.ReadString(itemName, sizeof(itemName));
     dp.Close()

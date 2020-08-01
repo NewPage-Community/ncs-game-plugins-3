@@ -35,12 +35,12 @@ public void LoadAdminInfo(HTTPResponse response, DataPack dp, const char[] error
 	// DataPack
 	dp.Reset();
 	int client = dp.ReadCell();
-	char uid[INT64_LENGTH];
+	char uid[MAX_UID_LENGTH];
 	dp.ReadString(uid, sizeof(uid));
 	dp.Close()
 
 	// JSON
-	char iUID[INT64_LENGTH];
+	char iUID[MAX_UID_LENGTH];
 	JSONObject data = view_as<JSONObject>(response.Data);
 	JSONObject info = view_as<JSONObject>(data.Get("info"));
 

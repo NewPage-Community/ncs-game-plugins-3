@@ -42,12 +42,12 @@ public void LoadBanCheck(HTTPResponse response, DataPack dp, const char[] error)
 	// DataPack
 	dp.Reset();
 	int client = dp.ReadCell();
-	char uid[INT64_LENGTH];
+	char uid[MAX_UID_LENGTH];
 	dp.ReadString(uid, sizeof(uid));
 	dp.Close();
 
 	// JSON
-	char banReason[64], expireTime[20], iUID[INT64_LENGTH];
+	char banReason[64], expireTime[20], iUID[MAX_UID_LENGTH];
 	JSONObject data = view_as<JSONObject>(response.Data);
 	JSONObject info = view_as<JSONObject>(data.Get("info"));
 

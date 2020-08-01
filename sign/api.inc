@@ -74,9 +74,12 @@ public void SignCallback(HTTPResponse response, DataPack dp, const char[] error)
 	bool alreadySigned = data.GetBool("already_signed");
 
 	if (alreadySigned)
+	{
 		NCS_Chat(client, _, "{blue}您今日已签到，请勿重复操作！");
-	else
-		NCS_Chat(client, _, "{blue}签到成功！");
+		return;
+	}
+
+	NCS_Chat(client, _, "{blue}签到成功！");
 
 	// Call global forward
 	Call_StartForward(onUserSigned);

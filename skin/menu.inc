@@ -42,8 +42,11 @@ public void UserSkinsCallback(HTTPResponse response, DataPack dp, const char[] e
 
     // Check UID is valid
     data.GetString("uid", iUID, sizeof(iUID));
-    if (!StrEqual(iUID, uid))
+    if (!StrEqual(iUID, uid) || !IsValidClient(client))
+    {
+        delete items;
         return;
+    }
     
     // Menu
 

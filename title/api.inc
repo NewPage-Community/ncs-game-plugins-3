@@ -53,8 +53,11 @@ void RequreTitle_Resp(HTTPResponse response, DataPack dp, const char[] error){
 
 	// Check UID is valid
 	info.GetString("uid", iUID, sizeof(iUID));
-	if (!StrEqual(iUID, uid))
+	if (!StrEqual(iUID, uid) || !IsValidClient(client))
+	{
+		delete info;
 		return;
+	}
 
 	char title[MAX_TITLE_LENGTH];
 	info.GetString("custom_title", title, sizeof(title));

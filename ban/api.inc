@@ -33,10 +33,6 @@ void ReqBanCheck(int client, const char[] uid)
 
 public void LoadBanCheck(HTTPResponse response, DataPack dp, const char[] error)
 {
-	// Ban record not found
-	if (response.Status == HTTPStatus_NotFound)
-		return;
-
 	if (response.Status != HTTPStatus_OK || response.Data == null)
 	{
 		NCS_LogError("Bans", "LoadBanInfo", "Faild to load info %d (%s)", response.Status, error);
@@ -48,17 +44,27 @@ public void LoadBanCheck(HTTPResponse response, DataPack dp, const char[] error)
 	int client = dp.ReadCell();
 	char uid[INT64_LENGTH];
 	dp.ReadString(uid, sizeof(uid));
-	dp.Close()
+	dp.Close();
 
 	// JSON
 	char banReason[64], expireTime[20], iUID[INT64_LENGTH];
 	JSONObject data = view_as<JSONObject>(response.Data);
 	JSONObject info = view_as<JSONObject>(data.Get("info"));
 
+	// Invalid
+	if (info.GetInt("id") == 0)
+	{
+		delete info;
+		return;
+	}
+
 	// Check UID is valid
 	info.GetString("uid", iUID, sizeof(iUID));
-	if (!StrEqual(iUID, uid))
+	if (!StrEqual(iUID, uid) || !IsValidClient(client))
+	{
+		delete info;
 		return;
+	}
 
 	// Get ban information
 	info.GetString("reason", banReason, sizeof(banReason));

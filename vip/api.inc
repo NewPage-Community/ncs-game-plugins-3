@@ -48,8 +48,11 @@ public void LoadVIPInfo(HTTPResponse response, DataPack dp, const char[] error)
 
 	// Check UID is valid
 	info.GetString("uid", iUID, sizeof(iUID));
-	if (!StrEqual(iUID, uid))
+	if (!StrEqual(iUID, uid) || !IsValidClient(client))
+	{
+		delete info;
 		return;
+	}
 	
 	// Get vip information
 	int point = info.GetInt("point");

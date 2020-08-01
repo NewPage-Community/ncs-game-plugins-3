@@ -69,7 +69,7 @@ public void LoadAccountUID(HTTPResponse response, DataPack dp, const char[] erro
 	
 	int client = FindClientBySteamId(AuthId_SteamID64, steamid);
 	// Invalid
-	if (client == 0)
+	if (!IsValidClient(client))
 		return;
 
 	char uid[MAX_UID_LENGTH], username[MAX_NAME_LENGTH];

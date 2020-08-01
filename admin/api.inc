@@ -26,10 +26,6 @@ void ReqAdmin(int client, const char[] uid)
 
 public void LoadAdminInfo(HTTPResponse response, DataPack dp, const char[] error)
 {
-	// Admin record not found
-	if (response.Status == HTTPStatus_NotFound)
-		return;
-
 	if (response.Status != HTTPStatus_OK || response.Data == null)
 	{
 		NCS_LogError("Admin", "LoadAdminInfo", "Faild to load info %d (%s)", response.Status, error);
@@ -50,13 +46,17 @@ public void LoadAdminInfo(HTTPResponse response, DataPack dp, const char[] error
 
 	// Check UID is valid
 	info.GetString("uid", iUID, sizeof(iUID));
-	if (!StrEqual(iUID, uid))
+	if (!StrEqual(iUID, uid) || !IsValidClient(client))
+	{
+		delete info;
 		return;
+	}
 
 	int flagbits = info.GetInt("flag");
 	int immunity = info.GetInt("immunity");
 
-	LoadAdmin(client, flagbits, immunity);
+	if (flagbits > 0 || immunity > 0)
+		LoadAdmin(client, flagbits, immunity);
 
 	delete info;
 }

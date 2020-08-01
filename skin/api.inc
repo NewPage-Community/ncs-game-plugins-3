@@ -76,7 +76,7 @@ public void LoadUserSkinInfo(HTTPResponse response, DataPack dp, const char[] er
 
     // Check UID is valid
     data.GetString("uid", iUID, sizeof(iUID));
-    if (!StrEqual(iUID, uid))
+    if (!StrEqual(iUID, uid) || !IsValidClient(client))
         return;
 
     g_UsersUsedSkin[client] = data.GetInt("used_skin");

@@ -59,26 +59,23 @@ public void SignCallback(HTTPResponse response, DataPack dp, const char[] error)
 	dp.ReadString(uid, sizeof(uid));
 	dp.Close()
 
+	if (!IsValidClient(client))
+		return;
+
 	if (response.Status != HTTPStatus_OK || response.Data == null)
 	{
-		if (response.Data != null)
-		{
-			JSONObject data = view_as<JSONObject>(response.Data);
-			int code = data.GetInt("code");
-			if (code == 2 && IsValidClient(client))
-			{
-				NCS_Chat(client, _, "{blue}您今日已签到，请勿重复操作！");
-				return;
-			}
-		}
 		NCS_LogError("Sign", "SignCallback", "Faild to load info %d (%s)", response.Status, error);
 		NCS_LogError("Sign", "SignCallback", "#%d UID:%s", client, uid);
-		if (IsValidClient(client))
-			NCS_Chat(client, _, "{blue}签到失败，请重试！");
+		NCS_Chat(client, _, "{blue}签到失败，请重试！");
 		return;
 	}
 
-	if (IsValidClient(client))
+	JSONObject data = view_as<JSONObject>(response.Data);
+	bool alreadySigned = data.GetBool("already_signed");
+
+	if (alreadySigned)
+		NCS_Chat(client, _, "{blue}您今日已签到，请勿重复操作！");
+	else
 		NCS_Chat(client, _, "{blue}签到成功！");
 
 	// Call global forward

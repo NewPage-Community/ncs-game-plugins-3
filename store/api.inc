@@ -51,6 +51,13 @@ void BuyItem(int client, Item item)
     if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
         return;
 
+    if (playerMoney[client] < item.GetPrice())
+    {
+        if (IsValidClient(client))
+            NCS_Chat(client, _, "{blue} 您的软妹币余额不足！");
+        return;
+    }
+
     // Datapack to pass to callback
     DataPack dp = new DataPack();
     dp.WriteCell(client, false);
@@ -99,6 +106,13 @@ void BuyAdvPass(int client, int type)
     char uid[MAX_UID_LENGTH];
     if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
         return;
+
+    if (playerMoney[client] < passTypePrice[type])
+    {
+        if (IsValidClient(client))
+            NCS_Chat(client, _, "{blue} 您的软妹币余额不足！");
+        return;
+    }
 
     // Datapack to pass to callback
     DataPack dp = new DataPack();

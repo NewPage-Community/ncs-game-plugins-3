@@ -1,4 +1,4 @@
-#define PROGRESS_LENGTH 10
+#define PROGRESS_LENGTH 20
 #define LEVEL_POINT 7200
 #define MAX_LEVEL_REWARDS 10
 #define MAX_LEVEL 100
@@ -79,9 +79,9 @@ void ProgressBar(int point, char[] buffer, int size)
     for (int i = 0; i < PROGRESS_LENGTH; i++)
     {
         if (left >= i)
-            Format(buffer, size, "%s#", buffer);
+            Format(buffer, size, "%s|", buffer);
         else
-            Format(buffer, size, "%s-", buffer);
+            Format(buffer, size, "%s ", buffer);
     }
     Format(buffer, size, "[%s]", buffer);
 }

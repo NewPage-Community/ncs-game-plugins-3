@@ -107,7 +107,7 @@ void DisplayNextRewards(int client)
     if (!IsValidClient(client))
         return;
     
-    int level = Level(player[client].point);
+    int level = Level(player[client].point) + 1;
     Menu menu = new Menu(NextRewardsHandle);
     menu.SetTitle("通行证下一级奖励\n \n%d级奖励", level);
 

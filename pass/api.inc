@@ -25,9 +25,12 @@ public Action Timer_UpdatePoint(Handle timer, int client)
     int count = 0;
     if (client != 0)
     {
-        player[client].PushJSONArray(array);
-        player[client].point = 0;
-        count++;
+        if (player[client].IsValid() && player[client].point > 0)
+        {
+            player[client].PushJSONArray(array);
+            player[client].point = 0;
+            count++;
+        }
     }
     else
     {

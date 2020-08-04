@@ -79,9 +79,9 @@ void ProgressBar(int point, char[] buffer, int size)
     for (int i = 0; i < PROGRESS_LENGTH; i++)
     {
         if (left >= i)
-            Format(buffer, size, "%s■", buffer);
+            Format(buffer, size, "%s#", buffer);
         else
-            Format(buffer, size, "%s□", buffer);
+            Format(buffer, size, "%s-", buffer);
     }
     Format(buffer, size, "[%s]", buffer);
 }

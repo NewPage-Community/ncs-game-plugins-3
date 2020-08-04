@@ -109,7 +109,7 @@ void DisplayNextRewards(int client)
     
     int level = Level(player[client].point);
     Menu menu = new Menu(NextRewardsHandle);
-    menu.SetTitle("通行证下一级奖励\n%d级\n ", level);
+    menu.SetTitle("通行证下一级奖励\n \n%d级奖励", level);
 
     char desc[512];
 

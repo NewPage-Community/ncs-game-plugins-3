@@ -16,9 +16,9 @@ public Action Command_Restart(int args)
 
 public Action Command_ReloadMap(int args)
 {
-	NCS_Chat(CLIENT_ALL, "[服务器提示]", "{blue}服务器将在5秒后进行热更新，执行地图重载!");
-	PrintCenterTextAll("服务器将在3秒后进行热更新，执行地图重载!");
-	CreateTimer(5.0, Timer_ReloadMap, 0);
+	NCS_Chat(CLIENT_ALL, "[服务器提示]", "{blue}服务器将在 {green}10秒 {blue}后进行热更新，执行地图重载!");
+	PrintCenterTextAll("服务器将在 10秒 后进行热更新，执行地图重载!");
+	CreateTimer(10.0, Timer_ReloadMap, 0);
 
 	return Plugin_Handled;
 }
@@ -27,8 +27,8 @@ public Action Timer_Restart(Handle timer, int time)
 {
 	if(time < 10)
 	{
-		NCS_Chat(CLIENT_ALL, "[服务器提示]", "服务器将在 \x04%d\x01 秒后重启!");
-		PrintCenterTextAll("服务器将在 %ds 后重启!", 10 - time);
+		NCS_Chat(CLIENT_ALL, "[服务器提示]", "{blue}服务器将在 {green}%d秒{blue} 后重启!", 10 - time);
+		PrintCenterTextAll("服务器将在 %d秒 后重启!", 10 - time);
 		CreateTimer(1.0, Timer_Restart, time + 1);
 		return Plugin_Stop;
 	}

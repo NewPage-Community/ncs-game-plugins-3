@@ -35,7 +35,7 @@ public void LoadPassInfo(HTTPResponse response, int client, const char[] error)
     ProgressBar(point, progress, sizeof(progress));
 
     Menu menu = new Menu(PassInfoMenuHandle);
-    menu.SetTitle("通行证 - 第%d赛季\n通行证类型: %s\n等级: %d\n%s\n ", season, passTypeName[type], Level(point), progress);
+    menu.SetTitle("通行证 - 第%d赛季\n类型: %s\n等级: %d\n%s\n ", season, passTypeName[type], Level(point), progress);
     menu.AddItem("", "升级通行证", type == 0 ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
     menu.AddItem("", "使用经验箱");
     menu.AddItem("", "查看下一级奖励");

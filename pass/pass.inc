@@ -1,4 +1,4 @@
-#define PROGRESS_LENGTH 10
+#define PROGRESS_LENGTH 20
 #define LEVEL_POINT 7200
 #define MAX_LEVEL_REWARDS 10
 #define MAX_LEVEL 100
@@ -75,7 +75,7 @@ enum struct Reward
 
 void ProgressBar(int point, char[] buffer, int size)
 {
-    int left = (point % LEVEL_POINT) / LEVEL_POINT * 10;
+    int left = (point % LEVEL_POINT) / LEVEL_POINT * PROGRESS_LENGTH;
     for (int i = 0; i < PROGRESS_LENGTH; i++)
     {
         if (left >= i)

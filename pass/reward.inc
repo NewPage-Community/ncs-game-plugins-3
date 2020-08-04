@@ -1,5 +1,7 @@
 void LoadRewards()
 {
+    ClearRewards();
+    
     char path[128];
     Format(path, sizeof(path), "%s/rewards", GamePass_Service);
     httpClient.Get(path, LoadRewardsCallback);
@@ -66,5 +68,18 @@ public void LoadRewardsCallback(HTTPResponse response, int client, const char[] 
         
         rewards[reward.level][AdvReward][count++] = reward;
         delete item;
+    }
+}
+
+void ClearRewards()
+{
+    Reward empty;
+    for (int i = 0; i < MAX_LEVEL; i++)
+    {
+        for (int j = 0; j < MAX_LEVEL_REWARDS; j++)
+        {
+            rewards[i][FreeReward][j] = empty;
+            rewards[i][AdvReward][j] = empty;
+        }
     }
 }

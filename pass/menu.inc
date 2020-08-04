@@ -118,6 +118,9 @@ void DisplayNextRewards(int client)
     Format(desc, sizeof(desc), "免费版:\n");
     for (int i = 0; i < MAX_LEVEL_REWARDS; i++)
     {
+        if (rewards[level][FreeReward][i].id == 0)
+            break;
+        
         char name[MAX_ITEM_NAME_LENGTH];
         rewards[level][FreeReward][i].GetName(name, sizeof(name));
         Format(desc, sizeof(desc), "- %s\n", name);
@@ -128,6 +131,9 @@ void DisplayNextRewards(int client)
     Format(desc, sizeof(desc), "高级版:\n");
     for (int i = 0; i < MAX_LEVEL_REWARDS; i++)
     {
+        if (rewards[level][FreeReward][i].id == 0)
+            break;
+        
         char name[MAX_ITEM_NAME_LENGTH];
         rewards[level][AdvReward][i].GetName(name, sizeof(name));
         Format(desc, sizeof(desc), "- %s\n", name);

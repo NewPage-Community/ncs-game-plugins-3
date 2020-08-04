@@ -31,7 +31,7 @@ public void LoadPassInfo(HTTPResponse response, int client, const char[] error)
 
     int type = player[client].type;
     int point = player[client].point;
-    char progress[16];
+    char progress[64];
     ProgressBar(point, progress, sizeof(progress));
 
     Menu menu = new Menu(PassInfoMenuHandle);

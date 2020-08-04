@@ -122,7 +122,7 @@ void DisplayNextRewards(int client)
         
         char name[MAX_ITEM_NAME_LENGTH];
         rewards[level][FreeReward][i].GetName(name, sizeof(name));
-        Format(desc, sizeof(desc), "- %s\n", name);
+        Format(desc, sizeof(desc), "%s- %s\n", desc, name);
     }
     menu.AddItem("", desc, ITEMDRAW_DISABLED);
 
@@ -135,7 +135,7 @@ void DisplayNextRewards(int client)
         
         char name[MAX_ITEM_NAME_LENGTH];
         rewards[level][AdvReward][i].GetName(name, sizeof(name));
-        Format(desc, sizeof(desc), "- %s\n", name);
+        Format(desc, sizeof(desc), "%s- %s\n", desc, name);
     }
     menu.AddItem("", desc, ITEMDRAW_DISABLED);
 

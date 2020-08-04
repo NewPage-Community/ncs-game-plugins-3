@@ -75,7 +75,7 @@ enum struct Reward
 
 void ProgressBar(int point, char[] buffer, int size)
 {
-    int left = (point % LEVEL_POINT) / LEVEL_POINT * PROGRESS_LENGTH;
+    int left = view_as<float>(point % LEVEL_POINT) / LEVEL_POINT * PROGRESS_LENGTH;
     for (int i = 0; i < PROGRESS_LENGTH; i++)
     {
         if (left >= i)

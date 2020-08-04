@@ -10,24 +10,33 @@ void CloseAPI()
     delete httpClient;
 }
 
-void LoadUserStoreList(int client)
+void LoadUserStoreList(int client, bool openMenu = false)
 {
     char uid[MAX_UID_LENGTH];
     if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
         return;
+    
+    DataPack dp = new DataPack();
+    dp.WriteCell(client, false);
+    dp.WriteCell(openMenu, false);
 
     char path[128];
     Format(path, sizeof(path), "%s/list/%s", Store_Service, uid);
-    httpClient.Get(path, LoadUserStoreListCallback, client);
+    httpClient.Get(path, LoadUserStoreListCallback, dp);
 }
 
-public void LoadUserStoreListCallback(HTTPResponse response, int client, const char[] error)
+public void LoadUserStoreListCallback(HTTPResponse response, DataPack dp, const char[] error)
 {
     if (response.Status != HTTPStatus_OK || response.Data == null)
     {
         NCS_LogError("Store", "LoadUserStoreListCallback", "Faild to load info %d (%s)", response.Status, error);
         return;
     }
+
+    dp.Reset();
+    int client = dp.ReadCell();
+    bool openMenu = dp.ReadCell();
+    dp.Close();
 
     if (!IsValidClient(client))
         return;
@@ -43,6 +52,9 @@ public void LoadUserStoreListCallback(HTTPResponse response, int client, const c
 
     playerMoney[client] = data.GetInt("money");
     playerPass[client] = data.GetInt("pass_type");
+
+    if (openMenu)
+        DisplayStoreMenu(client);
 }
 
 void BuyItem(int client, Item item)

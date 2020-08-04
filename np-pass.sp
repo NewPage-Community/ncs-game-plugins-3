@@ -33,12 +33,18 @@ public void OnPluginStart()
 {
     InitAPI();
     InitCache();
+    InitCmd();
 }
 
 public void OnPluginEnd()
 {
     CloseAPI();
     CloseCache();
+}
+
+public void OnMapStart()
+{
+    LoadRewards();
 }
 
 public void NCS_Account_OnUserLoaded(int client, const char[] uid)

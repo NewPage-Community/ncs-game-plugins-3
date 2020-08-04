@@ -3,7 +3,6 @@ static int playerLastItem[MAXPLAYERS+1];
 
 void DisplayStoreMenu(int client)
 {
-    LoadUserStoreList(client);
     Menu menu = new Menu(UserStoreListHandle); 
     menu.SetTitle("商店\n软妹币: %d", playerMoney[client]);
     menu.AddItem("0", "热门推荐")

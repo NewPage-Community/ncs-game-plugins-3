@@ -45,7 +45,7 @@ public void GiveMoneyCallback(HTTPResponse response, DataPack dp, const char[] e
     dp.ReadString(uid, sizeof(uid));
     int money = dp.ReadCell();
     dp.ReadString(reason, sizeof(reason));
-    dp.Close()
+    dp.Close();
 
     if (response.Status != HTTPStatus_OK || response.Data == null)
     {

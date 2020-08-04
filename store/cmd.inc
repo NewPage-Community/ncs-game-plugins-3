@@ -5,6 +5,6 @@ void InitCmd()
 
 public Action Command_Store(int client, int args)
 {
-	DisplayStoreMenu(client);
+	LoadUserStoreList(client, true);
 	return Plugin_Handled;
 }

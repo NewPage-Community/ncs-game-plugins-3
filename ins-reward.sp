@@ -48,7 +48,7 @@ void Reward()
     }
     for (int client = 1; client < MAXPLAYERS; client++)
     {
-        if (IsValidClient(client))
+        if (IsValidClient(client) && IsClientInGame(client))
         {
             NCS_Money_Give(client, rmb, "通关奖励");
             NCS_Chat(client, _, "{blue} 通关成功！奖励：{red}%d {blue}软妹币", rmb);

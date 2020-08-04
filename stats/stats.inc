@@ -36,7 +36,7 @@ methodmap Stats < ArrayList
         for (int i = 0; i < length; i++)
         {
             StatsInfo stats_raw;
-            JSONObject stats_json = new JSONObject()
+            JSONObject stats_json = new JSONObject();
             this.GetArray(i, stats_raw, sizeof(stats_raw));
             stats_json.SetString("range", stats_raw.range);
             stats_json.SetString("stats_name", stats_raw.stats_name);

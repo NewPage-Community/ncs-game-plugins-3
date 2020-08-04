@@ -53,6 +53,7 @@ methodmap Items < ArrayList
                 item.discount = 1.0;
 
             list.PushArray(item, sizeof(item));
+            delete data;
         }
         return view_as<Items>(list);
     }

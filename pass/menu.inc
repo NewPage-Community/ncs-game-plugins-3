@@ -41,6 +41,8 @@ public void LoadPassInfo(HTTPResponse response, int client, const char[] error)
     menu.AddItem("", "使用经验箱");
     menu.AddItem("", "查看下一级奖励");
     menu.Display(client, MENU_TIME_FOREVER);
+
+    delete info;
 }
 
 public int PassInfoMenuHandle(Menu menu, MenuAction action, int client, int slot)

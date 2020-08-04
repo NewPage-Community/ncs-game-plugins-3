@@ -69,6 +69,9 @@ public void LoadRewardsCallback(HTTPResponse response, int client, const char[] 
         rewards[reward.level][AdvReward][count++] = reward;
         delete item;
     }
+
+    delete free;
+    delete adv;
 }
 
 void ClearRewards()

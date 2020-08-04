@@ -38,7 +38,11 @@ public void LoadSkinsInfo(HTTPResponse response, DataPack dp, const char[] error
     g_Skins = new SkinIndex();
 
     for (int i = 0; i < length; i++)
-        g_Skins.Add(view_as<JSONObject>(skins.Get(i)));
+    {
+        JSONObject skin = view_as<JSONObject>(skins.Get(i));
+        g_Skins.Add(skin);
+        delete skin;
+    }
     
     delete skins;
 }

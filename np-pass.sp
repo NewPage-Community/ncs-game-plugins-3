@@ -1,5 +1,5 @@
 // for dev
-#define DEV
+//#define DEV
 
 #include <ncs>
 #include <ncs/account>

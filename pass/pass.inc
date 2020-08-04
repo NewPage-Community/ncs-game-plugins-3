@@ -75,13 +75,13 @@ enum struct Reward
 
 void ProgressBar(int point, char[] buffer, int size)
 {
-    int left = RoundToFloor(view_as<float>(point % LEVEL_POINT) / LEVEL_POINT * PROGRESS_LENGTH);
+    int left = (point % LEVEL_POINT) * PROGRESS_LENGTH / LEVEL_POINT;
     for (int i = 0; i < PROGRESS_LENGTH; i++)
     {
-        if (left >= i)
-            Format(buffer, size, "%s|", buffer);
+        if (left >= (i + 1))
+            Format(buffer, size, "%s#", buffer);
         else
-            Format(buffer, size, "%s ", buffer);
+            Format(buffer, size, "%s. ", buffer);
     }
     Format(buffer, size, "[%s]", buffer);
 }

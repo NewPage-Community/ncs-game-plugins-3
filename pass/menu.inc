@@ -109,7 +109,7 @@ void DisplayNextRewards(int client)
     
     int level = Level(player[client].point) + 1;
     Menu menu = new Menu(NextRewardsHandle);
-    menu.SetTitle("通行证下一级奖励\n \n%d级奖励", level);
+    menu.SetTitle("通行证下一级奖励\n \n%d级奖励\n ", level);
 
     char desc[512];
 
@@ -124,6 +124,7 @@ void DisplayNextRewards(int client)
         rewards[level][FreeReward][i].GetName(name, sizeof(name));
         Format(desc, sizeof(desc), "%s- %s\n", desc, name);
     }
+    Format(desc, sizeof(desc), "%s\n ", desc);
     menu.AddItem("", desc, ITEMDRAW_DISABLED);
 
     // adv

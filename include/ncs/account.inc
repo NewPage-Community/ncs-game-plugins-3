@@ -17,26 +17,27 @@ native bool NCS_Account_GetUID(int client, char[] uid, int size);
 native void NCS_Account_ChangeName(int client, const char[] name);
 // NCS_Account_GetName safety way to get name
 native void NCS_Account_GetName(int client, char[] buffer, int size);
-
-stock int GetClientFromUID(const char[] uid)
-{
-    for (int i = 1; i < MAXPLAYERS+1; i++)
-    {
-        int index = i;
-        if (index > 0 && index <= MaxClients && IsClientConnected(index) && !IsFakeClient(index) && !IsClientSourceTV(index))
-        {
-            char tUID[MAX_UID_LENGTH];
-            NCS_Account_GetUID(index, tUID, sizeof(tUID));
-            if (StrEqual(tUID, uid))
-                return index;
-        }
-    }
-    return 0;
-}
+// NCS_Account_GetClientOfUID faster way to get uid
+// not found return 0
+native int NCS_Account_GetClientOfUID(const char[] uid);
 
 public SharedPlugin __pl_ncs_account = 
 {
     name = "NCS-Account",
     file = "np-account.smx",
+#if defined REQUIRE_PLUGIN
     required = 1,
+#else
+    required = 0,
+#endif
 };
+
+#if !defined REQUIRE_PLUGIN
+public void __pl_ncs_account_SetNTVOptional()
+{
+    MarkNativeAsOptional("NCS_Account_GetUID");
+	MarkNativeAsOptional("NCS_Account_ChangeName");
+	MarkNativeAsOptional("NCS_Account_GetName");
+    MarkNativeAsOptional("NCS_Account_GetClientOfUID");
+}
+#endif

@@ -1,5 +1,5 @@
 #if defined _NCS_Server_
-	#endinput
+    #endinput
 #endif
 #define _NCS_Server_
 
@@ -18,7 +18,20 @@ native int NCS_Server_GetGameID();
 
 public SharedPlugin __pl_ncs_server = 
 {
-	name = "NCS-Server",
-	file = "np-server.smx",
-	required = 1,
+    name = "NCS-Server",
+    file = "np-server.smx",
+#if defined REQUIRE_PLUGIN
+    required = 1,
+#else
+    required = 0,
+#endif
 };
+
+#if !defined REQUIRE_PLUGIN
+public void __pl_ncs_server_SetNTVOptional()
+{
+    MarkNativeAsOptional("NCS_Server_GetID");
+    MarkNativeAsOptional("NCS_Server_GetModID");
+    MarkNativeAsOptional("NCS_Server_GetGameID");
+}
+#endif

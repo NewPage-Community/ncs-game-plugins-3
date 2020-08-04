@@ -2,7 +2,13 @@
 //#define DEV
 
 #include <ncs>
+
+#define REQUIRE_PLUGIN
 #include <ncs/account>
+#include <ncs/server>
+#undef REQUIRE_PLUGIN
+
+#include <ncs/chat>
 
 #define P_NAME P_PRE ... " - Sign"
 #define P_DESC "Sign API provider plugin"

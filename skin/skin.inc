@@ -68,7 +68,6 @@ methodmap SkinIndex < StringMap
 SkinIndex g_Skins;
 int g_UsersUsedSkin[MAXPLAYERS+1];
 
-#include <ncs/chat>
 #include "skin/api"
 #include "skin/player"
 #include "skin/preview"

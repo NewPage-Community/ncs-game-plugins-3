@@ -2,8 +2,11 @@
 
 #include <ncs/client>
 
+#define REQUIRE_PLUGIN
 #include <ncs/backpack>
 #include <ncs/money>
+#undef REQUIRE_PLUGIN
+
 #include <ncs/chat>
 
 #define P_NAME P_PRE ... " - Ins round reward"

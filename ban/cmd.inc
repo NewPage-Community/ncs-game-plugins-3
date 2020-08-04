@@ -15,7 +15,7 @@ public Action BanNotifyCallback(int args)
     GetCmdArg(2, type, sizeof(type));
     GetCmdArg(3, reason, sizeof(reason));
 
-    int client = GetClientFromUID(uid);
+    int client = NCS_Account_GetClientOfUID(uid);
     if (client > 0)
         ReqBanCheck(client, uid);
 

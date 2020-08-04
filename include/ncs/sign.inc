@@ -9,5 +9,9 @@ public SharedPlugin __pl_ncs_sign =
 {
     name = "NCS-Sign",
     file = "np-sign.smx",
+#if defined REQUIRE_PLUGIN
     required = 1,
+#else
+    required = 0,
+#endif
 };

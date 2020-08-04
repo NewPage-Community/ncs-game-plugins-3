@@ -3,6 +3,7 @@ void RegNative()
 	CreateNative("NCS_Account_GetUID", Native_GetUID);
 	CreateNative("NCS_Account_ChangeName", Native_ChangeName);
 	CreateNative("NCS_Account_GetName", Native_GetName);
+	CreateNative("NCS_Account_GetClientOfUID", Native_GetClientOfUID);
 }
 
 public int Native_GetUID(Handle plugin, int numParams)
@@ -29,4 +30,11 @@ public int Native_GetName(Handle plugin, int numParams)
 	if (!g_Accounts[client].Valid())
 		return 0;
 	return (SetNativeString(2, g_Accounts[client].name, GetNativeCell(3)) == 0);
+}
+
+public int Native_GetClientOfUID(Handle plugin, int numParams)
+{
+	char uid[MAX_UID_LENGTH];
+	GetNativeString(1, uid, MAX_UID_LENGTH);
+	return FindClient(uid);
 }

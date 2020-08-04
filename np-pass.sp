@@ -2,7 +2,12 @@
 //#define DEV
 
 #include <ncs>
+
+#define REQUIRE_PLUGIN
 #include <ncs/account>
+#undef REQUIRE_PLUGIN
+
+#include <ncs/chat>
 
 #define P_NAME P_PRE ... " - Pass"
 #define P_DESC "Pass API provider plugin"

@@ -34,6 +34,7 @@ public void OnPluginStart()
 	InitAPI();
 	InitCmd();
 	InitName();
+	InitUID();
 }
 
 public void OnPluginEnd()
@@ -56,5 +57,6 @@ public void OnClientAuthorized(int client, const char[] auth)
 
 public void OnClientDisconnect(int client)
 {
+	RemoveClient(client);
 	g_Accounts[client].Clean();
 }

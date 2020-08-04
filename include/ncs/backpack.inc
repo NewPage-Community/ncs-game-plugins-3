@@ -35,5 +35,16 @@ public SharedPlugin __pl_ncs_backpack =
 {
     name = "NCS-Backpack",
     file = "np-backpack.smx",
+#if defined REQUIRE_PLUGIN
     required = 1,
+#else
+    required = 0,
+#endif
 };
+
+#if !defined REQUIRE_PLUGIN
+public void __pl_ncs_backpack_SetNTVOptional()
+{
+    MarkNativeAsOptional("NCS_Backpack_AddItems");
+}
+#endif

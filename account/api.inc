@@ -80,6 +80,8 @@ public void LoadAccountUID(HTTPResponse response, DataPack dp, const char[] erro
 	// Update username
 	GetClientName(client, username, sizeof(username));
 	g_Accounts[client].UpdateName(username);
+	// UIDMap
+	InitClient(client, uid);
 
 	// Call global forward
 	Call_StartForward(onUserLoaded);

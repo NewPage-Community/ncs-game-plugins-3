@@ -20,7 +20,7 @@ public SharedPlugin __pl_ncs_vip =
 };
 
 #if !defined REQUIRE_PLUGIN
-public void __pl_ircrelay_SetNTVOptional()
+public void __pl_ncs_vip_SetNTVOptional()
 {
     MarkNativeAsOptional("NCS_VIP_IsVIP");
 	MarkNativeAsOptional("NCS_VIP_Level");

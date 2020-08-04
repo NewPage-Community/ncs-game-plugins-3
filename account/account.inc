@@ -40,6 +40,7 @@ enum struct account
 account g_Accounts[MAXPLAYERS + 1];
 
 #include "account/name"
+#include "account/uid"
 #include "account/api"
 #include "account/check"
 #include "account/cmd"

@@ -101,7 +101,6 @@ char passTypeName[][] = {"免费通行证", "高级通行证", "终极通行证"
 
 int season;
 
-#include <ncs/chat>
 #include "pass/api"
 #include "pass/cache"
 #include "pass/player"

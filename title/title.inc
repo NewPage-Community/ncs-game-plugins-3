@@ -1,10 +1,3 @@
-#include <sdktools>
-#include <ncs/vip>
-
-#define REQUIRE_PLUGIN
-#include <ncs/chat>
-#undef REQUIRE_PLUGIN
-
 enum struct TitleData
 {
     char title[MAX_TITLE_LENGTH];

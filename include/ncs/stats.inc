@@ -9,5 +9,16 @@ public SharedPlugin __pl_ncs_stats =
 {
     name = "NCS-Stats",
     file = "np-stats.smx",
+#if defined REQUIRE_PLUGIN
     required = 1,
+#else
+    required = 0,
+#endif
 };
+
+#if !defined REQUIRE_PLUGIN
+public void __pl_ncs_stats_SetNTVOptional()
+{
+    MarkNativeAsOptional("NCS_Stats_Add");
+}
+#endif

@@ -17,7 +17,7 @@ public SharedPlugin __pl_ncs_skin =
 };
 
 #if !defined REQUIRE_PLUGIN
-public void __pl_ircrelay_SetNTVOptional()
+public void __pl_ncs_skin_SetNTVOptional()
 {
     MarkNativeAsOptional("NCS_Skin_Preview");
 }

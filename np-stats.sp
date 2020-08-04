@@ -2,7 +2,10 @@
 //#define DEV
 
 #include <ncs>
+
+#define REQUIRE_PLUGIN
 #include <ncs/account>
+#undef REQUIRE_PLUGIN
 
 #define P_NAME P_PRE ... " - Stats"
 #define P_DESC "Stats api provider plugin"

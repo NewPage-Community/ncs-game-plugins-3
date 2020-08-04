@@ -3,6 +3,10 @@
 
 #include <ncs>
 
+#define REQUIRE_PLUGIN
+#include <ncs/account>
+#undef REQUIRE_PLUGIN
+
 #define P_NAME P_PRE ... " - Chat"
 #define P_DESC "Chat management plugin"
 

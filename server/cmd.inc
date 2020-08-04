@@ -1,5 +1,3 @@
-#include <ncs/chat>
-
 void RegCmd()
 {
 	RegServerCmd("ncs_server_restart", Command_Restart);

@@ -1,4 +1,3 @@
-#include <ncs/server>
 #define Sign_Service "user/sign"
 
 HTTPClient httpClient;

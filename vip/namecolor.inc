@@ -1,5 +1,8 @@
 void DisplayNameColorMenu(int client)
 {
+    if (!g_VIPs[client].IsValid())
+        return;
+    
     Menu menu = new Menu(NameColorMenuHandle);
     menu.SetTitle("名字颜色");
     menu.AddItem("{white}", "白色");

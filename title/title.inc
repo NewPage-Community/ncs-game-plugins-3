@@ -27,7 +27,7 @@ void TitleBeSet(int client, int type)
         }
         case 1:
         {
-            if (NCS_VIP_IsVIP(client))
+            if (NCS_VIP_IsVIP(client) && NCS_VIP_Level(client) >= 100)
             {
                 Format(title, sizeof(title), "<%s>", playerTitle[client].title);
                 strcopy(titleColor, sizeof(titleColor), "{blue}");

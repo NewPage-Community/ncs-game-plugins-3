@@ -60,6 +60,9 @@ public void LoadVIPInfo(HTTPResponse response, DataPack dp, const char[] error)
 
 	g_VIPs[client].Init(client, point, expireDate);
 
+	// internal vip info init hook
+	PlayerInit(client);
+
 	delete info;
 }
 

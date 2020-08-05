@@ -11,22 +11,22 @@ public Action Command_Prefix(int client, int args)
 
     playerTitle[client].isWaitingForplayerTitle = false;
 
-    Menu menu = new Menu(MenuHandler_Prefix);
+    MenuEx menu = new MenuEx(MenuHandler_Prefix);
     menu.SetTitle("请选择你显示的头衔");
 
-    AddMenuItemEx(menu, 0, "0", "不显示");
-    if (NCS_VIP_IsVIP(client))
+    menu.AddItemEx(0, "0", "不显示");
+    if (NCS_VIP_IsVIP(client) && NCS_VIP_Level(client) >= 100)
     {
-        AddMenuItemEx(menu, 0, "-1", "设置自定义头衔");
+        menu.AddItemEx(0, "-1", "设置自定义头衔");
         if (playerTitle[client].title[0] != '\0')
-            AddMenuItemEx(menu, 0, "1", "<%s>", playerTitle[client].title);
+            menu.AddItemEx(0, "1", "<%s>", playerTitle[client].title);
     }
     if (NCS_VIP_IsVIP(client))
-        AddMenuItemEx(menu, 0, "2", "<会员>");
+        menu.AddItemEx(0, "2", "<会员>");
     if (IsOwner(client))
-        AddMenuItemEx(menu, 0, "3", "<服主>");
+        menu.AddItemEx(0, "3", "<服主>");
     if (IsAdmin(client))
-        AddMenuItemEx(menu, 0, "4", "<管理>");
+        menu.AddItemEx(0, "4", "<管理>");
 
     menu.ExitButton = true;
     menu.Display(client, 0);

@@ -1,16 +1,36 @@
-#include <handles>
-
-// SourceMOD native hack
-stock void DrawPanelTextEx(Handle panel, const char[] fmt, any ...)
+methodmap MenuEx < Menu
 {
-	char vf[256];
-	VFormat(vf, 256, fmt, 3);
-	DrawPanelText(panel, vf);
+	public MenuEx(MenuHandler handler, MenuAction actions=MENU_ACTIONS_DEFAULT)
+	{
+		return view_as<MenuEx>(new Menu(handler, actions));
+	}
+
+	public bool AddItemEx(int style, const char[] info, const char[] fmt, any ...)
+	{
+		char vf[256];
+		VFormat(vf, sizeof(vf), fmt, 5);
+		return this.AddItem(info, vf, style);
+	}
 }
 
-stock bool AddMenuItemEx(Handle menu, int style, const char[] info, const char[] display, any ...)
+methodmap PanelEx < Panel
 {
-	char m_szBuffer[256];
-	VFormat(m_szBuffer, 256, display, 5);
-	return AddMenuItem(menu, info, m_szBuffer, style);
+	public PanelEx(Handle hStyle = null)
+	{
+		return view_as<PanelEx>(new Panel(hStyle));
+	}
+
+	public bool DrawTextEx(const char[] fmt, any ...)
+	{
+		char vf[256];
+		VFormat(vf, sizeof(vf), fmt, 3);
+		return this.DrawText(vf);
+	}
+
+	public int DrawItemEx(int style, const char[] fmt, any ...)
+	{
+		char vf[256];
+		VFormat(vf, sizeof(vf), fmt, 4);
+		return this.DrawItem(vf, style);
+	}
 }

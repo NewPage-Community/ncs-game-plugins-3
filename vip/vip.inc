@@ -1,4 +1,4 @@
-enum struct vip
+enum struct VIP
 {
     int index;
     int point;
@@ -41,7 +41,11 @@ enum struct vip
     }
 }
 
-vip g_VIPs[MAXPLAYERS + 1];
+VIP g_VIPs[MAXPLAYERS + 1];
 
 #include "vip/api"
 #include "vip/native"
+#include "vip/menu"
+#include "vip/votekick"
+#include "vip/namecolor"
+#include "vip/player"

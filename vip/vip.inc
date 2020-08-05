@@ -49,3 +49,4 @@ VIP g_VIPs[MAXPLAYERS + 1];
 #include "vip/votekick"
 #include "vip/namecolor"
 #include "vip/player"
+#include "vip/cmd"

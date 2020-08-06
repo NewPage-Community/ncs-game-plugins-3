@@ -10,9 +10,9 @@
 #define P_URLS	 		"https://new-page.xyz"
 #define P_PRE 			"NewPage Core System (NCS)"
 #if defined DEV
-	#define P_VERSION "v3.0.dev"
+	#define P_VERSION "v3.1.dev"
 #else
-    #define P_VERSION "v3.0.<pipeline_iid>"
+    #define P_VERSION "v3.1.<pipeline_iid>"
 #endif
 
 // Core Include

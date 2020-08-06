@@ -8,6 +8,7 @@
 #include <ncs/stats>
 #include <ncs/pass>
 #include <ncs/money>
+#include <ncs/cookie>
 
 #define P_NAME P_PRE ... " - Test"
 #define P_DESC "Test plugin"
@@ -69,6 +70,9 @@ public Action Command_testall(int client, int args)
 
     // Money
     NCS_Money_Give(client, 100, "test");
+
+    // Cookie
+    NCS_Cookie_Set(client, "test", "test");
 }
 
 public void NCS_Account_OnUserLoaded(int client, const char[] uid)
@@ -89,4 +93,12 @@ public void NCS_Server_OnLoaded()
 public void NCS_Sign_OnUserSigned(int client)
 {
     PrintToServer("NCS_Sign_OnUserSigned(client:%d)", client);
+}
+
+public void NCS_Cookie_OnUserCached(int client)
+{
+    char buffer[MAX_COOKIE_VALUE_LENGTH];
+    PrintToServer("NCS_Cookie_OnUserCached(client:%d)", client);
+    bool ok = NCS_Cookie_Get(client, "test", buffer, sizeof(buffer));
+    PrintToServer("Cookie test(%d): %s", ok, buffer);
 }

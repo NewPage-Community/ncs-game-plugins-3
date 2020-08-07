@@ -11,8 +11,9 @@ void SetClientAura(int client, int id = 0, bool preview = false)
     if (GetClientTeam(client) != 2)
         return;
 
-    if(g_tPreview[client] != INVALID_HANDLE)
-        KillTimer(g_tPreview[client]);
+    Handle timer = g_tPreview[client];
+    if(timer != INVALID_HANDLE && IsValidHandle(timer))
+        KillTimer(timer);
 
     if (playerAura[client] != INVALID_ENT_REFERENCE)
         RemoveClientAura(client);

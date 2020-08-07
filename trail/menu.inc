@@ -1,5 +1,3 @@
-#define BackpackUser_Service "backpack/user"
-
 void DisplayUserTrails(int client)
 {
     char uid[MAX_UID_LENGTH];

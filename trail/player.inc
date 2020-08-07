@@ -39,7 +39,7 @@ void CreateTrail(int client, int id = 0, bool preview = false)
     DispatchKeyValue(entity, "endwidth", "10.0");
     SetEntPropFloat(entity, Prop_Send, "m_flTextureRes", 0.05);
     DispatchSpawn(entity);
-    AttachTrail(entity, client, 0, 0);    
+    AttachTrail(entity, client, 0, 1);
 
     playerTrail[client] = EntIndexToEntRef(entity);
 
@@ -48,6 +48,7 @@ void CreateTrail(int client, int id = 0, bool preview = false)
         g_iPreviewEnt[entity] = client;
         SDKHook(entity, SDKHook_SetTransmit, Hook_SetTransmit_Preview);
         g_tPreview[client] = CreateTimer(30.0, Timer_ClearPreTrail, client);
+        NCS_Chat(client, _, "{blue}预览足迹 {lime}%s{blue} 30秒", s.name);
     }
 }
 

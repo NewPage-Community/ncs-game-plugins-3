@@ -101,6 +101,6 @@ public int Menu_TrailSelected(Menu menu, MenuAction action, int client, int slot
         menu.GetItem(slot, id, sizeof(id), _, name, sizeof(name));
 
         SetUsedTrail(client, id);
-        NCS_Chat(client, _, "{blue}已成功更换为 {lime}%s{blue}", name);
+        NCS_Chat(client, _, "{blue}已成功更换为 {lime}%s", name);
     }
 }

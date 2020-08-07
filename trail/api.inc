@@ -70,7 +70,7 @@ public void CheckUserHaveItemCallback(HTTPResponse response, DataPack dp, const 
 {
     if (response.Status != HTTPStatus_OK || response.Data == null)
     {
-        NCS_LogError("Trail", "LoadTrailInfo", "Faild to load info %d (%s)", response.Status, error);
+        NCS_LogError("Trail", "CheckUserHaveItemCallback", "Faild to load info %d (%s)", response.Status, error);
         return;
     }
 

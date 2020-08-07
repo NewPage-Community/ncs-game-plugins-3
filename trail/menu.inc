@@ -97,8 +97,7 @@ public int Menu_TrailSelected(Menu menu, MenuAction action, int client, int slot
         char id[8], name[32];
         menu.GetItem(slot, id, sizeof(id), _, name, sizeof(name));
 
-        g_UsersUsedTrail[client] = StringToInt(id);
-        CreateTrail(client);
+        SetUsedTrail(client, id);
         NCS_Chat(client, _, "{blue}已成功更换为 {lime}%s{blue}", name);
     }
 }

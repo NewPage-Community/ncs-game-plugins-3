@@ -106,9 +106,3 @@ public int Menu_SkinSelected(Menu menu, MenuAction action, int client, int slot)
         NCS_Chat(client, _, "{blue}已成功更换为 {lime}%s{blue}！可通过 {olive}!tp{blue} 查看模型", skinName);
     }
 }
-
-void SetUsedSkin(int client, const char[] id)
-{
-    NCS_Cookie_Set(client, "skin_used", id);
-    g_UsersUsedSkin[client] = StringToInt(id);
-}

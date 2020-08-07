@@ -5,3 +5,10 @@ void GetUsedTrail(int client)
     g_UsersUsedTrail[client] = StringToInt(id);
     CheckUserHaveTrail(client);
 }
+
+void SetUsedTrail(int client, const char[] id)
+{
+    NCS_Cookie_Set(client, "trail_used", id);
+    g_UsersUsedTrail[client] = StringToInt(id);
+    CreateTrail(client);
+}

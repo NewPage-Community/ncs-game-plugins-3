@@ -16,6 +16,10 @@ enum struct Trail
         JSONObject attr = view_as<JSONObject>(data.Get("attributes"));
         attr.GetString("trail_path", this.trailPath, PLATFORM_MAX_PATH);
         delete attr;
+
+        // Precache
+        if (this.trailPath[0] != '\0')
+            PrecacheGeneric(this.trailPath, true);
     }
 
     void Clean()

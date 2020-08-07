@@ -9,6 +9,7 @@
 
 #define MAXCHEERS 32
 #define MAX_CHEER_TYPE 2
+#define MAX_CHAT_LENGTH 512
 
 enum CheerType
 {
@@ -206,7 +207,10 @@ public Action CommandCheer(int client, int args)
             return Plugin_Handled;
         }
 
-        CPrintToChatAll("%s   \x04%s", name, g_cCheerString[GetRandomInt(0, 4)]);
+        char chat[MAX_CHAT_LENGTH];
+        Format(chat, sizeof(chat), "%s   \x04%s", name, g_cCheerString[GetRandomInt(0, 4)]);
+        ProcessColorString(chat, sizeof(chat), GetClientTeam(client));
+        PrintToChatAll(chat);
         PlaySound(client, Cheer);
         
         g_iCheerCount[client][Cheer]++;
@@ -221,7 +225,10 @@ public Action CommandCheer(int client, int args)
             return Plugin_Handled;
         }
 
-        CPrintToChatAll("%s   \x04%s", name, g_cCheerString[GetRandomInt(0, 4)]);
+        char chat[MAX_CHAT_LENGTH];
+        Format(chat, sizeof(chat), "%s   \x04%s", name, g_cCheerString[GetRandomInt(0, 4)]);
+        ProcessColorString(chat, sizeof(chat), GetClientTeam(client));
+        PrintToChatAll(chat);
         PlaySound(client, Jeer);
         
         g_iCheerCount[client][Jeer]++;

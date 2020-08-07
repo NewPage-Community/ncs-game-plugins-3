@@ -125,7 +125,7 @@ void BuyItemMenu(int client, Item item)
         case 3:
         {
             if (LibraryExists("NCS-Aura"))
-                menu.AddItem(info, "预览足迹\n(玩家活着有效)");
+                menu.AddItem(info, "预览光环\n(玩家活着有效)");
         }
     }
     

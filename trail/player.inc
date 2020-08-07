@@ -11,26 +11,22 @@ void CreateTrail(int client, int id = 0, bool preview = false)
     if (GetClientTeam(client) != 2)
         return;
 
+    if(g_tPreview[client] != INVALID_HANDLE)
+        KillTimer(g_tPreview[client]);
+
+    if (playerTrail[client] != INVALID_ENT_REFERENCE)
+        RemoveClientTrail(client);
+
     if (!preview)
     {
         id = g_UsersUsedTrail[client];
         if (id == 0)
-        {
-            if (playerTrail[client] == INVALID_ENT_REFERENCE)
-                RemoveClientTrail(client);
             return;
-        }
     }
 
     Trail s;
     if (!trails.Get(id, s))
         return;
-
-    if(g_tPreview[client] != INVALID_HANDLE)
-        KillTimer(g_tPreview[client]);
-
-    if (playerTrail[client] == INVALID_ENT_REFERENCE)
-        RemoveClientTrail(client);
 
     int entity;
     switch (s.type)

@@ -1,5 +1,6 @@
 #define MAX_TRAIL_NUM 1024
 #define MAX_TRAIL_NAME_LENGTH 64
+#define MAX_PARTICLE_NAME_LENGTH 64
 
 enum TrailType
 {
@@ -12,7 +13,8 @@ enum struct Trail
     int id;
     char name[MAX_TRAIL_NAME_LENGTH];
     char trailPath[PLATFORM_MAX_PATH];
-    int type;
+    char particleName[MAX_PARTICLE_NAME_LENGTH];
+    TrailType type;
 
     void Init(JSONObject data)
     {
@@ -20,22 +22,22 @@ enum struct Trail
         data.GetString("name", this.name, MAX_TRAIL_NAME_LENGTH);
 
         // attr
-        char trail_type[16], particle_name[16];
+        char trail_type[16];
         JSONObject attr = view_as<JSONObject>(data.Get("attributes"));
         attr.GetString("trail_path", this.trailPath, PLATFORM_MAX_PATH);
         attr.GetString("trail_type", trail_type, sizeof(trail_type));
-        attr.GetString("particle_name", particle_name, sizeof(particle_name));
+        attr.GetString("particle_name", this.particleName, MAX_PARTICLE_NAME_LENGTH);
         delete attr;
 
         // type
         if (StrEqual(trail_type, "particle"))
         {
-            this.type = view_as<int>(TrailType_Particle);
+            this.type = TrailType_Particle;
             PrecacheGeneric(this.trailPath, true);
-            PrecacheParticleEffect(particle_name);
+            PrecacheParticleEffect(this.particleName);
         }
         else
-            this.type = view_as<int>(TrailType_Material);
+            this.type = TrailType_Material;
     }
 
     void Clean()

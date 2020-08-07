@@ -15,7 +15,11 @@ void CreateTrail(int client, int id = 0, bool preview = false)
     {
         id = g_UsersUsedTrail[client];
         if (id == 0)
+        {
+            if (playerTrail[client] == INVALID_ENT_REFERENCE)
+                RemoveClientTrail(client);
             return;
+        }
     }
 
     Trail s;
@@ -31,8 +35,8 @@ void CreateTrail(int client, int id = 0, bool preview = false)
     int entity;
     switch (s.type)
     {
-        case 0: entity = CreateSpriteTrail(client, s.trailPath);
-        case 1: entity = CreateParticleTrail(client, s.trailPath);
+        case TrailType_Material: entity = CreateSpriteTrail(client, s.trailPath);
+        case TrailType_Particle: entity = CreateParticleTrail(client, s.particleName);
     }
 
     playerTrail[client] = EntIndexToEntRef(entity);
@@ -82,14 +86,14 @@ int CreateSpriteTrail(int client, const char[] path)
     return entity;
 }
 
-int CreateParticleTrail(int client, const char[] path)
+int CreateParticleTrail(int client, const char[] name)
 {
     float clientOrigin[3];
     GetClientAbsOrigin(client, clientOrigin);
 
     int entity = CreateEntityByName("info_particle_system");
     DispatchKeyValue(entity, "start_active", "1");
-    DispatchKeyValue(entity, "effect_name", path);
+    DispatchKeyValue(entity, "effect_name", name);
     DispatchSpawn(entity);
     TeleportEntity(entity, clientOrigin, NULL_VECTOR, NULL_VECTOR);
     SetVariantString("!activator");

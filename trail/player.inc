@@ -11,8 +11,10 @@ void SetClientTrail(int client, int id = 0, bool preview = false)
     if (GetClientTeam(client) != 2)
         return;
 
+    // Kill preview timer
     Handle timer = g_tPreview[client];
-    if(timer != INVALID_HANDLE && IsValidHandle(timer))
+    g_tPreview[client] = INVALID_HANDLE;
+    if(timer != INVALID_HANDLE)
         KillTimer(timer);
 
     if (playerTrail[client] != INVALID_ENT_REFERENCE)

@@ -60,11 +60,14 @@ public void UserTrailsCallback(HTTPResponse response, DataPack dp, const char[] 
         char exprTime[INT64_LENGTH];
         IntToString(item.GetInt("id"), id, sizeof(id));
         item.GetString("expr_time", exprTime, sizeof(exprTime));
-        delete item;
 
         Trail s;
         if (!trails.Get(item.GetInt("id"), s))
+        {
+            delete item;
             continue;
+        }
+        delete item;
         
         char desc[64];
         int left = StringToInt(exprTime) - GetTime();

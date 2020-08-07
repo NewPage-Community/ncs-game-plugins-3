@@ -69,6 +69,7 @@ public void UserSkinsCallback(HTTPResponse response, DataPack dp, const char[] e
             delete item;
             continue;
         }
+        delete item;
         
         char desc[64];
         int left = StringToInt(exprTime) - GetTime();
@@ -77,7 +78,6 @@ public void UserSkinsCallback(HTTPResponse response, DataPack dp, const char[] e
         else
             Format(desc, sizeof(desc), "%s", s.name);
         menu.AddItem(skinID, desc);
-        delete item;
     }
     menu.Display(client, MENU_TIME_FOREVER);
 

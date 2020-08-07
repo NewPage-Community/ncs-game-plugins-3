@@ -19,7 +19,12 @@ enum struct Trail
 
         // Precache
         if (this.trailPath[0] != '\0')
-            PrecacheGeneric(this.trailPath, true);
+        {
+            if (FileExists(this.trailPath, true))
+                PrecacheGeneric(this.trailPath, true);
+            else
+                NCS_LogError("Trail", "TrailInit", "File is not exists (%s)", this.trailPath);
+        }
     }
 
     void Clean()

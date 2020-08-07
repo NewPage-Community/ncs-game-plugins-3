@@ -21,9 +21,20 @@ enum struct Skin
 
         // Precache model
         if (this.skinPath[0] != '\0')
-            PrecacheModel(this.skinPath, true);
+        {
+            if (FileExists(this.skinPath, true))
+                PrecacheModel(this.skinPath, true);
+            else
+                NCS_LogError("Skin", "SkinInit", "File is not exists (%s)", this.skinPath);
+        }
+            
         if (this.armPath[0] != '\0')
-            PrecacheModel(this.armPath, true);
+        {
+            if (FileExists(this.armPath, true))
+                PrecacheModel(this.armPath, true);
+            else
+                NCS_LogError("Skin", "SkinInit", "File is not exists (%s)", this.armPath);
+        }
     }
 
     void Clean()

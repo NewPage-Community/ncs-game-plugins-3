@@ -36,7 +36,25 @@ public int NameColorMenuHandle(Menu menu, MenuAction action, int client, int slo
 
 void NameColor_UserInit(int client)
 {
+    // Wait for vip loaded
+    CreateTimer(1.0, NameColor_Init, client, TIMER_FLAG_NO_MAPCHANGE);
+}
+
+public Action NameColor_Init(Handle timer, int client)
+{
+    if (!g_VIPs[client].IsValid())
+        return Plugin_Stop;
+    
     char color[MAX_COLOR_LENGTH];
     NCS_Cookie_Get(client, COOKIE_COLOR_NAME_KEY, color, sizeof(color));
-    NCS_Chat_SetNameColor(client, color);
+
+    if (color[0] == '\0')
+        return Plugin_Stop;
+    
+    if (g_VIPs[client].IsVIP())
+        NCS_Chat_SetNameColor(client, color);
+    else
+        NCS_Cookie_Set(client, COOKIE_COLOR_NAME_KEY, "");
+    
+    return Plugin_Stop;
 }

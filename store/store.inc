@@ -85,7 +85,7 @@ Items playerStoreList[MAXPLAYERS+1];
 int playerMoney[MAXPLAYERS+1];
 int playerPass[MAXPLAYERS+1];
 
-char typeName[][] = {"", "皮肤", "拖尾", "喷漆", "投掷物轨迹"};
+char typeName[][] = {"", "皮肤", "拖尾", "光环", "喷漆"};
 char passTypeName[][] = {"", "高级通行证", "终极通行证"};
 char passTypeDesc[][] = {"", "- 解锁高级版等级奖励", "- 解锁高级版等级奖励\n- 通行证等级增加20级"};
 int passTypePrice[] = {0, 6888, 9888};

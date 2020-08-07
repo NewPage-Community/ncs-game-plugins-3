@@ -9,8 +9,8 @@ void DisplayStoreMenu(int client)
     menu.AddItem("0", "升级通行证");
     menu.AddItem("1", "皮肤");
     menu.AddItem("2", "足迹");
-    menu.AddItem("3", "喷漆");
-    menu.AddItem("4", "投掷物轨迹");
+    menu.AddItem("3", "光环");
+    menu.AddItem("4", "喷漆");
     menu.Display(client, MENU_TIME_FOREVER);
 }
 

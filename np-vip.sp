@@ -5,6 +5,7 @@
 
 #define REQUIRE_PLUGIN
 #include <ncs/account>
+#include <ncs/cookie>
 #undef REQUIRE_PLUGIN
 
 #include <ncs/chat>
@@ -59,4 +60,9 @@ public void NCS_Account_OnUserLoaded(int client, const char[] uid)
 public void OnClientDisconnect(int client)
 {
 	g_VIPs[client].Clean();
+}
+
+public void NCS_Cookie_OnUserCached(int client)
+{
+    NameColor_UserInit(client);
 }

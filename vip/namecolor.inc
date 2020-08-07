@@ -1,3 +1,5 @@
+#define COOKIE_COLOR_NAME_KEY "name_color"
+
 void DisplayNameColorMenu(int client)
 {
     if (!g_VIPs[client].IsValid())
@@ -24,8 +26,17 @@ public int NameColorMenuHandle(Menu menu, MenuAction action, int client, int slo
     {
         char color[MAX_COLOR_LENGTH];
         menu.GetItem(slot, color, sizeof(color));
+
+        NCS_Cookie_Set(client, COOKIE_COLOR_NAME_KEY, color);
         NCS_Chat_SetNameColor(client, color);
+
         NCS_Chat(client, _, "{blue}成功更换 %s名字颜色", color);
-        // TODO: Need to save color setting
     }
+}
+
+void NameColor_UserInit(int client)
+{
+    char color[MAX_COLOR_LENGTH];
+    NCS_Cookie_Get(client, COOKIE_COLOR_NAME_KEY, color, sizeof(color));
+    NCS_Chat_SetNameColor(client, color);
 }

@@ -29,6 +29,7 @@ public Action Command_Menu(int client, int args)
     menu.AddItem("", "会员菜单");
     menu.AddItem("", "皮肤设置");
     menu.AddItem("", "头衔设置");
+    menu.AddItem("", "足迹设置");
     menu.Display(client, MENU_TIME_FOREVER);
     return Plugin_Handled;
 }
@@ -47,6 +48,7 @@ public int MenuHandle(Menu menu, MenuAction action, int client, int slot)
             case 3: FakeClientCommandEx(client, "sm_vip");
             case 4: FakeClientCommandEx(client, "sm_skin");
             case 5: FakeClientCommandEx(client, "sm_title");
+            case 6: FakeClientCommandEx(client, "sm_trail");
         }
     }
 }

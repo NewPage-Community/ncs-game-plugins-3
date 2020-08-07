@@ -8,6 +8,7 @@
 #undef REQUIRE_PLUGIN
 
 #include <ncs/skin>
+#include <ncs/trail>
 #include <ncs/chat>
 
 #define P_NAME P_PRE ... " - Store"

@@ -117,6 +117,11 @@ void BuyItemMenu(int client, Item item)
             if (LibraryExists("NCS-Skin"))
                 menu.AddItem(info, "预览模型\n(准星位置生成模型)");
         }
+        case 2:
+        {
+            if (LibraryExists("NCS-Trail"))
+                menu.AddItem(info, "预览足迹\n(限时生效)");
+        }
     }
     
     menu.ExitBackButton = true;
@@ -151,6 +156,8 @@ public int BuyItemHandle(Menu menu, MenuAction action, int client, int slot)
             {
                 case 1:
                     NCS_Skin_Preview(client, item.id);
+                case 2:
+                    NCS_Trail_Preview(client, item.id);
             }
             BuyItemMenu(client, item);
         }

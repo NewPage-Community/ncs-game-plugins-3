@@ -1,4 +1,5 @@
-#define Skin_Service "game/skin"
+#define BackpackItems_Service "backpack/items"
+#define BackpackUser_Service "backpack/user"
 
 HTTPClient httpClient;
 
@@ -15,7 +16,7 @@ void CloseAPI()
 void LoadSkins()
 {
     char path[128];
-    Format(path, sizeof(path), "%s", Skin_Service);
+    Format(path, sizeof(path), "%s/type/1", BackpackItems_Service);
     httpClient.Get(path, LoadSkinsInfo);
 }
 
@@ -29,7 +30,7 @@ public void LoadSkinsInfo(HTTPResponse response, DataPack dp, const char[] error
 
     // JSON
     JSONObject data = view_as<JSONObject>(response.Data);
-    JSONArray skins = view_as<JSONArray>(data.Get("info"));
+    JSONArray skins = view_as<JSONArray>(data.Get("items"));
     int length = skins.Length;
 
     // Loading skins
@@ -47,61 +48,45 @@ public void LoadSkinsInfo(HTTPResponse response, DataPack dp, const char[] error
     delete skins;
 }
 
-void ReqUserSkinInfo(int client, const char[] uid)
+void CheckUserHaveSkin(int client)
 {
+    char uid[MAX_UID_LENGTH];
+    if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
+        return;
+
+    int id = g_UsersUsedSkin[client];
+    
     // Datapack to pass to callback
     DataPack dp = new DataPack();
     dp.WriteCell(client, false);
-    dp.WriteString(uid, false);
-
+    dp.WriteCell(id, false);
+    
     char path[128];
-    Format(path, sizeof(path), "%s/%s", Skin_Service, uid);
-    httpClient.Get(path, LoadUserSkinInfo, dp);
+    Format(path, sizeof(path), "%s/have/%s/%d", BackpackUser_Service, uid, id);
+    httpClient.Get(path, CheckUserHaveItemCallback, dp);
 }
 
-public void LoadUserSkinInfo(HTTPResponse response, DataPack dp, const char[] error)
+public void CheckUserHaveItemCallback(HTTPResponse response, DataPack dp, const char[] error)
 {
     if (response.Status != HTTPStatus_OK || response.Data == null)
     {
-        NCS_LogError("Skin", "LoadUserSkinInfo", "Faild to load info %d (%s)", response.Status, error);
+        NCS_LogError("Skin", "CheckUserHaveItemCallback", "Faild to load info %d (%s)", response.Status, error);
         return;
     }
 
     // DataPack
     dp.Reset();
     int client = dp.ReadCell();
-    char uid[MAX_UID_LENGTH];
-    dp.ReadString(uid, sizeof(uid));
+    int id = dp.ReadCell();
     dp.Close();
 
-    // JSON
-    char iUID[MAX_UID_LENGTH];
+    if (!IsValidClient(client))
+        return;
+    
+     // JSON
     JSONObject data = view_as<JSONObject>(response.Data);
+    bool have = data.GetBool("have");
 
-    // Check UID is valid
-    data.GetString("uid", iUID, sizeof(iUID));
-    if (!StrEqual(iUID, uid) || !IsValidClient(client))
-        return;
-
-    g_UsersUsedSkin[client] = data.GetInt("used_skin");
-}
-
-void SetUsedSkin(int client, int id)
-{
-    char uid[MAX_UID_LENGTH];
-    if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
-    {
-        NCS_Chat(client, _, "{blue}您的用户数据尚未加载，请重试！");
-        return;
-    }
-
-    g_UsersUsedSkin[client] = id;
-
-    // JSON data
-    JSONObject data = new JSONObject();
-    data.SetInt("used_skin", id);
-
-    char path[128];
-    Format(path, sizeof(path), "%s/%s/used", Skin_Service, uid);
-    httpClient.Post(path, data, BlankCallback);
+    if (g_UsersUsedSkin[client] == id && !have)
+        g_UsersUsedSkin[client] = 0;
 }

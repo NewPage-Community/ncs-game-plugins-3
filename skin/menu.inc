@@ -102,7 +102,13 @@ public int Menu_SkinSelected(Menu menu, MenuAction action, int client, int slot)
         char skinID[32], skinName[32];
         menu.GetItem(slot, skinID, sizeof(skinID), _, skinName, sizeof(skinName));
 
-        SetUsedSkin(client, StringToInt(skinID, 10));
+        SetUsedSkin(client, skinID);
         NCS_Chat(client, _, "{blue}已成功更换为 {lime}%s{blue}！可通过 {olive}!tp{blue} 查看模型", skinName);
     }
+}
+
+void SetUsedSkin(int client, const char[] id)
+{
+    NCS_Cookie_Set(client, "skin_used", id);
+    g_UsersUsedSkin[client] = StringToInt(id);
 }

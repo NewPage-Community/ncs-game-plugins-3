@@ -7,15 +7,17 @@ enum struct Skin
     char name[MAX_SKIN_NAME_LENGTH];
     char skinPath[PLATFORM_MAX_PATH];
     char armPath[PLATFORM_MAX_PATH];
-    int price;
 
     void Init(JSONObject data)
     {
         this.id = data.GetInt("id");
         data.GetString("name", this.name, MAX_SKIN_NAME_LENGTH);
-        data.GetString("skin_path", this.skinPath, PLATFORM_MAX_PATH);
-        data.GetString("arm_path", this.armPath, PLATFORM_MAX_PATH);
-        this.price = data.GetInt("price");
+
+        // attr
+        JSONObject attr = view_as<JSONObject>(data.Get("attributes"));
+        attr.GetString("skin_path", this.skinPath, PLATFORM_MAX_PATH);
+        attr.GetString("arm_path", this.armPath, PLATFORM_MAX_PATH);
+        delete attr;
 
         // Precache model
         if (this.skinPath[0] != '\0')
@@ -30,7 +32,6 @@ enum struct Skin
         this.name[0] = '\0';
         this.skinPath[0] = '\0';
         this.armPath[0] = '\0';
-        this.price = 0;
     }
 }
 
@@ -74,3 +75,4 @@ int g_UsersUsedSkin[MAXPLAYERS+1];
 #include "skin/menu"
 #include "skin/cmd"
 #include "skin/native"
+#include "skin/cookie"

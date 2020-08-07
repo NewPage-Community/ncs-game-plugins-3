@@ -5,6 +5,7 @@
 
 #define REQUIRE_PLUGIN
 #include <ncs/account>
+#include <ncs/cookie>
 #undef REQUIRE_PLUGIN
 
 #include <ncs/chat>
@@ -53,11 +54,6 @@ public void OnMapStart()
     LoadSkins();
 }
 
-public void NCS_Account_OnUserLoaded(int client, const char[] uid)
-{
-    ReqUserSkinInfo(client, uid);
-}
-
 public Action Event_PlayerSpawn(Event event, const char[] name1, bool dontBroadcast)
 {
     int client = GetClientOfUserId(GetEventInt(event, "userid"));
@@ -68,4 +64,9 @@ public Action Event_PlayerSpawn(Event event, const char[] name1, bool dontBroadc
     Preview_PlayerSpawn(client);
 
     return Plugin_Continue;
+}
+
+public void NCS_Cookie_OnUserCached(int client)
+{
+    GetUsedSkin(client);
 }

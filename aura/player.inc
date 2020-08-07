@@ -75,6 +75,7 @@ public Action Timer_ClearPre(Handle timer, int client)
 {
     g_tPreview[client] = INVALID_HANDLE;
     RemoveClientAura(client);
+    SetClientAura(client);
     return Plugin_Stop;
 }
 

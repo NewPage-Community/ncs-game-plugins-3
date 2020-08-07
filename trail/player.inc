@@ -2,7 +2,7 @@ static playerTrail[MAXPLAYERS+1];
 static int g_iPreviewEnt[2048];
 static Handle g_tPreview[MAXPLAYERS+1];
 
-void CreateTrail(int client, int id = 0, bool preview = false)
+void SetClientTrail(int client, int id = 0, bool preview = false)
 {
     if (!IsClientInGame(client) || !IsPlayerAlive(client) || IsFakeClient(client))
         return;
@@ -116,6 +116,7 @@ public Action Timer_ClearPreTrail(Handle timer, int client)
 {
     g_tPreview[client] = INVALID_HANDLE;
     RemoveClientTrail(client);
+    SetClientTrail(client);
     return Plugin_Stop;
 }
 

@@ -10,5 +10,5 @@ void SetUsedTrail(int client, const char[] id)
 {
     NCS_Cookie_Set(client, "trail_used", id);
     g_UsersUsedTrail[client] = StringToInt(id);
-    CreateTrail(client);
+    SetClientTrail(client);
 }

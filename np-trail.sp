@@ -67,7 +67,7 @@ public Action Event_PlayerSpawn(Event event, const char[] name1, bool dontBroadc
     if (client < 1 || client > MaxClients || !IsClientInGame(client) || GetClientTeam(client) < 2)
         return Plugin_Continue;
 
-    CreateTrail(client);
+    SetClientTrail(client);
 
     return Plugin_Continue;
 }

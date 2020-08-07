@@ -1,11 +1,18 @@
 #define MAX_TRAIL_NUM 1024
 #define MAX_TRAIL_NAME_LENGTH 64
 
+enum TrailType
+{
+    TrailType_Material = 0,
+    TrailType_Particle
+}
+
 enum struct Trail
 {
     int id;
     char name[MAX_TRAIL_NAME_LENGTH];
     char trailPath[PLATFORM_MAX_PATH];
+    int type;
 
     void Init(JSONObject data)
     {
@@ -13,18 +20,22 @@ enum struct Trail
         data.GetString("name", this.name, MAX_TRAIL_NAME_LENGTH);
 
         // attr
+        char trail_type[16], particle_name[16];
         JSONObject attr = view_as<JSONObject>(data.Get("attributes"));
         attr.GetString("trail_path", this.trailPath, PLATFORM_MAX_PATH);
+        attr.GetString("trail_type", trail_type, sizeof(trail_type));
+        attr.GetString("particle_name", particle_name, sizeof(particle_name));
         delete attr;
 
-        // Precache
-        if (this.trailPath[0] != '\0')
+        // type
+        if (StrEqual(trail_type, "particle"))
         {
-            if (FileExists(this.trailPath, true))
-                PrecacheGeneric(this.trailPath, true);
-            else
-                NCS_LogError("Trail", "TrailInit", "File is not exists (%s)", this.trailPath);
+            this.type = view_as<int>(TrailType_Particle);
+            PrecacheGeneric(this.trailPath, true);
+            PrecacheParticleEffect(particle_name);
         }
+        else
+            this.type = view_as<int>(TrailType_Material);
     }
 
     void Clean()
@@ -75,3 +86,4 @@ int g_UsersUsedTrail[MAXPLAYERS+1];
 #include "trail/cmd"
 #include "trail/menu"
 #include "trail/native"
+#include "trail/particle"

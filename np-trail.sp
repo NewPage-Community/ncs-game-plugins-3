@@ -52,7 +52,8 @@ public void OnPluginEnd()
 
 public void OnMapStart()
 {
-    LoadTrail();
+    InitParticle();
+    LoadTrail();   
 }
 
 public void NCS_Cookie_OnUserCached(int client)

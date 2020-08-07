@@ -28,18 +28,12 @@ void CreateTrail(int client, int id = 0, bool preview = false)
     if (playerTrail[client] == INVALID_ENT_REFERENCE)
         RemoveClientTrail(client);
 
-    int entity = CreateEntityByName("env_spritetrail");
-    DispatchKeyValue(entity, "classname", "env_spritetrail");
-    DispatchKeyValue(entity, "renderamt", "255");
-    DispatchKeyValue(entity, "rendercolor", "255 255 255");
-    DispatchKeyValue(entity, "lifetime", "1.0");
-    DispatchKeyValue(entity, "rendermode", "5");
-    DispatchKeyValue(entity, "spritename", s.trailPath);
-    DispatchKeyValue(entity, "startwidth", "10.0");
-    DispatchKeyValue(entity, "endwidth", "10.0");
-    SetEntPropFloat(entity, Prop_Send, "m_flTextureRes", 0.05);
-    DispatchSpawn(entity);
-    AttachTrail(entity, client, 0, 1);
+    int entity;
+    switch (s.type)
+    {
+        case 0: entity = CreateSpriteTrail(client, s.trailPath);
+        case 1: entity = CreateParticleTrail(client, s.trailPath);
+    }
 
     playerTrail[client] = EntIndexToEntRef(entity);
 
@@ -52,28 +46,56 @@ void CreateTrail(int client, int id = 0, bool preview = false)
     }
 }
 
-void AttachTrail(int ent, int client, int current, int num)
+int CreateSpriteTrail(int client, const char[] path)
 {
+    int entity = CreateEntityByName("env_spritetrail");
+    DispatchKeyValue(entity, "classname", "env_spritetrail");
+    DispatchKeyValue(entity, "renderamt", "255");
+    DispatchKeyValue(entity, "rendercolor", "255 255 255");
+    DispatchKeyValue(entity, "lifetime", "1.0");
+    DispatchKeyValue(entity, "rendermode", "5");
+    DispatchKeyValue(entity, "spritename", path);
+    DispatchKeyValue(entity, "startwidth", "10.0");
+    DispatchKeyValue(entity, "endwidth", "10.0");
+    SetEntPropFloat(entity, Prop_Send, "m_flTextureRes", 0.05);
+    DispatchSpawn(entity);
+
     float m_fOrigin[3];
     float m_fAngle[3];
     float m_fTemp[3] = {0.0, 90.0, 0.0};
     GetEntPropVector(client, Prop_Data, "m_angAbsRotation", m_fAngle);
     SetEntPropVector(client, Prop_Data, "m_angAbsRotation", m_fTemp);
-    float m_fX = (30.0*((num-1)%3))/2-(30.0*(current%3));
     float m_fPosition[3];
-    m_fPosition[0] = m_fX;
+    m_fPosition[0] = 0.0;
     m_fPosition[1] = 0.0;
-    m_fPosition[2]= 5.0+(current/3)*30.0;
+    m_fPosition[2]= 5.0;
     GetClientAbsOrigin(client, m_fOrigin);
     AddVectors(m_fOrigin, m_fPosition, m_fOrigin);
-    TeleportEntity(ent, m_fOrigin, m_fTemp, NULL_VECTOR);
+    TeleportEntity(entity, m_fOrigin, m_fTemp, NULL_VECTOR);
     SetVariantString("!activator");
-    AcceptEntityInput(ent, "SetParent", client, ent);
+    AcceptEntityInput(entity, "SetParent", client, entity);
     SetEntPropVector(client, Prop_Data, "m_angAbsRotation", m_fAngle);
     
     SetVariantString("OnUser1 !self:SetScale:1:0.5:-1");
-    AcceptEntityInput(ent, "AddOutput");
-    AcceptEntityInput(ent, "FireUser1");
+    AcceptEntityInput(entity, "AddOutput");
+    AcceptEntityInput(entity, "FireUser1");
+    return entity;
+}
+
+int CreateParticleTrail(int client, const char[] path)
+{
+    float clientOrigin[3];
+    GetClientAbsOrigin(client, clientOrigin);
+
+    int entity = CreateEntityByName("info_particle_system");
+    DispatchKeyValue(entity, "start_active", "1");
+    DispatchKeyValue(entity, "effect_name", path);
+    DispatchSpawn(entity);
+    TeleportEntity(entity, clientOrigin, NULL_VECTOR, NULL_VECTOR);
+    SetVariantString("!activator");
+    AcceptEntityInput(entity, "SetParent", client, entity, 0);
+    ActivateEntity(entity);
+    return entity;
 }
 
 void RemoveClientTrail(int client)

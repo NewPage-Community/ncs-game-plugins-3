@@ -1,4 +1,4 @@
-void DisplayUserTrails(int client)
+void DisplayUserAuras(int client)
 {
     char uid[MAX_UID_LENGTH];
     if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
@@ -14,14 +14,14 @@ void DisplayUserTrails(int client)
 
     char path[128];
     Format(path, sizeof(path), "%s/%s", BackpackUser_Service, uid);
-    httpClient.Get(path, UserTrailsCallback, dp);
+    httpClient.Get(path, UserAurasCallback, dp);
 }
 
-public void UserTrailsCallback(HTTPResponse response, DataPack dp, const char[] error)
+public void UserAurasCallback(HTTPResponse response, DataPack dp, const char[] error)
 {
     if (response.Status != HTTPStatus_OK || response.Data == null)
     {
-        NCS_LogError("Trail", "UserSkinsCallback", "Faild to load info %d (%s)", response.Status, error);
+        NCS_LogError("Aura", "UserAurasCallback", "Faild to load info %d (%s)", response.Status, error);
         return;
     }
 
@@ -48,9 +48,9 @@ public void UserTrailsCallback(HTTPResponse response, DataPack dp, const char[] 
     
     // Menu
 
-    Menu menu = new Menu(Menu_TrailSelected);
+    Menu menu = new Menu(Menu_Selected);
     menu.ExitButton = true;
-    menu.SetTitle("选择你要使用的足迹");
+    menu.SetTitle("选择你要使用的光环");
     menu.AddItem("0", "不使用");
 
     for (int i = 0; i < length; i++)
@@ -61,8 +61,8 @@ public void UserTrailsCallback(HTTPResponse response, DataPack dp, const char[] 
         IntToString(item.GetInt("id"), id, sizeof(id));
         item.GetString("expr_time", exprTime, sizeof(exprTime));
 
-        Trail s;
-        if (!trails.Get(item.GetInt("id"), s))
+        Aura s;
+        if (!auras.Get(item.GetInt("id"), s))
         {
             delete item;
             continue;
@@ -82,7 +82,7 @@ public void UserTrailsCallback(HTTPResponse response, DataPack dp, const char[] 
     delete items;
 }
 
-public int Menu_TrailSelected(Menu menu, MenuAction action, int client, int slot)
+public int Menu_Selected(Menu menu, MenuAction action, int client, int slot)
 {
     if (action == MenuAction_End)
     {
@@ -100,7 +100,7 @@ public int Menu_TrailSelected(Menu menu, MenuAction action, int client, int slot
         char id[8], name[32];
         menu.GetItem(slot, id, sizeof(id), _, name, sizeof(name));
 
-        SetUsedTrail(client, id);
+        SetUsedAura(client, id);
         NCS_Chat(client, _, "{blue}已成功更换为 {lime}%s", name);
     }
 }

@@ -13,18 +13,18 @@ void CloseAPI()
     delete httpClient;
 }
 
-void LoadTrail()
+void LoadAura()
 {
     char path[128];
-    Format(path, sizeof(path), "%s/type/2", BackpackItems_Service);
-    httpClient.Get(path, LoadTrailInfo);
+    Format(path, sizeof(path), "%s/type/3", BackpackItems_Service);
+    httpClient.Get(path, LoadAuraInfo);
 }
 
-public void LoadTrailInfo(HTTPResponse response, DataPack dp, const char[] error)
+public void LoadAuraInfo(HTTPResponse response, DataPack dp, const char[] error)
 {
     if (response.Status != HTTPStatus_OK || response.Data == null)
     {
-        NCS_LogError("Trail", "LoadTrailInfo", "Faild to load info %d (%s)", response.Status, error);
+        NCS_LogError("Aura", "LoadAuraInfo", "Faild to load info %d (%s)", response.Status, error);
         return;
     }
 
@@ -33,28 +33,28 @@ public void LoadTrailInfo(HTTPResponse response, DataPack dp, const char[] error
     JSONArray items = view_as<JSONArray>(data.Get("items"));
     int length = items.Length;
 
-    // Loading trails
-    if (trails != INVALID_HANDLE)
-        delete trails;
-    trails = new TrailIndex();
+    // Loading auras
+    if (auras != INVALID_HANDLE)
+        delete auras;
+    auras = new AuraIndex();
 
     for (int i = 0; i < length; i++)
     {
         JSONObject item = view_as<JSONObject>(items.Get(i));
-        trails.Add(item);
+        auras.Add(item);
         delete item;
     }
     
     delete items;
 }
 
-void CheckUserHaveTrail(int client)
+void CheckUserHaveAura(int client)
 {
     char uid[MAX_UID_LENGTH];
     if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
         return;
 
-    int id = g_UsersUsedTrail[client];
+    int id = g_UsersUsedAura[client];
     
     // Datapack to pass to callback
     DataPack dp = new DataPack();
@@ -70,7 +70,7 @@ public void CheckUserHaveItemCallback(HTTPResponse response, DataPack dp, const 
 {
     if (response.Status != HTTPStatus_OK || response.Data == null)
     {
-        NCS_LogError("Trail", "CheckUserHaveItemCallback", "Faild to load info %d (%s)", response.Status, error);
+        NCS_LogError("Aura", "CheckUserHaveItemCallback", "Faild to load info %d (%s)", response.Status, error);
         return;
     }
 
@@ -87,6 +87,6 @@ public void CheckUserHaveItemCallback(HTTPResponse response, DataPack dp, const 
     JSONObject data = view_as<JSONObject>(response.Data);
     bool have = data.GetBool("have");
 
-    if (g_UsersUsedTrail[client] == id && !have)
-        g_UsersUsedTrail[client] = 0;
+    if (g_UsersUsedAura[client] == id && !have)
+        g_UsersUsedAura[client] = 0;
 }

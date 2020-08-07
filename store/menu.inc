@@ -101,9 +101,9 @@ void BuyItemMenu(int client, Item item)
 
     Menu menu = new Menu(BuyItemHandle);
     if (FloatCompare(1.0, item.discount) == 1)
-        menu.SetTitle("购买 - %s\n现有软妹币: %d\n价格: %d(%1.1f折)\n ", item.name, playerMoney[client], item.price, item.discount * 10.0);
+        menu.SetTitle("购买 - %s\n现有软妹币: %d\n价格: %d(%1.1f折)\n \n%s\n ", item.name, playerMoney[client], item.price, item.discount * 10.0, item.description);
     else
-        menu.SetTitle("购买 - %s\n现有软妹币: %d\n价格: %d\n ", item.name, playerMoney[client], item.price);
+        menu.SetTitle("购买 - %s\n现有软妹币: %d\n价格: %d\n \n%s\n ", item.name, playerMoney[client], item.price, item.description);
 
     char info[8], desc[64];
     IntToString(item.id, info, sizeof(info));
@@ -120,6 +120,11 @@ void BuyItemMenu(int client, Item item)
         case 2:
         {
             if (LibraryExists("NCS-Trail"))
+                menu.AddItem(info, "预览足迹\n(玩家活着有效)");
+        }
+        case 3:
+        {
+            if (LibraryExists("NCS-Aura"))
                 menu.AddItem(info, "预览足迹\n(玩家活着有效)");
         }
     }
@@ -158,6 +163,8 @@ public int BuyItemHandle(Menu menu, MenuAction action, int client, int slot)
                     NCS_Skin_Preview(client, item.id);
                 case 2:
                     NCS_Trail_Preview(client, item.id);
+                case 3:
+                    NCS_Aura_Preview(client, item.id);
             }
             BuyItemMenu(client, item);
         }

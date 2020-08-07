@@ -45,6 +45,7 @@ enum struct Trail
         this.id = 0;
         this.name[0] = '\0';
         this.trailPath[0] = '\0';
+        this.particleName[0] = '\0';
     }
 }
 

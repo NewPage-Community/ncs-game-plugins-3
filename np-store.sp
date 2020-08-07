@@ -9,6 +9,7 @@
 
 #include <ncs/skin>
 #include <ncs/trail>
+#include <ncs/aura>
 #include <ncs/chat>
 
 #define P_NAME P_PRE ... " - Store"

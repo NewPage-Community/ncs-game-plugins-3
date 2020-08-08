@@ -1,7 +1,7 @@
-#define VIPMonthPrice       10
-#define VIPSeasonPrice      27
-#define VIPSemiannualPrice  52
-#define VIPAnnualPrice      100
+#define VIPMonthPrice       1000
+#define VIPSeasonPrice      2700
+#define VIPSemiannualPrice  5280
+#define VIPAnnualPrice      10000
 
 // Display price
 int VIPPrice(int month)

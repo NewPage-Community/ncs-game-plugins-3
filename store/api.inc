@@ -194,7 +194,7 @@ void BuyVIP(int client, int month)
     
     char path[128];
     Format(path, sizeof(path), "%s/buy/vip", Store_Service);
-    httpClient.Post(path, data, BuyItemCallback, dp);
+    httpClient.Post(path, data, BuyVIPCallback, dp);
 }
 
 public void BuyVIPCallback(HTTPResponse response, DataPack dp, const char[] error)

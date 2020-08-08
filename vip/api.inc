@@ -12,7 +12,7 @@ void CloseAPI()
 	delete httpClient;
 }
 
-void ReqVIPInfo(int client, const char[] uid)
+void ReqVIPInfo(int client, const char[] uid, bool reload = false)
 {
 	g_VIPs[client].Clean();
 
@@ -20,6 +20,7 @@ void ReqVIPInfo(int client, const char[] uid)
 	DataPack dp = new DataPack();
 	dp.WriteCell(client, false);
 	dp.WriteString(uid, false);
+	dp.WriteCell(reload, false);
 
 	char path[128];
 	Format(path, sizeof(path), "%s/%s", VIP_Service, uid);
@@ -39,6 +40,7 @@ public void LoadVIPInfo(HTTPResponse response, DataPack dp, const char[] error)
 	int client = dp.ReadCell();
 	char uid[MAX_UID_LENGTH];
 	dp.ReadString(uid, sizeof(uid));
+	bool reload = dp.ReadCell();
 	dp.Close()
 
 	// JSON
@@ -61,7 +63,8 @@ public void LoadVIPInfo(HTTPResponse response, DataPack dp, const char[] error)
 	g_VIPs[client].Init(client, point, expireDate);
 
 	// internal vip info init hook
-	PlayerInit(client);
+	if (!reload)
+		PlayerInit(client);
 
 	delete info;
 }

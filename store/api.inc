@@ -130,7 +130,7 @@ void BuyAdvPass(int client, int type)
     DataPack dp = new DataPack();
     dp.WriteCell(client, false);
     dp.WriteString(uid, false);
-    dp.WriteString(passTypeName[type], false);
+    dp.WriteCell(type, false);
 
     // JSON
     JSONObject data = new JSONObject();
@@ -139,5 +139,87 @@ void BuyAdvPass(int client, int type)
     
     char path[128];
     Format(path, sizeof(path), "%s/buy/pass", Store_Service);
+    httpClient.Post(path, data, BuyPassCallback, dp);
+}
+
+public void BuyPassCallback(HTTPResponse response, DataPack dp, const char[] error)
+{
+    // DataPack
+    dp.Reset();
+    int client = dp.ReadCell();
+    char uid[MAX_UID_LENGTH];
+    dp.ReadString(uid, sizeof(uid));
+    int type = dp.ReadCell();
+    dp.Close()
+
+    if (response.Status != HTTPStatus_OK || response.Data == null)
+    {
+        NCS_LogError("Store", "BuyPassCallback", "Faild to load info %d (%s)", response.Status, error);
+        NCS_LogError("Store", "BuyPassCallback", "#%d UID:%s type:%d", client, uid, type);
+        if (IsValidClient(client))
+            NCS_Chat(client, _, "{blue}升级失败！");
+        return;
+    }
+
+    if (IsValidClient(client))
+    {
+        LoadUserStoreList(client);
+        NCS_Chat(client, _, "{blue}升级 {green}%s{blue} 成功！", passTypeName[type]);
+    }
+}
+
+void BuyVIP(int client, int month)
+{
+    char uid[MAX_UID_LENGTH];
+    if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
+        return;
+
+    if (playerMoney[client] < VIPPrice(month))
+    {
+        if (IsValidClient(client))
+            NCS_Chat(client, _, "{blue} 您的软妹币余额不足！");
+        return;
+    }
+
+    // Datapack to pass to callback
+    DataPack dp = new DataPack();
+    dp.WriteCell(client, false);
+    dp.WriteString(uid, false);
+    dp.WriteCell(month, false);
+
+    // JSON
+    JSONObject data = new JSONObject();
+    data.SetInt64("uid", uid);
+    data.SetInt("month", month);
+    
+    char path[128];
+    Format(path, sizeof(path), "%s/buy/vip", Store_Service);
     httpClient.Post(path, data, BuyItemCallback, dp);
+}
+
+public void BuyVIPCallback(HTTPResponse response, DataPack dp, const char[] error)
+{
+    // DataPack
+    dp.Reset();
+    int client = dp.ReadCell();
+    char uid[MAX_UID_LENGTH];
+    dp.ReadString(uid, sizeof(uid));
+    int month = dp.ReadCell();
+    dp.Close()
+
+    if (response.Status != HTTPStatus_OK || response.Data == null)
+    {
+        NCS_LogError("Store", "BuyVIPCallback", "Faild to load info %d (%s)", response.Status, error);
+        NCS_LogError("Store", "BuyVIPCallback", "#%d UID:%s Month:%d", client, uid, month);
+        if (IsValidClient(client))
+            NCS_Chat(client, _, "{blue}续费失败！");
+        return;
+    }
+
+    if (IsValidClient(client))
+    {
+        if (LibraryExists("NCS-VIP"))
+            NCS_VIP_ReloadClient(client);
+        NCS_Chat(client, _, "{blue}续费 {green}%d个月VIP{blue} 成功！", month);
+    }
 }

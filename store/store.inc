@@ -84,3 +84,4 @@ int passTypePrice[] = {0, 6888, 9888};
 #include "store/api"
 #include "store/menu"
 #include "store/cmd"
+#include "store/vip"

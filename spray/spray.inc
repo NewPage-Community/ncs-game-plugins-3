@@ -19,7 +19,7 @@ enum struct Spray
         attr.GetString("spray_path", this.sprayPath, PLATFORM_MAX_PATH);
         delete attr;
 
-        this.decal = PrecacheDecal(this.sprayPath, true);
+        this.decal = PrecacheSpray(this.sprayPath);
     }
 
     void Clean()
@@ -60,6 +60,14 @@ methodmap SprayIndex < StringMap
         IntToString(id, key, sizeof(key));
         return this.Remove(key);
     }
+}
+
+int PrecacheSpray(const char[] path)
+{
+    char m_szDecal[256];
+    strcopy(m_szDecal, sizeof(m_szDecal), path[10]);
+    m_szDecal[strlen(m_szDecal)-4]=0;
+    return PrecacheDecal(m_szDecal, true);
 }
 
 SprayIndex sprays;

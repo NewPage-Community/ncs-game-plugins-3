@@ -31,6 +31,7 @@ public Action Command_Menu(int client, int args)
     menu.AddItem("", "头衔设置");
     menu.AddItem("", "足迹设置");
     menu.AddItem("", "光环设置");
+    menu.AddItem("", "喷漆设置");
     menu.Display(client, MENU_TIME_FOREVER);
     return Plugin_Handled;
 }
@@ -51,6 +52,7 @@ public int MenuHandle(Menu menu, MenuAction action, int client, int slot)
             case 5: FakeClientCommandEx(client, "sm_title");
             case 6: FakeClientCommandEx(client, "sm_trail");
             case 7: FakeClientCommandEx(client, "sm_aura");
+            case 8: FakeClientCommandEx(client, "sm_spray");
         }
     }
 }

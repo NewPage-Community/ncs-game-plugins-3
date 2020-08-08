@@ -115,7 +115,7 @@ void BuyItemMenu(int client, Item item)
         case 1:
         {
             if (LibraryExists("NCS-Skin"))
-                menu.AddItem(info, "预览模型\n(准星位置生成模型)");
+                menu.AddItem(info, "预览模型\n(准星位置生成)");
         }
         case 2:
         {
@@ -126,6 +126,11 @@ void BuyItemMenu(int client, Item item)
         {
             if (LibraryExists("NCS-Aura"))
                 menu.AddItem(info, "预览光环\n(玩家活着有效)");
+        }
+        case 4:
+        {
+            if (LibraryExists("NCS-Spray"))
+                menu.AddItem(info, "预览喷漆\n(准星位置生成)");
         }
     }
     
@@ -165,6 +170,8 @@ public int BuyItemHandle(Menu menu, MenuAction action, int client, int slot)
                     NCS_Trail_Preview(client, item.id);
                 case 3:
                     NCS_Aura_Preview(client, item.id);
+                case 4:
+                    NCS_Spray_Preview(client, item.id);
             }
             BuyItemMenu(client, item);
         }

@@ -44,12 +44,18 @@ void DisplayItemMenu(int client, int type)
     Menu menu = new Menu(ItemMenuHandle);
     menu.SetTitle("购买%s\n软妹币: %d", typeName[type], playerMoney[client]);
 
-    int length = playerStoreList[client].Length;
+    StringMapSnapshot ids = playerStoreList[client].Snapshot();
+    int length = ids.Length;
     int count = 0;
     for (int i = 0; i < length; i++)
     {
+        // Get item id
+        char id[8];
+        ids.GetKey(i, id, sizeof(id));
+
+        // Get item info
         Item item;
-        playerStoreList[client].Get(i, item);
+        playerStoreList[client].CGet(id, item);
 
         if (item.type != type)
             continue;
@@ -59,6 +65,7 @@ void DisplayItemMenu(int client, int type)
         menu.AddItem(info, desc);
         count++;
     }
+    delete ids;
 
     if (count == 0)
         menu.AddItem("", "货架空空如也～", ITEMDRAW_DISABLED);
@@ -88,7 +95,7 @@ public int ItemMenuHandle(Menu menu, MenuAction action, int client, int slot)
         menu.GetItem(slot, itemID, sizeof(itemID), _, _, _);
 
         Item item;
-        if (playerStoreList[client].Find(StringToInt(itemID), item) == -1)
+        if (!playerStoreList[client].Get(StringToInt(itemID), item))
             return;
         BuyItemMenu(client, item);
     }
@@ -156,7 +163,7 @@ public int BuyItemHandle(Menu menu, MenuAction action, int client, int slot)
         menu.GetItem(slot, itemID, sizeof(itemID), _, _, _);
 
         Item item;
-        if (playerStoreList[client].Find(StringToInt(itemID), item) == -1)
+        if (!playerStoreList[client].Get(StringToInt(itemID), item))
             return;
 
         // Preview
@@ -212,7 +219,7 @@ public void LoadHotSaleList(HTTPResponse response, int client, const char[] erro
     for (int i = 0; i < length; i++)
     {
         Item item;
-        if (playerStoreList[client].Find(array.GetInt(i), item) == -1)
+        if (!playerStoreList[client].Get(array.GetInt(i), item))
             continue;
 
         char info[8], desc[64];

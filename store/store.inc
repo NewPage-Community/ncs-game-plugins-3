@@ -28,12 +28,11 @@ enum struct Item
     }
 }
 
-methodmap Items < ArrayList
+methodmap Items < StringMap
 {
     public Items(JSONArray items)
     {
-        Item t;
-        ArrayList list = new ArrayList(sizeof(t), 0);
+        StringMap list = new StringMap();
         int length = items.Length;
         for (int i = 0; i < length; i++)
         {
@@ -52,32 +51,24 @@ methodmap Items < ArrayList
             if (FloatCompare(0.0, item.discount) == 0)
                 item.discount = 1.0;
 
-            list.PushArray(item, sizeof(item));
+            char id[8];
+            IntToString(item.id, id, sizeof(id));
+            list.SetArray(id, item, sizeof(item), true);
             delete data;
         }
         return view_as<Items>(list);
     }
 
-    public int Get(int index, Item buffer)
+    public bool Get(int id, Item buffer)
     {
-        return this.GetArray(index, buffer, sizeof(buffer));
+        char cid[8];
+        IntToString(id, cid, sizeof(cid));
+        return this.GetArray(cid, buffer, sizeof(buffer));
     }
 
-    // not found return -1
-    public int Find(int id, Item buffer)
+    public bool CGet(const char[] id, Item buffer)
     {
-        int length = this.Length;
-        for (int i = 0; i < length; i++)
-        {
-            Item item;
-            this.Get(i, item);
-            if (item.id == id)
-            {
-                buffer = item;
-                return i;
-            }
-        }
-        return -1;
+        return this.GetArray(id, buffer, sizeof(buffer));
     }
 }
 

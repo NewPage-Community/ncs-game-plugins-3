@@ -1,6 +1,5 @@
 #define SPRAY_COOLDOWN 30
 
-static int lastUse[MAXPLAYERS+1];
 static int playerLimiter[MAXPLAYERS+1];
 
 void CreateSprays(int client, int id = 0, bool preview = false)
@@ -65,14 +64,8 @@ public bool TraceRayDontHitSelf(int entity, int mask, any data)
     return true;
 }
 
-void PlayerOnRunCmd(int client, int buttons)
+void PlayerOnRunCmd(int client, int impulse)
 {
-    int time = GetTime();
-    if (time == lastUse[client])
-        return;
-
-    lastUse[client] = time;
-
-    if (buttons == IN_USE)
+    if (impulse == 201)
         CreateSprays(client);
 }

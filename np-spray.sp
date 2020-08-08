@@ -60,5 +60,5 @@ public void NCS_Cookie_OnUserCached(int client)
 
 public void OnPlayerRunCmdPost(int client, int buttons, int impulse, const float vel[3], const float angles[3], int weapon, int subtype, int cmdnum, int tickcount, int seed, const int mouse[2])
 {
-    PlayerOnRunCmd(client, buttons);
+    PlayerOnRunCmd(client, impulse);
 }

@@ -7,6 +7,7 @@ enum struct Skin
     char name[MAX_SKIN_NAME_LENGTH];
     char skinPath[PLATFORM_MAX_PATH];
     char armPath[PLATFORM_MAX_PATH];
+    char deathSound[PLATFORM_MAX_PATH];
 
     void Init(JSONObject data)
     {
@@ -17,6 +18,7 @@ enum struct Skin
         JSONObject attr = view_as<JSONObject>(data.Get("attributes"));
         attr.GetString("skin_path", this.skinPath, PLATFORM_MAX_PATH);
         attr.GetString("arm_path", this.armPath, PLATFORM_MAX_PATH);
+        attr.GetString("skin_death_sound", this.deathSound, PLATFORM_MAX_PATH);
         delete attr;
 
         // Precache model
@@ -35,6 +37,14 @@ enum struct Skin
             else
                 NCS_LogError("Skin", "SkinInit", "File is not exists (%s)", this.armPath);
         }
+
+        if (this.deathSound[0] != '\0')
+        {
+            if (FileExists(this.deathSound, true))
+                PrecacheSound(this.deathSound, true);
+            else
+                NCS_LogError("Skin", "SkinInit", "File is not exists (%s)", this.deathSound);
+        }
     }
 
     void Clean()
@@ -43,6 +53,7 @@ enum struct Skin
         this.name[0] = '\0';
         this.skinPath[0] = '\0';
         this.armPath[0] = '\0';
+        this.deathSound[0] = '\0';
     }
 }
 

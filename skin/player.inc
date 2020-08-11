@@ -43,3 +43,55 @@ public Action ModelCheck(Handle timer, int client)
 
     return Plugin_Continue;
 }
+
+void Broadcast_DeathSound(int client)
+{
+    if(!IsClientInGame(client) || IsFakeClient(client))
+        return;
+
+     // For Insurgency PVE
+    if (GetClientTeam(client) != 2)
+        return;
+
+    int skinID = g_UsersUsedSkin[client];
+    if (skinID <= 0)
+        return;
+    
+    Skin s;
+    if (!g_Skins.Get(skinID, s) || s.deathSound[0] == '\0')
+        return;
+
+    float fPos[3], fAgl[3];
+    GetClientEyePosition(client, fPos);
+    GetClientEyeAngles(client, fAgl);
+    fPos[2] -= 3.0;
+    int speaker = SpawnSpeakerEntity(fPos, fAgl, client, 3.0);
+
+    EmitSoundToAll(s.deathSound, speaker, SNDCHAN_VOICE, SNDLEVEL_NORMAL, SND_NOFLAGS, 0.8, SNDPITCH_NORMAL, speaker, fPos, fAgl, true);
+}
+
+int SpawnSpeakerEntity(float fPos[3], float fAgl[3], int source, float removeDelay = 0.1)
+{
+    int speaker = CreateEntityByName("info_target");
+    
+    if(speaker == -1)
+        return -1;
+
+    DispatchSpawn(speaker);
+
+    TeleportEntity(speaker, fPos, fAgl, NULL_VECTOR);
+
+    SetVariantString("!activator");
+    AcceptEntityInput(speaker, "SetParent", source, speaker, 0);
+
+    if(removeDelay > 0.0)
+    {
+        char input[128];
+        FormatEx(input, 128, "OnUser4 !self:Kill::%.2f:1", removeDelay);
+        SetVariantString(input);
+        AcceptEntityInput(speaker, "AddOutput");
+        AcceptEntityInput(speaker, "FireUser4");
+    }
+
+    return speaker;
+}

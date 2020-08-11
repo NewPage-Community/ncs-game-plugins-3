@@ -42,6 +42,7 @@ public void OnPluginStart()
     InitAPI();
     InitCmd();
     HookEvent("player_spawn", Event_PlayerSpawn, EventHookMode_Post);
+    HookEvent("player_death", Event_PlayerDeath_Pre, EventHookMode_Pre);
 }
 
 public void OnPluginEnd()
@@ -69,4 +70,13 @@ public Action Event_PlayerSpawn(Event event, const char[] name1, bool dontBroadc
 public void NCS_Cookie_OnUserCached(int client)
 {
     GetUsedSkin(client);
+}
+
+public Action Event_PlayerDeath_Pre(Event event, const char[] name, bool dontBroadcast)
+{
+    int client = GetClientOfUserId(event.GetInt("userid"));
+    if (IsFakeClient(client))
+        return Plugin_Continue;
+    RequestFrame(Broadcast_DeathSound, client);
+    return Plugin_Continue;
 }

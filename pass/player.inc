@@ -21,6 +21,8 @@ public Action Timer_AddPoint(Handle timer, int client)
     if (!player[client].IsValid())
         return Plugin_Stop;
 
-    player[client].AddPoint(1);
+    if (IsClientInGame(client))
+        player[client].AddPoint(1);
+
     return Plugin_Continue;
 }

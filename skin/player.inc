@@ -65,7 +65,7 @@ void Broadcast_DeathSound(int client)
     GetClientEyePosition(client, fPos);
     GetClientEyeAngles(client, fAgl);
     fPos[2] -= 3.0;
-    int speaker = SpawnSpeakerEntity(fPos, fAgl, client, 3.0);
+    int speaker = SpawnSpeakerEntity(fPos, fAgl, client, 10.0);
 
     EmitSoundToAll(s.deathSound, speaker, SNDCHAN_VOICE, SNDLEVEL_NORMAL, SND_NOFLAGS, 0.8, SNDPITCH_NORMAL, speaker, fPos, fAgl, true);
 }

@@ -67,7 +67,7 @@ void Broadcast_DeathSound(int client)
     fPos[2] -= 3.0;
     int speaker = SpawnSpeakerEntity(fPos, fAgl, client, 10.0);
 
-    EmitSoundToAll(s.deathSound, speaker, SNDCHAN_VOICE, SNDLEVEL_NORMAL, SND_NOFLAGS, 0.8, SNDPITCH_NORMAL, speaker, fPos, fAgl, true);
+    EmitSoundToAll(s.deathSound, speaker, _, _, _, 0.8, _, speaker, fPos, fAgl, true);
 }
 
 int SpawnSpeakerEntity(float fPos[3], float fAgl[3], int source, float removeDelay = 0.1)

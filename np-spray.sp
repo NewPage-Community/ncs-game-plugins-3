@@ -15,6 +15,8 @@
 #define P_NAME P_PRE ... " - Spray"
 #define P_DESC "Spray management plugin"
 
+#define SPRAY_SOUND "np_sound/spray.wav"
+
 public Plugin myinfo = 
 {
     name        = P_NAME,
@@ -51,6 +53,7 @@ public void OnPluginEnd()
 public void OnMapStart()
 {
     LoadSpray();
+    PrecacheSound(SPRAY_SOUND, true);
 }
 
 public void NCS_Cookie_OnUserCached(int client)

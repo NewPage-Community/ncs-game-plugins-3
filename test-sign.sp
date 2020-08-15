@@ -17,6 +17,6 @@ public Plugin myinfo =
 
 public void NCS_Sign_OnUserSigned(int client)
 {
-    NCS_Money_Give(client, 10000, "签到奖励");
-    NCS_Chat(client, _, "{blue}感谢参与测试，奖励你 {green}10000软妹币");
+    NCS_Money_Give(client, 100000, "签到奖励");
+    NCS_Chat(client, _, "{blue}感谢参与测试，奖励你 {green}100000软妹币");
 }

@@ -37,10 +37,12 @@ void CreateSprays(int client, int id = 0, bool preview = false)
     if (preview)
     {
         TE_SendToClient(client);
+        EmitSoundToClient(client, SPRAY_SOUND, _, _, _, _, 1.0);
     }
     else
     { 
         TE_SendToAll();
+        EmitSoundToAll(SPRAY_SOUND, client, _, _, _, 1.0);
         playerLimiter[client] = GetTime() + SPRAY_COOLDOWN;
     }
 }

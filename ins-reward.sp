@@ -36,7 +36,7 @@ public void OnPluginStart()
     cv_round_pass_point = CreateConVar("reward_roundwin_pass_point", "60", "", 0, true, 0.0);
     cv_sign_rmb = CreateConVar("reward_sign_rmb", "10", "10", 0, true, 0.0);
     cv_sign_vip_rmb = CreateConVar("reward_sign_vip_rmb", "10", "", 0, true, 0.0);
-    cv_sign_vip_skin = CreateConVar("reward_sign_vip_skin", "1,2,3", "", 0, true, 0.0);
+    cv_sign_vip_skin = CreateConVar("reward_sign_vip_skin", "11,68,73,99,110", "", 0, true, 0.0);
 }
 
 public Action RoundEnd_Event(Event event, const char[] name, bool dontBroadcast)
@@ -94,7 +94,7 @@ public void NCS_Sign_OnUserSigned(int client)
         // skin
         Items rewards = new Items();
         Item skin;
-        skin.amount = 1;
+        skin.length = 24*3600;
 
         char buffer[512], skinList[64][8];
         cv_sign_vip_skin.GetString(buffer, sizeof(buffer));

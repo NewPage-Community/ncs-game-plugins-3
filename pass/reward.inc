@@ -33,7 +33,10 @@ public void LoadRewardsCallback(HTTPResponse response, int client, const char[] 
         reward.id = item.GetInt("id");
         reward.level = item.GetInt("level");
         reward.amount = item.GetInt("amount");
-        reward.length = item.GetInt("length");
+
+        char ilength[INT64_LENGTH];
+        item.GetString("length", ilength, sizeof(ilength));
+        reward.length = StringToInt(ilength);
         item.GetString("name", reward.name, MAX_ITEM_NAME_LENGTH);
 
         if (lastLevel != reward.level)

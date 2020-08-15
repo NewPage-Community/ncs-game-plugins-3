@@ -22,7 +22,7 @@ public Action Command_Prefix(int client, int args)
             menu.AddItemEx(0, "1", "<%s>", playerTitle[client].title);
     }
     if (NCS_VIP_IsVIP(client))
-        menu.AddItemEx(0, "2", "<会员>");
+        menu.AddItemEx(0, "2", "<VIP>");
     if (IsOwner(client))
         menu.AddItemEx(0, "3", "<服主>");
     if (IsAdmin(client))

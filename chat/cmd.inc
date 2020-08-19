@@ -5,13 +5,13 @@ void InitCmd()
 
 public Action ChatNotifyCallback(int args)
 {
-    char uid[MAX_UID_LENGTH], prefix[64], context[512];
+    char uid[MAX_UID_LENGTH], prefix[64], message[512];
     GetCmdArg(1, uid, sizeof(uid));
     GetCmdArg(2, prefix, sizeof(prefix));
-    GetCmdArg(3, context, sizeof(context));
+    GetCmdArg(3, message, sizeof(message));
 
     int client = NCS_Account_GetClientOfUID(uid);
-    NCS_Chat(client, prefix, context);
+    NCS_Chat(client, prefix, message);
 
     return Plugin_Handled;
 }

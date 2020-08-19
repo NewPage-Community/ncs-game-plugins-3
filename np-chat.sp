@@ -7,6 +7,8 @@
 #include <ncs/account>
 #undef REQUIRE_PLUGIN
 
+#include <ncs/chat>
+
 #define P_NAME P_PRE ... " - Chat"
 #define P_DESC "Chat management plugin"
 
@@ -30,6 +32,17 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
     RegPluginLibrary("NCS-Chat");
 
     return APLRes_Success;
+}
+
+public void OnPluginStart()
+{
+    InitCmd();
+    InitAPI();
+}
+
+public void OnPluginEnd()
+{
+    CloseAPI();
 }
 
 public void OnConfigsExecuted()

@@ -50,3 +50,5 @@ PlayerInfo player[MAXPLAYERS + 1];
 
 #include "chat/basechat"
 #include "chat/native"
+#include "chat/cmd"
+#include "chat/api"

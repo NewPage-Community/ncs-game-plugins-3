@@ -17,6 +17,7 @@ ConVar cv_round_pass_point;
 ConVar cv_sign_rmb;
 ConVar cv_sign_vip_rmb;
 ConVar cv_sign_vip_skin;
+ConVar cv_sign_vip_point;
 
 public Plugin myinfo = 
 {
@@ -37,6 +38,7 @@ public void OnPluginStart()
     cv_sign_rmb = CreateConVar("reward_sign_rmb", "10", "10", 0, true, 0.0);
     cv_sign_vip_rmb = CreateConVar("reward_sign_vip_rmb", "10", "", 0, true, 0.0);
     cv_sign_vip_skin = CreateConVar("reward_sign_vip_skin", "11,68,73,99,110", "", 0, true, 0.0);
+    cv_sign_vip_point = CreateConVar("reward_sign_vip_point", "22", "", 0, true, 0.0);
 }
 
 public Action RoundEnd_Event(Event event, const char[] name, bool dontBroadcast)
@@ -81,12 +83,17 @@ public void NCS_Sign_OnUserSigned(int client)
 {
     int sign = cv_sign_rmb.IntValue;
     int vipSign = cv_sign_vip_rmb.IntValue;
+    int vipPoint = cv_sign_vip_point.IntValue;
 
     NCS_Money_Give(client, sign, "签到奖励");
     NCS_Chat(client, _, "{blue}奖励你 {green}%d软妹币", sign);
 
     if (NCS_VIP_IsVIP(client))
     {
+        // vip point
+        NCS_VIP_AddPoint(client, vipPoint);
+        NCS_Chat(client, _, "{blue}领取VIP成长值 {green}%d点", vipPoint);
+
         // rmb
         NCS_Money_Give(client, vipSign, "VIP福利");
         NCS_Chat(client, _, "{blue}领取VIP福利 {green}%d软妹币", vipSign);

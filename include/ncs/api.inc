@@ -2,7 +2,7 @@
 #include <ripext>
 #undef REQUIRE_EXTENSIONS
 
-#define API_URL "https://api.new-page.xyz/ncs/v3"
+#define API_URL "https://api.new-page.xyz/ncs/v3/game"
 
 #if defined DEV
 	#define TOKEN "TkVXUEFHRTpBUEk="

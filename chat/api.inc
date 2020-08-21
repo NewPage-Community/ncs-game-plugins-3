@@ -17,7 +17,7 @@ void AllChat(const char[] name, const char[] message)
     // JSON
     JSONObject data = new JSONObject();
     data.SetString("name", name);
-    data.SetString("message", message);
+    data.SetString("message", message[1]);
 
     char path[128];
     Format(path, sizeof(path), "%s/allchat", Chat_Service);

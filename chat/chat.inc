@@ -24,6 +24,8 @@ enum struct PlayerInfo
             Format(buffer, size, "%s%s", this.nameColor, buffer);
         else
             Format(buffer, size, "%s%s %s%s", this.titleColor, this.title, this.nameColor, buffer);
+        // Fix color
+        Format(buffer, size, "%s\x01", buffer);
     }
 
     void SetTitle(const char[] title, const char[] titleColor)

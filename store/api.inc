@@ -119,6 +119,9 @@ void BuyAdvPass(int client, int type)
     if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
         return;
 
+    if (!type)
+        return;
+
     if (playerMoney[client] < passTypePrice[type])
     {
         if (IsValidClient(client))

@@ -11,17 +11,17 @@ void AccountMenu(int client)
     GetClientAuthId(client, AuthId_Steam3, steam3, sizeof(steam3), true);
     GetClientIP(client, ip, sizeof(ip));
 
-    Panel panel = CreatePanel();
+    PanelEx panel = new PanelEx();
 
     panel.SetTitle("个人信息");
-    DrawPanelTextEx(panel, " ");
-    DrawPanelTextEx(panel, "玩家名: %d", g_Accounts[client].name);
-    DrawPanelTextEx(panel, "社区个人唯一身份 (UID): %d", g_Accounts[client].uid);
-    DrawPanelTextEx(panel, "STEAM2 ID: %s", steam2);
-    DrawPanelTextEx(panel, "STEAM3 ID: %s", steam3);
-    DrawPanelTextEx(panel, "STEAMID 64: %s", g_Accounts[client].steamid);
-    DrawPanelTextEx(panel, "IP地址: %s", ip);
-    DrawPanelTextEx(panel, " ");
+    panel.DrawTextEx(" ");
+    panel.DrawTextEx("玩家名: %d", g_Accounts[client].name);
+    panel.DrawTextEx("社区个人唯一身份 (UID): %d", g_Accounts[client].uid);
+    panel.DrawTextEx("STEAM2 ID: %s", steam2);
+    panel.DrawTextEx("STEAM3 ID: %s", steam3);
+    panel.DrawTextEx("STEAMID 64: %s", g_Accounts[client].steamid);
+    panel.DrawTextEx("IP地址: %s", ip);
+    panel.DrawTextEx(" ");
     panel.DrawItem("退出");
 
     panel.Send(client, MenuHandler_InfoPanel, 0);

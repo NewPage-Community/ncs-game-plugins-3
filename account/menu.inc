@@ -6,7 +6,7 @@ void AccountMenu(int client)
         return;
     }
 
-    char steam2[32], steam3[32], steamid64[32], ip[32];
+    char steam2[32], steam3[32], ip[32];
     GetClientAuthId(client, AuthId_Steam2, steam2, sizeof(steam2), true);
     GetClientAuthId(client, AuthId_Steam3, steam3, sizeof(steam3), true);
     GetClientIP(client, ip, sizeof(ip));

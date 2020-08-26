@@ -11,6 +11,11 @@ public Action ChatNotifyCallback(int args)
     GetCmdArg(3, message, sizeof(message));
 
     int client = NCS_Account_GetClientOfUID(uid);
+
+    // Invalid client
+    if (!StrEqual(uid, "0") && !IsValidClient(client))
+        return Plugin_Handled;
+
     NCS_Chat(client, prefix, message);
 
     return Plugin_Handled;

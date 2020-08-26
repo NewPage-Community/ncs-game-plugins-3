@@ -50,7 +50,7 @@ public int MenuHandle(Menu menu, MenuAction action, int client, int slot)
 void PersonalMenu(int client)
 {
     if (!IsValidClient(client))
-        return Plugin_Handled;
+        return;
 
     Menu menu = new Menu(PersonalMenuHandle);
     menu.SetTitle("NCS系统--个人中心");
@@ -59,7 +59,6 @@ void PersonalMenu(int client)
     menu.AddItem("", "会员(!vip)");
     menu.ExitBackButton = true;
     menu.Display(client, MENU_TIME_FOREVER);
-    return Plugin_Handled;
 }
 
 public int PersonalMenuHandle(Menu menu, MenuAction action, int client, int slot)
@@ -82,7 +81,7 @@ public int PersonalMenuHandle(Menu menu, MenuAction action, int client, int slot
 void SettingsMenu(int client)
 {
     if (!IsValidClient(client))
-        return Plugin_Handled;
+        return;
 
     Menu menu = new Menu(SettingsMenuHandle);
     menu.SetTitle("NCS系统--系统设置");
@@ -93,7 +92,6 @@ void SettingsMenu(int client)
     menu.AddItem("", "喷漆(!spray)");
     menu.ExitBackButton = true;
     menu.Display(client, MENU_TIME_FOREVER);
-    return Plugin_Handled;
 }
 
 public int SettingsMenuHandle(Menu menu, MenuAction action, int client, int slot)

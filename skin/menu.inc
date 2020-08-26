@@ -77,7 +77,10 @@ public void UserSkinsCallback(HTTPResponse response, DataPack dp, const char[] e
             Format(desc, sizeof(desc), "%s(%d天%d小时)", s.name, left / 86400, (left % 86400) / 3600);
         else
             Format(desc, sizeof(desc), "%s", s.name);
-        menu.AddItem(skinID, desc);
+        bool used = g_UsersUsedSkin[client] == s.id;
+        if (used)
+            Format(desc, sizeof(desc), "(使用中)%s", desc);
+        menu.AddItem(skinID, desc, used ? ITEMDRAW_DISABLED : ITEMDRAW_DEFAULT);
     }
     menu.Display(client, MENU_TIME_FOREVER);
 

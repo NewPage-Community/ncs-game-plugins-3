@@ -45,3 +45,4 @@ account g_Accounts[MAXPLAYERS + 1];
 #include "account/check"
 #include "account/cmd"
 #include "account/native"
+#include "account/menu"

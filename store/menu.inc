@@ -289,7 +289,7 @@ public int BuyAdvPassHandle(Menu menu, MenuAction action, int client, int slot)
                 return;
             BuyItemMenu(client, item);
         }
-        if (itype != 0)
+        else if (itype != 0)
             BuyAdvPassConfirm(client, itype);
     }
 }

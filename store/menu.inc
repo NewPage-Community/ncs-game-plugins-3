@@ -6,7 +6,7 @@ void DisplayStoreMenu(int client)
     Menu menu = new Menu(UserStoreListHandle); 
     menu.SetTitle("商店\n软妹币: %d", playerMoney[client]);
     menu.AddItem("0", "热门推荐")
-    menu.AddItem("0", "升级通行证");
+    menu.AddItem("0", "升级通行证", ITEMDRAW_DISABLED);
     menu.AddItem("0", "续费VIP");
     menu.AddItem("1", "皮肤");
     menu.AddItem("2", "足迹");

@@ -15,8 +15,8 @@ void AccountMenu(int client)
 
     panel.SetTitle("个人信息");
     panel.DrawTextEx(" ");
-    panel.DrawTextEx("玩家名: %d", g_Accounts[client].name);
-    panel.DrawTextEx("社区个人唯一身份 (UID): %d", g_Accounts[client].uid);
+    panel.DrawTextEx("玩家名: %s", g_Accounts[client].name);
+    panel.DrawTextEx("社区个人唯一身份 (UID): %s", g_Accounts[client].uid);
     panel.DrawTextEx("STEAM2 ID: %s", steam2);
     panel.DrawTextEx("STEAM3 ID: %s", steam3);
     panel.DrawTextEx("STEAMID 64: %s", g_Accounts[client].steamid);

@@ -43,3 +43,8 @@ public void NCS_Account_OnUserLoaded(int client, const char[] uid)
 {
 	ReqAdmin(client, uid);
 }
+
+public void OnRebuildAdminCache(AdminCachePart part)
+{
+	ReloadAllAdmins();
+}

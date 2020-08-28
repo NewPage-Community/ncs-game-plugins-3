@@ -115,7 +115,7 @@ void SignGiveRMB(int client)
         if (NCS_VIP_IsVIP(client))
         {
             // rmb
-            NCS_Money_Give(client, vipSign, "VIP福利");
+            NCS_Money_Give(client, vipSign, "VIP签到福利");
             NCS_Chat(client, CHAT_PREFIX, "{blue}VIP签到: {green}%d软妹币", vipSign);
         }
     }
@@ -178,7 +178,7 @@ void SignHoliday(int client)
     int now = GetTime();
     if (start <= now && now < end)
     {
-        NCS_Money_Give(client, rmb, "节日福利");
+        NCS_Money_Give(client, rmb, "节假日福利");
         NCS_Chat(client, CHAT_PREFIX, "{blue}节假日福利: {green}%d软妹币", rmb);
     }
 }

@@ -58,6 +58,6 @@ void ChangeName(int client, const char[] name)
 	if (!IsValidClient(client))
 		return;
 
-	Format(g_LastName[client], MAX_NAME_LENGTH, "%s", name);
-	SetClientName(client, g_LastName[client]);
+	SetClientName(client, name);
+	GetClientName(client, g_LastName[client], MAX_NAME_LENGTH);
 }

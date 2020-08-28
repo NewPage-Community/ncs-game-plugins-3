@@ -113,8 +113,8 @@ void DisplayBanTypeMenu(int client)
 	menu.ExitBackButton = true;
 
 	menu.AddItem("1", "全服封禁");
-	menu.AddItem("2", "当前模式封禁");
-	menu.AddItem("3", "当前游戏封禁");
+	menu.AddItem("2", "当前游戏封禁");
+	menu.AddItem("3", "当前模式封禁");
 	menu.AddItem("4", "当前服务器封禁");
 
 	menu.Display(client, MENU_TIME_FOREVER);

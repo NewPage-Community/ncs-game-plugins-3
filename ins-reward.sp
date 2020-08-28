@@ -88,12 +88,12 @@ void RoundReward()
             if (rmb > 0 && LibraryExists("NCS-Money"))
             {
                 NCS_Money_Give(client, rmb, "通关奖励");
-                NCS_Chat(client, CHAT_PREFIX, "{blue}通关奖励: {green}%d软妹币", rmb);
+                NCS_Chat(client, CHAT_PREFIX, "{blue}通关: {green}%d软妹币", rmb);
             }
             if (point > 0 && LibraryExists("NCS-Pass"))
             {
                 NCS_Pass_AddPoint(client, point);
-                NCS_Chat(client, CHAT_PREFIX, "{blue}通关奖励: {green}%d点通行证经验", point);
+                NCS_Chat(client, CHAT_PREFIX, "{blue}通关: {green}%d点通行证经验", point);
             }
         }
     }
@@ -117,7 +117,7 @@ void SignGiveRMB(int client)
         return;
 
     NCS_Money_Give(client, sign, "签到奖励");
-    NCS_Chat(client, CHAT_PREFIX, "{blue}签到奖励: {green}%d软妹币", sign);
+    NCS_Chat(client, CHAT_PREFIX, "{blue}签到: {green}%d软妹币", sign);
 
     if (LibraryExists("NCS-VIP"))
     {
@@ -125,7 +125,7 @@ void SignGiveRMB(int client)
         {
             // rmb
             NCS_Money_Give(client, vipSign, "VIP福利");
-            NCS_Chat(client, CHAT_PREFIX, "{blue}VIP签到奖励: {green}%d软妹币", vipSign);
+            NCS_Chat(client, CHAT_PREFIX, "{blue}VIP签到: {green}%d软妹币", vipSign);
         }
     }
 }
@@ -141,7 +141,7 @@ void SignGiveVIPPoint(int client)
     {
         // vip point
         NCS_VIP_AddPoint(client, vipPoint);
-        NCS_Chat(client, CHAT_PREFIX, "{blue}VIP签到奖励: {green}%d成长值", vipPoint);
+        NCS_Chat(client, CHAT_PREFIX, "{blue}VIP签到: {green}%d成长值", vipPoint);
     }
 }
 
@@ -169,7 +169,7 @@ void SignGiveBackpackItems(int client)
         if (count > 0)
         {
             NCS_Backpack_AddItems(client, rewards);
-            NCS_Chat(client, CHAT_PREFIX, "{blue}VIP签到奖励: {green}mur猫(1天)、香蕉人(1天)、pedobear【原版】(1天)");
+            NCS_Chat(client, CHAT_PREFIX, "{blue}VIP签到: {green}mur猫(1天)、香蕉人(1天)、pedobear【原版】(1天)");
         }
         delete rewards;
     }

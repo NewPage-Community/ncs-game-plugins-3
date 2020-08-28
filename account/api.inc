@@ -72,7 +72,7 @@ public void LoadAccountUID(HTTPResponse response, DataPack dp, const char[] erro
 	if (!IsValidClient(client))
 		return;
 
-	char uid[MAX_UID_LENGTH], username[MAX_NAME_LENGTH];
+	char uid[MAX_UID_LENGTH];
 	data.GetString("uid", uid, sizeof(uid));
 
 	// Init user

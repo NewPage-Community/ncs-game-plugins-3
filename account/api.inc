@@ -77,9 +77,6 @@ public void LoadAccountUID(HTTPResponse response, DataPack dp, const char[] erro
 
 	// Init user
 	g_Accounts[client].Init(client, uid, steamid);
-	// Update username
-	GetClientName(client, username, sizeof(username));
-	g_Accounts[client].UpdateName(username);
 	// UIDMap
 	InitClient(client, uid);
 

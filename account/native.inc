@@ -26,10 +26,17 @@ public int Native_ChangeName(Handle plugin, int numParams)
 
 public int Native_GetName(Handle plugin, int numParams)
 {
+	char name[MAX_NAME_LENGTH];
 	int client = GetNativeCell(1);
 	if (!g_Accounts[client].Valid())
-		return 0;
-	return (SetNativeString(2, g_Accounts[client].name, GetNativeCell(3)) == 0);
+	{
+		if (!IsValidClient(client))
+			return 0;
+		GetClientName(client, name, sizeof(name));
+	}
+	else
+		strcopy(name, sizeof(name), g_Accounts[client].name);
+	return (SetNativeString(2, name, GetNativeCell(3)) == 0);
 }
 
 public int Native_GetClientOfUID(Handle plugin, int numParams)

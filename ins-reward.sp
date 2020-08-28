@@ -50,13 +50,13 @@ public void OnPluginStart()
     cv_sign_vip_skin = CreateConVar("reward_sign_vip_skin", "75,11,93", "", 0, true, 0.0);
     cv_sign_vip_point = CreateConVar("reward_sign_vip_point", "22", "", 0, true, 0.0);
     // maintain
-    cv_maintain_rmb = CreateConVar("reward_maintain_rmb", "10", "", 0, true, 0.0);
+    cv_maintain_rmb = CreateConVar("reward_maintain_rmb", "100", "", 0, true, 0.0);
     cv_maintain_starttime = CreateConVar("reward_maintain_starttime", "0", "", 0, true, 0.0);
-    cv_maintain_endtime = CreateConVar("reward_maintain_endtime", "0", "", 0, true, 0.0);
+    cv_maintain_endtime = CreateConVar("reward_maintain_endtime", "1598630400", "", 0, true, 0.0);
     // holiday
     cv_holiday_rmb = CreateConVar("reward_holiday_rmb", "100", "", 0, true, 0.0);
     cv_holiday_starttime = CreateConVar("reward_holiday_starttime", "0", "", 0, true, 0.0);
-    cv_holiday_endtime = CreateConVar("reward_holiday_endtime", "0", "", 0, true, 0.0);
+    cv_holiday_endtime = CreateConVar("reward_holiday_endtime", "1598630400", "", 0, true, 0.0);
 }
 
 public Action RoundEnd_Event(Event event, const char[] name, bool dontBroadcast)

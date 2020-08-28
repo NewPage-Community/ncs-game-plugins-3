@@ -52,7 +52,10 @@ public Action Timer_CheckPlayers(Handle timer, any unused)
     {
         if (!IsValidClient(client))     // The Client is valid then go on 
             continue;
-        
+
+        if (GetUserFlagBits(client) != 0) // Skip admin
+            continue;
+
         if (g_Client[client].m_IsAFK)   //Default m_IsAFK is 'false'
         {
             if (++g_Client[client].m_Count >= CheckCountToKick)    //more than 5 times then kick out
@@ -70,7 +73,7 @@ public Action Timer_CheckPlayers(Handle timer, any unused)
 
 public void OnPlayerRunCmdPost(int client, int buttons, int impulse, const float vel[3], const float angles[3], int weapon, int subtype, int cmdnum, int tickcount, int seed, const int mouse[2])
 {
-    if (IsFakeClient(client) || GetUserFlagBits(client) != 0)
+    if (IsFakeClient(client))
         return;
 
     if (mouse[0] || mouse[1] || g_Client[client].m_Angle != angles[0] || g_Client[client].m_Vel != vel[1])

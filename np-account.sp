@@ -48,6 +48,9 @@ public void OnClientAuthorized(int client, const char[] auth)
 	if(strcmp(auth, "BOT") == 0 || IsFakeClient(client) || IsClientSourceTV(client))
 		return;
 
+	// Init
+	ResetIgnoreChangeName(client);
+
 	char steamid[32];
 	GetClientAuthId(client, AuthId_SteamID64, steamid, sizeof(steamid));
 	ReqAccountUID(steamid);

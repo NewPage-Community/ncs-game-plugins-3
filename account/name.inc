@@ -62,3 +62,8 @@ void ChangeName(int client, const char[] name)
 	ignore[client] = true;
 	SetClientName(client, name);
 }
+
+void ResetIgnoreChangeName(int client)
+{
+	ignore[client] = false;
+}

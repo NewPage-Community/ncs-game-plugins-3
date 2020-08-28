@@ -1,6 +1,6 @@
 #include <sdktools_functions>
 
-bool ignore[MAXPLAYERS + 1];
+static bool ignore[MAXPLAYERS + 1];
 
 GlobalForward onChangeName;
 

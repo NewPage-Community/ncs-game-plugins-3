@@ -1,5 +1,5 @@
 #if defined _NCS_Money_
-	#endinput
+    #endinput
 #endif
 #define _NCS_Money_
 
@@ -19,6 +19,6 @@ public SharedPlugin __pl_ncs_money =
 #if !defined REQUIRE_PLUGIN
 public void __pl_ncs_money_SetNTVOptional()
 {
-    NCS_Money_Give("NCS_Money_Give");
+    MarkNativeAsOptional("NCS_Money_Give");
 }
 #endif

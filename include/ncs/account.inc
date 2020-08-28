@@ -1,5 +1,5 @@
 #if defined _NCS_Account_
-	#endinput
+    #endinput
 #endif
 #define _NCS_Account_
 
@@ -36,8 +36,8 @@ public SharedPlugin __pl_ncs_account =
 public void __pl_ncs_account_SetNTVOptional()
 {
     MarkNativeAsOptional("NCS_Account_GetUID");
-	MarkNativeAsOptional("NCS_Account_ChangeName");
-	MarkNativeAsOptional("NCS_Account_GetName");
+    MarkNativeAsOptional("NCS_Account_ChangeName");
+    MarkNativeAsOptional("NCS_Account_GetName");
     MarkNativeAsOptional("NCS_Account_GetClientOfUID");
 }
 #endif

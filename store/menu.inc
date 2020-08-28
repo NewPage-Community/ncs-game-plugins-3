@@ -64,6 +64,8 @@ void DisplayItemMenu(int client, int type)
 
         char info[8], desc[64];
         item.GetMenuItem(info, sizeof(info), desc, sizeof(desc));
+        if (!item.available)
+            Format(desc, sizeof(desc), "(x)%s", desc);
         menu.AddItem(info, desc);
         count++;
     }
@@ -116,7 +118,15 @@ void BuyItemMenu(int client, Item item)
 
     char info[8], desc[64];
     IntToString(item.id, info, sizeof(info));
-    Format(desc, sizeof(desc), "购买\n(支付 %d 软妹币)\n ", item.GetPrice());
+    if (item.available)
+    {
+        if (item.alreadyHave)
+            Format(desc, sizeof(desc), "已拥有\n ");
+        else
+            Format(desc, sizeof(desc), "购买\n(支付 %d 软妹币)\n ", item.GetPrice());
+    }
+    else
+        Format(desc, sizeof(desc), "不可购买\n ");
     menu.AddItem(info, desc, (item.available && !item.alreadyHave && playerMoney[client] >= item.GetPrice()) ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
 
     switch (item.type)

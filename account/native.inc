@@ -17,8 +17,8 @@ public int Native_GetUID(Handle plugin, int numParams)
 public int Native_ChangeName(Handle plugin, int numParams)
 {
 	int client = GetNativeCell(1);
-	char name[MAX_NAME_LENGTH_FIX];
-	GetNativeString(2, name, MAX_NAME_LENGTH_FIX);
+	char name[MAX_NAME_LENGTH];
+	GetNativeString(2, name, MAX_NAME_LENGTH);
 
 	ChangeName(client, name);
 	return 1;

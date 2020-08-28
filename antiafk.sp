@@ -5,8 +5,8 @@
 #pragma newdecls required
 
 #define MinKickClients 0
-#define CheckPlayerTimer 200.0
-#define CheckCountToKick 3
+#define CheckPlayerTimer 30.0
+#define CheckCountToKick 20
 
 public Plugin myinfo = 
 {

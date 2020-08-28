@@ -21,10 +21,6 @@ ConVar cv_sign_rmb;
 ConVar cv_sign_vip_rmb;
 ConVar cv_sign_vip_skin;
 ConVar cv_sign_vip_point;
-// maintain
-ConVar cv_maintain_rmb;
-ConVar cv_maintain_starttime;
-ConVar cv_maintain_endtime;
 // holiday
 ConVar cv_holiday_rmb;
 ConVar cv_holiday_starttime;
@@ -52,10 +48,6 @@ public void OnPluginStart()
     cv_sign_vip_rmb = CreateConVar("reward_sign_vip_rmb", "10", "", 0, true, 0.0);
     cv_sign_vip_skin = CreateConVar("reward_sign_vip_skin", "75,11,93", "", 0, true, 0.0);
     cv_sign_vip_point = CreateConVar("reward_sign_vip_point", "50", "", 0, true, 0.0);
-    // maintain
-    cv_maintain_rmb = CreateConVar("reward_maintain_rmb", "100", "", 0, true, 0.0);
-    cv_maintain_starttime = CreateConVar("reward_maintain_starttime", "0", "", 0, true, 0.0);
-    cv_maintain_endtime = CreateConVar("reward_maintain_endtime", "1598630400", "", 0, true, 0.0);
     // holiday
     cv_holiday_rmb = CreateConVar("reward_holiday_rmb", "100", "", 0, true, 0.0);
     cv_holiday_starttime = CreateConVar("reward_holiday_starttime", "0", "", 0, true, 0.0);
@@ -104,7 +96,6 @@ public void NCS_Sign_OnUserSigned(int client)
     SignGiveRMB(client);
     SignGiveVIPPoint(client);
     SignGiveBackpackItems(client);
-    SignMaintain(client);
     SignHoliday(client);
 }
 
@@ -172,23 +163,6 @@ void SignGiveBackpackItems(int client)
             NCS_Chat(client, CHAT_PREFIX, "{blue}VIP签到: {green}mur猫(1天)、香蕉人(1天)、pedobear【原版】(1天)");
         }
         delete rewards;
-    }
-}
-
-void SignMaintain(int client)
-{
-    int rmb = cv_maintain_rmb.IntValue;
-    int start = cv_maintain_starttime.IntValue;
-    int end = cv_maintain_endtime.IntValue;
-
-    if (!LibraryExists("NCS-Money"))
-        return;
-    
-    int now = GetTime();
-    if (start <= now && now < end)
-    {
-        NCS_Money_Give(client, rmb, "维护补贴");
-        NCS_Chat(client, CHAT_PREFIX, "{blue}维护补贴: {green}%d软妹币", rmb);
     }
 }
 

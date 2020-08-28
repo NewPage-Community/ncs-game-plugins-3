@@ -1,7 +1,7 @@
 #define MAX_LENGTH_FLAG		32
 #define MAX_LENGTH_MESSAGE	128
 #define MAX_LENGTH_BUFFER	255
-#define MAX_NAME_LENGTH_FIX 256
+#define MAX_NAME_LENGTH_FIX 512
 
 static bool proto;
 static bool newMSG[MAXPLAYERS + 1];

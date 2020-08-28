@@ -1,6 +1,7 @@
 #define MAX_LENGTH_FLAG		32
 #define MAX_LENGTH_MESSAGE	128
 #define MAX_LENGTH_BUFFER	255
+#define MAX_NAME_LENGTH_FIX 256
 
 static bool proto;
 static bool newMSG[MAXPLAYERS + 1];
@@ -60,7 +61,7 @@ public Action OnSayText2(UserMsg msg_id, BfRead msg, const int[] players, int pl
     }
 
     //Get the name string of the client.
-    char sName[MAX_NAME_LENGTH];
+    char sName[MAX_NAME_LENGTH_FIX];
     switch (proto)
     {
         case true: PbReadString(msg, "params", sName, sizeof(sName), 0);
@@ -98,7 +99,7 @@ public void Frame_OnChatMessage_SayText2(DataPack data)
 
     int iSender = data.ReadCell();
 
-    char sName[MAX_NAME_LENGTH];
+    char sName[MAX_NAME_LENGTH_FIX];
     data.ReadString(sName, sizeof(sName));
 
     char sMessage[MAX_LENGTH_MESSAGE];
@@ -114,7 +115,7 @@ public void Frame_OnChatMessage_SayText2(DataPack data)
     // All Server Chat
     if (sMessage[0] == '#')
     {
-    	AllChat(sName, sMessage);
+    	AllChat(sName, sMessage[1]);
     	return;
     }
     
@@ -122,7 +123,7 @@ public void Frame_OnChatMessage_SayText2(DataPack data)
     bool alive = IsPlayerAlive(iSender);
 
     //Process colors.
-    ProcessColorString(sName, MAX_NAME_LENGTH, GetClientTeam(iSender));
+    ProcessColorString(sName, sizeof(sName), GetClientTeam(iSender));
 
     char sBuffer[MAX_LENGTH_BUFFER];
     Format(sBuffer, MAX_LENGTH_BUFFER, "\x05%s\x01 : %s", sName, sMessage);

@@ -179,11 +179,11 @@ public Action CommandCheer(int client, int args)
     int cheerCount, jeerCount;
     SetRandomSeed(GetTime());
 
-    char name[MAX_NAME_LENGTH];
+    char name[MAX_NAME_LENGTH_FIX];
     if (LibraryExists("NCS-Chat"))
-        NCS_Chat_GetChatName(client, name, MAX_NAME_LENGTH);
+        NCS_Chat_GetChatName(client, name, sizeof(name));
     else
-        GetClientName(client, name, MAX_NAME_LENGTH);
+        GetClientName(client, name, sizeof(name));
 
     cheerCount = g_cClientMaxCheers.IntValue;
     jeerCount = g_cClientMaxJeers.IntValue;

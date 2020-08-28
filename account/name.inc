@@ -1,6 +1,6 @@
 #include <sdktools_functions>
 
-char g_LastName[MAXPLAYERS + 1][MAX_NAME_LENGTH];
+char g_LastName[MAXPLAYERS + 1][MAX_NAME_LENGTH_FIX];
 
 GlobalForward onChangeName;
 
@@ -28,7 +28,7 @@ public Action Event_NameChanged(Event event, const char[] name, bool dontBroadca
 	if(!IsClientConnected(client) || !IsClientInGame(client)) return Plugin_Continue;
 
 	// Get the new name of client
-	char newName[MAX_NAME_LENGTH];
+	char newName[MAX_NAME_LENGTH_FIX];
 	event.GetString("newname", newName, sizeof(newName));
 
 	// Use Safety ChangeName to Pass
@@ -58,6 +58,6 @@ void ChangeName(int client, const char[] name)
 	if (!IsValidClient(client))
 		return;
 
-	strcopy(g_LastName[client], MAX_NAME_LENGTH, name);
+	strcopy(g_LastName[client], MAX_NAME_LENGTH_FIX, name);
 	SetClientName(client, name);
 }

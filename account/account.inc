@@ -21,12 +21,16 @@ enum struct account
 		strcopy(this.uid, MAX_UID_LENGTH, uid);
 		strcopy(this.steamid, MAX_STEAMID_LENGTH, steamid);
 		GetClientName(index, this.name, MAX_NAME_LENGTH);
+		// avoid color tag hack
+		RemoveColorString(this.name, MAX_NAME_LENGTH);
 	}
 
 	void UpdateName(const char[] username) {
 		if (!this.Valid())
 			return;
 		strcopy(this.name, MAX_STEAMID_LENGTH, username);
+		// avoid color tag hack
+		RemoveColorString(this.name, MAX_NAME_LENGTH);
 	}
 
 	bool Clean() {

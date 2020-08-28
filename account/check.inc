@@ -1,5 +1,3 @@
-#include <ncs/chat>
-
 void StartCheck(int client)
 {
 	CreateTimer(30.0, Timer_Check, client, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);

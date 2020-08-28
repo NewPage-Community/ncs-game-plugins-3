@@ -39,7 +39,7 @@ public int Native_GetChatName(Handle plugin, int numParams)
     if (!player[client].IsValid())
         return 1;
 
-    char name[MAX_NAME_LENGTH];
+    char name[MAX_NAME_LENGTH_FIX];
     player[client].GetChatName(name, sizeof(name));
     SetNativeString(2, name, size);
     return 1;

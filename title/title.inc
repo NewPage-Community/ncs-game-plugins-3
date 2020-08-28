@@ -16,7 +16,7 @@ void TitleBeSet(int client, int type)
     if (!IsValidClient(client))
         return;
 
-    char playerName[MAX_NAME_LENGTH], title[MAX_TITLE_LENGTH], titleColor[MAX_COLOR_LENGTH];
+    char playerName[MAX_NAME_LENGTH_FIX], title[MAX_TITLE_LENGTH], titleColor[MAX_COLOR_LENGTH];
     NCS_Account_GetName(client, playerName, sizeof(playerName));
 
     switch (type)

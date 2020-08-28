@@ -5,6 +5,7 @@
 
 #include <ncs/color>
 
+#define MAX_NAME_LENGTH_FIX 256
 #define MAX_TITLE_LENGTH 32
 #define CHAT_SYS_PREFIX "[系统提示]"
 #define CLIENT_ALL 0

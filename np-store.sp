@@ -3,10 +3,9 @@
 
 #include <ncs>
 
-#define REQUIRE_PLUGIN
 #include <ncs/account>
-#undef REQUIRE_PLUGIN
 
+#undef REQUIRE_PLUGIN
 #include <ncs/skin>
 #include <ncs/trail>
 #include <ncs/aura>

@@ -1,6 +1,9 @@
 #pragma semicolon 1
 
+
 #include <ncs/client>
+
+#undef REQUIRE_PLUGIN
 #include <ncs/backpack>
 #include <ncs/money>
 #include <ncs/vip>
@@ -82,7 +85,6 @@ void RoundReward()
     {
         if (IsValidClient(client) && IsClientInGame(client))
         {
-            NCS_Chat(client, CHAT_PREFIX, "{blue}通关成功");
             if (rmb > 0 && LibraryExists("NCS-Money"))
             {
                 NCS_Money_Give(client, rmb, "通关奖励");

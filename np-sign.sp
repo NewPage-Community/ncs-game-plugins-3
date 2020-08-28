@@ -3,11 +3,10 @@
 
 #include <ncs>
 
-#define REQUIRE_PLUGIN
 #include <ncs/account>
 #include <ncs/server>
-#undef REQUIRE_PLUGIN
 
+#undef REQUIRE_PLUGIN
 #include <ncs/chat>
 
 #define P_NAME P_PRE ... " - Sign"

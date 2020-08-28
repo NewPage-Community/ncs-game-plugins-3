@@ -3,9 +3,7 @@
 
 #include <ncs>
 
-#define REQUIRE_PLUGIN
 #include <ncs/account>
-#undef REQUIRE_PLUGIN
 
 #define P_NAME P_PRE ... " - Money"
 #define P_DESC "Money API provider plugin"

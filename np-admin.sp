@@ -3,9 +3,8 @@
 
 #include <ncs>
 
-#define REQUIRE_PLUGIN
-#include <ncs/account>
 #undef REQUIRE_PLUGIN
+#include <ncs/account>
 
 #define P_NAME P_PRE ... " - Admin"
 #define P_DESC "Admin management plugin"

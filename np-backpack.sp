@@ -3,9 +3,7 @@
 
 #include <ncs>
 
-#define REQUIRE_PLUGIN
 #include <ncs/account>
-#undef REQUIRE_PLUGIN
 
 #define P_NAME P_PRE ... " - Backpack"
 #define P_DESC "Backpack api provider plugin"

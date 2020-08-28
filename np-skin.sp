@@ -3,14 +3,14 @@
 
 #include <ncs>
 
-#define REQUIRE_PLUGIN
 #include <ncs/account>
 #include <ncs/cookie>
-#undef REQUIRE_PLUGIN
 
-#include <ncs/chat>
 #include <sdkhooks>
 #include <sdktools>
+
+#undef REQUIRE_PLUGIN
+#include <ncs/chat>
 
 #define P_NAME P_PRE ... " - Skin"
 #define P_DESC "Skin management plugin"

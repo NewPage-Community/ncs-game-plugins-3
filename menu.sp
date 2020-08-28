@@ -26,7 +26,7 @@ public Action Command_Menu(int client, int args)
     menu.AddItem("", "每日签到(!qd)");
     menu.AddItem("", "商店(!store)");
     menu.AddItem("", "个人中心");
-    menu.AddItem("", "系统设置");
+    menu.AddItem("", "个性化设置");
     menu.Display(client, MENU_TIME_FOREVER);
     return Plugin_Handled;
 }

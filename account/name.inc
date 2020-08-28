@@ -1,6 +1,6 @@
 #include <sdktools_functions>
 
-char g_LastName[MAXPLAYERS + 1][MAX_NAME_LENGTH];
+bool ignore[MAXPLAYERS + 1];
 
 GlobalForward onChangeName;
 
@@ -32,10 +32,11 @@ public Action Event_NameChanged(Event event, const char[] name, bool dontBroadca
 	event.GetString("newname", newName, sizeof(newName));
 
 	// Use Safety ChangeName to Pass
-	if (StrEqual(g_LastName[client], newName))
+	if (ignore[client])
+	{
+		ignore[client] = false;
 		return Plugin_Continue;
-	// Update
-	g_LastName[client] = newName;
+	}
 	
 	// Account service
 	if (g_Accounts[client].Valid())
@@ -58,6 +59,6 @@ void ChangeName(int client, const char[] name)
 	if (!IsValidClient(client))
 		return;
 
+	ignore[client] = true;
 	SetClientName(client, name);
-	GetClientName(client, g_LastName[client], MAX_NAME_LENGTH);
 }

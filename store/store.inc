@@ -1,5 +1,6 @@
 #define MAX_ITEM_NAME_LENGTH 32
 #define MAX_ITEM_DESC_LENGTH 64
+#define NEWLINE "#"
 #define Store_Service "game/store"
 
 enum struct Item
@@ -50,6 +51,9 @@ methodmap Items < StringMap
             // Fix discount
             if (FloatCompare(0.0, item.discount) == 0)
                 item.discount = 1.0;
+            
+            // New line
+            ReplaceString(item.description, MAX_ITEM_DESC_LENGTH, NEWLINE, "\n");
 
             char id[8];
             IntToString(item.id, id, sizeof(id));

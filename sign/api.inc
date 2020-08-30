@@ -31,7 +31,7 @@ void Sign(int client)
 	char uid[MAX_UID_LENGTH];
 	if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
 	{
-		NCS_Chat(client, _, "{blue}您的用户数据尚未加载，请重试！");
+		NCS_Chat(client, _, "{blue}您的用户数据尚未加载，请重试");
 		return;
 	}
 
@@ -65,7 +65,7 @@ public void SignCallback(HTTPResponse response, DataPack dp, const char[] error)
 	{
 		NCS_LogError("Sign", "SignCallback", "Faild to load info %d (%s)", response.Status, error);
 		NCS_LogError("Sign", "SignCallback", "#%d UID:%s", client, uid);
-		NCS_Chat(client, _, "{blue}签到失败，请重试！");
+		NCS_Chat(client, _, "{blue}签到失败，请重试");
 		return;
 	}
 
@@ -74,11 +74,11 @@ public void SignCallback(HTTPResponse response, DataPack dp, const char[] error)
 
 	if (alreadySigned)
 	{
-		NCS_Chat(client, _, "{blue}您今日已签到，请勿重复操作！");
+		NCS_Chat(client, _, "{blue}您今日已签到，请勿重复操作");
 		return;
 	}
 
-	NCS_Chat(client, _, "{blue}签到成功！");
+	NCS_Chat(client, _, "{blue}签到成功");
 
 	// Call global forward
 	Call_StartForward(onUserSigned);

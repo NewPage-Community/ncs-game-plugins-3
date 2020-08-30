@@ -203,7 +203,7 @@ public Action CommandCheer(int client, int args)
 
         if(g_iCheerCount[client][Cheer] >= cheerCount)
         {
-            CPrintToChat(client, "\x04[系统提示]{blue} 每局只能欢呼 {red}%d{blue} 次！", cheerCount);
+            CPrintToChat(client, "\x04[系统提示]{blue} 每局只能欢呼 {red}%d{blue} 次", cheerCount);
             return Plugin_Handled;
         }
 
@@ -221,7 +221,7 @@ public Action CommandCheer(int client, int args)
 
         if(g_iCheerCount[client][Jeer] >= jeerCount)
         {
-            CPrintToChat(client, "\x04[系统提示]{blue} 每局死亡后只能嘲笑 {red}%d{blue} 次！", jeerCount);
+            CPrintToChat(client, "\x04[系统提示]{blue} 每局死亡后只能嘲笑 {red}%d{blue} 次", jeerCount);
             return Plugin_Handled;
         }
 

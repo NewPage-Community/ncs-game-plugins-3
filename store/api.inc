@@ -77,6 +77,8 @@ void BuyItem(int client, Item item)
     dp.WriteCell(client, false);
     dp.WriteString(uid, false);
     dp.WriteString(item.name, false);
+    dp.WriteCell(item.id, false);
+    dp.WriteCell(item.GetPrice(), false);
 
     // JSON
     JSONObject data = new JSONObject();
@@ -97,6 +99,8 @@ public void BuyItemCallback(HTTPResponse response, DataPack dp, const char[] err
     char uid[MAX_UID_LENGTH], itemName[MAX_ITEM_NAME_LENGTH];
     dp.ReadString(uid, sizeof(uid));
     dp.ReadString(itemName, sizeof(itemName));
+    int item_id = dp.ReadCell();
+    int item_price = dp.ReadCell();
     dp.Close()
 
     if (response.Status != HTTPStatus_OK || response.Data == null)
@@ -109,7 +113,7 @@ public void BuyItemCallback(HTTPResponse response, DataPack dp, const char[] err
         else
         {
             NCS_LogError("Store", "BuyItemCallback", "Faild to load info %d (%s)", response.Status, error);
-            NCS_LogError("Store", "BuyItemCallback", "#%d UID:%s", client, uid);
+            NCS_LogError("Store", "BuyItemCallback", "#%d UID:%s ItemID:%d ItemPrice:%d", client, uid, item_id, item_price);
             if (IsValidClient(client))
                 NCS_Chat(client, _, "{blue}购买失败");
         }
@@ -175,7 +179,7 @@ public void BuyPassCallback(HTTPResponse response, DataPack dp, const char[] err
         else
         {
             NCS_LogError("Store", "BuyPassCallback", "Faild to load info %d (%s)", response.Status, error);
-            NCS_LogError("Store", "BuyPassCallback", "#%d UID:%s type:%d", client, uid, type);
+            NCS_LogError("Store", "BuyPassCallback", "#%d UID:%s Type:%d", client, uid, type);
             if (IsValidClient(client))
                 NCS_Chat(client, _, "{blue}升级失败");
         }

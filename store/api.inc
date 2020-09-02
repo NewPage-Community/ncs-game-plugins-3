@@ -29,11 +29,8 @@ void LoadUserStoreList(int client, bool openMenu = false)
 
 public void LoadUserStoreListCallback(HTTPResponse response, DataPack dp, const char[] error)
 {
-    if (response.Status != HTTPStatus_OK || response.Data == null)
-    {
-        NCS_LogError("Store", "LoadUserStoreListCallback", "Faild to load info %d (%s)", response.Status, error);
+    if (CheckAPIError("Store", "LoadUserStoreListCallback", response, error))
         return;
-    }
 
     dp.Reset();
     int client = dp.ReadCell();
@@ -103,20 +100,16 @@ public void BuyItemCallback(HTTPResponse response, DataPack dp, const char[] err
     int item_price = dp.ReadCell();
     dp.Close()
 
-    if (response.Status != HTTPStatus_OK || response.Data == null)
+    if (CheckAPIError("Store", "BuyItemCallback", response, error))
     {
-        if (NoEnoughMoney(response.Data))
+        if (IsValidClient(client))
         {
-            if (IsValidClient(client))
+            if (NoEnoughMoney(response.Data))
                 NCS_Chat(client, _, "{blue}您的软妹币余额不足");
-        }
-        else
-        {
-            NCS_LogError("Store", "BuyItemCallback", "Faild to load info %d (%s)", response.Status, error);
-            NCS_LogError("Store", "BuyItemCallback", "#%d UID:%s ItemID:%d ItemPrice:%d", client, uid, item_id, item_price);
-            if (IsValidClient(client))
+            else
                 NCS_Chat(client, _, "{blue}购买失败");
         }
+        NCS_LogError("Store", "BuyItemCallback", "#%d UID:%s ItemID:%d ItemPrice:%d", client, uid, item_id, item_price);
         return;
     }
 
@@ -169,20 +162,16 @@ public void BuyPassCallback(HTTPResponse response, DataPack dp, const char[] err
     int type = dp.ReadCell();
     dp.Close()
 
-    if (response.Status != HTTPStatus_OK || response.Data == null)
+    if (CheckAPIError("Store", "BuyPassCallback", response, error))
     {
-        if (NoEnoughMoney(response.Data))
+        if (IsValidClient(client))
         {
-            if (IsValidClient(client))
+            if (NoEnoughMoney(response.Data))
                 NCS_Chat(client, _, "{blue}您的软妹币余额不足");
-        }
-        else
-        {
-            NCS_LogError("Store", "BuyPassCallback", "Faild to load info %d (%s)", response.Status, error);
-            NCS_LogError("Store", "BuyPassCallback", "#%d UID:%s Type:%d", client, uid, type);
-            if (IsValidClient(client))
+            else
                 NCS_Chat(client, _, "{blue}升级失败");
         }
+        NCS_LogError("Store", "BuyPassCallback", "#%d UID:%s Type:%d", client, uid, type);
         return;
     }
 
@@ -232,20 +221,16 @@ public void BuyVIPCallback(HTTPResponse response, DataPack dp, const char[] erro
     int month = dp.ReadCell();
     dp.Close()
 
-    if (response.Status != HTTPStatus_OK || response.Data == null)
+    if (CheckAPIError("Store", "BuyVIPCallback", response, error))
     {
-        if (NoEnoughMoney(response.Data))
+        if (IsValidClient(client))
         {
-            if (IsValidClient(client))
+            if (NoEnoughMoney(response.Data))
                 NCS_Chat(client, _, "{blue}您的软妹币余额不足");
-        }
-        else
-        {
-            NCS_LogError("Store", "BuyVIPCallback", "Faild to load info %d (%s)", response.Status, error);
-            NCS_LogError("Store", "BuyVIPCallback", "#%d UID:%s Month:%d", client, uid, month);
-            if (IsValidClient(client))
+            else
                 NCS_Chat(client, _, "{blue}购买错误");
         }
+        NCS_LogError("Store", "BuyVIPCallback", "#%d UID:%s Month:%d", client, uid, month);
         return;
     }
 

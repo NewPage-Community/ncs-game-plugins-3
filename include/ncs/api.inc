@@ -31,3 +31,18 @@ public void BlankCallback(HTTPResponse response, any value, const char[] error)
     if (response.Status != HTTPStatus_OK)
 		NCS_LogError("API", "BlankCallback", "Faild to request %d (%s)", response.Status, error);
 }
+
+stock bool CheckAPIError(const char[] module, const char[] func, HTTPResponse response, const char[] error)
+{
+    if (response.Status == HTTPStatus_OK && response.Data != null)
+        return false;
+
+    if (response.Data != null)
+    {
+        char json[512];
+        response.Data.ToString(json, sizeof(json));
+        NCS_LogError(module, func, "JSON: %s", json);
+    }
+    NCS_LogError(module, func, "Faild to request %d (%s)", response.Status, error);
+    return true;
+}

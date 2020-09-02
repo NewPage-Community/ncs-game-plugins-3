@@ -383,11 +383,11 @@ void BuyVIPConfirm(int client, int month)
             Format(expireDate, sizeof(expireDate), "未开通");
         else
             FormatTime(expireDate, sizeof(expireDate), "%Y-%m-%d", StringToInt(expireTime));
-        menu.SetTitle("VIP续费确认\n软妹币: %d\n有效期值: %s\n ", playerMoney[client], expireDate);
+        menu.SetTitle("VIP续费确认\n软妹币: %d\n有效期值: %s\n \n%s\n ", playerMoney[client], expireDate, vipDesc);
     }
     else
     {
-        menu.SetTitle("VIP续费确认\n软妹币: %d\n ", playerMoney[client]);
+        menu.SetTitle("VIP续费确认\n软妹币: %d\n \n%s\n ", playerMoney[client], vipDesc);
     }
     
     int price = VIPPrice(month);

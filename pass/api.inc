@@ -94,9 +94,8 @@ public void UsePointBoxCallback(HTTPResponse response, DataPack dp, const char[]
     bool all = dp.ReadCell();
     dp.Close()
 
-    if (response.Status != HTTPStatus_OK || response.Data == null)
+    if (CheckAPIError("Pass", "UsePointBoxCallback", response, error))
     {
-        NCS_LogError("Pass", "UsePointBoxCallback", "Faild to load info %d (%s)", response.Status, error);
         NCS_LogError("Pass", "UsePointBoxCallback", "#%d UID:%s All:%d", client, uid, all);
 
         if (IsValidClient(client))

@@ -27,11 +27,8 @@ void UpdateCVars()
 
 public void LoadCVars(HTTPResponse response, any v, const char[] error)
 {
-    if (response.Status != HTTPStatus_OK || response.Data == null)
-    {
-        NCS_LogError("CVar", "LoadCVars", "Faild to load info %d (%s)", response.Status, error);
+    if (CheckAPIError("CVar", "LoadCVars", response, error))
         return;
-    }
 
     JSONObject data = view_as<JSONObject>(response.Data);
     JSONArray cvars = view_as<JSONArray>(data.Get("cvars"));

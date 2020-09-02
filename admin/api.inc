@@ -26,11 +26,8 @@ void ReqAdmin(int client, const char[] uid)
 
 public void LoadAdminInfo(HTTPResponse response, DataPack dp, const char[] error)
 {
-    if (response.Status != HTTPStatus_OK || response.Data == null)
-    {
-        NCS_LogError("Admin", "LoadAdminInfo", "Faild to load info %d (%s)", response.Status, error);
+    if (CheckAPIError("Admin", "LoadAdminInfo", response, error))
         return;
-    }
 
     // DataPack
     dp.Reset();

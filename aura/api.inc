@@ -22,11 +22,8 @@ void LoadAura()
 
 public void LoadAuraInfo(HTTPResponse response, DataPack dp, const char[] error)
 {
-    if (response.Status != HTTPStatus_OK || response.Data == null)
-    {
-        NCS_LogError("Aura", "LoadAuraInfo", "Faild to load info %d (%s)", response.Status, error);
+    if (CheckAPIError("Aura", "LoadAuraInfo", response, error))
         return;
-    }
 
     // JSON
     JSONObject data = view_as<JSONObject>(response.Data);
@@ -68,11 +65,8 @@ void CheckUserHaveAura(int client)
 
 public void CheckUserHaveItemCallback(HTTPResponse response, DataPack dp, const char[] error)
 {
-    if (response.Status != HTTPStatus_OK || response.Data == null)
-    {
-        NCS_LogError("Aura", "CheckUserHaveItemCallback", "Faild to load info %d (%s)", response.Status, error);
+    if (CheckAPIError("Aura", "CheckUserHaveItemCallback", response, error))
         return;
-    }
 
     // DataPack
     dp.Reset();

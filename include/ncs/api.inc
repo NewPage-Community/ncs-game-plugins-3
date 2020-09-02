@@ -28,8 +28,7 @@ stock HTTPClient NewNCSAPI()
 
 public void BlankCallback(HTTPResponse response, any value, const char[] error)
 {
-    if (response.Status != HTTPStatus_OK)
-		NCS_LogError("API", "BlankCallback", "Faild to request %d (%s)", response.Status, error);
+    CheckAPIError("API", "BlankCallback", response, error);
 }
 
 stock bool CheckAPIError(const char[] module, const char[] func, HTTPResponse response, const char[] error)

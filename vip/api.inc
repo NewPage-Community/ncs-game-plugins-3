@@ -29,11 +29,8 @@ void ReqVIPInfo(int client, const char[] uid, bool reload = false)
 
 public void LoadVIPInfo(HTTPResponse response, DataPack dp, const char[] error)
 {
-	if (response.Status != HTTPStatus_OK || response.Data == null)
-	{
-		NCS_LogError("VIP", "LoadVIPInfo", "Faild to load info %d (%s)", response.Status, error);
+	if (CheckAPIError("VIP", "LoadVIPInfo", response, error))
 		return;
-	}
 
 	// DataPack
 	dp.Reset();
@@ -100,9 +97,8 @@ public void AddPointCallback(HTTPResponse response, DataPack dp, const char[] er
 	int addPoint = dp.ReadCell();
 	dp.Close()
 
-	if (response.Status != HTTPStatus_OK || response.Data == null)
+	if (CheckAPIError("VIP", "AddPointCallback", response, error))
 	{
-		NCS_LogError("VIP", "AddPointCallback", "Faild to load info %d (%s)", response.Status, error);
 		NCS_LogError("VIP", "AddPointCallback", "#%d UID:%s AddPoint:%d", client, uid, addPoint);
 		return;
 	}
@@ -146,9 +142,8 @@ public void RenewalCallback(HTTPResponse response, DataPack dp, const char[] err
 	int length = dp.ReadCell();
 	dp.Close()
 
-	if (response.Status != HTTPStatus_OK || response.Data == null)
+	if (CheckAPIError("VIP", "RenewalCallback", response, error))
 	{
-		NCS_LogError("VIP", "RenewalCallback", "Faild to load info %d (%s)", response.Status, error);
 		NCS_LogError("VIP", "RenewalCallback", "#%d UID:%s Length:%d", client, uid, length);
 		return;
 	}

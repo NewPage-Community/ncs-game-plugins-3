@@ -31,13 +31,10 @@ void RequreTitle(int client, const char[] uid)
 
 }
 
-void RequreTitle_Resp(HTTPResponse response, DataPack dp, const char[] error){
-
-	if (response.Status != HTTPStatus_OK || response.Data == null)
-	{
-		NCS_LogError("Title", "LoadTitleInfo", "Faild to load info %d (%s)", response.Status, error);
+void RequreTitle_Resp(HTTPResponse response, DataPack dp, const char[] error)
+{
+	if (CheckAPIError("Title", "LoadTitleInfo", response, error))
 		return;
-	}
 
 	// DataPack
 	dp.Reset();

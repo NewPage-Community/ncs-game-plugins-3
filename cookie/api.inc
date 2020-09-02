@@ -26,11 +26,8 @@ void LoadUserCookie(int client, const char[] uid)
 
 public void LoadUserCookieCallback(HTTPResponse response, int client, const char[] error)
 {
-    if (response.Status != HTTPStatus_OK || response.Data == null)
-    {
-        NCS_LogError("Cookie", "LoadUserCookieCallback", "Faild to load info %d (%s)", response.Status, error);
+    if (CheckAPIError("Cookie", "LoadUserCookieCallback", response, error))
         return;
-    }
 
     if (!IsValidClient(client))
         return;

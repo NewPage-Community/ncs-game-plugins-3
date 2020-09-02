@@ -22,11 +22,8 @@ void LoadTrail()
 
 public void LoadTrailInfo(HTTPResponse response, DataPack dp, const char[] error)
 {
-    if (response.Status != HTTPStatus_OK || response.Data == null)
-    {
-        NCS_LogError("Trail", "LoadTrailInfo", "Faild to load info %d (%s)", response.Status, error);
+    if (CheckAPIError("Trail", "LoadTrailInfo", response, error))
         return;
-    }
 
     // JSON
     JSONObject data = view_as<JSONObject>(response.Data);
@@ -68,11 +65,8 @@ void CheckUserHaveTrail(int client)
 
 public void CheckUserHaveItemCallback(HTTPResponse response, DataPack dp, const char[] error)
 {
-    if (response.Status != HTTPStatus_OK || response.Data == null)
-    {
-        NCS_LogError("Trail", "CheckUserHaveItemCallback", "Faild to load info %d (%s)", response.Status, error);
+    if (CheckAPIError("Trail", "CheckUserHaveItemCallback", response, error))
         return;
-    }
 
     // DataPack
     dp.Reset();

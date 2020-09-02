@@ -53,11 +53,8 @@ void ReqAccountUID(const char[] steamid, bool notify = false)
 
 public void LoadAccountUID(HTTPResponse response, DataPack dp, const char[] error)
 {
-	if (response.Status != HTTPStatus_OK || response.Data == null)
-	{
-		NCS_LogError("Account", "LoadAccountUID", "Faild to load info %d (%s)", response.Status, error);
+	if (CheckAPIError("Account", "BuyVIPCallback", response, error))
 		return;
-	}
 
 	// Load data
 	char steamid[32];

@@ -22,11 +22,8 @@ void LoadSkins()
 
 public void LoadSkinsInfo(HTTPResponse response, DataPack dp, const char[] error)
 {
-    if (response.Status != HTTPStatus_OK || response.Data == null)
-    {
-        NCS_LogError("Skin", "LoadSkinsInfo", "Faild to load info %d (%s)", response.Status, error);
+    if (CheckAPIError("Skin", "LoadSkinsInfo", response, error))
         return;
-    }
 
     // JSON
     JSONObject data = view_as<JSONObject>(response.Data);
@@ -68,11 +65,8 @@ void CheckUserHaveSkin(int client)
 
 public void CheckUserHaveItemCallback(HTTPResponse response, DataPack dp, const char[] error)
 {
-    if (response.Status != HTTPStatus_OK || response.Data == null)
-    {
-        NCS_LogError("Skin", "CheckUserHaveItemCallback", "Faild to load info %d (%s)", response.Status, error);
+    if (CheckAPIError("Skin", "CheckUserHaveItemCallback", response, error))
         return;
-    }
 
     // DataPack
     dp.Reset();

@@ -22,11 +22,8 @@ void LoadSpray()
 
 public void LoadSprayInfo(HTTPResponse response, DataPack dp, const char[] error)
 {
-    if (response.Status != HTTPStatus_OK || response.Data == null)
-    {
-        NCS_LogError("Spray", "LoadSprayInfo", "Faild to load info %d (%s)", response.Status, error);
+    if (CheckAPIError("Spray", "LoadSprayInfo", response, error))
         return;
-    }
 
     // JSON
     JSONObject data = view_as<JSONObject>(response.Data);
@@ -68,11 +65,8 @@ void CheckUserHaveSpray(int client)
 
 public void CheckUserHaveItemCallback(HTTPResponse response, DataPack dp, const char[] error)
 {
-    if (response.Status != HTTPStatus_OK || response.Data == null)
-    {
-        NCS_LogError("Spray", "CheckUserHaveItemCallback", "Faild to load info %d (%s)", response.Status, error);
+    if (CheckAPIError("Spray", "CheckUserHaveItemCallback", response, error))
         return;
-    }
 
     // DataPack
     dp.Reset();

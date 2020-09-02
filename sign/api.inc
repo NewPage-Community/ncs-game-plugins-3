@@ -58,16 +58,16 @@ public void SignCallback(HTTPResponse response, DataPack dp, const char[] error)
 	dp.ReadString(uid, sizeof(uid));
 	dp.Close()
 
-	if (!IsValidClient(client))
-		return;
-
-	if (response.Status != HTTPStatus_OK || response.Data == null)
+	if (CheckAPIError("Sign", "SignCallback", response, error))
 	{
-		NCS_LogError("Sign", "SignCallback", "Faild to load info %d (%s)", response.Status, error);
 		NCS_LogError("Sign", "SignCallback", "#%d UID:%s", client, uid);
-		NCS_Chat(client, _, "{blue}签到失败，请重试");
+		if (!IsValidClient(client))
+			NCS_Chat(client, _, "{blue}签到失败，请重试");
 		return;
 	}
+
+	if (!IsValidClient(client))
+		return;
 
 	JSONObject data = view_as<JSONObject>(response.Data);
 	bool alreadySigned = data.GetBool("already_signed");

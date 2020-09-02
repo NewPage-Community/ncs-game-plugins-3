@@ -33,11 +33,8 @@ void ReqBanCheck(int client, const char[] uid)
 
 public void LoadBanCheck(HTTPResponse response, DataPack dp, const char[] error)
 {
-	if (response.Status != HTTPStatus_OK || response.Data == null)
-	{
-		NCS_LogError("Bans", "LoadBanInfo", "Faild to load info %d (%s)", response.Status, error);
+	if (CheckAPIError("Bans", "LoadBanCheck", response, error))
 		return;
-	}
 
 	// DataPack
 	dp.Reset();

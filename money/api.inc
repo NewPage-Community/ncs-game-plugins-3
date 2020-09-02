@@ -47,9 +47,8 @@ public void GiveMoneyCallback(HTTPResponse response, DataPack dp, const char[] e
     dp.ReadString(reason, sizeof(reason));
     dp.Close();
 
-    if (response.Status != HTTPStatus_OK || response.Data == null)
+    if (CheckAPIError("Money", "GiveMoneyCallback", response, error))
     {
-        NCS_LogError("Money", "GiveMoneyCallback", "Faild to load info %d (%s)", response.Status, error);
         NCS_LogError("Money", "GiveMoneyCallback", "#%d UID:%s GiveMoney:%d %s", client, uid, money, reason);
         return;
     }

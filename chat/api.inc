@@ -18,6 +18,7 @@ void AllChat(const char[] name, const char[] message)
     JSONObject data = new JSONObject();
     data.SetString("name", name);
     data.SetString("message", message);
+    data.SetInt("server_id", NCS_Server_GetID());
 
     char path[128];
     Format(path, sizeof(path), "%s/allchat", Chat_Service);

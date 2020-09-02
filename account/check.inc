@@ -5,7 +5,7 @@ void StartCheck(int client)
 
 public Action Timer_Check(Handle timer, int client)
 {
-	if (g_Accounts[client].Valid() || !IsClientInGame(client))
+	if (g_Accounts[client].Valid())
 		return Plugin_Stop;
 
 	char steamid[32];

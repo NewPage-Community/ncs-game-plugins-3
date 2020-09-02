@@ -31,6 +31,7 @@ public void BlankCallback(HTTPResponse response, any value, const char[] error)
     CheckAPIError("API", "BlankCallback", response, error);
 }
 
+// Check has error ?
 stock bool CheckAPIError(const char[] module, const char[] func, HTTPResponse response, const char[] error)
 {
     if (response.Status == HTTPStatus_OK && response.Data != null)

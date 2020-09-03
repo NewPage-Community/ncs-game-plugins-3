@@ -15,5 +15,5 @@ stock int FindClientBySteamId(AuthIdType authType, const char[] authId, bool val
 				if(strcmp(steamId, authId) == 0)
 					return client;
 
-	return -1;
+	return 0;
 }

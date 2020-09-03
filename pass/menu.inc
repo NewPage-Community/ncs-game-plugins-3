@@ -13,11 +13,8 @@ void DisplayPassInfo(int client)
 
 public void LoadPassInfo(HTTPResponse response, int client, const char[] error)
 {
-    if (response.Status != HTTPStatus_OK || response.Data == null)
-    {
-        NCS_LogError("Pass", "LoadPassInfo", "Faild to load info %d (%s)", response.Status, error);
+    if (CheckAPIError("Pass", "LoadPassInfo", response, error))
         return;
-    }
     
     if (!IsValidClient(client))
         return;

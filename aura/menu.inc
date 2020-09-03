@@ -19,11 +19,8 @@ void DisplayUserAuras(int client)
 
 public void UserAurasCallback(HTTPResponse response, DataPack dp, const char[] error)
 {
-    if (response.Status != HTTPStatus_OK || response.Data == null)
-    {
-        NCS_LogError("Aura", "UserAurasCallback", "Faild to load info %d (%s)", response.Status, error);
+    if (CheckAPIError("Aura", "UserAurasCallback", response, error))
         return;
-    }
 
     // DataPack
     dp.Reset();

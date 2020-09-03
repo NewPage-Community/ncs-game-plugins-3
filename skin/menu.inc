@@ -21,11 +21,8 @@ void DisplayUserSkins(int client)
 
 public void UserSkinsCallback(HTTPResponse response, DataPack dp, const char[] error)
 {
-    if (response.Status != HTTPStatus_OK || response.Data == null)
-    {
-        NCS_LogError("Skin", "UserSkinsCallback", "Faild to load info %d (%s)", response.Status, error);
+    if (CheckAPIError("Skin", "UserSkinsCallback", response, error))
         return;
-    }
 
     // DataPack
     dp.Reset();

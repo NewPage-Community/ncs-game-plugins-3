@@ -19,11 +19,8 @@ void DisplayUserSprays(int client)
 
 public void UserSpraysCallback(HTTPResponse response, DataPack dp, const char[] error)
 {
-    if (response.Status != HTTPStatus_OK || response.Data == null)
-    {
-        NCS_LogError("Spray", "UserSpraysCallback", "Faild to load info %d (%s)", response.Status, error);
+    if (CheckAPIError("Spray", "UserSpraysCallback", response, error))
         return;
-    }
 
     // DataPack
     dp.Reset();

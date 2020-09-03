@@ -211,11 +211,8 @@ void HotSaleListMenu(int client)
 
 public void LoadHotSaleList(HTTPResponse response, int client, const char[] error)
 {
-    if (response.Status != HTTPStatus_OK || response.Data == null)
-    {
-        NCS_LogError("Store", "LoadHotSaleList", "Faild to load info %d (%s)", response.Status, error);
+    if (CheckAPIError("Store", "LoadHotSaleList", response, error))
         return;
-    }
 
     if (!IsValidClient(client))
         return;

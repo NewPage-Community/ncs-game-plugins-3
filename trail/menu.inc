@@ -19,11 +19,8 @@ void DisplayUserTrails(int client)
 
 public void UserTrailsCallback(HTTPResponse response, DataPack dp, const char[] error)
 {
-    if (response.Status != HTTPStatus_OK || response.Data == null)
-    {
-        NCS_LogError("Trail", "UserSkinsCallback", "Faild to load info %d (%s)", response.Status, error);
+    if (CheckAPIError("Trail", "UserSkinsCallback", response, error))
         return;
-    }
 
     // DataPack
     dp.Reset();

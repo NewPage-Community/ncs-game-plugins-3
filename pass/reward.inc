@@ -9,11 +9,8 @@ void LoadRewards()
 
 public void LoadRewardsCallback(HTTPResponse response, int client, const char[] error)
 {
-    if (response.Status != HTTPStatus_OK || response.Data == null)
-    {
-        NCS_LogError("Pass", "LoadPassInfo", "Faild to load info %d (%s)", response.Status, error);
+    if (CheckAPIError("Pass", "LoadRewardsCallback", response, error))
         return;
-    }
     
     // JSON data
     JSONObject data = view_as<JSONObject>(response.Data);

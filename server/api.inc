@@ -97,7 +97,6 @@ public void LoadServerInfo(HTTPResponse response, any value, const char[] error)
 	if (CheckAPIError("Server", "LoadServerInfo", response, error))
 	{
 		info = new ServerInfo()
-		PrintToServer("[NCS] Server - Faild to load info %d (%s)", response.Status, error);
 	}
 	else
 	{

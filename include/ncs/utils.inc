@@ -159,6 +159,21 @@ stock void GetTimeStamp(char[] time, int size)
         Format(time, size, "%d%d", stamp[1], stamp[0]);
 }
 
+// i1 > i2 return 1; i1 < i2 return -1; i1 = i2 return 0
+stock int StringIntCmp(const char[] i1, const char[] i2)
+{
+    int i1_length = strlen(i1);
+    int i2_length = strlen(i2);
+
+    if (i1_length > i2_length)
+        return 1;
+    
+    if (i1_length < i2_length)
+        return -1;
+    
+    return strcmp(i1, i2);
+}
+
 stock int StrLenMB(const char[] str)
 {
     

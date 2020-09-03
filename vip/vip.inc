@@ -21,7 +21,7 @@ enum struct VIP
             return false;
         char now[INT64_LENGTH];
         GetTimeStamp(now, sizeof(now))
-        return (strcmp(now, this.expireDate) == -1);
+        return (StringIntCmp(now, this.expireDate) == -1);
     }
 
     void Init(int index, int point, const char[] expireDate) {

@@ -7,7 +7,6 @@ enum struct TitleData
 
 TitleData playerTitle[MAXPLAYERS+1];
 
-#include "title/utils"
 #include "title/api"
 #include "title/menu"
 

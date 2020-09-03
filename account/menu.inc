@@ -7,8 +7,8 @@ void AccountMenu(int client)
     }
 
     char steam2[32], steam3[32], ip[32];
-    GetClientAuthId(client, AuthId_Steam2, steam2, sizeof(steam2), true);
-    GetClientAuthId(client, AuthId_Steam3, steam3, sizeof(steam3), true);
+    GetClientAuthId(client, AuthId_Steam2, steam2, sizeof(steam2));
+    GetClientAuthId(client, AuthId_Steam3, steam3, sizeof(steam3));
     GetClientIP(client, ip, sizeof(ip));
 
     PanelEx panel = new PanelEx();

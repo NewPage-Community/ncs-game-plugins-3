@@ -52,7 +52,13 @@ public void OnClientAuthorized(int client, const char[] auth)
 	ResetIgnoreChangeName(client);
 
 	char steamid[32];
-	GetClientAuthId(client, AuthId_SteamID64, steamid, sizeof(steamid));
+	if (!GetClientAuthId(client, AuthId_SteamID64, steamid, sizeof(steamid)))
+	{
+		NCS_LogError("Account", "OnClientAuthorized", "Can not verify client SteamID64 -> \"%L\"", client);
+		KickClient(client, "无效SteamID，请重启Steam客户端\nInvalid Steam ID, please restart Steam client");
+		return;
+	}
+	
 	ReqAccountUID(steamid);
 
 	// Check loaded

@@ -12,7 +12,8 @@ enum struct account
 		if (this.index == 0 || this.uid[0] == '\0')
 			return false;
 		char steamid[MAX_STEAMID_LENGTH];
-		GetClientAuthId(this.index, AuthId_SteamID64, steamid, sizeof(steamid), true);
+		if (!GetClientAuthId(this.index, AuthId_SteamID64, steamid, sizeof(steamid)))
+			return false;
 		return IsValidClient(this.index) && StrEqual(steamid, this.steamid)
 	}
 

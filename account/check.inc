@@ -9,7 +9,9 @@ public Action Timer_Check(Handle timer, int client)
 		return Plugin_Stop;
 
 	char steamid[32];
-	GetClientAuthId(client, AuthId_SteamID64, steamid, sizeof(steamid));
+	if (!GetClientAuthId(client, AuthId_SteamID64, steamid, sizeof(steamid)))
+		return Plugin_Stop;
+
 	ReqAccountUID(steamid, true);
 	return Plugin_Continue;
 }

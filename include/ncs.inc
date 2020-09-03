@@ -22,3 +22,4 @@
 #include <ncs/log>
 #include <ncs/menu>
 #include <ncs/utils>
+#include <ncs/admin>

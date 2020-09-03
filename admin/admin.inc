@@ -1,7 +1,8 @@
 void LoadAdmin(int client, int flagbits, int immunity)
 {
 	char auth[32];
-	GetClientAuthId(client, AuthId_Steam2, auth, sizeof(auth));
+	if (!GetClientAuthId(client, AuthId_Steam2, auth, sizeof(auth)))
+		return;
 
 	AdminId admin;
 

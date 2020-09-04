@@ -39,7 +39,7 @@ void VIPInfoMenu(int client)
     
     bool vip = g_VIPs[client].IsVIP();
     int point = g_VIPs[client].point;
-    char expireTime[128];
+    char expireTime[256];
     FormatTime(expireTime, sizeof(expireTime), NULL_STRING, StringToInt(g_VIPs[client].expireDate));
     
     PanelEx panel = new PanelEx();

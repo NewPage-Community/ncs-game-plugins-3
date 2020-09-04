@@ -374,7 +374,7 @@ void BuyVIPConfirm(int client, int month)
     
     if (LibraryExists("NCS-VIP"))
     {
-        char expireTime[INT64_LENGTH], expireDate[32];
+        char expireTime[INT64_LENGTH], expireDate[256];
         NCS_VIP_ExpireTime(client, expireTime, sizeof(expireTime));
         if (StringToInt(expireTime) == 0)
             Format(expireDate, sizeof(expireDate), "未开通");

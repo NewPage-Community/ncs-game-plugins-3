@@ -69,7 +69,7 @@ public void LoadBanCheck(HTTPResponse response, DataPack dp, const char[] error)
 	int banType = info.GetInt("type");
 
 	// Format expire time
-	char time[64];
+	char time[256];
 	FormatTime(time, sizeof(time), NULL_STRING, StringToInt(expireTime));
 
 	// Ban client

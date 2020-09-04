@@ -31,7 +31,7 @@ public void LoadMoneyRecord(HTTPResponse response, int client, const char[] erro
         delete record;
 
         FormatTime(sTime, sizeof(sTime), NULL_STRING, StringToInt(timestamp));
-        menu.AddItemEx(ITEMDRAW_DISABLED, "", "金额: %d\n时间: %s\n原因: %s", amount, sTime, reason);
+        menu.AddItemEx(ITEMDRAW_DISABLED, "", "原因: %s\n  时间: %s\n  金额: %d", reason, sTime, amount);
     }
 
     delete records;

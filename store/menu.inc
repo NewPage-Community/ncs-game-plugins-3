@@ -379,7 +379,7 @@ void BuyVIPConfirm(int client, int month)
         if (StringToInt(expireTime) == 0)
             Format(expireDate, sizeof(expireDate), "未开通");
         else
-            FormatTime(expireDate, sizeof(expireDate), "%Y-%m-%d", StringToInt(expireTime));
+            FormatTime(expireDate, sizeof(expireDate), NULL_STRING, StringToInt(expireTime));
         menu.SetTitle("VIP续费确认\n软妹币: %d\n有效期值: %s\n \n%s\n ", playerMoney[client], expireDate, vipDesc);
     }
     else

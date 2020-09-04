@@ -70,7 +70,7 @@ public void LoadBanCheck(HTTPResponse response, DataPack dp, const char[] error)
 
 	// Format expire time
 	char time[64];
-	FormatTime(time, sizeof(time), "%Y/%m/%d %H:%M:%S", StringToInt(expireTime));
+	FormatTime(time, sizeof(time), NULL_STRING, StringToInt(expireTime));
 
 	// Ban client
 	char kickReason[256];

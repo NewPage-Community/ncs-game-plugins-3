@@ -40,7 +40,7 @@ void VIPInfoMenu(int client)
     bool vip = g_VIPs[client].IsVIP();
     int point = g_VIPs[client].point;
     char expireTime[128];
-    FormatTime(expireTime, sizeof(expireTime), "%Y-%m-%d", StringToInt(g_VIPs[client].expireDate));
+    FormatTime(expireTime, sizeof(expireTime), NULL_STRING, StringToInt(g_VIPs[client].expireDate));
     
     PanelEx panel = new PanelEx();
     panel.SetTitle("VIP信息");

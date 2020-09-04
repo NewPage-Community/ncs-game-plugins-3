@@ -57,6 +57,7 @@ void PersonalMenu(int client)
     menu.AddItem("", "个人信息(!account)");
     menu.AddItem("", "通行证(!pass)");
     menu.AddItem("", "会员(!vip)");
+    menu.AddItem("", "软妹币流水账(!moneyrecords)");
     menu.ExitBackButton = true;
     menu.Display(client, MENU_TIME_FOREVER);
 }
@@ -74,6 +75,7 @@ public int PersonalMenuHandle(Menu menu, MenuAction action, int client, int slot
             case 0: FakeClientCommandEx(client, "sm_account");
             case 1: FakeClientCommandEx(client, "sm_pass");
             case 2: FakeClientCommandEx(client, "sm_vip");
+            case 3: FakeClientCommandEx(client, "sm_moneyrecords");
         }
     }
 }

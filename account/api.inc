@@ -53,7 +53,7 @@ void ReqAccountUID(const char[] steamid, bool notify = false)
 
 public void LoadAccountUID(HTTPResponse response, DataPack dp, const char[] error)
 {
-	if (CheckAPIError("Account", "BuyVIPCallback", response, error))
+	if (CheckAPIError("Account", "LoadAccountUID", response, error))
 		return;
 
 	// Load data

@@ -212,3 +212,24 @@ stock void PrecacheEffect(const char[] name)
     AddToStringTable(table, name);
     LockStringTables(save);
 }
+
+stock int GetGameAppID()
+{
+    File file = OpenFile("steam.inf", "r");
+    if (file == INVALID_HANDLE)
+        return -1;
+
+    char line[128], parts[2][64];
+    while (ReadFileLine(file, line, sizeof(line)))
+    {
+        ExplodeString(line, "=", parts, sizeof(parts), sizeof(parts[]));
+        if (StrEqual(parts[0], "appID"))
+        {
+            delete file;
+            return StringToInt(parts[1]);
+        }
+    }
+
+    delete file;
+    return -1;
+}

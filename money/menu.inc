@@ -15,7 +15,7 @@ public void LoadMoneyRecord(HTTPResponse response, int client, const char[] erro
         return;
 
     MenuEx menu = new MenuEx(MoneyRecordHandle);
-    menu.SetTitle("软妹币流水帐");
+    menu.SetTitle("软妹币流水帐(近10天)");
 
     JSONObject data = view_as<JSONObject>(response.Data);
     JSONArray records = view_as<JSONArray>(data.Get("records"));
@@ -31,7 +31,7 @@ public void LoadMoneyRecord(HTTPResponse response, int client, const char[] erro
         delete record;
 
         FormatTime(sTime, sizeof(sTime), NULL_STRING, StringToInt(timestamp));
-        menu.AddItemEx(ITEMDRAW_DISABLED, "", "原因: %s\n  时间: %s\n  金额: %d", reason, sTime, amount);
+        menu.AddItemEx(ITEMDRAW_DISABLED, "", "原因: %s\n    时间: %s\n    金额: %d", reason, sTime, amount);
     }
 
     delete records;

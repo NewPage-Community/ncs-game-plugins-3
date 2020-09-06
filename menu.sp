@@ -23,8 +23,8 @@ public Action Command_Menu(int client, int args)
 
     Menu menu = new Menu(MenuHandle);
     menu.SetTitle("NCS系统菜单");
-    menu.AddItem("", "每日签到(!qd)");
-    menu.AddItem("", "商店(!store)");
+    menu.AddItem("", "每日签到\n(!qd)");
+    menu.AddItem("", "商店\n(!store)");
     menu.AddItem("", "个人中心");
     menu.AddItem("", "个性化设置");
     menu.Display(client, MENU_TIME_FOREVER);
@@ -54,10 +54,10 @@ void PersonalMenu(int client)
 
     Menu menu = new Menu(PersonalMenuHandle);
     menu.SetTitle("NCS系统--个人中心");
-    menu.AddItem("", "个人信息(!account)");
-    menu.AddItem("", "通行证(!pass)");
-    menu.AddItem("", "会员(!vip)");
-    menu.AddItem("", "软妹币流水账(!moneyrecords)");
+    menu.AddItem("", "个人信息\n(!account)");
+    menu.AddItem("", "通行证\n(!pass)");
+    menu.AddItem("", "会员\n(!vip)");
+    menu.AddItem("", "软妹币流水账\n(!moneyrecords)");
     menu.ExitBackButton = true;
     menu.Display(client, MENU_TIME_FOREVER);
 }
@@ -87,11 +87,11 @@ void SettingsMenu(int client)
 
     Menu menu = new Menu(SettingsMenuHandle);
     menu.SetTitle("NCS系统--系统设置");
-    menu.AddItem("", "皮肤(!skin)");
-    menu.AddItem("", "头衔(!title)");
-    menu.AddItem("", "足迹(!trail)");
-    menu.AddItem("", "光环(!aura)");
-    menu.AddItem("", "喷漆(!spray)");
+    menu.AddItem("", "皮肤\n(!skin)");
+    menu.AddItem("", "头衔\n(!title)");
+    menu.AddItem("", "足迹\n(!trail)");
+    menu.AddItem("", "光环\n(!aura)");
+    menu.AddItem("", "喷漆\n(!spray)");
     menu.ExitBackButton = true;
     menu.Display(client, MENU_TIME_FOREVER);
 }

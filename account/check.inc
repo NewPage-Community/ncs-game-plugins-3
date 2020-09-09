@@ -7,6 +7,9 @@ public Action Timer_Check(Handle timer, int client)
 {
 	if (g_Accounts[client].Valid())
 		return Plugin_Stop;
+	
+	if (!IsValidClient(client))
+		return Plugin_Stop;
 
 	char steamid[32];
 	if (!GetClientAuthId(client, AuthId_SteamID64, steamid, sizeof(steamid)))

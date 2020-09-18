@@ -5,10 +5,10 @@
 
 stock bool IsAdmin(int client)
 {
-    return (GetUserFlagBits(client) & ADMFLAG_GENERIC) == 1;
+    return (GetUserFlagBits(client) & ADMFLAG_GENERIC) != 0;
 }
 
 stock bool IsOwner(int client)
 {
-    return (GetUserFlagBits(client) & ADMFLAG_ROOT) == 1;
+    return (GetUserFlagBits(client) & ADMFLAG_ROOT) != 0;
 }

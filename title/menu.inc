@@ -9,7 +9,7 @@ public Action Command_Prefix(int client, int args)
     if (!IsValidClient(client))
         return Plugin_Handled;
 
-    playerTitle[client].isWaitingForplayerTitle = false;
+    player[client].isWaitingForPlayerTitle = false;
 
     MenuEx menu = new MenuEx(MenuHandler_Prefix);
     menu.SetTitle("请选择你显示的头衔");
@@ -18,8 +18,8 @@ public Action Command_Prefix(int client, int args)
     if (NCS_VIP_IsVIP(client) && NCS_VIP_Level(client) >= 100)
     {
         menu.AddItemEx(0, "-1", "设置自定义头衔");
-        if (playerTitle[client].title[0] != '\0')
-            menu.AddItemEx(0, "1", "<%s>", playerTitle[client].title);
+        if (player[client].title[0] != '\0')
+            menu.AddItemEx(0, "1", "<%s>", player[client].title);
     }
     if (NCS_VIP_IsVIP(client))
         menu.AddItemEx(0, "2", "<VIP>");
@@ -47,16 +47,12 @@ public int MenuHandler_Prefix(Menu menu, MenuAction action, int client, int slot
         int itype = StringToInt(type);
         if (itype == -1)
         {
-            playerTitle[client].isWaitingForplayerTitle = true;
+            player[client].isWaitingForPlayerTitle = true;
             NCS_Chat(client, _, "{blue}请在聊天栏输入你想设置的自定义头衔");
         }
         else
         {
-            playerTitle[client].type = itype;
-            TitleBeSet(client, itype);
-
-            // Save
-            SetTitle(client);
+            UpdatePlayerTitleType(client, itype);
         }
     }
 }

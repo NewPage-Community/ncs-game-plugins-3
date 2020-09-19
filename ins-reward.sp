@@ -62,23 +62,27 @@ public Action RoundEnd_Event(Event event, const char[] name, bool dontBroadcast)
             return Plugin_Continue;
 
     int winner = GetEventInt(event, "winner");
+    // Invalid team
+    if (winner <= 1)
+        return Plugin_Continue;
+
     if (LibraryExists("NCS-Server"))
     {
         if (NCS_Server_GetModID() == PVP_MODE)
         {
-            RoundReward();
+            RoundReward(winner);
         }
         else
         {
-            // PVP
+            // PVE
             if (winner == 2)
-                RoundReward();
+                RoundReward(2);
         }
     }
     return Plugin_Continue;
 }
 
-void RoundReward()
+void RoundReward(int team)
 {
     int rmb = cv_round_rmb.IntValue;
     int point = cv_round_pass_point.IntValue;
@@ -88,17 +92,20 @@ void RoundReward()
 
     for (int client = 1; client < MAXPLAYERS; client++)
     {
-        if (IsValidClient(client) && IsClientInGame(client))
+        if (IsValidClient(client))
         {
-            if (rmb > 0 && LibraryExists("NCS-Money"))
+            if (IsClientInGame(client) && GetClientTeam(client) == team)
             {
-                NCS_Money_Give(client, rmb, "胜利奖励");
-                NCS_Chat(client, CHAT_PREFIX, "{blue}胜利: {green}%d软妹币", rmb);
-            }
-            if (point > 0 && LibraryExists("NCS-Pass"))
-            {
-                NCS_Pass_AddPoint(client, point);
-                NCS_Chat(client, CHAT_PREFIX, "{blue}胜利: {green}%d点通行证经验", point);
+                if (rmb > 0 && LibraryExists("NCS-Money"))
+                {
+                    NCS_Money_Give(client, rmb, "胜利奖励");
+                    NCS_Chat(client, CHAT_PREFIX, "{blue}胜利: {green}%d软妹币", rmb);
+                }
+                if (point > 0 && LibraryExists("NCS-Pass"))
+                {
+                    NCS_Pass_AddPoint(client, point);
+                    NCS_Chat(client, CHAT_PREFIX, "{blue}胜利: {green}%d点通行证经验", point);
+                }
             }
         }
     }

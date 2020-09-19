@@ -9,8 +9,10 @@
 #include <ncs/vip>
 #include <ncs/pass>
 #include <ncs/chat>
+#include <ncs/server>
 
 #define CHAT_PREFIX "[奖励]"
+#define PVP_MODE 3
 
 // round
 ConVar cv_round_min_player;
@@ -56,11 +58,22 @@ public void OnPluginStart()
 
 public Action RoundEnd_Event(Event event, const char[] name, bool dontBroadcast)
 {
+    if (GetClientCount(true) < cv_round_min_player.IntValue)
+            return Plugin_Continue;
+
     int winner = GetEventInt(event, "winner");
-    if (winner == 2)
+    if (LibraryExists("NCS-Server"))
     {
-        if (GetClientCount(true) >= cv_round_min_player.IntValue)
+        if (NCS_Server_GetModID() == PVP_MODE)
+        {
             RoundReward();
+        }
+        else
+        {
+            // PVP
+            if (winner == 2)
+                RoundReward();
+        }
     }
     return Plugin_Continue;
 }
@@ -79,13 +92,13 @@ void RoundReward()
         {
             if (rmb > 0 && LibraryExists("NCS-Money"))
             {
-                NCS_Money_Give(client, rmb, "通关奖励");
-                NCS_Chat(client, CHAT_PREFIX, "{blue}通关: {green}%d软妹币", rmb);
+                NCS_Money_Give(client, rmb, "胜利奖励");
+                NCS_Chat(client, CHAT_PREFIX, "{blue}胜利: {green}%d软妹币", rmb);
             }
             if (point > 0 && LibraryExists("NCS-Pass"))
             {
                 NCS_Pass_AddPoint(client, point);
-                NCS_Chat(client, CHAT_PREFIX, "{blue}通关: {green}%d点通行证经验", point);
+                NCS_Chat(client, CHAT_PREFIX, "{blue}胜利: {green}%d点通行证经验", point);
             }
         }
     }

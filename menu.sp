@@ -54,10 +54,10 @@ void PersonalMenu(int client)
 
     Menu menu = new Menu(PersonalMenuHandle);
     menu.SetTitle("NCS系统--个人中心");
-    menu.AddItem("", "个人信息\n(!account)");
-    menu.AddItem("", "通行证\n(!pass)");
-    menu.AddItem("", "会员\n(!vip)");
-    menu.AddItem("", "软妹币流水账\n(!moneyrecords)");
+    menu.AddItem("", "个人信息\n(!account)", LibraryExists("NCS-Account") ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
+    menu.AddItem("", "通行证\n(!pass)", LibraryExists("NCS-Pass") ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
+    menu.AddItem("", "会员\n(!vip)", LibraryExists("NCS-VIP") ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
+    menu.AddItem("", "软妹币流水账\n(!moneyrecords)", LibraryExists("NCS-Money") ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
     menu.ExitBackButton = true;
     menu.Display(client, MENU_TIME_FOREVER);
 }
@@ -87,11 +87,11 @@ void SettingsMenu(int client)
 
     Menu menu = new Menu(SettingsMenuHandle);
     menu.SetTitle("NCS系统--系统设置");
-    menu.AddItem("", "皮肤\n(!skin)");
-    menu.AddItem("", "头衔\n(!title)");
-    menu.AddItem("", "足迹\n(!trail)");
-    menu.AddItem("", "光环\n(!aura)");
-    menu.AddItem("", "喷漆\n(!spray)");
+    menu.AddItem("", "皮肤\n(!skin)", LibraryExists("NCS-Skin") ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
+    menu.AddItem("", "头衔\n(!title)", LibraryExists("NCS-Title") ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
+    menu.AddItem("", "足迹\n(!trail)", LibraryExists("NCS-Trail") ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
+    menu.AddItem("", "光环\n(!aura)", LibraryExists("NCS-Aura") ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
+    menu.AddItem("", "喷漆\n(!spray)", LibraryExists("NCS-Spray") ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
     menu.ExitBackButton = true;
     menu.Display(client, MENU_TIME_FOREVER);
 }

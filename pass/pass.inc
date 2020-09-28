@@ -35,7 +35,8 @@ enum struct PassInfo
 
     void AddPoint(int point)
     {
-        this.point += point;
+        if (IsPassEnabled())
+            this.point += point;
     }
 
     void PushJSONArray(JSONArray array)
@@ -91,6 +92,14 @@ int Level(int point)
     if (point == 0)
         return 0;
     return point / LEVEL_POINT + 1;
+}
+
+bool IsPassEnabled()
+{
+    int now = GetTime();
+    int start = cv_pass_starttime.IntValue;
+    int end = cv_pass_endtime.IntValue;
+    return start <= now && now < end
 }
 
 Reward rewards[MAX_LEVEL][2][MAX_LEVEL_REWARDS];

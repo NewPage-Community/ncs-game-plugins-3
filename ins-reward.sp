@@ -43,15 +43,15 @@ public void OnPluginStart()
 
     // round
     cv_round_min_player = CreateConVar("reward_roundwin_min_player", "10", "", 0, true, 0.0);
-    cv_round_rmb = CreateConVar("reward_roundwin_rmb", "5", "", 0, true, 0.0);
-    cv_round_pass_point = CreateConVar("reward_roundwin_pass_point", "60", "", 0, true, 0.0);
+    cv_round_rmb = CreateConVar("reward_roundwin_rmb", "0", "", 0, true, 0.0);
+    cv_round_pass_point = CreateConVar("reward_roundwin_pass_point", "0", "", 0, true, 0.0);
     // sign
-    cv_sign_rmb = CreateConVar("reward_sign_rmb", "10", "", 0, true, 0.0);
-    cv_sign_vip_rmb = CreateConVar("reward_sign_vip_rmb", "10", "", 0, true, 0.0);
-    cv_sign_vip_skin = CreateConVar("reward_sign_vip_skin", "75,11,93", "", 0, true, 0.0);
-    cv_sign_vip_point = CreateConVar("reward_sign_vip_point", "50", "", 0, true, 0.0);
+    cv_sign_rmb = CreateConVar("reward_sign_rmb", "0", "", 0, true, 0.0);
+    cv_sign_vip_rmb = CreateConVar("reward_sign_vip_rmb", "0", "", 0, true, 0.0);
+    cv_sign_vip_skin = CreateConVar("reward_sign_vip_skin", "", "", 0, true, 0.0);
+    cv_sign_vip_point = CreateConVar("reward_sign_vip_point", "0", "", 0, true, 0.0);
     // holiday
-    cv_holiday_rmb = CreateConVar("reward_holiday_rmb", "100", "", 0, true, 0.0);
+    cv_holiday_rmb = CreateConVar("reward_holiday_rmb", "0", "", 0, true, 0.0);
     cv_holiday_starttime = CreateConVar("reward_holiday_starttime", "0", "", 0, true, 0.0);
     cv_holiday_endtime = CreateConVar("reward_holiday_endtime", "1598630400", "", 0, true, 0.0);
 }

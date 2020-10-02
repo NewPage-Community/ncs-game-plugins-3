@@ -58,7 +58,7 @@ public void OnPluginStart()
 
 public Action RoundEnd_Event(Event event, const char[] name, bool dontBroadcast)
 {
-    if (GetClientCount(true) < cv_round_min_player.IntValue)
+    if (GetHumanCount(true) < cv_round_min_player.IntValue)
             return Plugin_Continue;
 
     int winner = GetEventInt(event, "winner");

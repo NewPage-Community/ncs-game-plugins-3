@@ -96,7 +96,8 @@ public void LoadServerInfo(HTTPResponse response, any value, const char[] error)
 
 	if (CheckAPIError("Server", "LoadServerInfo", response, error))
 	{
-		info = new ServerInfo()
+		info = new ServerInfo();
+		CreateTimer(10.0, Timer_Reload, 0, TIMER_FLAG_NO_MAPCHANGE);
 	}
 	else
 	{
@@ -110,16 +111,24 @@ public void LoadServerInfo(HTTPResponse response, any value, const char[] error)
 	ModID = info.ModID;
 	GameID = info.GameID;
 	// Set RCON password
-	info.SetRcon()
+	info.SetRcon();
 	// Set Hostname
 	info.SetHostname();
 
 	if (Loaded)
 		PrintToServer("[NCS] Server - Loaded!");
+	else
+		PrintToServer("[NCS] Server - Failed to load!");
 
 	// Call global forward
 	Call_StartForward(onLoaded);
 	Call_Finish();
 
 	delete info;
+}
+
+public Action Timer_Reload(Handle timer)
+{
+	ReqServerInfo();
+	return Plugin_Stop;
 }

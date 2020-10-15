@@ -83,7 +83,7 @@ int playerPass[MAXPLAYERS+1];
 char vipDesc[] = "详细VIP特权请查看论坛\n每续费1月送50成长值(叠加)";
 char typeName[][] = {"", "皮肤", "拖尾", "光环", "喷漆"};
 char passTypeName[][] = {"", "高级通行证", "终极通行证"};
-char passTypeDesc[][] = {"", "- 解锁高级版等级奖励", "- 解锁高级版等级奖励\n- 通行证等级增加8级"};
+char passTypeDesc[][] = {"", "- 解锁高级版等级奖励\n（2个限定皮肤、2个限定装饰）", "- 解锁高级版等级奖励\n（2个限定皮肤、2个限定装饰）\n- 通行证等级增加8级"};
 int passTypePrice[] = {0, 6888, 9888};
 
 #include "store/api"

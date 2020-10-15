@@ -1,4 +1,5 @@
 #define CachePath "data/ncs-stats-cache.json"
+#define MaxCacheLength 10240
 
 static char cacheFile[PLATFORM_MAX_PATH];
 static Handle cache;
@@ -9,10 +10,18 @@ void InitCache()
 
     if (FileExists(cacheFile))
     {
-        char path[128];
-        JSONObject data = JSONObject.FromFile(cacheFile);
-        Format(path, sizeof(path), "%s/user/incrs", Stats_Service);
-        httpClient.Post(path, data, BlankCallback);
+        char json[MaxCacheLength];
+        File file = OpenFile(cacheFile, "r");
+        file.ReadString(json, sizeof(json));
+        delete file;
+
+        if (json[0] == '{')
+        {
+            JSONObject data = JSONObject.FromString(json);
+            char path[128];
+            Format(path, sizeof(path), "%s/user/incrs", Stats_Service);
+            httpClient.Post(path, data, BlankCallback);
+        }
     }
     
     cache = CreateTimer(1.0, Timer_Cache, 0, TIMER_REPEAT);
@@ -21,13 +30,20 @@ void InitCache()
 void CloseCache()
 {
     delete cache;
-    DeleteFile(cacheFile);
 }
 
 public Action Timer_Cache(Handle timer)
 {
+    char json[MaxCacheLength];
     JSONObject data = StatsList.JSON();
-    data.ToFile(cacheFile);
+    data.ToString(json, sizeof(json), JSON_COMPACT);
     delete data;
+
+    // Save to file
+    File file = OpenFile(cacheFile, "w");
+    file.WriteString(json, false);
+    file.Flush();
+    delete file;
+
     return Plugin_Continue;
 }

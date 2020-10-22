@@ -49,9 +49,6 @@ public Action OnSayText2(UserMsg msg_id, BfRead msg, const int[] players, int pl
     else if (reliable)	//Fix for other plugins that use SayText2 I guess?
         return Plugin_Stop;
 
-    //Chat Type
-    bool bChat = proto ? PbReadBool(msg, "chat") : view_as<bool>(BfReadByte(msg));
-
     //Retrieve the name of template name to use when getting the format.
     char sFlag[MAX_LENGTH_FLAG];
     switch (proto)
@@ -59,6 +56,8 @@ public Action OnSayText2(UserMsg msg_id, BfRead msg, const int[] players, int pl
         case true: PbReadString(msg, "msg_name", sFlag, sizeof(sFlag));
         case false: BfReadString(msg, sFlag, sizeof(sFlag));
     }
+    //Trim the flag so there's no potential issues with retrieving the specified format rules.
+    TrimString(sFlag);
 
     //Get the name string of the client.
     char sName[MAX_NAME_LENGTH_FIX];
@@ -85,7 +84,6 @@ public Action OnSayText2(UserMsg msg_id, BfRead msg, const int[] players, int pl
     hPack.WriteString(sName);
     hPack.WriteString(sMessage);
     hPack.WriteString(sFlag);
-    hPack.WriteCell(bChat);
 
     RequestFrame(Frame_OnChatMessage_SayText2, hPack);
 
@@ -108,15 +106,13 @@ public void Frame_OnChatMessage_SayText2(DataPack data)
     char sFlag[MAX_LENGTH_FLAG];
     data.ReadString(sFlag, sizeof(sFlag));
 
-    bool bChat = data.ReadCell();
-
     delete data;
 
     // All Server Chat
-    if (sMessage[0] == '#')
+    if (sMessage[0] == '#' && allowAllChat.BoolValue)
     {
-    	AllChat(sName, sMessage[1]);
-    	return;
+        AllChat(sName, sMessage[1]);
+        return;
     }
     
     int team = GetClientTeam(iSender);
@@ -149,10 +145,7 @@ public void Frame_OnChatMessage_SayText2(DataPack data)
             if (!allowDeadtalk && IsPlayerAlive(i) && !IsPlayerAlive(iSender))
                 continue;
 
-            if (proto)
-                CSayText2(i, sBuffer, iSender, bChat);
-            else
-                SendPlayerMessage(i, sBuffer, iSender);
+            CPrintToChat(i, "%s", sBuffer);
         }
     }
 }
@@ -161,40 +154,6 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 {
     if (client > 0 && StrContains(command, "say") != -1)
         newMSG[client] = true;
-}
-
-void CSayText2(int iClient, char[] sMessage, int iAuthor, bool bChat = true)
-{
-    Handle hMsg = StartMessageOne("SayText2", iClient, USERMSG_RELIABLE|USERMSG_BLOCKHOOKS);
-    if(GetFeatureStatus(FeatureType_Native, "GetUserMessageType") == FeatureStatus_Available && GetUserMessageType() == UM_Protobuf)
-    {
-        PbSetInt(hMsg, "ent_idx", iAuthor);
-        PbSetBool(hMsg, "chat", bChat);
-        PbSetString(hMsg, "msg_name", sMessage);
-        PbAddString(hMsg, "params", "");
-        PbAddString(hMsg, "params", "");
-        PbAddString(hMsg, "params", "");
-        PbAddString(hMsg, "params", "");
-    }
-    else
-    {
-        BfWriteByte(hMsg, iAuthor);
-        BfWriteByte(hMsg, true);
-        BfWriteString(hMsg, sMessage);
-    }
-    EndMessage();
-}
-
-void SendPlayerMessage(int iClient, char[] sMessage, int iAuthor  = 0)
-{
-    if (iAuthor < 1 || iAuthor > MaxClients || !IsClientInGame(iAuthor))
-    {
-        PrintToChat(iClient, sMessage);
-        if (iAuthor != 0)
-            LogError("Client %d is not valid or in game", iAuthor);
-    }
-    else
-        CSayText2(iClient, sMessage, iAuthor);
 }
 
 public void Deadtalk_Changed(ConVar convar, const char[] oldValue, const char[] newValue)

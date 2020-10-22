@@ -5,6 +5,9 @@ void InitCmd()
 
 public Action ChatNotifyCallback(int args)
 {
+    if (!allowAllChat.BoolValue)
+        return Plugin_Handled;
+
     char uid[MAX_UID_LENGTH], prefix[64], message[512];
     GetCmdArg(1, uid, sizeof(uid));
     GetCmdArg(2, prefix, sizeof(prefix));

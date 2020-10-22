@@ -128,6 +128,8 @@ public void Frame_OnChatMessage_SayText2(DataPack data)
         Format(sBuffer, MAX_LENGTH_BUFFER, "\x05*观察*\x01 %s", sBuffer);
     else if (!alive)
         Format(sBuffer, MAX_LENGTH_BUFFER, "\x05*死亡*\x01 %s", sBuffer);
+    else if (StrContains(sFlag, "_All") == -1)
+        Format(sBuffer, MAX_LENGTH_BUFFER, "\x05*队伍*\x01 %s", sBuffer);
 
     // CSGO quirk where the 1st color in the line won't work..
     if (engine == Engine_CSGO)

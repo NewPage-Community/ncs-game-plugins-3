@@ -14,14 +14,14 @@ stock HTTPClient NewNCSAPI()
 {
     HTTPClient c = new HTTPClient(API_URL);
 
-    c.ConnectTimeout = 1;
-    c.Timeout = 5;
+    c.ConnectTimeout = 10;
+    c.Timeout = 10;
     c.FollowLocation = false;
 
     char auth[64];
     Format(auth, sizeof(auth), "Basic %s", TOKEN);
     c.SetHeader("Authorization", auth);
-    c.SetHeader("X-B3-Sampled", "1");
+    //c.SetHeader("X-B3-Sampled", "1");
 
     return c;
 }

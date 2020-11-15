@@ -112,7 +112,7 @@ void DisplayNextRewards(int client)
 
     // free
     Format(desc, sizeof(desc), "免费版:\n");
-    for (int i = 0; i < MAX_LEVEL_REWARDS; i++)
+    for (int i = 0; i < MAX_LEVEL_REWARDS && level < MAX_LEVEL; i++)
     {
         if (rewards[level][FreeReward][i].name[0] == '\0')
             break;
@@ -126,7 +126,7 @@ void DisplayNextRewards(int client)
 
     // adv
     Format(desc, sizeof(desc), "高级版:\n");
-    for (int i = 0; i < MAX_LEVEL_REWARDS; i++)
+    for (int i = 0; i < MAX_LEVEL_REWARDS && level < MAX_LEVEL; i++)
     {
         if (rewards[level][FreeReward][i].name[0] == '\0')
             break;

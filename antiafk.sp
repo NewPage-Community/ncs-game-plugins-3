@@ -11,9 +11,9 @@
 public Plugin myinfo = 
 {
 	name        = "AntiAFK",
-	author      = "Takatoshi, Kyle",
+	author      = "Gunslinger, Takatoshi, Kyle",
 	description = "Judging the status of users and kick the clients maliciously hanging up.",
-	version     = "1.0",
+	version     = "1.1",
 	url         = ""
 };
 
@@ -51,6 +51,9 @@ public Action Timer_CheckPlayers(Handle timer, any unused)
     for(int client = 1; client <= MaxClients; ++client)        //To search every client in the server
     {
         if (!IsValidClient(client))     // The Client is valid then go on 
+            continue;
+
+        if (!IsClientInGame(client))    // Skip not in game client
             continue;
 
         if (GetUserFlagBits(client) != 0) // Skip admin

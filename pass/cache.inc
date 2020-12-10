@@ -49,7 +49,7 @@ public Action Timer_Cache(Handle timer)
     delete data;
 
     // Save to file
-    File file = OpenFile(cacheFile, "w");
+    File file = OpenFile(cacheFile, "w+");
     file.WriteString(json, false);
     file.Flush();
     delete file;

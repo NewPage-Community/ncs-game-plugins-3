@@ -1,6 +1,6 @@
 void InitCmd()
 {
-    RegServerCmd("ncs_chat_notify", ChatNotifyCallback, "[ncs] 聊天通知");
+    RegServerCmd("ncs_chat_notify", ChatNotifyCallback, "[NCS] 聊天通知");
 }
 
 public Action ChatNotifyCallback(int args)

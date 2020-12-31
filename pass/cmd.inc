@@ -23,20 +23,26 @@ public Action UpgradeNotify(int args)
     if (!StrEqual(uid, "0") && !IsValidClient(client))
         return Plugin_Handled;
 
+    if (level >= MAX_LEVEL)
+        return Plugin_Handled;
+
     char nextRewards[512];
+    bool firstReward = true;
     // Free
     for (int i = 0; i < MAX_LEVEL_REWARDS && rewards[level][FreeReward][i].IsValid(); i++)
     {
         char name[MAX_ITEM_NAME_LENGTH];
         rewards[level][FreeReward][i].GetName(name, sizeof(name));
-        Format(nextRewards, sizeof(nextRewards), i == 0 ? "%s%s" : "%s,%s", nextRewards, name);
+        Format(nextRewards, sizeof(nextRewards), firstReward ? "%s%s" : "%s，%s", nextRewards, name);
+        firstReward = false;
     }
     // Adv
     for (int i = 0; i < MAX_LEVEL_REWARDS && rewards[level][AdvReward][i].IsValid(); i++)
     {
         char name[MAX_ITEM_NAME_LENGTH];
         rewards[level][AdvReward][i].GetName(name, sizeof(name));
-        Format(nextRewards, sizeof(nextRewards), "%s,%s", nextRewards, name);
+        Format(nextRewards, sizeof(nextRewards), firstReward ? "%s%s" : "%s，%s", nextRewards, name);
+        firstReward = false;
     }
     // No things
     if (!rewards[level][FreeReward][0].IsValid() && !rewards[level][AdvReward][0].IsValid())

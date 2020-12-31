@@ -39,7 +39,7 @@ public Action UpgradeNotify(int args)
         Format(nextRewards, sizeof(nextRewards), "%s,%s", nextRewards, name);
     }
     // No things
-    if (rewards[level][FreeReward][0].IsValid() && rewards[level][AdvReward][0].IsValid())
+    if (!rewards[level][FreeReward][0].IsValid() && !rewards[level][AdvReward][0].IsValid())
         strcopy(nextRewards, sizeof(nextRewards), "无");
 
     // Chat notify

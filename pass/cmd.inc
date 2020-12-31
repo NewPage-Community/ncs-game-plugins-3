@@ -29,20 +29,21 @@ public Action UpgradeNotify(int args)
 	{
 		char name[MAX_ITEM_NAME_LENGTH];
 		rewards[level][FreeReward][i].GetName(name, sizeof(name));
-		Format(nextRewards, sizeof(nextRewards), "%s,", name);
+		Format(nextRewards, sizeof(nextRewards), i == 0 ? "%s%s" : "%s,%s", nextRewards, name);
 	}
 	// Adv
 	for (int i = 0; i < MAX_LEVEL_REWARDS; i++)
 	{
 		char name[MAX_ITEM_NAME_LENGTH];
 		rewards[level][AdvReward][i].GetName(name, sizeof(name));
-		Format(nextRewards, sizeof(nextRewards), "%s,", name);
+		Format(nextRewards, sizeof(nextRewards), "%s,%s", nextRewards, name);
 	}
-	// Fix last ,
-	if (rewards[level][FreeReward][0].id == 0 && rewards[level][AdvReward][0].id)
+	// No things
+	if (rewards[level][FreeReward][0].id == 0 &&
+		rewards[level][AdvReward][0].id == 0 &&
+		rewards[level][FreeReward][0].amount == 0 &&
+		rewards[level][AdvReward][0].amount == 0)
 		strcopy(nextRewards, sizeof(nextRewards), "无");
-	else
-		nextRewards[FindCharInString(nextRewards, ',', true)] = '\0';
 
 	// Chat notify
 	NCS_Chat(client, _, "{blue}通行证成功升级到 {green}%d{blue} 级，购买高级通行证可解锁更多大奖～", level);

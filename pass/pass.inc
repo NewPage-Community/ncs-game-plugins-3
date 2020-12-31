@@ -72,6 +72,11 @@ enum struct Reward
         else if (this.length != 0)
             Format(buffer, size, "%s(%d天)", this.name, this.length / 86400);
     }
+
+    bool IsValid()
+    {
+        return this.name[0] != '\0';
+    }
 }
 
 void ProgressBar(int point, char[] buffer, int size)

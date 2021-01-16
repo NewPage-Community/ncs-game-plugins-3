@@ -2,10 +2,6 @@ void SetModel(int client)
 {
     if (!IsClientInGame(client) || !IsPlayerAlive(client) || IsFakeClient(client))
         return;
-    
-    // For Insurgency PVE
-    if (GetClientTeam(client) != 2)
-        return;
 
     int skinID = g_UsersUsedSkin[client];
     if (skinID > 0)
@@ -47,10 +43,6 @@ public Action ModelCheck(Handle timer, int client)
 void Broadcast_DeathSound(int client)
 {
     if(!IsClientInGame(client) || IsFakeClient(client))
-        return;
-
-     // For Insurgency PVE
-    if (GetClientTeam(client) != 2)
         return;
 
     int skinID = g_UsersUsedSkin[client];

@@ -49,7 +49,6 @@ public Action UpgradeNotify(int args)
         strcopy(nextRewards, sizeof(nextRewards), "无");
 
     // Chat notify
-    NCS_Chat(client, _, "{blue}通行证成功升级到 {green}%d{blue} 级，购买高级通行证可解锁更多大奖～", level);
-    NCS_Chat(client, _, "{blue}下一级奖励：{green}%s", nextRewards);
+    NCS_Chat(client, _, "{blue}通行证成功升级到 {green}%d{blue} 级！\n购买高级通行证可解锁更多大奖～\n下一级奖励：{green}%s", level, nextRewards);
     return Plugin_Handled;
 }

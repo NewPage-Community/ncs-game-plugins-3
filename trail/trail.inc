@@ -16,7 +16,7 @@ enum struct Trail
     char particleName[MAX_PARTICLE_NAME_LENGTH];
     TrailType type;
 
-    void Init(JSONObject data)
+    bool Init(JSONObject data)
     {
         this.id = data.GetInt("id");
         data.GetString("name", this.name, MAX_TRAIL_NAME_LENGTH);
@@ -38,6 +38,14 @@ enum struct Trail
         }
         else
             this.type = TrailType_Material;
+
+        if (!FileExists(this.trailPath, true))
+        {
+            NCS_LogError("Trail", "TrailInit", "File is not exists (%s)", this.trailPath);
+            return false;
+        }
+
+        return true;
     }
 
     void Clean()
@@ -60,7 +68,8 @@ methodmap TrailIndex < StringMap
     {
         char key[8];
         Trail s;
-        s.Init(data);
+        if (!s.Init(data))
+            return false;
         IntToString(s.id, key, sizeof(key));
         return this.SetArray(key, s, sizeof(s), true);
     }

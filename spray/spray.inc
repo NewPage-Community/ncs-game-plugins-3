@@ -9,7 +9,7 @@ enum struct Spray
     char sprayPath[PLATFORM_MAX_PATH];
     int decal;
 
-    void Init(JSONObject data)
+    bool Init(JSONObject data)
     {
         this.id = data.GetInt("id");
         data.GetString("name", this.name, MAX_SPRAY_NAME_LENGTH);
@@ -20,6 +20,14 @@ enum struct Spray
         delete attr;
 
         this.decal = PrecacheSpray(this.sprayPath);
+
+        if (!FileExists(this.sprayPath, true))
+        {
+            NCS_LogError("Spray", "SprayInit", "File is not exists (%s)", this.sprayPath);
+            return false;
+        }
+
+        return true;
     }
 
     void Clean()
@@ -42,7 +50,8 @@ methodmap SprayIndex < StringMap
     {
         char key[8];
         Spray s;
-        s.Init(data);
+        if (!s.Init(data))
+            return false;
         IntToString(s.id, key, sizeof(key));
         return this.SetArray(key, s, sizeof(s), true);
     }

@@ -9,7 +9,7 @@ enum struct Skin
     char armPath[PLATFORM_MAX_PATH];
     char deathSound[PLATFORM_MAX_PATH];
 
-    void Init(JSONObject data)
+    bool Init(JSONObject data)
     {
         this.id = data.GetInt("id");
         data.GetString("name", this.name, MAX_SKIN_NAME_LENGTH);
@@ -27,15 +27,21 @@ enum struct Skin
             if (FileExists(this.skinPath, true))
                 PrecacheModel(this.skinPath, false);
             else
+            {
                 NCS_LogError("Skin", "SkinInit", "File is not exists (%s)", this.skinPath);
+                return false;
+            }
         }
-            
+
         if (this.armPath[0] != '\0')
         {
             if (FileExists(this.armPath, true))
                 PrecacheModel(this.armPath, false);
             else
+            {
                 NCS_LogError("Skin", "SkinInit", "File is not exists (%s)", this.armPath);
+                return false;
+            }
         }
 
         if (this.deathSound[0] != '\0')
@@ -47,6 +53,8 @@ enum struct Skin
             else
                 NCS_LogError("Skin", "SkinInit", "File is not exists (%s)", path);
         }
+
+        return true;
     }
 
     void Clean()
@@ -65,12 +73,13 @@ methodmap SkinIndex < StringMap
     {
         return view_as<SkinIndex>(new StringMap());
     }
-    
+
     public bool Add(JSONObject data)
     {
         char key[8];
         Skin s;
-        s.Init(data);
+        if (!s.Init(data))
+            return false;
         IntToString(s.id, key, sizeof(key));
         return this.SetArray(key, s, sizeof(s), true);
     }

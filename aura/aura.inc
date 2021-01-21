@@ -9,7 +9,7 @@ enum struct Aura
     char auraPath[PLATFORM_MAX_PATH];
     char particleName[MAX_PARTICLE_NAME_LENGTH];
 
-    void Init(JSONObject data)
+    bool Init(JSONObject data)
     {
         this.id = data.GetInt("id");
         data.GetString("name", this.name, MAX_AURA_NAME_LENGTH);
@@ -22,6 +22,14 @@ enum struct Aura
 
         PrecacheGeneric(this.auraPath, true);
         PrecacheParticleEffect(this.particleName);
+
+        if (!FileExists(this.auraPath, true))
+        {
+            NCS_LogError("Aura", "AuraInit", "File is not exists (%s)", this.auraPath);
+            return false;
+        }
+
+        return true;
     }
 
     void Clean()
@@ -44,7 +52,8 @@ methodmap AuraIndex < StringMap
     {
         char key[8];
         Aura s;
-        s.Init(data);
+        if (!s.Init(data))
+            return false;
         IntToString(s.id, key, sizeof(key));
         return this.SetArray(key, s, sizeof(s), true);
     }

@@ -5,6 +5,7 @@
 
 #include <ncs/account>
 #include <ncs/cookie>
+#include <ncs/game>
 
 #include <sdkhooks>
 #include <sdktools>

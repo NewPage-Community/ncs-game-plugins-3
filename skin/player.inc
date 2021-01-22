@@ -11,7 +11,7 @@ void SetModel(int client)
             return;
 
         // Support SDK2013
-        if (GetEngineVersion() == Engine_SDK2013)
+        if (IsSDK2013Mod())
             ClientCommand(client, "cl_playermodel %s", s.skinPath);
         else
             SetEntityModel(client, s.skinPath);
@@ -36,7 +36,7 @@ public Action ModelCheck(Handle timer, int client)
             return Plugin_Continue;
 
         // Support SDK2013
-        if (GetEngineVersion() == Engine_SDK2013)
+        if (IsSDK2013Mod())
         {
             DataPack dp = new DataPack();
             dp.WriteString(s.skinPath);

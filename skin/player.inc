@@ -50,6 +50,9 @@ public Action ModelCheck(Handle timer, int client)
                 RequestFrame(SetModel, client);
         }
     }
+    else
+        if (IsSDK2013Mod())
+            ClientCommand(client, "cl_playermodel models/human");
 
     return Plugin_Continue;
 }

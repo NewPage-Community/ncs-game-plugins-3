@@ -59,7 +59,7 @@ public void OnMapStart()
 public Action Event_PlayerSpawn(Event event, const char[] name1, bool dontBroadcast)
 {
     int client = GetClientOfUserId(GetEventInt(event, "userid"));
-    if (client < 1 || client > MaxClients || !IsClientInGame(client) || GetClientTeam(client) < 2)
+    if (client < 1 || client > MaxClients || !IsClientInGame(client) || IsFakeClient(client))
         return Plugin_Continue;
 
     Model_PlayerSpawn(client);

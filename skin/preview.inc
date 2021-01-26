@@ -36,16 +36,19 @@ void PreviewSkin(int client, int skinID)
     
     AcceptEntityInput(m_iViewModel, "Enable");
     
-    int offset = GetEntSendPropOffs(m_iViewModel, "m_clrGlow");
-    SetEntProp(m_iViewModel, Prop_Send, "m_bShouldGlow", true, true);
-    SetEntProp(m_iViewModel, Prop_Send, "m_nGlowStyle", 0);
-    SetEntPropFloat(m_iViewModel, Prop_Send, "m_flGlowMaxDist", 2000.0);
+    if (HasEntProp(m_iViewModel, Prop_Send, "m_bShouldGlow"))
+    {
+        int offset = GetEntSendPropOffs(m_iViewModel, "m_clrGlow");
+        SetEntProp(m_iViewModel, Prop_Send, "m_bShouldGlow", true, true);
+        SetEntProp(m_iViewModel, Prop_Send, "m_nGlowStyle", 0);
+        SetEntPropFloat(m_iViewModel, Prop_Send, "m_flGlowMaxDist", 2000.0);
 
-    //Miku Green
-    SetEntData(m_iViewModel, offset    ,  57, _, true);
-    SetEntData(m_iViewModel, offset + 1, 197, _, true);
-    SetEntData(m_iViewModel, offset + 2, 187, _, true);
-    SetEntData(m_iViewModel, offset + 3, 255, _, true);
+        //Miku Green
+        SetEntData(m_iViewModel, offset    ,  57, _, true);
+        SetEntData(m_iViewModel, offset + 1, 197, _, true);
+        SetEntData(m_iViewModel, offset + 2, 187, _, true);
+        SetEntData(m_iViewModel, offset + 3, 255, _, true);
+    }
 
     float m_fOrigin[3], m_fAngles[3], m_fRadians[2], m_fPosition[3];
 
@@ -66,7 +69,7 @@ void PreviewSkin(int client, int skinID)
 
     g_iPreMdlRef[client] = EntIndexToEntRef(m_iViewModel);
 
-    SDKHook(m_iViewModel, SDKHook_SetTransmit, Hook_SetTransmit_Preview);
+    SDKHookEx(m_iViewModel, SDKHook_SetTransmit, Hook_SetTransmit_Preview);
     g_iPreviewEnt[m_iViewModel] = client;
     
     g_tPreMdl[client] = CreateTimer(30.0, Timer_ClearPreMdl, client);

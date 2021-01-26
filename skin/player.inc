@@ -12,10 +12,7 @@ void SetModel(int client)
 
         // Support SDK2013
         if (IsSDK2013Mod())
-        {
-            SetEntProp(client, Prop_Send, "m_nModelIndex", PrecacheModel(s.skinPath));
-            SetEntPropString(client, Prop_Data, "m_ModelName", s.skinPath);
-        }
+            ClientCommand(client, "cl_playermodel %s", s.skinPath);
         else
             SetEntityModel(client, s.skinPath);
     }

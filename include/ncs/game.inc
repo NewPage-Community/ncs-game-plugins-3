@@ -1,8 +1,6 @@
 static char SDK2013Mod[][] = {
-    "hl2mp",
     "obsidian",
     "zombie_master_reborn",
-    "zps"
 }
 
 stock bool IsSDK2013Mod()

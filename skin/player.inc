@@ -12,7 +12,10 @@ void SetModel(int client)
 
         // Support SDK2013
         if (IsSDK2013Mod())
-            ClientCommand(client, "cl_playermodel %s", s.skinPath);
+        {
+            SetEntProp(client, Prop_Send, "m_nModelIndex", PrecacheModel(s.skinPath));
+            SetEntPropString(client, Prop_Data, "m_ModelName", s.skinPath);
+        }
         else
             SetEntityModel(client, s.skinPath);
     }
@@ -35,24 +38,11 @@ public Action ModelCheck(Handle timer, int client)
         if (!g_Skins.Get(skinID, s))
             return Plugin_Continue;
 
-        // Support SDK2013
-        if (IsSDK2013Mod())
-        {
-            DataPack dp = new DataPack();
-            dp.WriteString(s.skinPath);
-            QueryClientConVar(client, "cl_playermodel", ModelCheckCallback, dp);
-        }
-        else
-        {
-            char sModelPath[PLATFORM_MAX_PATH];
-            GetEntPropString(client, Prop_Data, "m_ModelName", sModelPath, sizeof(sModelPath));
-            if (StrContains(sModelPath, s.skinPath, true) == -1)
-                RequestFrame(SetModel, client);
-        }
+        char sModelPath[PLATFORM_MAX_PATH];
+        GetEntPropString(client, Prop_Data, "m_ModelName", sModelPath, sizeof(sModelPath));
+        if (StrContains(sModelPath, s.skinPath, true) == -1)
+            RequestFrame(SetModel, client);
     }
-    else
-        if (IsSDK2013Mod())
-            ClientCommand(client, "cl_playermodel models/human");
 
     return Plugin_Continue;
 }
@@ -103,17 +93,4 @@ int SpawnSpeakerEntity(float fPos[3], float fAgl[3], int source, float removeDel
     }
 
     return speaker;
-}
-
-void ModelCheckCallback(QueryCookie cookie, int client, ConVarQueryResult result, const char[] cvarName, const char[] cvarValue, DataPack dp)
-{
-    if (result == ConVarQuery_Okay)
-    {
-        char sModelPath[PLATFORM_MAX_PATH];
-        dp.Reset();
-        dp.ReadString(sModelPath, sizeof(sModelPath));
-        if (StrContains(cvarValue, sModelPath, true) == -1)
-            RequestFrame(SetModel, client);
-    }
-    delete dp;
 }

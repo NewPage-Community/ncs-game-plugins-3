@@ -25,7 +25,7 @@ enum struct Skin
         if (this.skinPath[0] != '\0')
         {
             if (FileExists(this.skinPath, true))
-                PrecacheModel(this.skinPath, false);
+                PrecacheModel(this.skinPath, IsSDK2013Mod() ? true : false);
             else
             {
                 NCS_LogError("Skin", "SkinInit", "File is not exists (%s)", this.skinPath);
@@ -36,7 +36,7 @@ enum struct Skin
         if (this.armPath[0] != '\0')
         {
             if (FileExists(this.armPath, true))
-                PrecacheModel(this.armPath, false);
+                PrecacheModel(this.armPath, IsSDK2013Mod() ? true : false);
             else
             {
                 NCS_LogError("Skin", "SkinInit", "File is not exists (%s)", this.armPath);

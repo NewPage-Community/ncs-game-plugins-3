@@ -10,11 +10,11 @@ void SetModel(int client)
         if (!g_Skins.Get(skinID, s))
             return;
 
-        // Support SDK2013
-        if (IsSDK2013Mod())
-            ClientCommand(client, "cl_playermodel %s", s.skinPath);
-        else
-            SetEntityModel(client, s.skinPath);
+        if (!IsModelPrecached(s.skinPath))
+            return;
+
+        SetEntityModel(client, s.skinPath);
+        SetEntityRenderColor(client, 255, 255, 255, 255);
     }
 }
 

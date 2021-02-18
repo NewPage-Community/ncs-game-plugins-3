@@ -109,7 +109,7 @@ public void Frame_OnChatMessage_SayText2(DataPack data)
     delete data;
 
     // All Server Chat
-    if (sMessage[0] == '#' && allowAllChat.BoolValue)
+    if (sMessage[0] == '#')
     {
         AllChat(sName, sMessage[1]);
         return;

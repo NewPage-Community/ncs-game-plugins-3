@@ -50,8 +50,8 @@ enum struct PlayerInfo
 
 PlayerInfo player[MAXPLAYERS + 1];
 
-#include "chat/cvar"
 #include "chat/basechat"
 #include "chat/native"
 #include "chat/cmd"
 #include "chat/api"
+#include "chat/cookie"

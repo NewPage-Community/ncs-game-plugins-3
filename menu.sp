@@ -92,6 +92,7 @@ void SettingsMenu(int client)
     menu.AddItem("", "足迹\n(!trail)", LibraryExists("NCS-Trail") ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
     menu.AddItem("", "光环\n(!aura)", LibraryExists("NCS-Aura") ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
     menu.AddItem("", "喷漆\n(!spray)", LibraryExists("NCS-Spray") ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
+    menu.AddItem("", "全服聊天开关\n(!allchat)", LibraryExists("NCS-Chat") ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
     menu.ExitBackButton = true;
     menu.Display(client, MENU_TIME_FOREVER);
 }
@@ -111,6 +112,7 @@ public int SettingsMenuHandle(Menu menu, MenuAction action, int client, int slot
             case 2: FakeClientCommandEx(client, "sm_trail");
             case 3: FakeClientCommandEx(client, "sm_aura");
             case 4: FakeClientCommandEx(client, "sm_spray");
+            case 5: FakeClientCommandEx(client, "sm_allchat");
         }
     }
 }

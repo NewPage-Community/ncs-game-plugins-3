@@ -5,6 +5,7 @@
 
 #include <ncs/account>
 #include <ncs/server>
+#include <ncs/cookie>
 
 #undef REQUIRE_PLUGIN
 #include <ncs/chat>
@@ -36,7 +37,6 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 public void OnPluginStart()
 {
-    InitConVar();
     InitCmd();
     InitAPI();
 }

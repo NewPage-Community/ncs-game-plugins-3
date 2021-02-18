@@ -20,8 +20,7 @@ void SetPlayerTitle(int client)
     if (!IsValidClient(client))
         return;
     
-    char playerName[MAX_NAME_LENGTH], title[MAX_TITLE_LENGTH], titleColor[MAX_COLOR_LENGTH];
-    NCS_Account_GetName(client, playerName, sizeof(playerName));
+    char title[MAX_TITLE_LENGTH], titleColor[MAX_COLOR_LENGTH];
 
     switch (player[client].type)
     {
@@ -32,7 +31,6 @@ void SetPlayerTitle(int client)
             {
                 Format(title, sizeof(title), "<%s>", player[client].title);
                 strcopy(titleColor, sizeof(titleColor), "{blue}");
-                Format(playerName, sizeof(playerName),"%s %s", title, playerName);
             }
         }
         case 2:
@@ -41,7 +39,6 @@ void SetPlayerTitle(int client)
             {
                 strcopy(title, sizeof(title), "<VIP>");
                 strcopy(titleColor, sizeof(titleColor), "{red}");
-                Format(playerName, sizeof(playerName),"%s %s", title, playerName);
             }
         }
         case 3:
@@ -50,7 +47,6 @@ void SetPlayerTitle(int client)
             {
                 strcopy(title, sizeof(title), "<服主>");
                 strcopy(titleColor, sizeof(titleColor), "{purple}");
-                Format(playerName, sizeof(playerName),"%s %s", title, playerName);
             }
         }
         case 4:
@@ -59,13 +55,11 @@ void SetPlayerTitle(int client)
             {
                 strcopy(title, sizeof(title), "<管理>");
                 strcopy(titleColor, sizeof(titleColor), "{green}");
-                Format(playerName, sizeof(playerName),"%s %s", title, playerName);
             }
         }
         default: {}
     }
     
-    NCS_Account_ChangeName(client, playerName);
     NCS_Chat_SetTitle(client, title, titleColor);
 }
 

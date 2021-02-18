@@ -153,6 +153,7 @@ stock void CPrintToChat(int client, const char[] format, any...)
 		return;
 	
 	char buffer[254];
+	SetGlobalTransTarget(client);
 	VFormat(buffer, sizeof(buffer), format, 3);
 	ProcessColorString(buffer, sizeof(buffer));
 	PrintToChat(client, "%s", buffer);

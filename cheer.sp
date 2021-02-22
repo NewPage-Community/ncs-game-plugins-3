@@ -176,6 +176,9 @@ public Action CommandCheer(int client, int args)
     if(!client || !IsClientInGame(client))
         return Plugin_Handled;
 
+    char game[32];
+    GetGameFolderName(game, 32);
+
     int cheerCount, jeerCount;
     SetRandomSeed(GetTime());
 
@@ -203,12 +206,12 @@ public Action CommandCheer(int client, int args)
 
         if(g_iCheerCount[client][Cheer] >= cheerCount)
         {
-            CPrintToChat(client, "\x04[系统提示]{blue} 每局只能欢呼 {red}%d{blue} 次", cheerCount);
+            NCS_Chat(client, "[系统提示]", "每局只能欢呼 {red}%d{blue} 次", cheerCount);
             return Plugin_Handled;
         }
 
         char chat[MAX_CHAT_LENGTH];
-        Format(chat, sizeof(chat), "%s   \x04%s", name, g_cCheerString[GetRandomInt(0, 4)]);
+        Format(chat, sizeof(chat), "%s%s   \x04%s", !strcmp(game, "csgo") ? " ": "" , name, g_cCheerString[GetRandomInt(0, 4)]);
         ProcessColorString(chat, sizeof(chat), GetClientTeam(client));
         PrintToChatAll(chat);
         PlaySound(client, Cheer);
@@ -221,12 +224,12 @@ public Action CommandCheer(int client, int args)
 
         if(g_iCheerCount[client][Jeer] >= jeerCount)
         {
-            CPrintToChat(client, "\x04[系统提示]{blue} 每局死亡后只能嘲笑 {red}%d{blue} 次", jeerCount);
+            NCS_Chat(client, "[系统提示]", "每局死亡后只能嘲笑 {red}%d{blue} 次", jeerCount);
             return Plugin_Handled;
         }
 
         char chat[MAX_CHAT_LENGTH];
-        Format(chat, sizeof(chat), "%s   \x04%s", name, g_cCheerString[GetRandomInt(0, 4)]);
+        Format(chat, sizeof(chat), "%s%s   \x04%s", !strcmp(game, "csgo") ? " ": "" , name, g_cCheerString[GetRandomInt(0, 4)]);
         ProcessColorString(chat, sizeof(chat), GetClientTeam(client));
         PrintToChatAll(chat);
         PlaySound(client, Jeer);

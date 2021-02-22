@@ -143,6 +143,22 @@ stock void RemoveColorString(char[] message, int maxLen)
 	ReplaceString(message, maxLen, "{purple}",      "", false);
 	ReplaceString(message, maxLen, "{darkorange}",  "", false);
 	ReplaceString(message, maxLen, "{name}",        "", false);
+	ReplaceString(message, maxLen, "\x01",          "", false);
+	ReplaceString(message, maxLen, "\x02",          "", false);
+	ReplaceString(message, maxLen, "\x03",          "", false);
+	ReplaceString(message, maxLen, "\x04",          "", false);
+	ReplaceString(message, maxLen, "\x05",          "", false);
+	ReplaceString(message, maxLen, "\x06",          "", false);
+	ReplaceString(message, maxLen, "\x07",          "", false);
+	ReplaceString(message, maxLen, "\x08",          "", false);
+	ReplaceString(message, maxLen, "\x09",          "", false);
+	ReplaceString(message, maxLen, "\x10",          "", false);
+	ReplaceString(message, maxLen, "\x0A",          "", false);
+	ReplaceString(message, maxLen, "\x0B",          "", false);
+	ReplaceString(message, maxLen, "\x0C",          "", false);
+	ReplaceString(message, maxLen, "\x0D",          "", false);
+	ReplaceString(message, maxLen, "\x0E",          "", false);
+	ReplaceString(message, maxLen, "\x0F",          "", false);
 }
 
 // Color chat

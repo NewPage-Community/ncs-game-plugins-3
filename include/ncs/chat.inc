@@ -13,9 +13,10 @@
 // Send a message with prefix (For plugin notification)
 stock void NCS_Chat(int client = CLIENT_ALL, char[] prefix = CHAT_SYS_PREFIX, char[] msg, any ...)
 {
-    char buffer[512];
+    char buffer[512], game[32];
+    GetGameFolderName(game, 32);
     VFormat(buffer, sizeof(buffer), msg, 4);
-    Format(buffer, sizeof(buffer), "\x04%s\x01 %s", prefix, buffer);
+    Format(buffer, sizeof(buffer), "%s\x04%s\x01 %s", !strcmp(game, "csgo") ? " ": "" , prefix, buffer);
 
     if (!client)
         CPrintToChatAll(buffer);

@@ -19,7 +19,7 @@ public Action ChatNotifyCallback(int args)
         for (int i = 1; i <= MaxClients; i++)
             if (IsValidClient(i))
                 if (!GetCookieAllChatDisabled(i))
-                    NCS_Chat(client, prefix, message);
+                    NCS_Chat(i, prefix, message);
     }
     else
     {

@@ -2,7 +2,7 @@
 #include <ripext>
 #undef REQUIRE_EXTENSIONS
 
-#define API_URL "https://api.new-page.xyz/ncs/v3/game"
+#define API_URL "https://api.new-page.xyz/ncs/csgo/game"
 
 #if defined DEV
 	#define TOKEN "TkVXUEFHRTpBUEk="

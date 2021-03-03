@@ -31,7 +31,6 @@ endif
 	@test -e compiled/newpage || mkdir compiled/newpage
 	@test -e compiled/stats || mkdir compiled/stats
 	@test -e compiled/test || mkdir compiled/test
-	@test -e compiled/ins || mkdir compiled/ins
 	@for sourcefile in *.sp; \
 		do \
 			smxfile="`echo $$sourcefile | sed -e 's/\.sp$$/\.smx/'`"; \
@@ -48,6 +47,9 @@ endif
 			elif [[ "$$smxfile" =~ "ins-" ]]; \
 			then \
 				smxfile="ins/$$smxfile"; \
+			elif [[ "$$smxfile" =~ "csgo-" ]]; \
+			then \
+				smxfile="csgo/$$smxfile"; \
 			fi; \
 			./spcomp -E $$sourcefile -ocompiled/$$smxfile; \
 			if [[ $$? -ne 0 ]]; \

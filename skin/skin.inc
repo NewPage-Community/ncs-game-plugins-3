@@ -1,6 +1,8 @@
 #define MAX_SKINS_NUM 1024
 #define MAX_SKIN_NAME_LENGTH 64
 
+EngineVersion engine;
+
 enum struct Skin
 {
     int id;
@@ -33,7 +35,7 @@ enum struct Skin
             }
         }
 
-        if (this.armPath[0] != '\0')
+        if (this.armPath[0] != '\0' && engine == Engine_CSGO)
         {
             if (FileExists(this.armPath, true))
                 PrecacheModel(this.armPath, IsSDK2013Mod() ? true : false);
@@ -101,6 +103,12 @@ methodmap SkinIndex < StringMap
 
 SkinIndex g_Skins;
 int g_UsersUsedSkin[MAXPLAYERS+1];
+
+
+void InitSkin()
+{
+    engine = GetEngineVersion();
+}
 
 #include "skin/api"
 #include "skin/player"

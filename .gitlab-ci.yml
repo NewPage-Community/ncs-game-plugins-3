@@ -4,10 +4,17 @@ image: registry.new-page.xyz/newpage/sourcemod-builder:latest
 .build_script: &build_script
   - make all
 
-build-dev-1.11:
+dev-1.11:
   stage: build
   variables:
     SOURCEMOD_VERSION: "1.11"
+  script:
+    - *build_script
+
+csgo-build-1.10:
+  stage: build
+  variables:
+    API_URL: $API_URL_CSGO
   script:
     - *build_script
   artifacts:
@@ -15,8 +22,10 @@ build-dev-1.11:
     paths:
       - compiled/*
 
-build-1.10:
+ins-build-1.10:
   stage: build
+  variables:
+    API_URL: $API_URL_INS
   script:
     - *build_script
   artifacts:

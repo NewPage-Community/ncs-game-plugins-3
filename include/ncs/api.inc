@@ -2,13 +2,8 @@
 #include <ripext>
 #undef REQUIRE_EXTENSIONS
 
-#define API_URL "https://api.new-page.xyz/ncs/v3/game"
-
-#if defined DEV
-	#define TOKEN "TkVXUEFHRTpBUEk="
-#else
-    #define TOKEN "<api_token>"
-#endif
+#define API_URL "<api_url>"
+#define TOKEN   "<api_token>"
 
 stock HTTPClient NewNCSAPI()
 {

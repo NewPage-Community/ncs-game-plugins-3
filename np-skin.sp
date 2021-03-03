@@ -1,6 +1,3 @@
-// for dev
-//#define DEV
-
 #include <ncs>
 
 #include <ncs/account>
@@ -42,6 +39,7 @@ public void OnPluginStart()
 {
     InitAPI();
     InitCmd();
+    InitSkin();
     HookEvent("player_spawn", Event_PlayerSpawn, EventHookMode_Post);
     HookEvent("player_death", Event_PlayerDeath_Pre, EventHookMode_Pre);
 }

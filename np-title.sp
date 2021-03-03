@@ -1,4 +1,3 @@
-//#define DEV
 #pragma semicolon 1
 
 #include <ncs>

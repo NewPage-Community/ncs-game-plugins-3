@@ -1,6 +1,3 @@
-// for dev
-//#define DEV
-
 #include <ncs>
 
 #undef REQUIRE_PLUGIN

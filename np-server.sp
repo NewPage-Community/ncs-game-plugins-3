@@ -1,6 +1,3 @@
-// for dev
-//#define DEV
-
 #include <ncs>
 
 #include <ncs/chat>

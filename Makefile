@@ -25,6 +25,7 @@ build:
 ifdef CI
 	@printf "\nPipeline id $(CI_PIPELINE_IID)"
 	@sed -i "s%<pipeline_iid>%$(CI_PIPELINE_IID)%g" include/ncs.inc
+	@sed -i "s%<api_url>%$(API_URL)%g" include/ncs/api.inc
 	@sed -i "s%<api_token>%$(API_TOKEN)%g" include/ncs/api.inc
 endif
 	@test -e compiled || mkdir compiled
@@ -44,12 +45,6 @@ endif
 			elif [[ "$$smxfile" =~ "test-" ]]; \
 			then \
 				smxfile="test/$$smxfile"; \
-			elif [[ "$$smxfile" =~ "ins-" ]]; \
-			then \
-				smxfile="ins/$$smxfile"; \
-			elif [[ "$$smxfile" =~ "csgo-" ]]; \
-			then \
-				smxfile="csgo/$$smxfile"; \
 			fi; \
 			./spcomp -E $$sourcefile -ocompiled/$$smxfile; \
 			if [[ $$? -ne 0 ]]; \

@@ -9,11 +9,7 @@
 #define P_AUTHOR 		"NewPage Dev-Team"
 #define P_URLS	 		"https://new-page.xyz"
 #define P_PRE 			"NewPage Core System (NCS)"
-#if defined DEV
-	#define P_VERSION "v3.1.dev"
-#else
-    #define P_VERSION "v3.1.<pipeline_iid>"
-#endif
+#define P_VERSION       "v3.2.<pipeline_iid>"
 
 // Core Include
 #include <ncs/api>

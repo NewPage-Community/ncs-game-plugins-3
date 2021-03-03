@@ -66,7 +66,7 @@ stock void ProcessColorString(char[] message, int maxLen, int team = 0)
 		switch(team)
 		{
 	  		case 3 : ReplaceString(message, maxLen, "{name}", "\x0A", false);
-	   		case 2 : ReplaceString(message, maxLen, "{name}", "\x10", false);
+	   		case 2 : ReplaceString(message, maxLen, "{name}", "\x09", false);
 			default: ReplaceString(message, maxLen, "{name}", "\x01", false);
 		}
 	}

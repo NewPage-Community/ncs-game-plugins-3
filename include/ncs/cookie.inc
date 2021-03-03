@@ -13,6 +13,9 @@ native void NCS_Cookie_Set(int client, const char[] key, const char[] value);
 
 native void NCS_Cookie_IsCached(int client);
 
+// Returns the last updated timestamp for a client cookie
+native int NCS_Cookie_GetTime(int client);
+
 stock bool NCS_Cookie_GetBool(int client, const char[] key, bool def)
 {
     char v[2];

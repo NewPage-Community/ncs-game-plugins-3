@@ -12,6 +12,7 @@ enum struct CookieInfo
     {
         this.index = index;
         this.cached = true;
+        this.timestamp = GetTime();
         if (this.cookie != INVALID_HANDLE)
             delete this.cookie;
         this.cookie = new StringMap();
@@ -40,6 +41,7 @@ enum struct CookieInfo
     void Clear()
     {
         this.index = 0;
+        this.timestamp = 0;
         this.cached = false;
         if (this.cookie != INVALID_HANDLE)
             delete this.cookie;

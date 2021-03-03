@@ -3,6 +3,7 @@ void InitNative()
     CreateNative("NCS_Cookie_Get", Native_GetClient);
     CreateNative("NCS_Cookie_Set", Native_SetClient);
     CreateNative("NCS_Cookie_IsCached", Native_IsCached);
+    CreateNative("NCS_Cookie_GetTime", Native_GetTime);
 }
 
 public int Native_GetClient(Handle plugin, int numParams)
@@ -32,4 +33,9 @@ public int Native_SetClient(Handle plugin, int numParams)
 public int Native_IsCached(Handle plugin, int numParams)
 {
     return player[GetNativeCell(1)].cached;
+}
+
+public int Native_GetTime(Handle plugin, int numParams)
+{
+    return player[GetNativeCell(1)].timestamp;
 }

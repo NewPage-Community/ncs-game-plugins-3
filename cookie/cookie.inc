@@ -4,11 +4,14 @@
 enum struct CookieInfo
 {
     int index;
+    bool cached;
+    int timestamp;
     StringMap cookie;
 
     void Init(int index, JSONObject data)
     {
         this.index = index;
+        this.cached = true;
         if (this.cookie != INVALID_HANDLE)
             delete this.cookie;
         this.cookie = new StringMap();
@@ -37,6 +40,7 @@ enum struct CookieInfo
     void Clear()
     {
         this.index = 0;
+        this.cached = false;
         if (this.cookie != INVALID_HANDLE)
             delete this.cookie;
     }

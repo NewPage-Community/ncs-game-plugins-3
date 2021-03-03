@@ -2,6 +2,7 @@ void InitNative()
 {
     CreateNative("NCS_Cookie_Get", Native_GetClient);
     CreateNative("NCS_Cookie_Set", Native_SetClient);
+    CreateNative("NCS_Cookie_IsCached", Native_IsCached);
 }
 
 public int Native_GetClient(Handle plugin, int numParams)
@@ -26,4 +27,9 @@ public int Native_SetClient(Handle plugin, int numParams)
     GetNativeString(3, value, sizeof(value));
     
     return SetUserCookie(client, key, value);
+}
+
+public int Native_IsCached(Handle plugin, int numParams)
+{
+    return player[GetNativeCell(1)].cached;
 }

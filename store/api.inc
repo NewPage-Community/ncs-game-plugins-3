@@ -65,7 +65,7 @@ void BuyItem(int client, Item item)
     if (playerMoney[client] < item.GetPrice())
     {
         if (IsValidClient(client))
-            NCS_Chat(client, _, "{blue} 您的软妹币余额不足");
+            NCS_Chat(client, _, "{default} 您的软妹币余额不足");
         return;
     }
 
@@ -105,9 +105,9 @@ public void BuyItemCallback(HTTPResponse response, DataPack dp, const char[] err
         if (IsValidClient(client))
         {
             if (NoEnoughMoney(response.Data))
-                NCS_Chat(client, _, "{blue}您的软妹币余额不足");
+                NCS_Chat(client, _, "{default}您的软妹币余额不足");
             else
-                NCS_Chat(client, _, "{blue}购买失败");
+                NCS_Chat(client, _, "{default}购买失败");
         }
         NCS_LogError("Store", "BuyItemCallback", "#%d UID:%s ItemID:%d ItemPrice:%d", client, uid, item_id, item_price);
         return;
@@ -116,7 +116,7 @@ public void BuyItemCallback(HTTPResponse response, DataPack dp, const char[] err
     if (IsValidClient(client))
     {
         LoadUserStoreList(client);
-        NCS_Chat(client, _, "{blue}购买 {green}%s{blue} 成功", itemName);
+        NCS_Chat(client, _, "{default}购买 {green}%s{default} 成功", itemName);
     }
 }
 
@@ -132,7 +132,7 @@ void BuyAdvPass(int client, int type)
     if (playerMoney[client] < passTypePrice[type])
     {
         if (IsValidClient(client))
-            NCS_Chat(client, _, "{blue} 您的软妹币余额不足");
+            NCS_Chat(client, _, "{default} 您的软妹币余额不足");
         return;
     }
 
@@ -167,9 +167,9 @@ public void BuyPassCallback(HTTPResponse response, DataPack dp, const char[] err
         if (IsValidClient(client))
         {
             if (NoEnoughMoney(response.Data))
-                NCS_Chat(client, _, "{blue}您的软妹币余额不足");
+                NCS_Chat(client, _, "{default}您的软妹币余额不足");
             else
-                NCS_Chat(client, _, "{blue}升级失败");
+                NCS_Chat(client, _, "{default}升级失败");
         }
         NCS_LogError("Store", "BuyPassCallback", "#%d UID:%s Type:%d", client, uid, type);
         return;
@@ -178,7 +178,7 @@ public void BuyPassCallback(HTTPResponse response, DataPack dp, const char[] err
     if (IsValidClient(client))
     {
         LoadUserStoreList(client);
-        NCS_Chat(client, _, "{blue}升级 {green}%s{blue} 成功", passTypeName[type]);
+        NCS_Chat(client, _, "{default}升级 {green}%s{default} 成功", passTypeName[type]);
     }
 }
 
@@ -191,7 +191,7 @@ void BuyVIP(int client, int month)
     if (playerMoney[client] < VIPPrice(month))
     {
         if (IsValidClient(client))
-            NCS_Chat(client, _, "{blue}您的软妹币余额不足");
+            NCS_Chat(client, _, "{default}您的软妹币余额不足");
         return;
     }
 
@@ -226,9 +226,9 @@ public void BuyVIPCallback(HTTPResponse response, DataPack dp, const char[] erro
         if (IsValidClient(client))
         {
             if (NoEnoughMoney(response.Data))
-                NCS_Chat(client, _, "{blue}您的软妹币余额不足");
+                NCS_Chat(client, _, "{default}您的软妹币余额不足");
             else
-                NCS_Chat(client, _, "{blue}购买错误");
+                NCS_Chat(client, _, "{default}购买错误");
         }
         NCS_LogError("Store", "BuyVIPCallback", "#%d UID:%s Month:%d", client, uid, month);
         return;
@@ -238,7 +238,7 @@ public void BuyVIPCallback(HTTPResponse response, DataPack dp, const char[] erro
     {
         if (LibraryExists("NCS-VIP"))
             NCS_VIP_ReloadClient(client);
-        NCS_Chat(client, _, "{blue}续费 {green}%d个月VIP{blue} 成功", month);
+        NCS_Chat(client, _, "{default}续费 {green}%d个月VIP{default} 成功", month);
     }
 }
 

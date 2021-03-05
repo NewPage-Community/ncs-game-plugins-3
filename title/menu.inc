@@ -48,7 +48,7 @@ public int MenuHandler_Prefix(Menu menu, MenuAction action, int client, int slot
         if (itype == -1)
         {
             player[client].isWaitingForPlayerTitle = true;
-            NCS_Chat(client, _, "{blue}请在聊天栏输入你想设置的自定义头衔");
+            NCS_Chat(client, _, "{default}请在聊天栏输入你想设置的自定义头衔");
         }
         else
         {

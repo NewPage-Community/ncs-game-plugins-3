@@ -16,7 +16,7 @@ stock void NCS_Chat(int client = CLIENT_ALL, char[] prefix = CHAT_SYS_PREFIX, ch
     char buffer[512], game[32];
     GetGameFolderName(game, 32);
     VFormat(buffer, sizeof(buffer), msg, 4);
-    Format(buffer, sizeof(buffer), "%s\x04%s\x01 %s", !strcmp(game, "csgo") ? " ": "" , prefix, buffer);
+    Format(buffer, sizeof(buffer), "%s %s", prefix, buffer);
 
     if (!client)
         CPrintToChatAll(buffer);

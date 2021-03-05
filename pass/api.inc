@@ -99,10 +99,10 @@ public void UsePointBoxCallback(HTTPResponse response, DataPack dp, const char[]
         NCS_LogError("Pass", "UsePointBoxCallback", "#%d UID:%s All:%d", client, uid, all);
 
         if (IsValidClient(client))
-            NCS_Chat(client, _, "{blue} 使用通行证经验箱失败");
+            NCS_Chat(client, _, "{default} 使用通行证经验箱失败");
         return;
     }
 
     if (IsValidClient(client))
-            NCS_Chat(client, _, "{blue} 成功使用通行证经验箱");
+            NCS_Chat(client, _, "{default} 成功使用通行证经验箱");
 }

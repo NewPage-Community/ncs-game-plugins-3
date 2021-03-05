@@ -2,7 +2,7 @@ void AccountMenu(int client)
 {
     if (!g_Accounts[client].Valid())
     {
-        NCS_Chat(client, _, "{blue}您的用户数据未加载");
+        NCS_Chat(client, _, "{default}您的用户数据未加载");
         return;
     }
 

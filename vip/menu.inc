@@ -82,7 +82,7 @@ void VIPFeatureMenu(int client)
 
     if (!vip)
     {
-        NCS_Chat(client, _, "{blue}您没有权限使用该菜单");
+        NCS_Chat(client, _, "{default}您没有权限使用该菜单");
         return;
     }
 

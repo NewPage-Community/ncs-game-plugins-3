@@ -3,6 +3,10 @@ void SetModel(int client)
     if (!IsClientInGame(client) || !IsPlayerAlive(client) || IsFakeClient(client))
         return;
 
+    if (isZombieReloadedLoaded)
+        if (ZR_IsClientZombie(client))
+            return;
+
     int skinID = g_UsersUsedSkin[client];
     if (skinID > 0)
     {
@@ -16,7 +20,7 @@ void SetModel(int client)
         SetEntityModel(client, s.skinPath);
         SetEntityRenderColor(client, 255, 255, 255, 255);
 
-        if (IsModelPrecached(s.armPath) && engine == Engine_CSGO)
+        if (IsModelPrecached(s.armPath) && s.armPath[0] != '\0' && engine == Engine_CSGO)
             SetEntPropString(client, Prop_Send, "m_szArmsModel", s.armPath);
     }
 }

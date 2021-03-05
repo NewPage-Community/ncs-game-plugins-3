@@ -76,6 +76,14 @@ methodmap AuraIndex < StringMap
 AuraIndex auras;
 int g_UsersUsedAura[MAXPLAYERS+1];
 
+// Library
+bool isZombieReloadedLoaded = false;
+
+void InitLibrary()
+{
+    isZombieReloadedLoaded = LibraryExists("zombiereloaded");
+}
+
 #include "aura/api"
 #include "aura/player"
 #include "aura/cookie"

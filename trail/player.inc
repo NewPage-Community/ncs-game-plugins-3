@@ -7,6 +7,10 @@ void SetClientTrail(int client, int id = 0, bool preview = false)
     if (!IsClientInGame(client) || !IsPlayerAlive(client) || IsFakeClient(client))
         return;
 
+    if (isZombieReloadedLoaded)
+        if (ZR_IsClientZombie(client))
+            return;
+
     // Kill preview timer
     Handle timer = g_tPreview[client];
     g_tPreview[client] = INVALID_HANDLE;
@@ -122,4 +126,10 @@ public Action Timer_ClearPreTrail(Handle timer, int client)
 public Action Hook_SetTransmit_Preview(int ent, int client)
 {
     return (g_iPreviewEnt[ent] == client) ? Plugin_Continue : Plugin_Handled;
+}
+
+public void ZR_OnClientInfected(int client, int attacker, bool motherInfect, bool respawnOverride, bool respawn)
+{
+    if (IsValidClient(client))
+        RemoveClientTrail(client);
 }

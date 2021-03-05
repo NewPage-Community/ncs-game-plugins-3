@@ -27,16 +27,19 @@ public Action Timer_Restart(Handle timer, int time)
 	{
 		NCS_Chat(CLIENT_ALL, _, "{default}服务器将在 {green}%d秒{default} 后重启!", 10 - time);
 		PrintCenterTextAll("服务器将在 %d秒 后重启!", 10 - time);
-		CreateTimer(1.0, Timer_Restart, time + 1);
+	}
+	else if (time == 11)
+	{
+		for(int i = 1; i <= MaxClients; i++)
+			if (IsClientInGame(i))
+				ClientCommand(i, "retry");
+	}
+	else if (time == 12)
+	{
+		ServerCommand("quit");
 		return Plugin_Stop;
 	}
-
-	for(int i = 1; i <= MaxClients; i++)
-		if (IsClientInGame(i))
-				ClientCommand(i, "retry");
-
-	ServerCommand("quit");
-
+	CreateTimer(1.0, Timer_Restart, time + 1);
 	return Plugin_Stop;
 }
 

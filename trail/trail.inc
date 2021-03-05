@@ -92,6 +92,14 @@ methodmap TrailIndex < StringMap
 TrailIndex trails;
 int g_UsersUsedTrail[MAXPLAYERS+1];
 
+// Library
+bool isZombieReloadedLoaded = false;
+
+void InitLibrary()
+{
+    isZombieReloadedLoaded = LibraryExists("zombiereloaded");
+}
+
 #include "trail/api"
 #include "trail/player"
 #include "trail/cookie"

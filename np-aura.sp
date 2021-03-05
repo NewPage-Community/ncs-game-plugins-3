@@ -8,6 +8,7 @@
 
 #undef REQUIRE_PLUGIN
 #include <ncs/chat>
+#include <zombiereloaded>
 
 #define P_NAME P_PRE ... " - Aura"
 #define P_DESC "Aura management plugin"
@@ -31,7 +32,14 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
     // lib
     RegPluginLibrary("NCS-Aura");
 
+    MarkNativeAsOptional("ZR_IsClientZombie");
+
     return APLRes_Success;
+}
+
+public void OnAllPluginsLoaded()
+{
+    InitLibrary();
 }
 
 public void OnPluginStart()

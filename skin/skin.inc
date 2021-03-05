@@ -104,6 +104,13 @@ methodmap SkinIndex < StringMap
 SkinIndex g_Skins;
 int g_UsersUsedSkin[MAXPLAYERS+1];
 
+// Library
+bool isZombieReloadedLoaded = false;
+
+void InitLibrary()
+{
+    isZombieReloadedLoaded = LibraryExists("zombiereloaded");
+}
 
 void InitSkin()
 {

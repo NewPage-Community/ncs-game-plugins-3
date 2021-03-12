@@ -20,13 +20,18 @@ enum struct Aura
         attr.GetString("particle_name", this.particleName, MAX_PARTICLE_NAME_LENGTH);
         delete attr;
 
-        PrecacheGeneric(this.auraPath, true);
-        PrecacheParticleEffect(this.particleName);
-
-        if (!FileExists(this.auraPath, true))
+        if (this.auraPath[0] != '\0')
         {
-            NCS_LogError("Aura", "AuraInit", "File is not exists (%s)", this.auraPath);
-            return false;
+            if (FileExists(this.auraPath, true))
+            {
+                PrecacheGeneric(this.auraPath, true);
+                PrecacheParticleEffect(this.particleName);
+            }
+            else
+            {
+                NCS_LogError("Aura", "AuraInit", "File is not exists (%s)", this.auraPath);
+                return false;
+            }
         }
 
         return true;

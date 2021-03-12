@@ -19,12 +19,17 @@ enum struct Spray
         attr.GetString("spray_path", this.sprayPath, PLATFORM_MAX_PATH);
         delete attr;
 
-        this.decal = PrecacheSpray(this.sprayPath);
-
-        if (!FileExists(this.sprayPath, true))
+        if (this.sprayPath[0] != '\0')
         {
-            NCS_LogError("Spray", "SprayInit", "File is not exists (%s)", this.sprayPath);
-            return false;
+            if (FileExists(this.sprayPath, true))
+            {
+                this.decal = PrecacheSpray(this.sprayPath);
+            }
+            else
+            {
+                NCS_LogError("Spray", "SprayInit", "File is not exists (%s)", this.sprayPath);
+                return false;
+            }
         }
 
         return true;

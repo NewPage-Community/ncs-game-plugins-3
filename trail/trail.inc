@@ -29,20 +29,25 @@ enum struct Trail
         attr.GetString("particle_name", this.particleName, MAX_PARTICLE_NAME_LENGTH);
         delete attr;
 
-        // type
-        if (StrEqual(trail_type, "particle"))
+        if (this.trailPath[0] != '\0')
         {
-            this.type = TrailType_Particle;
-            PrecacheGeneric(this.trailPath, true);
-            PrecacheParticleEffect(this.particleName);
-        }
-        else
-            this.type = TrailType_Material;
-
-        if (!FileExists(this.trailPath, true))
-        {
-            NCS_LogError("Trail", "TrailInit", "File is not exists (%s)", this.trailPath);
-            return false;
+            if (FileExists(this.trailPath, true))
+            {
+                // type
+                if (StrEqual(trail_type, "particle"))
+                {
+                    this.type = TrailType_Particle;
+                    PrecacheGeneric(this.trailPath, true);
+                    PrecacheParticleEffect(this.particleName);
+                }
+                else
+                    this.type = TrailType_Material;
+            }
+            else
+            {
+                NCS_LogError("Trail", "TrailInit", "File is not exists (%s)", this.trailPath);
+                return false;
+            }
         }
 
         return true;

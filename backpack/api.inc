@@ -40,5 +40,10 @@ void AddItems(int client, Items items)
 
     char path[128];
     Format(path, sizeof(path), "%s/additem", Backpack_Service);
-    httpClient.Post(path, data, BlankCallback);
+    httpClient.Post(path, data, AddItemsCallback);
+}
+
+public void AddItemsCallback(HTTPResponse response, any value, const char[] error)
+{
+    CheckAPIError("Backpack", "AddItemsCallback", response, error);
 }

@@ -62,6 +62,11 @@ bool SetUserCookie(int client, const char[] key, const char[] value)
 
     char path[128];
     Format(path, sizeof(path), "%s/set", Cookie_Service);
-    httpClient.Post(path, data, BlankCallback);
+    httpClient.Post(path, data, SetUserCookieCallback);
     return ok;
+}
+
+public void SetUserCookieCallback(HTTPResponse response, any value, const char[] error)
+{
+    CheckAPIError("Cookie", "SetUserCookieCallback", response, error);
 }

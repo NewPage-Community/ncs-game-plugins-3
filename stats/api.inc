@@ -30,7 +30,12 @@ void UpdateStatsData()
 
     char path[128];
     Format(path, sizeof(path), "%s/user/incrs", Stats_Service);
-    httpClient.Post(path, data, BlankCallback);
+    httpClient.Post(path, data, UpdateStatsDataCallback);
+}
+
+public void UpdateStatsDataCallback(HTTPResponse response, any value, const char[] error)
+{
+    CheckAPIError("Stats", "UpdateStatsDataCallback", response, error);
 }
 
 public Action Timer_UpdateStats(Handle timer)

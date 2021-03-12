@@ -54,12 +54,17 @@ public Action Timer_UpdatePoint(Handle timer, int client)
     {
         char path[128];
         Format(path, sizeof(path), "%s/addpoints", PassUser_Service);
-        httpClient.Post(path, data, BlankCallback);
+        httpClient.Post(path, data, UpdatePointCallback);
     }
     else
         delete data;
     
     return Plugin_Continue;
+}
+
+public void UpdatePointCallback(HTTPResponse response, any value, const char[] error)
+{
+    CheckAPIError("Pass", "UpdatePointCallback", response, error);
 }
 
 void UsePointBox(int client, bool all = false)

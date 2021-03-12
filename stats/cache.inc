@@ -20,11 +20,16 @@ void InitCache()
             JSONObject data = JSONObject.FromString(json);
             char path[128];
             Format(path, sizeof(path), "%s/user/incrs", Stats_Service);
-            httpClient.Post(path, data, BlankCallback);
+            httpClient.Post(path, data, InitCacheCallback);
         }
     }
     
     cache = CreateTimer(1.0, Timer_Cache, 0, TIMER_REPEAT);
+}
+
+public void InitCacheCallback(HTTPResponse response, any value, const char[] error)
+{
+    CheckAPIError("Stats", "InitCacheCallback", response, error);
 }
 
 void CloseCache()

@@ -22,5 +22,10 @@ void AllChat(const char[] name, const char[] message)
 
     char path[128];
     Format(path, sizeof(path), "%s/allchat", Chat_Service);
-    httpClient.Post(path, data, BlankCallback);
+    httpClient.Post(path, data, AllChatCallback);
+}
+
+public void AllChatCallback(HTTPResponse response, any value, const char[] error)
+{
+    CheckAPIError("Chat", "AllChatCallback", response, error);
 }

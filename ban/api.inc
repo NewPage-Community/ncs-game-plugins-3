@@ -118,5 +118,10 @@ void ReqBanClient(int client, int type, int length, const char[] reason)
 
 	char path[128];
 	Format(path, sizeof(path), "%s/add", Ban_Service);
-	httpClient.Post(path, data, BlankCallback);
+	httpClient.Post(path, data, ReqBanClientCallback);
+}
+
+public void ReqBanClientCallback(HTTPResponse response, any value, const char[] error)
+{
+    CheckAPIError("Ban", "ReqBanClientCallback", response, error);
 }

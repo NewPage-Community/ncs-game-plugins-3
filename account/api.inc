@@ -97,5 +97,10 @@ void UpdateAccountName(int client)
 
 	char path[128];
 	Format(path, sizeof(path), "%s/%s", Account_Service, g_Accounts[client].uid);
-	httpClient.Put(path, data, BlankCallback);
+	httpClient.Put(path, data, UpdateAccountNameCallback);
+}
+
+public void UpdateAccountNameCallback(HTTPResponse response, any value, const char[] error)
+{
+    CheckAPIError("Account", "UpdateAccountNameCallback", response, error);
 }

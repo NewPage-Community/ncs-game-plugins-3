@@ -15,7 +15,7 @@ stock void NCS_Chat(int client = CLIENT_ALL, char[] prefix = CHAT_SYS_PREFIX, ch
 {
     char buffer[MAX_CHAT_MESSAGE_LENGTH];
     VFormat(buffer, sizeof(buffer), msg, 4);
-    Format(buffer, sizeof(buffer), "%s %s", prefix, buffer);
+    Format(buffer, sizeof(buffer), "\x01%s %s", prefix, buffer);
 
     if (!client)
         CPrintToChatAll(buffer);

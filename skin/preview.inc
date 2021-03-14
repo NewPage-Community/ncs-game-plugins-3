@@ -74,7 +74,7 @@ void PreviewSkin(int client, int skinID)
     
     g_tPreMdl[client] = CreateTimer(30.0, Timer_ClearPreMdl, client);
 
-    NCS_Chat(client, _, "{blue}预览皮肤 {lime}%s{default} 30秒", s.name);
+    NCS_Chat(client, _, "预览皮肤 {lime}%s{default} 30秒", s.name);
 }
 
 public Action Timer_ClearPreMdl(Handle timer, int client)

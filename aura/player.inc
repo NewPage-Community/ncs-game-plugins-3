@@ -40,7 +40,7 @@ void SetClientAura(int client, int id = 0, bool preview = false)
         g_iPreviewEnt[entity] = client;
         SDKHook(entity, SDKHook_SetTransmit, Hook_SetTransmit_Preview);
         g_tPreview[client] = CreateTimer(30.0, Timer_ClearPre, client);
-        NCS_Chat(client, _, "{blue}预览光环 {lime}%s{default} 30秒，输入 {green}!tp{default} 查看效果", s.name);
+        NCS_Chat(client, _, "预览光环 {lime}%s{default} 30秒，输入 {green}!tp{default} 查看效果", s.name);
     }
 }
 

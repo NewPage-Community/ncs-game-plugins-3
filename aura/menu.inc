@@ -3,7 +3,7 @@ void DisplayUserAuras(int client)
     char uid[MAX_UID_LENGTH];
     if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
     {
-        NCS_Chat(client, _, "{blue}您的用户数据尚未加载，请重试");
+        NCS_Chat(client, _, "您的用户数据尚未加载，请重试");
         return;
     }
 
@@ -101,6 +101,6 @@ public int Menu_Selected(Menu menu, MenuAction action, int client, int slot)
         menu.GetItem(slot, id, sizeof(id), _, name, sizeof(name));
 
         SetUsedAura(client, id);
-        NCS_Chat(client, _, "{blue}已成功更换为 {lime}%s", name);
+        NCS_Chat(client, _, "已成功更换为 {lime}%s", name);
     }
 }

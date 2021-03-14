@@ -4,6 +4,7 @@
 #define _NCS_Color_
 
 #define MAX_COLOR_LENGTH 16
+#define MAX_CHAT_MESSAGE_LENGTH 1024
 
 // Chat Color code
 
@@ -14,9 +15,9 @@ stock void ProcessColorString(char[] message, int maxLen, int team = 0)
 
 	if (!strcmp(game, "insurgency") || !strcmp(game, "doi"))
 	{
-		ReplaceString(message, maxLen, "{normal}",      "\x01", false);
-		ReplaceString(message, maxLen, "{default}",     "\x01", false);
-		ReplaceString(message, maxLen, "{white}",       "\x01", false);
+		ReplaceString(message, maxLen, "{normal}",      "\x08FFFFFFFF", false);
+		ReplaceString(message, maxLen, "{default}",     "\x08FFFFFFFF", false);
+		ReplaceString(message, maxLen, "{white}",       "\x08FFFFFFFF", false);
 		ReplaceString(message, maxLen, "{darkred}",     "\x088B0000FF", false);
 		ReplaceString(message, maxLen, "{pink}",        "\x08FFC0CBFF", false);
 		ReplaceString(message, maxLen, "{green}",       "\x083EFF3EFF", false);
@@ -38,7 +39,7 @@ stock void ProcessColorString(char[] message, int maxLen, int team = 0)
 		{
 	  		case 3 : ReplaceString(message, maxLen, "{name}", "\x08AC4029FF", false);
 	   		case 2 : ReplaceString(message, maxLen, "{name}", "\x0884961CFF", false);
-			default: ReplaceString(message, maxLen, "{name}", "\x05", false);
+			default: ReplaceString(message, maxLen, "{name}", "\x08FFFFFFFF", false);
 		}
 	}
 	else if (!strcmp(game, "csgo"))
@@ -72,8 +73,8 @@ stock void ProcessColorString(char[] message, int maxLen, int team = 0)
 	}
 	else if (!strcmp(game, "cstrike"))
 	{
-		ReplaceString(message, maxLen, "{normal}",      "\x01", false);
-		ReplaceString(message, maxLen, "{default}",     "\x01", false);
+		ReplaceString(message, maxLen, "{normal}",      "\x07FFFFFF", false);
+		ReplaceString(message, maxLen, "{default}",     "\x07FFFFFF", false);
 		ReplaceString(message, maxLen, "{white}",       "\x07FFFFFF", false);
 		ReplaceString(message, maxLen, "{darkred}",     "\x078B0000", false);
 		ReplaceString(message, maxLen, "{pink}",        "\x07FF1493", false);
@@ -168,7 +169,7 @@ stock void CPrintToChat(int client, const char[] format, any...)
 	if (!IsClientInGame(client))
 		return;
 	
-	char buffer[254];
+	char buffer[MAX_CHAT_MESSAGE_LENGTH];
 	SetGlobalTransTarget(client);
 	VFormat(buffer, sizeof(buffer), format, 3);
 	ProcessColorString(buffer, sizeof(buffer));
@@ -177,7 +178,7 @@ stock void CPrintToChat(int client, const char[] format, any...)
 
 stock void CPrintToChatAll(const char[] format, any...)
 {
-	char buffer[254];
+	char buffer[MAX_CHAT_MESSAGE_LENGTH];
 	for (int i = 1; i <= MaxClients; i++)
 	{
 		if (IsClientInGame(i))

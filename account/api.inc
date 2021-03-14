@@ -84,7 +84,7 @@ public void LoadAccountUID(HTTPResponse response, DataPack dp, const char[] erro
 	Call_Finish();
 
 	if (notify)
-		NCS_Chat(client, _, "{default}你的用户数据已加载成功");
+		NCS_Chat(client, _, "你的用户数据已加载成功");
 }
 
 void UpdateAccountName(int client)

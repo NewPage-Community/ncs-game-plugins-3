@@ -30,7 +30,7 @@ public int NameColorMenuHandle(Menu menu, MenuAction action, int client, int slo
         NCS_Cookie_Set(client, COOKIE_COLOR_NAME_KEY, color);
         NCS_Chat_SetNameColor(client, color);
 
-        NCS_Chat(client, _, "{default}成功更换 %s名字颜色", color);
+        NCS_Chat(client, _, "成功更换 %s名字颜色", color);
     }
 }
 

@@ -13,8 +13,7 @@
 // Send a message with prefix (For plugin notification)
 stock void NCS_Chat(int client = CLIENT_ALL, char[] prefix = CHAT_SYS_PREFIX, char[] msg, any ...)
 {
-    char buffer[512], game[32];
-    GetGameFolderName(game, 32);
+    char buffer[MAX_CHAT_MESSAGE_LENGTH];
     VFormat(buffer, sizeof(buffer), msg, 4);
     Format(buffer, sizeof(buffer), "%s %s", prefix, buffer);
 

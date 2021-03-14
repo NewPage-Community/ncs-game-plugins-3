@@ -5,7 +5,7 @@ void DisplayUserSkins(int client)
     char uid[MAX_UID_LENGTH];
     if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
     {
-        NCS_Chat(client, _, "您的用户数据尚未加载，请重试");
+        NCS_Chat(client, _, "{blue}您的用户数据尚未加载，请重试");
         return;
     }
 
@@ -105,6 +105,6 @@ public int Menu_SkinSelected(Menu menu, MenuAction action, int client, int slot)
         SetUsedSkin(client, skinID);
         if (engine == Engine_CSGO)
             SetModel(client);
-        NCS_Chat(client, _, "已成功更换为 {lime}%s{default}，可通过 {olive}!tp{default} 查看模型", skinName);
+        NCS_Chat(client, _, "{blue}已成功更换为 {lime}%s{default}，可通过 {olive}!tp{default} 查看模型", skinName);
     }
 }

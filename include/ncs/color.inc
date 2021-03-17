@@ -173,7 +173,7 @@ stock void CPrintToChat(int client, const char[] format, any...)
 	SetGlobalTransTarget(client);
 	VFormat(buffer, sizeof(buffer), format, 3);
 	ProcessColorString(buffer, sizeof(buffer));
-	PrintToChat(client, "%s", buffer);
+	PrintToChat(client, "\x01%s", buffer);
 }
 
 stock void CPrintToChatAll(const char[] format, any...)
@@ -186,7 +186,7 @@ stock void CPrintToChatAll(const char[] format, any...)
 			SetGlobalTransTarget(i);
 			VFormat(buffer, sizeof(buffer), format, 2);
 			ProcessColorString(buffer, sizeof(buffer));
-			PrintToChat(i, "%s", buffer);
+			PrintToChat(i, "\x01%s", buffer);
 		}
 	}
 }

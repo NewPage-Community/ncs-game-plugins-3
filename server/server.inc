@@ -5,3 +5,4 @@ int ServerID = 0,
 #include "server/api"
 #include "server/cmd"
 #include "server/native"
+#include "server/map"

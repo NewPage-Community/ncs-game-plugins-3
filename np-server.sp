@@ -33,6 +33,7 @@ public void OnPluginStart()
 	InitAPI();
 	RegCmd();
 	RegForward();
+	InitMap();
 }
 
 public void OnPluginEnd()
@@ -43,4 +44,5 @@ public void OnPluginEnd()
 public void OnMapStart()
 {
 	ReqServerInfo();
+	MapNotify();
 }

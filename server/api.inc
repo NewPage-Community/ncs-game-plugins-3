@@ -132,3 +132,20 @@ public Action Timer_Reload(Handle timer)
 	ReqServerInfo();
 	return Plugin_Stop;
 }
+
+void ReqMapNotify(int serverID, const char[] map)
+{
+	// JSON
+	JSONObject data = new JSONObject();
+	data.SetInt("server_id", serverID);
+	data.SetString("map", map);
+	
+	char url[64];
+	Format(url, sizeof(url), "%s/changemap", Server_Service);
+	httpClient.Post(url, data, ReqMapNotifyCallback);
+}
+
+public void ReqMapNotifyCallback(HTTPResponse response, any value, const char[] error)
+{
+	CheckAPIError("Server", "ReqMapNotifyCallback", response, error);
+}

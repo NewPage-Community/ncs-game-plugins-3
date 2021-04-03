@@ -7,7 +7,7 @@ void InitMap()
 
 void MapNotify()
 {
-    if (changeMapNotify.BoolValue)
+    if (changeMapNotify.BoolValue && ServerID > 0)
     {
         char map[PLATFORM_MAX_PATH];
         GetCurrentMap(map, sizeof(map));

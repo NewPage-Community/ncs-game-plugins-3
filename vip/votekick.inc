@@ -9,7 +9,7 @@ void DisplayKickTargetMenu(int client)
 	Format(title, sizeof(title), "%T:", "Kick vote", client);
 	menu.SetTitle(title);
 	
-	AddTargetsToMenu(menu, client, false, false);
+	AddTargetsToMenu(menu, 0, false, false);
 	
 	menu.Display(client, MENU_TIME_FOREVER);
 }

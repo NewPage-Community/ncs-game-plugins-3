@@ -6,6 +6,10 @@ void SetModel(int client)
     if (isZombieReloadedLoaded)
         if (ZR_IsClientZombie(client))
             return;
+    
+    // Team limit
+    if (cv_skin_only_team.IntValue > 0 && cv_skin_only_team.IntValue != GetClientTeam(client))
+        return;
 
     int skinID = g_UsersUsedSkin[client];
     if (skinID > 0)

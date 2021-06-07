@@ -11,6 +11,8 @@
 #include <ncs/chat>
 #include <zombiereloaded>
 
+ConVar cv_skin_only_team;
+
 #define P_NAME P_PRE ... " - Skin"
 #define P_DESC "Skin management plugin"
 
@@ -50,6 +52,8 @@ public void OnPluginStart()
     InitSkin();
     HookEvent("player_spawn", Event_PlayerSpawn, EventHookMode_Post);
     HookEvent("player_death", Event_PlayerDeath_Pre, EventHookMode_Pre);
+
+    cv_skin_only_team = CreateConVar("skin_only_team", "0", "", 0, true, 0.0, true, 3.0);
 }
 
 public void OnPluginEnd()

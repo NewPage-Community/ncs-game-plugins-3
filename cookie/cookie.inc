@@ -30,11 +30,13 @@ enum struct CookieInfo
 
     bool Get(const char[] key, char[] value, int maxlen)
     {
+        if (this.cookie == INVALID_HANDLE) return false;
         return this.cookie.GetString(key, value, maxlen);
     }
 
     bool Set(const char[] key, const char[] value)
     {
+        if (this.cookie == INVALID_HANDLE) return false;
         return this.cookie.SetString(key, value, true);
     }
 

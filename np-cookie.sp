@@ -29,6 +29,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 public void OnPluginStart()
 {
+	InitCmd();
 	InitAPI();
 }
 

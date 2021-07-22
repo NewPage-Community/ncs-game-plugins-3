@@ -54,3 +54,4 @@ CookieInfo player[MAXPLAYERS+1];
 
 #include "cookie/api"
 #include "cookie/native"
+#include "cookie/cmd"

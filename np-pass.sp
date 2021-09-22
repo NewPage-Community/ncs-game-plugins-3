@@ -7,9 +7,6 @@
 #define P_NAME P_PRE ... " - Pass"
 #define P_DESC "Pass API provider plugin"
 
-ConVar cv_pass_starttime;
-ConVar cv_pass_endtime;
-
 public Plugin myinfo = 
 {
     name        = P_NAME,
@@ -37,9 +34,7 @@ public void OnPluginStart()
     InitAPI();
     InitCache();
     InitCmd();
-
-    cv_pass_starttime = CreateConVar("pass_starttime", "0", "", 0, true, 0.0);
-    cv_pass_endtime = CreateConVar("pass_endtime", "0", "", 0, true, 0.0);
+    InitConVar();
 }
 
 public void OnPluginEnd()

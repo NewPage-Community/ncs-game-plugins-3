@@ -4,6 +4,15 @@
 #define MAX_LEVEL 100
 #define MAX_ITEM_NAME_LENGTH 64
 
+ConVar cv_pass_starttime;
+ConVar cv_pass_endtime;
+
+void InitConVar()
+{
+    cv_pass_starttime = CreateConVar("pass_starttime", "0", "", 0, true, 0.0);
+    cv_pass_endtime = CreateConVar("pass_endtime", "0", "", 0, true, 0.0);
+}
+
 enum struct PassInfo
 {
     char uid[MAX_UID_LENGTH];

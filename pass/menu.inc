@@ -29,10 +29,13 @@ public void LoadPassInfo(HTTPResponse response, int client, const char[] error)
     int type = player[client].type;
     int point = player[client].point;
     char progress[64];
+    char startDate[20], endDate[20];
     ProgressBar(point, progress, sizeof(progress));
+    FormatTime(startDate, sizeof(startDate), "%Y/%m/%d", cv_pass_starttime.IntValue);
+    FormatTime(endDate, sizeof(endDate), "%Y/%m/%d", cv_pass_endtime.IntValue);
 
     Menu menu = new Menu(PassInfoMenuHandle);
-    menu.SetTitle("通行证 - 第%d赛季\n类型: %s\n等级: %d\n%s\n ", season, passTypeName[type], Level(point), progress);
+    menu.SetTitle("通行证 - 第%d赛季\n时间: %s - %s\n类型: %s\n等级: %d\n%s\n ", season, startDate, endDate, passTypeName[type], Level(point), progress);
     menu.AddItem("", "升级通行证", type == 0 ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
     menu.AddItem("", "使用经验箱");
     menu.AddItem("", "查看下一级奖励");

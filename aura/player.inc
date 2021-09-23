@@ -1,4 +1,4 @@
-static playerAura[MAXPLAYERS+1];
+static int playerAura[MAXPLAYERS+1];
 static int g_iPreviewEnt[2048];
 static Handle g_tPreview[MAXPLAYERS+1];
 

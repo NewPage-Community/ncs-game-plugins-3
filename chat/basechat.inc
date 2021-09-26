@@ -111,7 +111,7 @@ public void Frame_OnChatMessage_SayText2(DataPack data)
     // All Server Chat
     if (sMessage[0] == '#')
     {
-        AllChat(sName, sMessage[1]);
+        AllChat(iSender, sName, sMessage[1]);
         return;
     }
     

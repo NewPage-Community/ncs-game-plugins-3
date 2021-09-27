@@ -57,7 +57,6 @@ public void OnPluginEnd()
 
 public void OnMapStart()
 {
-    InitParticle();
     LoadTrail();   
 }
 

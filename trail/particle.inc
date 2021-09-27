@@ -1,4 +1,0 @@
-void InitParticle()
-{
-    PrecacheEffect("ParticleEffect");
-}

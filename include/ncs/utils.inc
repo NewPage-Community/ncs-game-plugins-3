@@ -188,31 +188,6 @@ stock int StrLenMB(const char[] str)
     return count;
 }
 
-//https://forums.alliedmods.net/showpost.php?p=2471747&postcount=4
-stock void PrecacheParticleEffect(const char[] effect)
-{
-    static int table = INVALID_STRING_TABLE;
-    
-    if (table == INVALID_STRING_TABLE)
-        table = FindStringTable("ParticleEffectNames");
-    
-    bool save = LockStringTables(false);
-    AddToStringTable(table, effect);
-    LockStringTables(save);
-}
-
-stock void PrecacheEffect(const char[] name)
-{
-    static int table = INVALID_STRING_TABLE;
-
-    if(table == INVALID_STRING_TABLE)
-        table = FindStringTable("EffectDispatch");
-
-    bool save = LockStringTables(false);
-    AddToStringTable(table, name);
-    LockStringTables(save);
-}
-
 stock int GetGameAppID()
 {
     File file = OpenFile("steam.inf", "r");

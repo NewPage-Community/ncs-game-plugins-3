@@ -24,7 +24,7 @@ enum struct Aura
         {
             if (FileExists(this.auraPath, true))
             {
-                PrecacheGeneric(this.auraPath, false);
+                PrecacheGeneric(this.auraPath);
                 PrecacheParticleEffect(this.particleName);
             }
             else

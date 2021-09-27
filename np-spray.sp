@@ -50,7 +50,7 @@ public void OnPluginEnd()
 public void OnMapStart()
 {
     LoadSpray();
-    PrecacheSound(SPRAY_SOUND, false);
+    PrecacheSound(SPRAY_SOUND);
 }
 
 public void NCS_Cookie_OnUserCached(int client)

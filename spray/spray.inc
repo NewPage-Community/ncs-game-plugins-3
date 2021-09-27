@@ -81,7 +81,7 @@ int PrecacheSpray(const char[] path)
     char m_szDecal[256];
     strcopy(m_szDecal, sizeof(m_szDecal), path[10]);
     m_szDecal[strlen(m_szDecal)-4]=0;
-    return PrecacheDecal(m_szDecal, false);
+    return PrecacheDecal(m_szDecal);
 }
 
 SprayIndex sprays;

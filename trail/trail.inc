@@ -37,7 +37,7 @@ enum struct Trail
                 if (StrEqual(trail_type, "particle"))
                 {
                     this.type = TrailType_Particle;
-                    PrecacheGeneric(this.trailPath, false);
+                    PrecacheGeneric(this.trailPath);
                     PrecacheParticleEffect(this.particleName);
                 }
                 else

@@ -94,4 +94,3 @@ void InitLibrary()
 #include "aura/cmd"
 #include "aura/menu"
 #include "aura/native"
-#include "aura/particle"

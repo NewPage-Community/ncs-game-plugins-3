@@ -110,4 +110,3 @@ void InitLibrary()
 #include "trail/cmd"
 #include "trail/menu"
 #include "trail/native"
-#include "trail/particle"

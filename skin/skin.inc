@@ -51,7 +51,7 @@ enum struct Skin
             char path[PLATFORM_MAX_PATH];
             Format(path, sizeof(path), "sound/%s", this.deathSound);
             if (FileExists(path, true))
-                PrecacheSound(this.deathSound, true);
+                PrecacheSound(this.deathSound, false);
             else
                 NCS_LogError("Skin", "SkinInit", "File is not exists (%s)", path);
         }

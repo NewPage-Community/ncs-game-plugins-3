@@ -41,17 +41,9 @@ void SetPlayerTitle(int client)
                 strcopy(titleColor, sizeof(titleColor), "{red}");
             }
         }
-        case 3:
+        case 3,4:
         {
-            if (IsOwner(client))
-            {
-                strcopy(title, sizeof(title), "<服主>");
-                strcopy(titleColor, sizeof(titleColor), "{purple}");
-            }
-        }
-        case 4:
-        {
-            if (IsAdmin(client))
+            if (IsOwner(client) || IsAdmin(client))
             {
                 strcopy(title, sizeof(title), "<管理>");
                 strcopy(titleColor, sizeof(titleColor), "{green}");

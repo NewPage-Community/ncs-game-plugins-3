@@ -56,3 +56,5 @@ deploy:
     - lftp -c "open -u $SOURCEMOD_SFTP_USER,$SOURCEMOD_SFTP_PASS sftp://$SOURCEMOD_SFTP_HOST;mirror -Rv compiled plugins/ --ignore-time --transfer-all --parallel=50 --exclude-glob .git* --exclude .git/" || true
   only:
     - master
+  dependencies:
+    - ins-build-1.10

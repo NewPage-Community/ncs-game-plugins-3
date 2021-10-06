@@ -55,7 +55,7 @@ deploy:
   script:
     - sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     - apk add --no-cache --update lftp
-    - lftp -e "debug;set sftp:auto-confirm yes;open -u $SOURCEMOD_SFTP_USER,$SOURCEMOD_SFTP_PASS sftp://$SOURCEMOD_SFTP_HOST;mirror -Rv compiled plugins --ignore-time --transfer-all --parallel=50 --exclude-glob .git* --exclude .git/;bye"
+    - lftp -c "debug;set sftp:auto-confirm yes;open -u $SOURCEMOD_SFTP_USER,$SOURCEMOD_SFTP_PASS sftp://$SOURCEMOD_SFTP_HOST;mirror -Rv compiled plugins --ignore-time --transfer-all --parallel=50 --exclude-glob .git* --exclude .git/;bye"
   only:
     - master
   dependencies:

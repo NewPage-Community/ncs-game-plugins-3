@@ -15,7 +15,7 @@ dev-1.11:
   script:
     - *build_script
 
-csgo-build-1.10:
+build-1.10-csgo:
   stage: build
   variables:
     API_URL: $API_URL_CSGO
@@ -26,7 +26,7 @@ csgo-build-1.10:
     paths:
       - compiled/*
 
-ins-build-1.10:
+build-1.10-ins:
   stage: build
   variables:
     API_URL: $API_URL_INS
@@ -53,8 +53,8 @@ deploy:
   image: mwienk/docker-lftp:latest
   stage: deploy
   script:
-    - lftp -c "open -u $SOURCEMOD_SFTP_USER,$SOURCEMOD_SFTP_PASS sftp://$SOURCEMOD_SFTP_HOST;mirror -Rv compiled plugins/ --ignore-time --transfer-all --parallel=50 --exclude-glob .git* --exclude .git/" || true
+    - lftp -c "set sftp:auto-confirm yes;open -u $SOURCEMOD_SFTP_USER,$SOURCEMOD_SFTP_PASS sftp://$SOURCEMOD_SFTP_HOST;mirror -Rv compiled plugins --ignore-time --transfer-all --parallel=50 --exclude-glob .git* --exclude .git/;bye"
   only:
     - master
   dependencies:
-    - ins-build-1.10
+    - build-1.10-ins

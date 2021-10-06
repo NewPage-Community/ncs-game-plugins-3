@@ -4,6 +4,10 @@ image: registry.new-page.xyz/newpage/sourcemod-builder:latest
 .build_script: &build_script
   - make all
 
+stages:
+  - build
+  - deploy
+
 dev-1.11:
   stage: build
   variables:
@@ -44,3 +48,11 @@ merge-check:
     - *build_script
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
+deploy:
+  image: mwienk/docker-lftp:latest
+  stage: deploy
+  script:
+    - lftp -c "open -u $SOURCEMOD_SFTP_USER,$SOURCEMOD_SFTP_PASS sftp://$SOURCEMOD_SFTP_HOST;mirror -Rv compiled plugins/ --ignore-time --transfer-all --parallel=50 --exclude-glob .git* --exclude .git/" || true
+  only:
+    - master

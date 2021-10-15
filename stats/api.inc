@@ -44,7 +44,7 @@ public Action Timer_UpdateStats(Handle timer)
     return Plugin_Continue;
 }
 
-void GetStatsData(int client, Handle plugin, Function callback, const char[] range, const char[] statsName, const char[] version)
+void GetStatsData(int client, Handle plugin, Function callback, const char[] range, const char[] statsName, const char[] version, any data)
 {
     char uid[MAX_UID_LENGTH];
     if (!NCS_Account_GetUID(client, uid, MAX_UID_LENGTH))
@@ -52,13 +52,11 @@ void GetStatsData(int client, Handle plugin, Function callback, const char[] ran
 
     // Datapack to pass to callback
     DataPack dp = new DataPack();
-    dp.WriteCell(client, false);
-    dp.WriteString(uid, false);
-    dp.WriteCell(plugin, false);
-    dp.WriteFunction(callback, false);
-    dp.WriteString(statsName, false);
-    dp.WriteString(version, false);
-    dp.WriteString(range, false);
+    dp.WriteCell(client);
+    dp.WriteString(uid);
+    dp.WriteCell(plugin);
+    dp.WriteFunction(callback);
+    dp.WriteCell(data);
 
     char path[128];
     Format(path, sizeof(path), "%s/user/%s/%s/%s/%s", Stats_Service, uid, statsName, version, range);
@@ -67,7 +65,6 @@ void GetStatsData(int client, Handle plugin, Function callback, const char[] ran
 
 public void GetStatsDataCallback(HTTPResponse response, DataPack dp, const char[] error)
 {
-    StatsData stats;
     // DataPack
     dp.Reset();
     int client = dp.ReadCell();
@@ -75,9 +72,7 @@ public void GetStatsDataCallback(HTTPResponse response, DataPack dp, const char[
     dp.ReadString(uid, sizeof(uid));
     Handle plugin = dp.ReadCell();
     Function callback = dp.ReadFunction();
-    dp.ReadString(stats.statsName, NCS_STATS_KEY_LENGTH);
-    dp.ReadString(stats.version, NCS_STATS_KEY_LENGTH);
-    dp.ReadString(stats.range, NCS_STATS_KEY_LENGTH);
+    any cdata = dp.ReadCell();
     dp.Close()
 
     if (CheckAPIError("Stats", "GetStatsDataCallback", response, error))
@@ -86,14 +81,17 @@ public void GetStatsDataCallback(HTTPResponse response, DataPack dp, const char[
     // JSON
     char buffer[INT64_LENGTH];
     JSONObject data = view_as<JSONObject>(response.Data);
-    stats.score = data.GetFloat("score");
+    float score = data.GetFloat("score");
     data.GetInt64("rank", buffer, sizeof(buffer));
-    stats.rank = StringToInt(buffer);
+    int rank = StringToInt(buffer);
     data.GetInt64("total", buffer, sizeof(buffer));
-    stats.total = StringToInt(buffer);
+    int total = StringToInt(buffer);
 
     Call_StartFunction(plugin, callback);
     Call_PushCell(client);
-    Call_PushArray(stats, sizeof(stats));
+    Call_PushCell(score);
+    Call_PushCell(rank);
+    Call_PushCell(total);
+    Call_PushCell(cdata);
     Call_Finish();
 }

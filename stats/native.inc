@@ -28,6 +28,6 @@ public int Native_Get(Handle plugin, int numParams)
     GetNativeString(3, range, sizeof(range));
     GetNativeString(4, statsName, sizeof(statsName));
     GetNativeString(5, version, sizeof(version));
-    GetStatsData(client, callback, range, statsName, version);
+    GetStatsData(client, plugin, callback, range, statsName, version);
     return 1;
 }

@@ -44,7 +44,7 @@ public Action Timer_UpdateStats(Handle timer)
     return Plugin_Continue;
 }
 
-void GetStatsData(int client, Function callback, const char[] range, const char[] statsName, const char[] version)
+void GetStatsData(int client, Handle plugin, Function callback, const char[] range, const char[] statsName, const char[] version)
 {
     char uid[MAX_UID_LENGTH];
     if (!NCS_Account_GetUID(client, uid, MAX_UID_LENGTH))
@@ -54,6 +54,7 @@ void GetStatsData(int client, Function callback, const char[] range, const char[
     DataPack dp = new DataPack();
     dp.WriteCell(client, false);
     dp.WriteString(uid, false);
+    dp.WriteCell(plugin, false);
     dp.WriteFunction(callback, false);
     dp.WriteString(statsName, false);
     dp.WriteString(version, false);
@@ -72,6 +73,7 @@ public void GetStatsDataCallback(HTTPResponse response, DataPack dp, const char[
     int client = dp.ReadCell();
     char uid[MAX_UID_LENGTH];
     dp.ReadString(uid, sizeof(uid));
+    Handle plugin = dp.ReadCell();
     Function callback = dp.ReadFunction();
     dp.ReadString(stats.statsName, NCS_STATS_KEY_LENGTH);
     dp.ReadString(stats.version, NCS_STATS_KEY_LENGTH);
@@ -90,7 +92,7 @@ public void GetStatsDataCallback(HTTPResponse response, DataPack dp, const char[
     data.GetInt64("total", buffer, sizeof(buffer));
     stats.total = StringToInt(buffer);
 
-    Call_StartFunction(INVALID_HANDLE, callback);
+    Call_StartFunction(plugin, callback);
     Call_PushCell(client);
     Call_PushArray(stats, sizeof(stats));
     Call_Finish();

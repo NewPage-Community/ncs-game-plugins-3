@@ -38,5 +38,6 @@ public SharedPlugin __pl_ncs_stats =
 public void __pl_ncs_stats_SetNTVOptional()
 {
     MarkNativeAsOptional("NCS_Stats_Add");
+    MarkNativeAsOptional("NCS_Stats_Get");
 }
 #endif

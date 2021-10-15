@@ -9,6 +9,8 @@
 forward void NCS_Account_OnUserLoaded(int client, const char[] uid);
 // Safety change name event
 forward void NCS_Account_OnChangeName(int client, const char[] newname);
+// Call when player disconnect (safe to get uid)
+forward void NCS_Account_OnUserDisconnect(int client, const char[] uid);
 
 // NCS_Account_GetUID get uid
 // return false = invalid

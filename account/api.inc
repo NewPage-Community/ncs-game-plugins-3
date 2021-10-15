@@ -3,6 +3,7 @@
 HTTPClient httpClient;
 
 GlobalForward onUserLoaded;
+GlobalForward onUserDisconnect;
 
 void InitAPI()
 {
@@ -13,6 +14,7 @@ void InitAPI()
 void RegAPIForward()
 {
 	onUserLoaded = new GlobalForward("NCS_Account_OnUserLoaded",  ET_Ignore, Param_Cell, Param_String);
+	onUserDisconnect = new GlobalForward("NCS_Account_OnUserDisconnect", ET_Ignore, Param_Cell, Param_String);
 }
 
 void CloseAPI()
@@ -103,4 +105,13 @@ void UpdateAccountName(int client)
 public void UpdateAccountNameCallback(HTTPResponse response, any value, const char[] error)
 {
     CheckAPIError("Account", "UpdateAccountNameCallback", response, error);
+}
+
+void UserDisconnectForward(int client, const char[] uid)
+{
+	// Call global forward
+	Call_StartForward(onUserDisconnect);
+	Call_PushCell(client);
+	Call_PushString(uid);
+	Call_Finish();
 }

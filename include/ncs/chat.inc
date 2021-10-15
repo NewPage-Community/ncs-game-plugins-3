@@ -23,6 +23,8 @@ stock void NCS_Chat(int client = CLIENT_ALL, char[] prefix = CHAT_SYS_PREFIX, ch
         CPrintToChat(client, buffer);
 }
 
+forward void NCS_Chat_OnTitleChanged(int client, const char[] title);
+
 native void NCS_Chat_SetTitle(int client, const char[] title, const char[] titleColor);
 native void NCS_Chat_SetNameColor(int client, const char[] nameColor);
 native void NCS_Chat_GetChatName(int client, char[] buffer, int size);

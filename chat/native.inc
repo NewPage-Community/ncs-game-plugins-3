@@ -1,9 +1,12 @@
+GlobalForward onTitleChanged;
+
 void InitNative()
 {
     CreateNative("NCS_Chat_SetTitle", Native_SetTitle);
     CreateNative("NCS_Chat_SetNameColor", Native_SetNameColor);
     CreateNative("NCS_Chat_GetChatName", Native_GetChatName);
     CreateNative("NCS_Chat_GetTitle", Native_GetTitle);
+    onTitleChanged = new GlobalForward("NCS_Chat_OnTitleChanged", ET_Ignore, Param_Cell, Param_String);
 }
 
 public int Native_SetTitle(Handle plugin, int numParams)
@@ -17,6 +20,12 @@ public int Native_SetTitle(Handle plugin, int numParams)
     GetNativeString(3, titleColor, sizeof(titleColor));
 
     player[client].SetTitle(title, titleColor);
+
+    Call_StartForward(onTitleChanged);
+    Call_PushCell(client);
+    Call_PushString(title);
+    Call_Finish();
+
     return 1;
 }
 

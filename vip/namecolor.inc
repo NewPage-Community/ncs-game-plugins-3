@@ -7,6 +7,7 @@ void DisplayNameColorMenu(int client)
     
     Menu menu = new Menu(NameColorMenuHandle);
     menu.SetTitle("名字颜色");
+    menu.AddItem("", "默认");
     menu.AddItem("{white}", "白色");
     menu.AddItem("{green}", "绿色");
     menu.AddItem("{yellow}", "黄色");
@@ -29,6 +30,8 @@ public int NameColorMenuHandle(Menu menu, MenuAction action, int client, int slo
 
         NCS_Cookie_Set(client, COOKIE_COLOR_NAME_KEY, color);
         NCS_Chat_SetNameColor(client, color);
+
+        if (strlen(color) == 0) strcopy(color, sizeof(color), "{name}");
 
         NCS_Chat(client, _, "成功更换 %s名字颜色", color);
     }

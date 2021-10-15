@@ -1,6 +1,7 @@
 #include <ncs>
 
 #include <ncs/account>
+#include <ncs/stats>
 
 #define P_NAME P_PRE ... " - Stats"
 #define P_DESC "Stats api provider plugin"

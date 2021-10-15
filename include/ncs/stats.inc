@@ -3,7 +3,25 @@
 #endif
 #define _NCS_Stats_
 
-native void NCS_Stats_Add(int client, const char[] range, const char[] stats_name, const char[] version, float increment);
+#define NCS_STATS_KEY_LENGTH 16
+
+enum struct StatsData
+{
+    char range[NCS_STATS_KEY_LENGTH];
+    char statsName[NCS_STATS_KEY_LENGTH];
+    char version[NCS_STATS_KEY_LENGTH];
+    float score;
+    int rank;
+    int total;
+}
+
+typeset StatsDataCallback
+{
+	function void (int client, StatsData data);
+};
+
+native void NCS_Stats_Add(int client, const char[] range, const char[] statsName, const char[] version, float increment);
+native void NCS_Stats_Get(int client, StatsDataCallback callback, const char[] range, const char[] statsName, const char[] version);
 
 public SharedPlugin __pl_ncs_stats = 
 {

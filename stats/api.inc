@@ -44,7 +44,7 @@ public Action Timer_UpdateStats(Handle timer)
     return Plugin_Continue;
 }
 
-void GetStatsData(int client, StatsDataCallback callback, const char[] range, const char[] statsName, const char[] version)
+void GetStatsData(int client, Function callback, const char[] range, const char[] statsName, const char[] version)
 {
     char uid[MAX_UID_LENGTH];
     if (!NCS_Account_GetUID(client, uid, MAX_UID_LENGTH))
@@ -72,7 +72,7 @@ public void GetStatsDataCallback(HTTPResponse response, DataPack dp, const char[
     int client = dp.ReadCell();
     char uid[MAX_UID_LENGTH];
     dp.ReadString(uid, sizeof(uid));
-    StatsDataCallback callback = view_as<StatsDataCallback>(dp.ReadFunction());
+    Function callback = dp.ReadFunction();
     dp.ReadString(stats.statsName, NCS_STATS_KEY_LENGTH);
     dp.ReadString(stats.version, NCS_STATS_KEY_LENGTH);
     dp.ReadString(stats.range, NCS_STATS_KEY_LENGTH);

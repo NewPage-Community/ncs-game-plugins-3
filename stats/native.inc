@@ -24,7 +24,7 @@ public int Native_Get(Handle plugin, int numParams)
 {
     char range[NCS_STATS_KEY_LENGTH], statsName[NCS_STATS_KEY_LENGTH], version[NCS_STATS_KEY_LENGTH];
     int client = GetNativeCell(1);
-    StatsDataCallback callback = view_as<StatsDataCallback>(GetNativeFunction(2));
+    Function callback = GetNativeFunction(2);
     GetNativeString(3, range, sizeof(range));
     GetNativeString(4, statsName, sizeof(statsName));
     GetNativeString(5, version, sizeof(version));

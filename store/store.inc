@@ -44,13 +44,9 @@ methodmap Items < StringMap
             data.GetString("description", item.description, MAX_ITEM_DESC_LENGTH);
             item.type = data.GetInt("type");
             item.price = data.GetInt("price");
-            item.discount = data.GetFloat("discount");
+            item.discount = data.GetFloatEx("discount");
             item.available = data.GetBool("available");
             item.alreadyHave = data.GetBool("already_have");
-            
-            // Fix discount
-            if (FloatCompare(0.0, item.discount) == 0)
-                item.discount = 1.0;
             
             // New line
             ReplaceString(item.description, MAX_ITEM_DESC_LENGTH, NEWLINE, "\n");

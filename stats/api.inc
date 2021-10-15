@@ -79,15 +79,10 @@ public void GetStatsDataCallback(HTTPResponse response, DataPack dp, const char[
         return;
 
     // JSON
-    char buffer[INT64_LENGTH];
     JSONObject data = view_as<JSONObject>(response.Data);
-    float score;
-    if ((score = data.GetFloat("score")) == 0.0)
-        score = float(data.GetInt("score"));
-    data.GetString("rank", buffer, sizeof(buffer));
-    int rank = StringToInt(buffer);
-    data.GetString("total", buffer, sizeof(buffer));
-    int total = StringToInt(buffer);
+    float score = data.GetFloatEx("score");
+    int rank = data.GetInt64Int("rank");
+    int total = data.GetInt64Int("total");
 
     Call_StartFunction(plugin, callback);
     Call_PushCell(client);

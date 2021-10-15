@@ -187,6 +187,29 @@ methodmap JSONObject < JSON
 	property int Size {
 		public native get();
 	}
+
+	public float GetFloatEx(const char[] key)
+	{
+		float result;
+		if ((result = this.GetFloat(key)) == 0.0)
+			result = float(this.GetInt(key));
+		return result;
+	}
+
+	public bool GetInt64Ex(const char[] key, char[] buffer, int maxlength)
+	{
+		bool result = this.GetInt64(key, buffer, maxlength);
+		if (!result)
+			result = this.GetString(key, buffer, maxlength);
+		return result;
+	}
+
+	public int GetInt64Int(const char[] key)
+	{
+		char buffer[20];
+		this.GetInt64Ex(key, buffer, sizeof(buffer));
+		return StringToInt(buffer, 10);
+	}
 };
 
 /**

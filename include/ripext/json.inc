@@ -196,18 +196,10 @@ methodmap JSONObject < JSON
 		return result;
 	}
 
-	public bool GetInt64Ex(const char[] key, char[] buffer, int maxlength)
-	{
-		bool result = this.GetInt64(key, buffer, maxlength);
-		if (!result)
-			result = this.GetString(key, buffer, maxlength);
-		return result;
-	}
-
-	public int GetInt64Int(const char[] key)
+	public int GetStringInt(const char[] key)
 	{
 		char buffer[20];
-		this.GetInt64Ex(key, buffer, sizeof(buffer));
+		this.GetString(key, buffer, sizeof(buffer));
 		return StringToInt(buffer, 10);
 	}
 };

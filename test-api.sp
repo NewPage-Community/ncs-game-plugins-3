@@ -73,7 +73,7 @@ public Action Command_testall(int client, int args)
 
     // Cookie
     NCS_Cookie_Set(client, "test", "test");
-    return Plugin_Handle;
+    return Plugin_Handled;
 }
 
 public void NCS_Account_OnUserLoaded(int client, const char[] uid)

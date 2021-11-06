@@ -1,12 +1,12 @@
 #define Sign_Service "user/sign"
 
-HTTPClient httpClient;
+
 
 GlobalForward onUserSigned;
 
 void InitAPI()
 {
-	httpClient = NewNCSAPI();
+	InitNCSAPI();
 	RegAPIForward();
 }
 
@@ -17,7 +17,7 @@ void RegAPIForward()
 
 void CloseAPI()
 {
-	delete httpClient;
+	CloseNCSAPI();
 	CloseAPIForward();
 }
 
@@ -46,7 +46,7 @@ void Sign(int client)
 
 	char path[128];
 	Format(path, sizeof(path), "%s", Sign_Service);
-	httpClient.Post(path, data, SignCallback, dp);
+	GetNCSAPI().Post(path, data, SignCallback, dp);
 }
 
 public void SignCallback(HTTPResponse response, DataPack dp, const char[] error)

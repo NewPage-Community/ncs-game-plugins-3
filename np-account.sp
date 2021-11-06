@@ -1,5 +1,4 @@
 #include <ncs>
-#include <ncs/chat>
 
 #define P_NAME P_PRE ... " - Account"
 #define P_DESC "Account management plugin"

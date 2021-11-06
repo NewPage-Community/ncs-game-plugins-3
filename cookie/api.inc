@@ -1,18 +1,18 @@
 #define Cookie_Service "game/cookie"
 
-HTTPClient httpClient;
+
 
 static GlobalForward onUserCached;
 
 void InitAPI()
 {
-    httpClient = NewNCSAPI();
+    InitNCSAPI();
     onUserCached = new GlobalForward("NCS_Cookie_OnUserCached",  ET_Ignore, Param_Cell);
 }
 
 void CloseAPI()
 {
-    delete httpClient;
+    CloseNCSAPI();
 }
 
 void LoadUserCookie(int client, const char[] uid)
@@ -21,7 +21,7 @@ void LoadUserCookie(int client, const char[] uid)
     
     char path[128];
     Format(path, sizeof(path), "%s/all/%s", Cookie_Service, uid);
-    httpClient.Get(path, LoadUserCookieCallback, client);
+    GetNCSAPI().Get(path, LoadUserCookieCallback, client);
 }
 
 public void LoadUserCookieCallback(HTTPResponse response, int client, const char[] error)
@@ -62,7 +62,7 @@ bool SetUserCookie(int client, const char[] key, const char[] value)
 
     char path[128];
     Format(path, sizeof(path), "%s/set", Cookie_Service);
-    httpClient.Post(path, data, SetUserCookieCallback);
+    GetNCSAPI().Post(path, data, SetUserCookieCallback);
     return ok;
 }
 

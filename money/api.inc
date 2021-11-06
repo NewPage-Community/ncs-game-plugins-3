@@ -1,15 +1,15 @@
 #define Money_Service "user/money"
 
-HTTPClient httpClient;
+
 
 void InitAPI()
 {
-    httpClient = NewNCSAPI();
+    InitNCSAPI();
 }
 
 void CloseAPI()
 {
-    delete httpClient;
+    CloseNCSAPI();
 }
 
 void GiveMoney(int client, int money, const char[] reason)
@@ -33,7 +33,7 @@ void GiveMoney(int client, int money, const char[] reason)
 
     char path[128];
     Format(path, sizeof(path), "%s/%s/give", Money_Service, uid);
-    httpClient.Post(path, data, GiveMoneyCallback, dp);
+    GetNCSAPI().Post(path, data, GiveMoneyCallback, dp);
 }
 
 public void GiveMoneyCallback(HTTPResponse response, DataPack dp, const char[] error)

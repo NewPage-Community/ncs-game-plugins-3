@@ -14,7 +14,7 @@ void DisplayUserSprays(int client)
 
     char path[128];
     Format(path, sizeof(path), "%s/%s", BackpackUser_Service, uid);
-    httpClient.Get(path, UserSpraysCallback, dp);
+    GetNCSAPI().Get(path, UserSpraysCallback, dp);
 }
 
 public void UserSpraysCallback(HTTPResponse response, DataPack dp, const char[] error)

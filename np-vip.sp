@@ -1,12 +1,11 @@
 #include <ncs>
-
 #include <ncs/account>
 #include <ncs/cookie>
-
 #include <adminmenu>
 
 #undef REQUIRE_PLUGIN
 #include <ncs/chat>
+#define REQUIRE_PLUGIN
 
 #define P_NAME P_PRE ... " - VIP"
 #define P_DESC "VIP API provider plugin"

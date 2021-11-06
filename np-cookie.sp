@@ -1,5 +1,4 @@
 #include <ncs>
-
 #include <ncs/account>
 
 #define P_NAME P_PRE ... " - Cookie"

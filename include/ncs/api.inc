@@ -2,19 +2,53 @@
 #include <ripext>
 #undef REQUIRE_EXTENSIONS
 
-#define API_URL "<api_url>"
-#define TOKEN   "<api_token>"
+#define CONVARAPIURL "ncs_api_url"
+#define CONVARAPITOKEN "ncs_api_token"
 
-stock HTTPClient NewNCSAPI()
+static HTTPClient gHTTPClient;
+static ConVar url;
+static ConVar token;
+
+stock void InitNCSAPI()
 {
-    HTTPClient c = new HTTPClient(API_URL);
+    char buffer[128];
 
-    char auth[64];
-    Format(auth, sizeof(auth), "Basic %s", TOKEN);
-    c.SetHeader("Authorization", auth);
+    // ConVar init
+    if ((url = FindConVar(CONVARAPIURL)) == null)
+        url = CreateConVar(CONVARAPIURL, "", "");
+    if ((token = FindConVar(CONVARAPITOKEN)) == null)
+        token = CreateConVar(CONVARAPITOKEN, "", "");
+    // ConVar change hook
+    url.AddChangeHook(NCSAPIChanged);
+    token.AddChangeHook(NCSAPIChanged);
+
+    // New Client
+    url.GetString(buffer, sizeof(buffer));
+    gHTTPClient = new HTTPClient(buffer);
+
+    // Http auth
+    token.GetString(buffer, sizeof(buffer));
+    Format(buffer, sizeof(buffer), "Basic %s", buffer);
+    gHTTPClient.SetHeader("Authorization", buffer);
+
+    // tracing
     //c.SetHeader("X-B3-Sampled", "1");
+}
 
-    return c;
+public void NCSAPIChanged(ConVar convar, const char[] oldValue, const char[] newValue)
+{
+    CloseNCSAPI();
+    InitNCSAPI();
+}
+
+stock HTTPClient GetNCSAPI()
+{
+    return gHTTPClient;
+}
+
+stock void CloseNCSAPI()
+{
+    delete gHTTPClient;
 }
 
 // Check has error ?

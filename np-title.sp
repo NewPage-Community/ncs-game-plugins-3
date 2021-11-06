@@ -1,13 +1,12 @@
-#pragma semicolon 1
-
 #include <ncs>
-
 #include <ncs/account>
-#include <ncs/chat>
 #include <ncs/vip>
 #include <ncs/cookie>
-
 #include <sdktools>
+
+#undef REQUIRE_PLUGIN
+#include <ncs/chat>
+#define REQUIRE_PLUGIN
 
 #define P_NAME P_PRE ... " - Title"
 #define P_DESC "Title management plugin"

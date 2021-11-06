@@ -1,18 +1,17 @@
 #include <ncs/server>
 #define Ban_Service "user/ban"
 
-HTTPClient httpClient;
 int gameAppID;
 
 void InitAPI()
 {
-	httpClient = NewNCSAPI();
+	InitNCSAPI();
 	gameAppID = GetGameAppID();
 }
 
 void CloseAPI()
 {
-	delete httpClient;
+	CloseNCSAPI();
 }
 
 void ReqBanCheck(int client, const char[] uid)
@@ -34,7 +33,7 @@ void ReqBanCheck(int client, const char[] uid)
 
 	char path[128];
 	Format(path, sizeof(path), "%s/check/%s", Ban_Service, uid);
-	httpClient.Post(path, data, LoadBanCheck, dp);
+	GetNCSAPI().Post(path, data, LoadBanCheck, dp);
 }
 
 public void LoadBanCheck(HTTPResponse response, DataPack dp, const char[] error)
@@ -118,7 +117,7 @@ void ReqBanClient(int client, int type, int length, const char[] reason)
 
 	char path[128];
 	Format(path, sizeof(path), "%s/add", Ban_Service);
-	httpClient.Post(path, data, ReqBanClientCallback);
+	GetNCSAPI().Post(path, data, ReqBanClientCallback);
 }
 
 public void ReqBanClientCallback(HTTPResponse response, any value, const char[] error)

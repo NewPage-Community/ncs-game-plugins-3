@@ -14,7 +14,7 @@ void DisplayUserTrails(int client)
 
     char path[128];
     Format(path, sizeof(path), "%s/%s", BackpackUser_Service, uid);
-    httpClient.Get(path, UserTrailsCallback, dp);
+    GetNCSAPI().Get(path, UserTrailsCallback, dp);
 }
 
 public void UserTrailsCallback(HTTPResponse response, DataPack dp, const char[] error)

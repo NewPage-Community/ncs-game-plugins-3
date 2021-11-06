@@ -1,15 +1,13 @@
 #define Admin_Service "user/admin"
 
-HTTPClient httpClient;
-
 void InitAPI()
 {
-    httpClient = NewNCSAPI();
+    InitNCSAPI();
 }
 
 void CloseAPI()
 {
-    delete httpClient;
+    CloseNCSAPI();
 }
 
 void ReqAdmin(int client, const char[] uid)
@@ -21,7 +19,7 @@ void ReqAdmin(int client, const char[] uid)
 
     char path[128];
     Format(path, sizeof(path), "%s/%s", Admin_Service, uid);
-    httpClient.Get(path, LoadAdminInfo, dp);
+    GetNCSAPI().Get(path, LoadAdminInfo, dp);
 }
 
 public void LoadAdminInfo(HTTPResponse response, DataPack dp, const char[] error)

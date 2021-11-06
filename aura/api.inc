@@ -1,23 +1,21 @@
 #define BackpackItems_Service "backpack/items"
 #define BackpackUser_Service "backpack/user"
 
-HTTPClient httpClient;
-
 void InitAPI()
 {
-    httpClient = NewNCSAPI();
+    InitNCSAPI();
 }
 
 void CloseAPI()
 {
-    delete httpClient;
+    CloseNCSAPI();
 }
 
 void LoadAura()
 {
     char path[128];
     Format(path, sizeof(path), "%s/type/3", BackpackItems_Service);
-    httpClient.Get(path, LoadAuraInfo);
+    GetNCSAPI().Get(path, LoadAuraInfo);
 }
 
 public void LoadAuraInfo(HTTPResponse response, DataPack dp, const char[] error)
@@ -60,7 +58,7 @@ void CheckUserHaveAura(int client)
     
     char path[128];
     Format(path, sizeof(path), "%s/have/%s/%d", BackpackUser_Service, uid, id);
-    httpClient.Get(path, CheckUserHaveItemCallback, dp);
+    GetNCSAPI().Get(path, CheckUserHaveItemCallback, dp);
 }
 
 public void CheckUserHaveItemCallback(HTTPResponse response, DataPack dp, const char[] error)

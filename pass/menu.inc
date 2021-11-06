@@ -8,7 +8,7 @@ void DisplayPassInfo(int client)
     
     char path[128];
     Format(path, sizeof(path), "%s/info/%s", GamePass_Service, uid);
-    httpClient.Get(path, LoadPassInfo, client);
+    GetNCSAPI().Get(path, LoadPassInfo, client);
 }
 
 public void LoadPassInfo(HTTPResponse response, int client, const char[] error)

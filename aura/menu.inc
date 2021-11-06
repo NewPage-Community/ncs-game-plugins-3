@@ -14,7 +14,7 @@ void DisplayUserAuras(int client)
 
     char path[128];
     Format(path, sizeof(path), "%s/%s", BackpackUser_Service, uid);
-    httpClient.Get(path, UserAurasCallback, dp);
+    GetNCSAPI().Get(path, UserAurasCallback, dp);
 }
 
 public void UserAurasCallback(HTTPResponse response, DataPack dp, const char[] error)

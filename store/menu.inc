@@ -206,7 +206,7 @@ void HotSaleListMenu(int client)
 {
     char path[128];
     Format(path, sizeof(path), "%s/hotsale", Store_Service);
-    httpClient.Get(path, LoadHotSaleList, client);
+    GetNCSAPI().Get(path, LoadHotSaleList, client);
 }
 
 public void LoadHotSaleList(HTTPResponse response, int client, const char[] error)

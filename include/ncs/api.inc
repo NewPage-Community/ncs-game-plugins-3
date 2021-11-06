@@ -22,6 +22,8 @@ stock void InitNCSAPI()
     url.AddChangeHook(NCSAPIChanged);
     token.AddChangeHook(NCSAPIChanged);
 
+    AutoExecConfig(true, "ncs");
+
     // New Client
     url.GetString(buffer, sizeof(buffer));
     gHTTPClient = new HTTPClient(buffer);

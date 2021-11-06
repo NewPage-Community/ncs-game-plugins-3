@@ -43,4 +43,5 @@ public int MoneyRecordHandle(Menu menu, MenuAction action, int client, int slot)
 {
     if (action == MenuAction_End)
         delete menu;
+    return 0;
 }

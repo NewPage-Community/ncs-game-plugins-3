@@ -84,13 +84,6 @@ methodmap TrailIndex < StringMap
         IntToString(trailID, key, sizeof(key));
         return this.GetArray(key, ref, sizeof(ref));
     }
-
-    public bool Remove(int trailID)
-    {
-        char key[8];
-        IntToString(trailID, key, sizeof(key));
-        return this.Remove(key);
-    }
 }
 
 TrailIndex trails;

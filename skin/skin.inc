@@ -93,12 +93,6 @@ methodmap SkinIndex < StringMap
         return this.GetArray(key, ref, sizeof(ref));
     }
 
-    public bool Remove(int skinID)
-    {
-        char key[8];
-        IntToString(skinID, key, sizeof(key));
-        return this.Remove(key);
-    }
 }
 
 SkinIndex g_Skins;

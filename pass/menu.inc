@@ -1,4 +1,4 @@
-static PassInfo player[MAXPLAYERS+1];
+static PassInfo playerPass[MAXPLAYERS+1];
 
 void DisplayPassInfo(int client)
 {
@@ -22,12 +22,12 @@ public void LoadPassInfo(HTTPResponse response, int client, const char[] error)
     // JSON data
     JSONObject data = view_as<JSONObject>(response.Data);
 
-    player[client].type = data.GetInt("type");
-    player[client].point = data.GetInt("point");
-    player[client].box_amount = data.GetInt("box_amount");
+    playerPass[client].type = data.GetInt("type");
+    playerPass[client].point = data.GetInt("point");
+    playerPass[client].box_amount = data.GetInt("box_amount");
 
-    int type = player[client].type;
-    int point = player[client].point;
+    int type = playerPass[client].type;
+    int point = playerPass[client].point;
     char progress[64];
     char startDate[20], endDate[20];
     ProgressBar(point, progress, sizeof(progress));
@@ -90,8 +90,8 @@ public int UsePassPointBoxHandle(Menu menu, MenuAction action, int client, int s
             case 0:
             {
                 UsePointBox(client, false);
-                player[client].point += 7200;
-                player[client].box_amount --;
+                playerPass[client].point += 7200;
+                playerPass[client].box_amount --;
                 UsePassPointBox(client);
             }
             case 1:

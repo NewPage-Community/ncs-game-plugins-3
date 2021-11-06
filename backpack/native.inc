@@ -9,4 +9,5 @@ public int Native_AddItems(Handle plugin, int numParams)
     Items items = view_as<Items>(GetNativeCell(2));
 
     AddItems(client, items);
+    return 0;
 }

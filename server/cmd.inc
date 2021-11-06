@@ -10,6 +10,8 @@ public Action Command_Restart(int args)
 	NCS_Chat(CLIENT_ALL, _, "服务器将进行重启更新!");
 	PrintCenterTextAll("服务器将进行重启更新!");
 	CreateTimer(1.0, Timer_Restart, 0);
+
+	return Plugin_Handled;
 }
 
 public Action Command_ReloadMap(int args)

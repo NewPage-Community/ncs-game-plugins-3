@@ -55,6 +55,7 @@ public int PassInfoMenuHandle(Menu menu, MenuAction action, int client, int slot
             case 2: DisplayNextRewards(client);
         }
     }
+    return 0;
 }
 
 void UsePassPointBox(int client)
@@ -100,6 +101,7 @@ public int UsePassPointBoxHandle(Menu menu, MenuAction action, int client, int s
             }
         }
     }
+    return 0;
 }
 
 void DisplayNextRewards(int client)
@@ -155,4 +157,5 @@ public int NextRewardsHandle(Menu menu, MenuAction action, int client, int slot)
         DisplayPassInfo(client);
         delete menu;
     }
+    return 0;
 }

@@ -36,6 +36,7 @@ public int UserStoreListHandle(Menu menu, MenuAction action, int client, int slo
         else
             DisplayItemMenu(client, StringToInt(type));
     }
+    return 0;
 }
 
 void DisplayItemMenu(int client, int type)
@@ -99,10 +100,10 @@ public int ItemMenuHandle(Menu menu, MenuAction action, int client, int slot)
         menu.GetItem(slot, itemID, sizeof(itemID), _, _, _);
 
         Item item;
-        if (!playerStoreList[client].CGet(itemID, item))
-            return;
-        BuyItemMenu(client, item);
+        if (playerStoreList[client].CGet(itemID, item))
+            BuyItemMenu(client, item);
     }
+    return 0;
 }
 
 void BuyItemMenu(int client, Item item)
@@ -176,7 +177,7 @@ public int BuyItemHandle(Menu menu, MenuAction action, int client, int slot)
 
         Item item;
         if (!playerStoreList[client].CGet(itemID, item))
-            return;
+            return 0;
 
         // Preview
         if (slot == 1)
@@ -200,6 +201,7 @@ public int BuyItemHandle(Menu menu, MenuAction action, int client, int slot)
             lastMenu.DisplayAt(client, lastPage, MENU_TIME_FOREVER);
         }
     }
+    return 0;
 }
 
 void HotSaleListMenu(int client)
@@ -293,12 +295,13 @@ public int BuyAdvPassHandle(Menu menu, MenuAction action, int client, int slot)
         {
             Item item;
             if (!playerStoreList[client].CGet("1000", item))
-                return;
+                return 0;
             BuyItemMenu(client, item);
         }
         else if (itype != 0)
             BuyAdvPassConfirm(client, itype);
     }
+    return 0;
 }
 
 void BuyAdvPassConfirm(int client, int type)
@@ -331,6 +334,7 @@ public int BuyAdvPassConfirmHandle(Menu menu, MenuAction action, int client, int
         BuyAdvPass(client, StringToInt(type));
         DisplayStoreMenu(client);
     }
+    return 0;
 }
 
 void BuyVIPMenu(int client)
@@ -366,6 +370,7 @@ public int BuyVIPMenuHandle(Menu menu, MenuAction action, int client, int slot)
         menu.GetItem(slot, month, sizeof(month), _, _, _);
         BuyVIPConfirm(client, StringToInt(month))
     }
+    return 0;
 }
 
 void BuyVIPConfirm(int client, int month)
@@ -413,4 +418,5 @@ public int BuyVIPConfirmHandle(Menu menu, MenuAction action, int client, int slo
         BuyVIP(client, StringToInt(month));
         DisplayStoreMenu(client);
     }
+    return 0;
 }

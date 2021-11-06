@@ -96,15 +96,15 @@ public int Menu_SkinSelected(Menu menu, MenuAction action, int client, int slot)
     }
     else if (action == MenuAction_Select)
     {
-        if (!IsValidClient(client))
-            return;
+        if (IsValidClient(client))
+        {
+            char skinID[32], skinName[32];
+            menu.GetItem(slot, skinID, sizeof(skinID), _, skinName, sizeof(skinName));
 
-        char skinID[32], skinName[32];
-        menu.GetItem(slot, skinID, sizeof(skinID), _, skinName, sizeof(skinName));
-
-        SetUsedSkin(client, skinID);
-        if (engine == Engine_CSGO)
-            SetModel(client);
-        NCS_Chat(client, _, "已成功更换为 {lime}%s{default}，可通过 {olive}!tp{default} 查看模型", skinName);
+            SetUsedSkin(client, skinID);
+            if (engine == Engine_CSGO) SetModel(client);
+            NCS_Chat(client, _, "已成功更换为 {lime}%s{default}，可通过 {olive}!tp{default} 查看模型", skinName);
+        }
     }
+    return 0;
 }

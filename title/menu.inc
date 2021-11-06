@@ -55,4 +55,6 @@ public int MenuHandler_Prefix(Menu menu, MenuAction action, int client, int slot
             UpdatePlayerTitleType(client, itype);
         }
     }
+
+    return 0;
 }

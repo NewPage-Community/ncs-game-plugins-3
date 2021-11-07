@@ -20,8 +20,6 @@ stock void InitNCSAPI()
     // ConVar change hook
     url.AddChangeHook(NCSAPIChanged);
     token.AddChangeHook(NCSAPIChanged);
-    AutoExecConfig(true, "ncs");
-    NCSAPIConnect();
 }
 
 void NCSAPIConnect()

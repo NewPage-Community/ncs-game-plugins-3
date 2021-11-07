@@ -11,8 +11,6 @@ static ConVar token;
 
 stock void InitNCSAPI()
 {
-    char buffer[128];
-
     // ConVar init
     if ((url = FindConVar(CONVARAPIURL)) == null)
         url = CreateConVar(CONVARAPIURL, "", "");
@@ -23,6 +21,11 @@ stock void InitNCSAPI()
     token.AddChangeHook(NCSAPIChanged);
 
     AutoExecConfig(true, "ncs");
+}
+
+void NCSAPIConnect()
+{
+    char buffer[128];
 
     // New Client
     url.GetString(buffer, sizeof(buffer));
@@ -40,7 +43,7 @@ stock void InitNCSAPI()
 public void NCSAPIChanged(ConVar convar, const char[] oldValue, const char[] newValue)
 {
     CloseNCSAPI();
-    InitNCSAPI();
+    NCSAPIConnect();
 }
 
 stock HTTPClient GetNCSAPI()
@@ -50,7 +53,7 @@ stock HTTPClient GetNCSAPI()
 
 stock void CloseNCSAPI()
 {
-    delete gHTTPClient;
+    if (gHTTPClient != INVALID_HANDLE) delete gHTTPClient;
 }
 
 // Check has error ?

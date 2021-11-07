@@ -1,15 +1,15 @@
 #define NoEnoughMoneyErr "no enough money"
 
-HTTPClient httpClient;
+
 
 void InitAPI()
 {
-    httpClient = NewNCSAPI();
+    InitNCSAPI();
 }
 
 void CloseAPI()
 {
-    delete httpClient;
+    CloseNCSAPI();
 }
 
 void LoadUserStoreList(int client, bool openMenu = false)
@@ -24,7 +24,7 @@ void LoadUserStoreList(int client, bool openMenu = false)
 
     char path[128];
     Format(path, sizeof(path), "%s/list/%s", Store_Service, uid);
-    httpClient.Get(path, LoadUserStoreListCallback, dp);
+    GetNCSAPI().Get(path, LoadUserStoreListCallback, dp);
 }
 
 public void LoadUserStoreListCallback(HTTPResponse response, DataPack dp, const char[] error)
@@ -85,7 +85,7 @@ void BuyItem(int client, Item item)
     
     char path[128];
     Format(path, sizeof(path), "%s/buy", Store_Service);
-    httpClient.Post(path, data, BuyItemCallback, dp);
+    GetNCSAPI().Post(path, data, BuyItemCallback, dp);
 }
 
 public void BuyItemCallback(HTTPResponse response, DataPack dp, const char[] error)
@@ -149,7 +149,7 @@ void BuyAdvPass(int client, int type)
     
     char path[128];
     Format(path, sizeof(path), "%s/buy/pass", Store_Service);
-    httpClient.Post(path, data, BuyPassCallback, dp);
+    GetNCSAPI().Post(path, data, BuyPassCallback, dp);
 }
 
 public void BuyPassCallback(HTTPResponse response, DataPack dp, const char[] error)
@@ -208,7 +208,7 @@ void BuyVIP(int client, int month)
     
     char path[128];
     Format(path, sizeof(path), "%s/buy/vip", Store_Service);
-    httpClient.Post(path, data, BuyVIPCallback, dp);
+    GetNCSAPI().Post(path, data, BuyVIPCallback, dp);
 }
 
 public void BuyVIPCallback(HTTPResponse response, DataPack dp, const char[] error)

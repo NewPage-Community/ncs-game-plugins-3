@@ -1,15 +1,13 @@
 #define Backpack_Service "backpack/user"
 
-HTTPClient httpClient;
-
 void InitAPI()
 {
-    httpClient = NewNCSAPI();
+    InitNCSAPI();
 }
 
 void CloseAPI()
 {
-    delete httpClient;
+    CloseNCSAPI();
 }
 
 void AddItems(int client, Items items)
@@ -40,7 +38,7 @@ void AddItems(int client, Items items)
 
     char path[128];
     Format(path, sizeof(path), "%s/additem", Backpack_Service);
-    httpClient.Post(path, data, AddItemsCallback);
+    GetNCSAPI().Post(path, data, AddItemsCallback);
 }
 
 public void AddItemsCallback(HTTPResponse response, any value, const char[] error)

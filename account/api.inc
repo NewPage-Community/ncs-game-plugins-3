@@ -1,13 +1,11 @@
 #define Account_Service "user/account"
 
-HTTPClient httpClient;
-
 GlobalForward onUserLoaded;
 GlobalForward onUserDisconnect;
 
 void InitAPI()
 {
-	httpClient = NewNCSAPI();
+	InitNCSAPI();
 	RegAPIForward();
 }
 
@@ -19,7 +17,7 @@ void RegAPIForward()
 
 void CloseAPI()
 {
-	delete httpClient;
+	CloseNCSAPI();
 }
 
 void ReqAccountUID(const char[] steamid, bool notify = false)
@@ -50,7 +48,7 @@ void ReqAccountUID(const char[] steamid, bool notify = false)
 
 	char path[128];
 	Format(path, sizeof(path), "%s/game/playerconnect", Account_Service);
-	httpClient.Post(path, data, LoadAccountUID, dp);
+	GetNCSAPI().Post(path, data, LoadAccountUID, dp);
 }
 
 public void LoadAccountUID(HTTPResponse response, DataPack dp, const char[] error)
@@ -99,7 +97,7 @@ void UpdateAccountName(int client)
 
 	char path[128];
 	Format(path, sizeof(path), "%s/%s", Account_Service, g_Accounts[client].uid);
-	httpClient.Put(path, data, UpdateAccountNameCallback);
+	GetNCSAPI().Put(path, data, UpdateAccountNameCallback);
 }
 
 public void UpdateAccountNameCallback(HTTPResponse response, any value, const char[] error)

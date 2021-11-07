@@ -1,15 +1,14 @@
 #include <ncs>
-
 #include <ncs/account>
 #include <ncs/cookie>
 #include <ncs/game>
-
 #include <sdkhooks>
 #include <sdktools>
 
 #undef REQUIRE_PLUGIN
 #include <ncs/chat>
 #include <zombiereloaded>
+#define REQUIRE_PLUGIN
 
 ConVar cv_skin_only_team;
 

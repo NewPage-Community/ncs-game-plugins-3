@@ -41,4 +41,5 @@ public int MenuHandler_Kick(Menu menu, MenuAction action, int param1, int param2
 			ServerCommand("sm_votekick #%d", userid);
 		}
 	}
+	return 0;
 }

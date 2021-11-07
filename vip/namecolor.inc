@@ -35,6 +35,7 @@ public int NameColorMenuHandle(Menu menu, MenuAction action, int client, int slo
 
         NCS_Chat(client, _, "成功更换 %s名字颜色", color);
     }
+    return 0;
 }
 
 void NameColor_UserInit(int client)

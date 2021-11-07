@@ -1,23 +1,23 @@
 #define BackpackItems_Service "backpack/items"
 #define BackpackUser_Service "backpack/user"
 
-HTTPClient httpClient;
+
 
 void InitAPI()
 {
-    httpClient = NewNCSAPI();
+    InitNCSAPI();
 }
 
 void CloseAPI()
 {
-    delete httpClient;
+    CloseNCSAPI();
 }
 
 void LoadSpray()
 {
     char path[128];
     Format(path, sizeof(path), "%s/type/4", BackpackItems_Service);
-    httpClient.Get(path, LoadSprayInfo);
+    GetNCSAPI().Get(path, LoadSprayInfo);
 }
 
 public void LoadSprayInfo(HTTPResponse response, DataPack dp, const char[] error)
@@ -60,7 +60,7 @@ void CheckUserHaveSpray(int client)
     
     char path[128];
     Format(path, sizeof(path), "%s/have/%s/%d", BackpackUser_Service, uid, id);
-    httpClient.Get(path, CheckUserHaveItemCallback, dp);
+    GetNCSAPI().Get(path, CheckUserHaveItemCallback, dp);
 }
 
 public void CheckUserHaveItemCallback(HTTPResponse response, DataPack dp, const char[] error)

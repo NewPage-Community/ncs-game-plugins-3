@@ -67,13 +67,6 @@ methodmap SprayIndex < StringMap
         IntToString(id, key, sizeof(key));
         return this.GetArray(key, ref, sizeof(ref));
     }
-
-    public bool Remove(int id)
-    {
-        char key[8];
-        IntToString(id, key, sizeof(key));
-        return this.Remove(key);
-    }
 }
 
 int PrecacheSpray(const char[] path)

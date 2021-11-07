@@ -1,6 +1,6 @@
 #define Server_Service "game/server"
 
-HTTPClient httpClient;
+
 
 GlobalForward onLoaded;
 
@@ -56,7 +56,7 @@ methodmap ServerInfo < JSONObject
 
 void InitAPI()
 {
-	httpClient = NewNCSAPI();
+	InitNCSAPI();
 }
 
 void RegForward()
@@ -66,7 +66,7 @@ void RegForward()
 
 void CloseAPI()
 {
-	delete httpClient;
+	CloseNCSAPI();
 }
 
 void ReqServerInfo()
@@ -84,7 +84,7 @@ void ReqServerInfo()
 	
 	char url[64];
 	Format(url, sizeof(url), "%s/init", Server_Service);
-	httpClient.Post(url, data, LoadServerInfo);
+	GetNCSAPI().Post(url, data, LoadServerInfo);
 	delete hostip;
 	delete hostport;
 }
@@ -142,7 +142,7 @@ void ReqMapNotify(int serverID, const char[] map)
 	
 	char url[64];
 	Format(url, sizeof(url), "%s/changemap", Server_Service);
-	httpClient.Post(url, data, ReqMapNotifyCallback);
+	GetNCSAPI().Post(url, data, ReqMapNotifyCallback);
 }
 
 public void ReqMapNotifyCallback(HTTPResponse response, any value, const char[] error)

@@ -14,7 +14,7 @@ void DisplayUserSprays(int client)
 
     char path[128];
     Format(path, sizeof(path), "%s/%s", BackpackUser_Service, uid);
-    httpClient.Get(path, UserSpraysCallback, dp);
+    GetNCSAPI().Get(path, UserSpraysCallback, dp);
 }
 
 public void UserSpraysCallback(HTTPResponse response, DataPack dp, const char[] error)
@@ -94,13 +94,14 @@ public int Menu_Selected(Menu menu, MenuAction action, int client, int slot)
     }
     else if (action == MenuAction_Select)
     {
-        if (!IsValidClient(client))
-            return;
+        if (IsValidClient(client))
+        {
+            char id[8], name[32];
+            menu.GetItem(slot, id, sizeof(id), _, name, sizeof(name));
 
-        char id[8], name[32];
-        menu.GetItem(slot, id, sizeof(id), _, name, sizeof(name));
-
-        SetUsedSpray(client, id);
-        NCS_Chat(client, _, "已成功更换为 {lime}%s", name);
+            SetUsedSpray(client, id);
+            NCS_Chat(client, _, "已成功更换为 {lime}%s", name);
+        }
     }
+    return 0;
 }

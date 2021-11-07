@@ -1,11 +1,11 @@
 #include <ncs>
-
 #include <ncs/account>
 #include <ncs/server>
 #include <ncs/cookie>
 
 #undef REQUIRE_PLUGIN
 #include <ncs/chat>
+#define REQUIRE_PLUGIN
 
 #define P_NAME P_PRE ... " - Chat"
 #define P_DESC "Chat management plugin"

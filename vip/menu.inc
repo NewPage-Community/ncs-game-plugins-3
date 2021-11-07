@@ -30,6 +30,7 @@ public int VIPMenuHandle(Menu menu, MenuAction action, int client, int slot)
             case 2: VIPFeatureMenu(client);
         }
     }
+    return 0;
 }
 
 void VIPInfoMenu(int client)
@@ -70,6 +71,7 @@ public int VIPInfoMenuHandle(Handle menu, MenuAction action, int client, int slo
             case 1: DisplayVIPMenu(client);
         }
     }
+    return 0;
 }
 
 void VIPFeatureMenu(int client)
@@ -113,4 +115,5 @@ public int VIPFeatureMenuHandle(Handle menu, MenuAction action, int client, int 
             case 2: FakeClientCommandEx(client, "sm_title");
         }
     }
+    return 0;
 }

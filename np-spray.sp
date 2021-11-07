@@ -1,13 +1,12 @@
 #include <ncs>
-
 #include <ncs/account>
 #include <ncs/cookie>
-
 #include <sdkhooks>
 #include <sdktools>
 
 #undef REQUIRE_PLUGIN
 #include <ncs/chat>
+#define REQUIRE_PLUGIN
 
 #define P_NAME P_PRE ... " - Spray"
 #define P_DESC "Spray management plugin"

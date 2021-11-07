@@ -156,6 +156,7 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 {
     if (client > 0 && StrContains(command, "say") != -1)
         newMSG[client] = true;
+    return Plugin_Continue;
 }
 
 public void Deadtalk_Changed(ConVar convar, const char[] oldValue, const char[] newValue)

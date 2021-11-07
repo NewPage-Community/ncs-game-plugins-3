@@ -1,8 +1,9 @@
 #include <ncs>
-
 #include <ncs/account>
 
+#undef REQUIRE_PLUGIN
 #include <ncs/chat>
+#define REQUIRE_PLUGIN
 
 #define P_NAME P_PRE ... " - Bans"
 #define P_DESC "Bans management plugin"

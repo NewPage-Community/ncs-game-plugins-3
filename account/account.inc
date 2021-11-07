@@ -34,7 +34,7 @@ enum struct account
 		RemoveColorString(this.name, MAX_NAME_LENGTH);
 	}
 
-	bool Clean() {
+	void Clean() {
 		this.index = 0;
 		this.uid[0] = '\0';
 		this.steamid[0] = '\0';

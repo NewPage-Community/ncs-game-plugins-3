@@ -1,6 +1,4 @@
 #include <ncs>
-
-#undef REQUIRE_PLUGIN
 #include <ncs/account>
 
 #define P_NAME P_PRE ... " - Admin"

@@ -1,15 +1,15 @@
 #define VIP_Service "user/vip"
 
-HTTPClient httpClient;
+
 
 void InitAPI()
 {
-	httpClient = NewNCSAPI();
+	InitNCSAPI();
 }
 
 void CloseAPI()
 {
-	delete httpClient;
+	CloseNCSAPI();
 }
 
 void ReqVIPInfo(int client, const char[] uid, bool reload = false)
@@ -24,7 +24,7 @@ void ReqVIPInfo(int client, const char[] uid, bool reload = false)
 
 	char path[128];
 	Format(path, sizeof(path), "%s/%s", VIP_Service, uid);
-	httpClient.Get(path, LoadVIPInfo, dp);
+	GetNCSAPI().Get(path, LoadVIPInfo, dp);
 }
 
 public void LoadVIPInfo(HTTPResponse response, DataPack dp, const char[] error)
@@ -84,7 +84,7 @@ void AddPoint(int client, int addPoint)
 
 	char path[128];
 	Format(path, sizeof(path), "%s/%s/addpoint", VIP_Service, uid);
-	httpClient.Put(path, data, AddPointCallback, dp);
+	GetNCSAPI().Put(path, data, AddPointCallback, dp);
 }
 
 public void AddPointCallback(HTTPResponse response, DataPack dp, const char[] error)
@@ -129,7 +129,7 @@ void Renewal(int client, int length)
 
 	char path[128];
 	Format(path, sizeof(path), "%s/renewal", VIP_Service);
-	httpClient.Post(path, data, RenewalCallback, dp);
+	GetNCSAPI().Post(path, data, RenewalCallback, dp);
 }
 
 public void RenewalCallback(HTTPResponse response, DataPack dp, const char[] error)

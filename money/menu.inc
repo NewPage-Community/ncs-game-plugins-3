@@ -6,7 +6,7 @@ void DisplayMoneyRecord(int client)
     
     char path[128];
     Format(path, sizeof(path), "%s/%s/records", Money_Service, uid);
-    httpClient.Get(path, LoadMoneyRecord, client);
+    GetNCSAPI().Get(path, LoadMoneyRecord, client);
 }
 
 public void LoadMoneyRecord(HTTPResponse response, int client, const char[] error)
@@ -43,4 +43,5 @@ public int MoneyRecordHandle(Menu menu, MenuAction action, int client, int slot)
 {
     if (action == MenuAction_End)
         delete menu;
+    return 0;
 }

@@ -1,15 +1,13 @@
 #define Chat_Service "game/chat"
 
-HTTPClient httpClient;
-
 void InitAPI()
 {
-    httpClient = NewNCSAPI();
+    InitNCSAPI();
 }
 
 void CloseAPI()
 {
-    delete httpClient;
+    CloseNCSAPI();
 }
 
 void AllChat(int client, const char[] name, const char[] message)
@@ -27,7 +25,7 @@ void AllChat(int client, const char[] name, const char[] message)
 
     char path[128];
     Format(path, sizeof(path), "%s/allchat", Chat_Service);
-    httpClient.Post(path, data, AllChatCallback);
+    GetNCSAPI().Post(path, data, AllChatCallback);
 }
 
 public void AllChatCallback(HTTPResponse response, any value, const char[] error)

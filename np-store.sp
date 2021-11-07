@@ -1,5 +1,4 @@
 #include <ncs>
-
 #include <ncs/account>
 
 #undef REQUIRE_PLUGIN
@@ -9,6 +8,7 @@
 #include <ncs/spray>
 #include <ncs/vip>
 #include <ncs/chat>
+#define REQUIRE_PLUGIN
 
 #define P_NAME P_PRE ... " - Store"
 #define P_DESC "Store plugin"

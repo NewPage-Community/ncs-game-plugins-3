@@ -14,7 +14,7 @@ void DisplayUserTrails(int client)
 
     char path[128];
     Format(path, sizeof(path), "%s/%s", BackpackUser_Service, uid);
-    httpClient.Get(path, UserTrailsCallback, dp);
+    GetNCSAPI().Get(path, UserTrailsCallback, dp);
 }
 
 public void UserTrailsCallback(HTTPResponse response, DataPack dp, const char[] error)
@@ -95,7 +95,7 @@ public int Menu_TrailSelected(Menu menu, MenuAction action, int client, int slot
     else if (action == MenuAction_Select)
     {
         if (!IsValidClient(client))
-            return;
+            return 0;
 
         char id[8], name[32];
         menu.GetItem(slot, id, sizeof(id), _, name, sizeof(name));
@@ -103,4 +103,5 @@ public int Menu_TrailSelected(Menu menu, MenuAction action, int client, int slot
         SetUsedTrail(client, id);
         NCS_Chat(client, _, "已成功更换为 {lime}%s", name);
     }
+    return 0;
 }

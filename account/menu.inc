@@ -31,4 +31,5 @@ public int MenuHandler_InfoPanel(Handle menu, MenuAction action, int client, int
 {
     if(action == MenuAction_End)
         delete menu;
+    return 0;
 }

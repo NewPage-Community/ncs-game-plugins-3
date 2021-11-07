@@ -1,15 +1,15 @@
 #define CVar_Service "game/cvar"
 
-HTTPClient httpClient;
+
 
 void InitAPI()
 {
-    httpClient = NewNCSAPI();
+    InitNCSAPI();
 }
 
 void CloseAPI()
 {
-    delete httpClient;
+    CloseNCSAPI();
 }
 
 void UpdateCVars()
@@ -22,7 +22,7 @@ void UpdateCVars()
 
     char path[128];
     Format(path, sizeof(path), "%s/update", CVar_Service);
-    httpClient.Post(path, data, LoadCVars);
+    GetNCSAPI().Post(path, data, LoadCVars);
 }
 
 public void LoadCVars(HTTPResponse response, any v, const char[] error)

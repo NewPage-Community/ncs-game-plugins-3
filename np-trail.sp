@@ -1,14 +1,13 @@
 #include <ncs>
-
 #include <ncs/account>
 #include <ncs/cookie>
-
 #include <sdkhooks>
 #include <sdktools>
 
 #undef REQUIRE_PLUGIN
 #include <ncs/chat>
 #include <zombiereloaded>
+#define REQUIRE_PLUGIN
 
 #define P_NAME P_PRE ... " - Trail"
 #define P_DESC "Trail management plugin"

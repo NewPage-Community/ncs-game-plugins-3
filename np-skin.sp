@@ -29,6 +29,7 @@ public Plugin myinfo =
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
+    InitAPI();
     InitNative();
 
     // lib
@@ -46,7 +47,6 @@ public void OnAllPluginsLoaded()
 
 public void OnPluginStart()
 {
-    InitAPI();
     InitCmd();
     InitSkin();
     HookEvent("player_spawn", Event_PlayerSpawn, EventHookMode_Post);

@@ -24,6 +24,7 @@ public Plugin myinfo =
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
+	InitAPI();
 	// core
 	InitNative();
 
@@ -39,7 +40,6 @@ public void OnPluginStart()
 	LoadTranslations("basevotes.phrases");
 	LoadTranslations("plugin.basecommands");
 	
-	InitAPI();
 	InitCmd();
 }
 

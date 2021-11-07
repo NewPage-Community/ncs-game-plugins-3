@@ -18,6 +18,7 @@ public Plugin myinfo =
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
+	InitAPI();
 	// core
 	InitNative();
 
@@ -29,7 +30,6 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 public void OnPluginStart()
 {
-	InitAPI();
 }
 
 public void OnPluginEnd()

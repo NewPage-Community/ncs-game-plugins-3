@@ -11,6 +11,7 @@ static ConVar token;
 
 stock void InitNCSAPI()
 {
+    if (gHTTPClient != INVALID_HANDLE) return;
     // ConVar init
     if ((url = FindConVar(CONVARAPIURL)) == null)
         url = CreateConVar(CONVARAPIURL, "", "");
@@ -20,6 +21,7 @@ stock void InitNCSAPI()
     url.AddChangeHook(NCSAPIChanged);
     token.AddChangeHook(NCSAPIChanged);
     AutoExecConfig(true, "ncs");
+    NCSAPIConnect();
 }
 
 void NCSAPIConnect()

@@ -33,7 +33,6 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 public void OnPluginStart()
 {
     InitAPI();
-    InitCache();
     InitCmd();
     InitConVar();
 }
@@ -44,8 +43,9 @@ public void OnPluginEnd()
     CloseCache();
 }
 
-public void OnMapStart()
+public void OnConfigsExecuted()
 {
+    InitCache();
     LoadRewards();
 }
 

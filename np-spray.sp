@@ -48,8 +48,12 @@ public void OnPluginEnd()
 
 public void OnMapStart()
 {
-    LoadSpray();
     PrecacheSound(SPRAY_SOUND);
+}
+
+public void OnConfigsExecuted()
+{
+    LoadSpray();
 }
 
 public void NCS_Cookie_OnUserCached(int client)

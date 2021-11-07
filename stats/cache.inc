@@ -3,9 +3,13 @@
 
 static char cacheFile[PLATFORM_MAX_PATH];
 static Handle cache;
+static bool ready = false;
 
 void InitCache()
 {
+    if (ready) return;
+    ready = true;
+
     BuildPath(Path_SM, cacheFile, PLATFORM_MAX_PATH, CachePath);
 
     if (FileExists(cacheFile))

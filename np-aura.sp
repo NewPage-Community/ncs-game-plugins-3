@@ -54,7 +54,7 @@ public void OnPluginEnd()
     CloseAPI();
 }
 
-public void OnMapStart()
+public void OnConfigsExecuted()
 {
     LoadAura();   
 }

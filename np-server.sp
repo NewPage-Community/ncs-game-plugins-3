@@ -20,7 +20,6 @@ public Plugin myinfo =
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
 	// core
-	InitAPI();
 	RegNative();
 
 	// lib
@@ -31,6 +30,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 public void OnPluginStart()
 {
+	InitAPI();
 	RegCmd();
 	RegForward();
 	InitMap();

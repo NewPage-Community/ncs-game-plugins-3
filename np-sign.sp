@@ -23,7 +23,6 @@ public Plugin myinfo =
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
-	InitAPI();
 	// lib
 	RegPluginLibrary("NCS-Sign");
 
@@ -32,6 +31,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 public void OnPluginStart()
 {
+	InitAPI();
 	InitCmd();
 }
 

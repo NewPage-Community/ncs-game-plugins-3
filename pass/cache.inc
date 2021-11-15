@@ -24,7 +24,7 @@ void InitCache()
             JSONObject data = JSONObject.FromString(json);
             char path[128];
             Format(path, sizeof(path), "%s/addpoints", PassUser_Service);
-            GetNCSAPI().Post(path, data, InitCacheCallback);
+            NewNCSAPI(path).Post(data, InitCacheCallback);
         }
     }
     

@@ -8,14 +8,14 @@ void InitAPI()
 
 void CloseAPI()
 {
-    CloseNCSAPI();
+
 }
 
 void LoadAura()
 {
     char path[128];
     Format(path, sizeof(path), "%s/type/3", BackpackItems_Service);
-    GetNCSAPI().Get(path, LoadAuraInfo);
+    NewNCSAPI(path).Get(LoadAuraInfo);
 }
 
 public void LoadAuraInfo(HTTPResponse response, DataPack dp, const char[] error)
@@ -58,7 +58,7 @@ void CheckUserHaveAura(int client)
     
     char path[128];
     Format(path, sizeof(path), "%s/have/%s/%d", BackpackUser_Service, uid, id);
-    GetNCSAPI().Get(path, CheckUserHaveItemCallback, dp);
+    NewNCSAPI(path).Get(CheckUserHaveItemCallback, dp);
 }
 
 public void CheckUserHaveItemCallback(HTTPResponse response, DataPack dp, const char[] error)

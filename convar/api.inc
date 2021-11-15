@@ -9,7 +9,7 @@ void InitAPI()
 
 void CloseAPI()
 {
-    CloseNCSAPI();
+
 }
 
 void UpdateCVars()
@@ -22,7 +22,7 @@ void UpdateCVars()
 
     char path[128];
     Format(path, sizeof(path), "%s/update", CVar_Service);
-    GetNCSAPI().Post(path, data, LoadCVars);
+    NewNCSAPI(path).Post(data, LoadCVars);
 }
 
 public void LoadCVars(HTTPResponse response, any v, const char[] error)

@@ -12,7 +12,7 @@ void InitAPI()
 
 void CloseAPI()
 {
-    CloseNCSAPI();
+
 }
 
 void LoadUserCookie(int client, const char[] uid)
@@ -21,7 +21,7 @@ void LoadUserCookie(int client, const char[] uid)
     
     char path[128];
     Format(path, sizeof(path), "%s/all/%s", Cookie_Service, uid);
-    GetNCSAPI().Get(path, LoadUserCookieCallback, client);
+    NewNCSAPI(path).Get(LoadUserCookieCallback, client);
 }
 
 public void LoadUserCookieCallback(HTTPResponse response, int client, const char[] error)
@@ -62,7 +62,7 @@ bool SetUserCookie(int client, const char[] key, const char[] value)
 
     char path[128];
     Format(path, sizeof(path), "%s/set", Cookie_Service);
-    GetNCSAPI().Post(path, data, SetUserCookieCallback);
+    NewNCSAPI(path).Post(data, SetUserCookieCallback);
     return ok;
 }
 

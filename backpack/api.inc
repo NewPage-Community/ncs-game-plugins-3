@@ -7,7 +7,7 @@ void InitAPI()
 
 void CloseAPI()
 {
-    CloseNCSAPI();
+
 }
 
 void AddItems(int client, Items items)
@@ -38,7 +38,7 @@ void AddItems(int client, Items items)
 
     char path[128];
     Format(path, sizeof(path), "%s/additem", Backpack_Service);
-    GetNCSAPI().Post(path, data, AddItemsCallback);
+    NewNCSAPI(path).Post(data, AddItemsCallback);
 }
 
 public void AddItemsCallback(HTTPResponse response, any value, const char[] error)

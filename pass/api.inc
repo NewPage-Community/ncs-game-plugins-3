@@ -14,7 +14,7 @@ void InitAPI()
 void CloseAPI()
 {
     delete updatePointTimer;
-    CloseNCSAPI();
+
 }
 
 public Action Timer_UpdatePoint(Handle timer, int client)
@@ -54,7 +54,7 @@ public Action Timer_UpdatePoint(Handle timer, int client)
     {
         char path[128];
         Format(path, sizeof(path), "%s/addpoints", PassUser_Service);
-        GetNCSAPI().Post(path, data, UpdatePointCallback);
+        NewNCSAPI(path).Post(data, UpdatePointCallback);
     }
     else
         delete data;
@@ -86,7 +86,7 @@ void UsePointBox(int client, bool all = false)
     
     char path[128];
     Format(path, sizeof(path), "%s/pointbox", GamePass_Service);
-    GetNCSAPI().Post(path, data, UsePointBoxCallback, dp);
+    NewNCSAPI(path).Post(data, UsePointBoxCallback, dp);
 }
 
 public void UsePointBoxCallback(HTTPResponse response, DataPack dp, const char[] error)

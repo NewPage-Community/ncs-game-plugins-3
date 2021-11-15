@@ -16,7 +16,7 @@ void DisplayUserSkins(int client)
 
     char path[128];
     Format(path, sizeof(path), "%s/%s", Backpack_Service, uid);
-    GetNCSAPI().Get(path, UserSkinsCallback, dp);
+    NewNCSAPI(path).Get(UserSkinsCallback, dp);
 }
 
 public void UserSkinsCallback(HTTPResponse response, DataPack dp, const char[] error)

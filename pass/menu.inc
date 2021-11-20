@@ -1,5 +1,3 @@
-static PassInfo playerPass[MAXPLAYERS+1];
-
 void DisplayPassInfo(int client)
 {
     char uid[MAX_UID_LENGTH];
@@ -63,11 +61,11 @@ void UsePassPointBox(int client)
     if (!IsValidClient(client))
         return;
     
-    int level = Level(player[client].point);
+    int level = Level(playerPass[client].point);
     Menu menu = new Menu(UsePassPointBoxHandle);
-    menu.SetTitle("使用经验箱\n等级: %d\n经验箱: %d个", level, player[client].box_amount);
-    menu.AddItem("", "使用1个经验箱", player[client].box_amount > 0 ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
-    menu.AddItem("", "使用全部经验箱", player[client].box_amount > 0 ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
+    menu.SetTitle("使用经验箱\n等级: %d\n经验箱: %d个", level, playerPass[client].box_amount);
+    menu.AddItem("", "使用1个经验箱", playerPass[client].box_amount > 0 ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
+    menu.AddItem("", "使用全部经验箱", playerPass[client].box_amount > 0 ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
     menu.ExitBackButton = true;
     menu.Display(client, MENU_TIME_FOREVER);
 }
@@ -109,7 +107,7 @@ void DisplayNextRewards(int client)
     if (!IsValidClient(client))
         return;
     
-    int level = Level(player[client].point) + 1;
+    int level = Level(playerPass[client].point) + 1;
     Menu menu = new Menu(NextRewardsHandle);
     menu.SetTitle("通行证下一级奖励\n \n%d级奖励\n ", level);
 

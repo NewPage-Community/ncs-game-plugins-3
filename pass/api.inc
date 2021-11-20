@@ -25,24 +25,24 @@ public Action Timer_UpdatePoint(Handle timer, int client)
     int count = 0;
     if (client != 0)
     {
-        if (player[client].IsValid() && player[client].point > 0)
+        if (playerPass[client].IsValid() && playerPass[client].point > 0)
         {
-            player[client].PushJSONArray(array);
-            player[client].point = 0;
+            playerPass[client].PushJSONArray(array);
+            playerPass[client].point = 0;
             count++;
         }
     }
     else
     {
-        int length = sizeof(player);
+        int length = sizeof(playerPass);
         for (int i = 0; i < length; i++)
         {
-            if (player[i].IsValid() && player[i].point > 0)
+            if (playerPass[i].IsValid() && playerPass[i].point > 0)
             {
-                player[i].PushJSONArray(array);
+                playerPass[i].PushJSONArray(array);
                 count++;
             }
-            player[i].point = 0;
+            playerPass[i].point = 0;
         }
     }
     

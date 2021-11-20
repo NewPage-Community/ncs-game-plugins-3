@@ -118,7 +118,7 @@ bool IsPassEnabled()
 
 Reward rewards[MAX_LEVEL][2][MAX_LEVEL_REWARDS];
 
-PassInfo player[MAXPLAYERS+1];
+PassInfo playerPass[MAXPLAYERS+1];
 
 char passTypeName[][] = {"免费通行证", "高级通行证", "终极通行证"};
 

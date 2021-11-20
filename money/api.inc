@@ -9,7 +9,7 @@ void InitAPI()
 
 void CloseAPI()
 {
-    CloseNCSAPI();
+
 }
 
 void GiveMoney(int client, int money, const char[] reason)
@@ -33,7 +33,7 @@ void GiveMoney(int client, int money, const char[] reason)
 
     char path[128];
     Format(path, sizeof(path), "%s/%s/give", Money_Service, uid);
-    GetNCSAPI().Post(path, data, GiveMoneyCallback, dp);
+    NewNCSAPI(path).Post(data, GiveMoneyCallback, dp);
 }
 
 public void GiveMoneyCallback(HTTPResponse response, DataPack dp, const char[] error)

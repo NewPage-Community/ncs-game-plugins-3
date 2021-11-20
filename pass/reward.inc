@@ -4,7 +4,7 @@ void LoadRewards()
     
     char path[128];
     Format(path, sizeof(path), "%s/rewards", GamePass_Service);
-    GetNCSAPI().Get(path, LoadRewardsCallback);
+    NewNCSAPI(path).Get(LoadRewardsCallback);
 }
 
 public void LoadRewardsCallback(HTTPResponse response, int client, const char[] error)

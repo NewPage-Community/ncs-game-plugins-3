@@ -10,14 +10,14 @@ void InitAPI()
 
 void CloseAPI()
 {
-    CloseNCSAPI();
+
 }
 
 void LoadTrail()
 {
     char path[128];
     Format(path, sizeof(path), "%s/type/2", BackpackItems_Service);
-    GetNCSAPI().Get(path, LoadTrailInfo);
+    NewNCSAPI(path).Get(LoadTrailInfo);
 }
 
 public void LoadTrailInfo(HTTPResponse response, DataPack dp, const char[] error)
@@ -60,7 +60,7 @@ void CheckUserHaveTrail(int client)
     
     char path[128];
     Format(path, sizeof(path), "%s/have/%s/%d", BackpackUser_Service, uid, id);
-    GetNCSAPI().Get(path, CheckUserHaveItemCallback, dp);
+    NewNCSAPI(path).Get(CheckUserHaveItemCallback, dp);
 }
 
 public void CheckUserHaveItemCallback(HTTPResponse response, DataPack dp, const char[] error)

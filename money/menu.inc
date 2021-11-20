@@ -6,7 +6,7 @@ void DisplayMoneyRecord(int client)
     
     char path[128];
     Format(path, sizeof(path), "%s/%s/records", Money_Service, uid);
-    GetNCSAPI().Get(path, LoadMoneyRecord, client);
+    NewNCSAPI(path).Get(LoadMoneyRecord, client);
 }
 
 public void LoadMoneyRecord(HTTPResponse response, int client, const char[] error)

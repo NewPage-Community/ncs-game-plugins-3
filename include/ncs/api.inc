@@ -5,54 +5,35 @@
 #define CONVARAPIURL "ncs_api_url"
 #define CONVARAPITOKEN "ncs_api_token"
 
-static HTTPClient gHTTPClient;
 static ConVar url;
 static ConVar token;
 
 stock void InitNCSAPI()
 {
-    if (gHTTPClient != INVALID_HANDLE) return;
     // ConVar init
     if ((url = FindConVar(CONVARAPIURL)) == null)
         url = CreateConVar(CONVARAPIURL, "", "");
     if ((token = FindConVar(CONVARAPITOKEN)) == null)
         token = CreateConVar(CONVARAPITOKEN, "", "");
-    // ConVar change hook
-    url.AddChangeHook(NCSAPIChanged);
-    token.AddChangeHook(NCSAPIChanged);
 }
 
-void NCSAPIConnect()
+stock HTTPRequest NewNCSAPI(const char[] path)
 {
     char buffer[128];
 
     // New Client
     url.GetString(buffer, sizeof(buffer));
-    gHTTPClient = new HTTPClient(buffer);
+    Format(buffer, sizeof(buffer), "%s/%s", buffer, path);
+    HTTPRequest client = new HTTPRequest(buffer);
 
     // Http auth
     token.GetString(buffer, sizeof(buffer));
     Format(buffer, sizeof(buffer), "Basic %s", buffer);
-    gHTTPClient.SetHeader("Authorization", buffer);
+    client.SetHeader("Authorization", buffer);
 
     // tracing
     //c.SetHeader("X-B3-Sampled", "1");
-}
-
-public void NCSAPIChanged(ConVar convar, const char[] oldValue, const char[] newValue)
-{
-    CloseNCSAPI();
-    NCSAPIConnect();
-}
-
-stock HTTPClient GetNCSAPI()
-{
-    return gHTTPClient;
-}
-
-stock void CloseNCSAPI()
-{
-    if (gHTTPClient != INVALID_HANDLE) delete gHTTPClient;
+    return client;
 }
 
 // Check has error ?
@@ -61,12 +42,12 @@ stock bool CheckAPIError(const char[] module, const char[] func, HTTPResponse re
     if (response.Status == HTTPStatus_OK)
         return false;
 
+    NCS_LogError(module, func, "Faild to request HTTPCode: %d Err: %s", response.Status, error);
     if (response.Status != HTTPStatus_Invalid)
     {
         char json[512];
         response.Data.ToString(json, sizeof(json));
         NCS_LogError(module, func, "Response JSON: %s", json);
     }
-    NCS_LogError(module, func, "Faild to request HTTPCode: %d Err: %s", response.Status, error);
     return true;
 }

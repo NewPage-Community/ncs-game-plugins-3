@@ -7,7 +7,7 @@ void InitAPI()
 
 void CloseAPI()
 {
-    CloseNCSAPI();
+
 }
 
 void AllChat(int client, const char[] name, const char[] message)
@@ -25,7 +25,7 @@ void AllChat(int client, const char[] name, const char[] message)
 
     char path[128];
     Format(path, sizeof(path), "%s/allchat", Chat_Service);
-    GetNCSAPI().Post(path, data, AllChatCallback);
+    NewNCSAPI(path).Post(data, AllChatCallback);
 }
 
 public void AllChatCallback(HTTPResponse response, any value, const char[] error)

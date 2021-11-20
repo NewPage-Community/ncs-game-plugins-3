@@ -10,14 +10,14 @@ void InitAPI()
 
 void CloseAPI()
 {
-    CloseNCSAPI();
+
 }
 
 void LoadSpray()
 {
     char path[128];
     Format(path, sizeof(path), "%s/type/4", BackpackItems_Service);
-    GetNCSAPI().Get(path, LoadSprayInfo);
+    NewNCSAPI(path).Get(LoadSprayInfo);
 }
 
 public void LoadSprayInfo(HTTPResponse response, DataPack dp, const char[] error)
@@ -60,7 +60,7 @@ void CheckUserHaveSpray(int client)
     
     char path[128];
     Format(path, sizeof(path), "%s/have/%s/%d", BackpackUser_Service, uid, id);
-    GetNCSAPI().Get(path, CheckUserHaveItemCallback, dp);
+    NewNCSAPI(path).Get(CheckUserHaveItemCallback, dp);
 }
 
 public void CheckUserHaveItemCallback(HTTPResponse response, DataPack dp, const char[] error)

@@ -7,7 +7,7 @@ void InitAPI()
 
 void CloseAPI()
 {
-    CloseNCSAPI();
+
 }
 
 void ReqAdmin(int client, const char[] uid)
@@ -19,7 +19,7 @@ void ReqAdmin(int client, const char[] uid)
 
     char path[128];
     Format(path, sizeof(path), "%s/%s", Admin_Service, uid);
-    GetNCSAPI().Get(path, LoadAdminInfo, dp);
+    NewNCSAPI(path).Get(LoadAdminInfo, dp);
 }
 
 public void LoadAdminInfo(HTTPResponse response, DataPack dp, const char[] error)

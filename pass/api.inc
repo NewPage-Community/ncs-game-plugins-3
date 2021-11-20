@@ -14,7 +14,7 @@ void InitAPI()
 void CloseAPI()
 {
     delete updatePointTimer;
-    CloseNCSAPI();
+
 }
 
 public Action Timer_UpdatePoint(Handle timer, int client)
@@ -25,24 +25,24 @@ public Action Timer_UpdatePoint(Handle timer, int client)
     int count = 0;
     if (client != 0)
     {
-        if (player[client].IsValid() && player[client].point > 0)
+        if (playerPass[client].IsValid() && playerPass[client].point > 0)
         {
-            player[client].PushJSONArray(array);
-            player[client].point = 0;
+            playerPass[client].PushJSONArray(array);
+            playerPass[client].point = 0;
             count++;
         }
     }
     else
     {
-        int length = sizeof(player);
+        int length = sizeof(playerPass);
         for (int i = 0; i < length; i++)
         {
-            if (player[i].IsValid() && player[i].point > 0)
+            if (playerPass[i].IsValid() && playerPass[i].point > 0)
             {
-                player[i].PushJSONArray(array);
+                playerPass[i].PushJSONArray(array);
                 count++;
             }
-            player[i].point = 0;
+            playerPass[i].point = 0;
         }
     }
     
@@ -54,7 +54,7 @@ public Action Timer_UpdatePoint(Handle timer, int client)
     {
         char path[128];
         Format(path, sizeof(path), "%s/addpoints", PassUser_Service);
-        GetNCSAPI().Post(path, data, UpdatePointCallback);
+        NewNCSAPI(path).Post(data, UpdatePointCallback);
     }
     else
         delete data;
@@ -86,7 +86,7 @@ void UsePointBox(int client, bool all = false)
     
     char path[128];
     Format(path, sizeof(path), "%s/pointbox", GamePass_Service);
-    GetNCSAPI().Post(path, data, UsePointBoxCallback, dp);
+    NewNCSAPI(path).Post(data, UsePointBoxCallback, dp);
 }
 
 public void UsePointBoxCallback(HTTPResponse response, DataPack dp, const char[] error)

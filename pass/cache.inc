@@ -24,7 +24,7 @@ void InitCache()
             JSONObject data = JSONObject.FromString(json);
             char path[128];
             Format(path, sizeof(path), "%s/addpoints", PassUser_Service);
-            GetNCSAPI().Post(path, data, InitCacheCallback);
+            NewNCSAPI(path).Post(data, InitCacheCallback);
         }
     }
     
@@ -47,10 +47,10 @@ public Action Timer_Cache(Handle timer)
     JSONObject data = new JSONObject();
     JSONArray array = new JSONArray();
 
-    int length = sizeof(player);
+    int length = sizeof(playerPass);
     for (int i = 0; i < length; i++)
-        if (player[i].IsValid() && player[i].point > 0)
-            player[i].PushJSONArray(array);
+        if (playerPass[i].IsValid() && playerPass[i].point > 0)
+            playerPass[i].PushJSONArray(array);
 
     data.Set("add", array);
     data.ToString(json, sizeof(json), JSON_COMPACT);

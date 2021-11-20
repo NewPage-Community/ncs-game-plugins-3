@@ -17,7 +17,7 @@ void RegAPIForward()
 
 void CloseAPI()
 {
-	CloseNCSAPI();
+
 }
 
 void ReqAccountUID(const char[] steamid, bool notify = false)
@@ -48,7 +48,7 @@ void ReqAccountUID(const char[] steamid, bool notify = false)
 
 	char path[128];
 	Format(path, sizeof(path), "%s/game/playerconnect", Account_Service);
-	GetNCSAPI().Post(path, data, LoadAccountUID, dp);
+	NewNCSAPI(path).Post(data, LoadAccountUID, dp);
 }
 
 public void LoadAccountUID(HTTPResponse response, DataPack dp, const char[] error)
@@ -97,7 +97,7 @@ void UpdateAccountName(int client)
 
 	char path[128];
 	Format(path, sizeof(path), "%s/%s", Account_Service, g_Accounts[client].uid);
-	GetNCSAPI().Put(path, data, UpdateAccountNameCallback);
+	NewNCSAPI(path).Put(data, UpdateAccountNameCallback);
 }
 
 public void UpdateAccountNameCallback(HTTPResponse response, any value, const char[] error)

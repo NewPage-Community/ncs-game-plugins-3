@@ -15,7 +15,7 @@ void CloseAPI()
 
     UpdateStatsData();
     
-    CloseNCSAPI();
+
     delete StatsList;
 }
 
@@ -30,7 +30,7 @@ void UpdateStatsData()
 
     char path[128];
     Format(path, sizeof(path), "%s/user/incrs", Stats_Service);
-    GetNCSAPI().Post(path, data, UpdateStatsDataCallback);
+    NewNCSAPI(path).Post(data, UpdateStatsDataCallback);
 }
 
 public void UpdateStatsDataCallback(HTTPResponse response, any value, const char[] error)
@@ -60,7 +60,7 @@ void GetStatsData(int client, Handle plugin, Function callback, const char[] ran
 
     char path[128];
     Format(path, sizeof(path), "%s/user/%s/%s/%s/%s", Stats_Service, uid, statsName, version, range);
-    GetNCSAPI().Get(path, GetStatsDataCallback, dp);
+    NewNCSAPI(path).Get(GetStatsDataCallback, dp);
 }
 
 public void GetStatsDataCallback(HTTPResponse response, DataPack dp, const char[] error)

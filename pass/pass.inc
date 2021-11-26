@@ -1,6 +1,6 @@
 #define PROGRESS_LENGTH 20
 #define LEVEL_POINT 10800
-#define MAX_LEVEL 100
+#define MAX_LEVEL 31
 #define MAX_ITEM_NAME_LENGTH 64
 
 ConVar cv_pass_starttime;

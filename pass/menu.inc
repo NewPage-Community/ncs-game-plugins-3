@@ -37,9 +37,9 @@ public void LoadPassInfo(HTTPResponse response, int client, const char[] error)
 
     Menu menu = new Menu(PassInfoMenuHandle);
     menu.SetTitle("通行证 - 第%d赛季\n时间: %s - %s\n类型: %s\n等级: %d\n%s\n ", season, startDate, endDate, passTypeName[type], Level(point), progress);
-    menu.AddItem("", "升级通行证", type == 0 ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
+    menu.AddItem("", "升级通行证");
     menu.AddItem("", "使用经验箱");
-    menu.AddItem("", "查看下一级奖励");
+    menu.AddItem("", "通行证奖励预览");
     menu.Display(client, MENU_TIME_FOREVER);
 }
 
@@ -53,7 +53,7 @@ public int PassInfoMenuHandle(Menu menu, MenuAction action, int client, int slot
         {
             case 0: FakeClientCommandEx(client, "sm_store");
             case 1: UsePassPointBox(client);
-            case 2: DisplayNextRewards(client);
+            case 2: DisplayRewards(client);
         }
     }
     return 0;
@@ -105,49 +105,48 @@ public int UsePassPointBoxHandle(Menu menu, MenuAction action, int client, int s
     return 0;
 }
 
-void DisplayNextRewards(int client)
+void DisplayRewards(int client)
 {
     if (!IsValidClient(client))
         return;
     
     int level = Level(playerCached[client].point) + 1;
-    Menu menu = new Menu(NextRewardsHandle);
-    menu.SetTitle("通行证下一级奖励\n \n%d级奖励\n ", level);
+    Menu menu = new Menu(RewardsHandle);
+    menu.SetTitle("通行证奖励预览", level);
 
     char desc[512];
+    char name[MAX_ITEM_NAME_LENGTH];
 
-    // free
-    Format(desc, sizeof(desc), "免费版:\n");
-    for (int i = 0; i < MAX_LEVEL_REWARDS && level < MAX_LEVEL; i++)
+    for (int i = 0; i < MAX_LEVEL; i++)
     {
-        if (rewards[level][FreeReward][i].name[0] == '\0')
-            break;
-        
-        char name[MAX_ITEM_NAME_LENGTH];
-        rewards[level][FreeReward][i].GetName(name, sizeof(name));
-        Format(desc, sizeof(desc), "%s- %s\n", desc, name);
+        Format(desc, sizeof(desc), "\n免费版: ");
+        if (rewards[i][FreeReward].IsValid())
+        {
+            rewards[level][FreeReward].GetName(name, sizeof(name));
+            Format(desc, sizeof(desc), "%s- %s", desc, name);
+        }
+        else
+        {
+            Format(desc, sizeof(desc), "无");
+        }
+        Format(desc, sizeof(desc), "\n高级版: ");
+        if (rewards[i][AdvReward].IsValid())
+        {
+            rewards[level][AdvReward].GetName(name, sizeof(name));
+            Format(desc, sizeof(desc), "%s- %s", desc, name);
+        }
+        else
+        {
+            Format(desc, sizeof(desc), "无");
+        }
+        menu.AddItem("", desc, ITEMDRAW_DISABLED);
     }
-    Format(desc, sizeof(desc), "%s\n ", desc);
-    menu.AddItem("", desc, ITEMDRAW_DISABLED);
-
-    // adv
-    Format(desc, sizeof(desc), "高级版:\n");
-    for (int i = 0; i < MAX_LEVEL_REWARDS && level < MAX_LEVEL; i++)
-    {
-        if (rewards[level][FreeReward][i].name[0] == '\0')
-            break;
-        
-        char name[MAX_ITEM_NAME_LENGTH];
-        rewards[level][AdvReward][i].GetName(name, sizeof(name));
-        Format(desc, sizeof(desc), "%s- %s\n", desc, name);
-    }
-    menu.AddItem("", desc, ITEMDRAW_DISABLED);
 
     menu.ExitBackButton = true;
     menu.Display(client, MENU_TIME_FOREVER);
 }
 
-public int NextRewardsHandle(Menu menu, MenuAction action, int client, int slot)
+public int RewardsHandle(Menu menu, MenuAction action, int client, int slot)
 {
     if (action == MenuAction_End && slot == MenuEnd_Exit)
     {

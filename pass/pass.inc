@@ -1,6 +1,5 @@
 #define PROGRESS_LENGTH 20
 #define LEVEL_POINT 10800
-#define MAX_LEVEL_REWARDS 10
 #define MAX_LEVEL 100
 #define MAX_ITEM_NAME_LENGTH 64
 
@@ -116,7 +115,7 @@ bool IsPassEnabled()
     return start <= now && now < end
 }
 
-Reward rewards[MAX_LEVEL][2][MAX_LEVEL_REWARDS];
+Reward rewards[MAX_LEVEL][2];
 
 PassInfo playerPass[MAXPLAYERS+1];
 

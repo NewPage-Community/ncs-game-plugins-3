@@ -21,8 +21,6 @@ public void LoadRewardsCallback(HTTPResponse response, int client, const char[] 
 
     // free
     int length = free.Length;
-    int lastLevel = 0;
-    int count = 0;
     for (int i = 0; i < length; i++)
     {
         Reward reward;
@@ -36,20 +34,12 @@ public void LoadRewardsCallback(HTTPResponse response, int client, const char[] 
         reward.length = StringToInt(ilength);
         item.GetString("name", reward.name, MAX_ITEM_NAME_LENGTH);
 
-        if (lastLevel != reward.level)
-        {
-            lastLevel = reward.level;
-            count = 0;
-        }
-
-        rewards[reward.level][FreeReward][count++] = reward;
+        rewards[reward.level][FreeReward] = reward;
         delete item;
     }
 
     // adv
     length = adv.Length;
-    lastLevel = 0;
-    count = 0;
     for (int i = 0; i < length; i++)
     {
         Reward reward;
@@ -59,14 +49,8 @@ public void LoadRewardsCallback(HTTPResponse response, int client, const char[] 
         reward.amount = item.GetInt("amount");
         reward.length = item.GetInt("length");
         item.GetString("name", reward.name, MAX_ITEM_NAME_LENGTH);
-
-        if (lastLevel != reward.level)
-        {
-            lastLevel = reward.level;
-            count = 0;
-        }
         
-        rewards[reward.level][AdvReward][count++] = reward;
+        rewards[reward.level][AdvReward] = reward;
         delete item;
     }
 
@@ -79,10 +63,7 @@ void ClearRewards()
     Reward empty;
     for (int i = 0; i < MAX_LEVEL; i++)
     {
-        for (int j = 0; j < MAX_LEVEL_REWARDS; j++)
-        {
-            rewards[i][FreeReward][j] = empty;
-            rewards[i][AdvReward][j] = empty;
-        }
+        rewards[i][FreeReward] = empty;
+        rewards[i][AdvReward] = empty;
     }
 }

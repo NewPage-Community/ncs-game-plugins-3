@@ -26,26 +26,25 @@ public Action UpgradeNotify(int args)
     if (level >= MAX_LEVEL)
         return Plugin_Handled;
 
+    char name[MAX_ITEM_NAME_LENGTH];
     char nextRewards[512];
     bool firstReward = true;
     // Free
-    for (int i = 0; i < MAX_LEVEL_REWARDS && rewards[level][FreeReward][i].IsValid(); i++)
+    if (rewards[level][FreeReward].IsValid())
     {
-        char name[MAX_ITEM_NAME_LENGTH];
-        rewards[level][FreeReward][i].GetName(name, sizeof(name));
+        rewards[level][FreeReward].GetName(name, sizeof(name));
         Format(nextRewards, sizeof(nextRewards), firstReward ? "%s%s" : "%s，%s", nextRewards, name);
         firstReward = false;
     }
     // Adv
-    for (int i = 0; i < MAX_LEVEL_REWARDS && rewards[level][AdvReward][i].IsValid(); i++)
+    if (rewards[level][AdvReward].IsValid())
     {
-        char name[MAX_ITEM_NAME_LENGTH];
-        rewards[level][AdvReward][i].GetName(name, sizeof(name));
+        rewards[level][AdvReward].GetName(name, sizeof(name));
         Format(nextRewards, sizeof(nextRewards), firstReward ? "%s%s" : "%s，%s", nextRewards, name);
         firstReward = false;
     }
     // No things
-    if (!rewards[level][FreeReward][0].IsValid() && !rewards[level][AdvReward][0].IsValid())
+    if (firstReward)
         strcopy(nextRewards, sizeof(nextRewards), "无");
 
     // Chat notify

@@ -122,26 +122,27 @@ void DisplayRewards(int client)
         Format(desc, sizeof(desc), "\n免费版: ");
         if (rewards[i][FreeReward].IsValid())
         {
-            rewards[level][FreeReward].GetName(name, sizeof(name));
-            Format(desc, sizeof(desc), "%s- %s", desc, name);
+            rewards[i][FreeReward].GetName(name, sizeof(name));
+            Format(desc, sizeof(desc), "%s%s", desc, name);
         }
         else
         {
-            Format(desc, sizeof(desc), "无");
+            Format(desc, sizeof(desc), "%s无", desc);
         }
-        Format(desc, sizeof(desc), "\n高级版: ");
+        Format(desc, sizeof(desc), "%s\n高级版: ", desc);
         if (rewards[i][AdvReward].IsValid())
         {
-            rewards[level][AdvReward].GetName(name, sizeof(name));
-            Format(desc, sizeof(desc), "%s- %s", desc, name);
+            rewards[i][AdvReward].GetName(name, sizeof(name));
+            Format(desc, sizeof(desc), "%s%s", desc, name);
         }
         else
         {
-            Format(desc, sizeof(desc), "无");
+            Format(desc, sizeof(desc), "%s无", desc);
         }
         menu.AddItem("", desc, ITEMDRAW_DISABLED);
     }
 
+    menu.Pagination = RoundToCeil(float(level) / float(6));
     menu.ExitBackButton = true;
     menu.Display(client, MENU_TIME_FOREVER);
 }

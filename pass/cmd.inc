@@ -17,7 +17,7 @@ public Action UpgradeNotify(int args)
     GetCmdArg(2, clevel, sizeof(clevel));
 
     int client = NCS_Account_GetClientOfUID(uid);
-    int level = StringToInt(clevel);
+    int level = StringToInt(clevel) + 1;
 
     // Invalid client
     if (!StrEqual(uid, "0") && !IsValidClient(client))

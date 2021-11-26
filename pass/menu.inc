@@ -1,3 +1,6 @@
+// Local Cached
+static PassInfo playerCached[MAXPLAYERS + 1];
+
 void DisplayPassInfo(int client)
 {
     char uid[MAX_UID_LENGTH];
@@ -20,12 +23,12 @@ public void LoadPassInfo(HTTPResponse response, int client, const char[] error)
     // JSON data
     JSONObject data = view_as<JSONObject>(response.Data);
 
-    playerPass[client].type = data.GetInt("type");
-    playerPass[client].point = data.GetInt("point");
-    playerPass[client].box_amount = data.GetInt("box_amount");
+    playerCached[client].type = data.GetInt("type");
+    playerCached[client].point = data.GetInt("point");
+    playerCached[client].box_amount = data.GetInt("box_amount");
 
-    int type = playerPass[client].type;
-    int point = playerPass[client].point;
+    int type = playerCached[client].type;
+    int point = playerCached[client].point;
     char progress[64];
     char startDate[20], endDate[20];
     ProgressBar(point, progress, sizeof(progress));
@@ -61,11 +64,11 @@ void UsePassPointBox(int client)
     if (!IsValidClient(client))
         return;
     
-    int level = Level(playerPass[client].point);
+    int level = Level(playerCached[client].point);
     Menu menu = new Menu(UsePassPointBoxHandle);
-    menu.SetTitle("使用经验箱\n等级: %d\n经验箱: %d个", level, playerPass[client].box_amount);
-    menu.AddItem("", "使用1个经验箱", playerPass[client].box_amount > 0 ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
-    menu.AddItem("", "使用全部经验箱", playerPass[client].box_amount > 0 ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
+    menu.SetTitle("使用经验箱\n等级: %d\n经验箱: %d个", level, playerCached[client].box_amount);
+    menu.AddItem("", "使用1个经验箱", playerCached[client].box_amount > 0 ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
+    menu.AddItem("", "使用全部经验箱", playerCached[client].box_amount > 0 ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
     menu.ExitBackButton = true;
     menu.Display(client, MENU_TIME_FOREVER);
 }
@@ -88,8 +91,8 @@ public int UsePassPointBoxHandle(Menu menu, MenuAction action, int client, int s
             case 0:
             {
                 UsePointBox(client, false);
-                playerPass[client].point += 7200;
-                playerPass[client].box_amount --;
+                playerCached[client].point += 7200;
+                playerCached[client].box_amount --;
                 UsePassPointBox(client);
             }
             case 1:
@@ -107,7 +110,7 @@ void DisplayNextRewards(int client)
     if (!IsValidClient(client))
         return;
     
-    int level = Level(playerPass[client].point) + 1;
+    int level = Level(playerCached[client].point) + 1;
     Menu menu = new Menu(NextRewardsHandle);
     menu.SetTitle("通行证下一级奖励\n \n%d级奖励\n ", level);
 

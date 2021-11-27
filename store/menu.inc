@@ -197,7 +197,7 @@ public int BuyItemHandle(Menu menu, MenuAction action, int client, int slot)
         }
         else
         {
-            BuyItem(client, item);
+            BuyItemConfirmMenu(client, item);
             lastMenu.DisplayAt(client, lastPage, MENU_TIME_FOREVER);
         }
     }
@@ -263,7 +263,7 @@ void BuyAdvPassMenu(int client)
 
     // pass point box
     Item box;
-    playerStoreList[client].Get(1000, box);
+    playerStoreList[client].Get(PASSBOX_ID, box);
     char info[8], desc[64];
     box.GetMenuItem(info, sizeof(info), desc, sizeof(desc));
     menu.AddItem(info, desc);
@@ -287,14 +287,14 @@ public int BuyAdvPassHandle(Menu menu, MenuAction action, int client, int slot)
     }
     else if (action == MenuAction_Select)
     {
-        char type[8];
-        menu.GetItem(slot, type, sizeof(type), _, _, _);
+        char itemID[8];
+        menu.GetItem(slot, itemID, sizeof(itemID), _, _, _);
 
-        int itype = StringToInt(type);
-        if (itype == 1000)
+        int itype = StringToInt(itemID);
+        if (itype == PASSBOX_ID)
         {
             Item item;
-            if (!playerStoreList[client].CGet("1000", item))
+            if (!playerStoreList[client].CGet(itemID, item))
                 return 0;
             BuyItemMenu(client, item);
         }
@@ -417,6 +417,57 @@ public int BuyVIPConfirmHandle(Menu menu, MenuAction action, int client, int slo
         menu.GetItem(slot, month, sizeof(month), _, _, _);
         BuyVIP(client, StringToInt(month));
         DisplayStoreMenu(client);
+    }
+    return 0;
+}
+
+void BuyItemConfirmMenu(int client, Item item)
+{
+    if (!IsValidClient(client))
+        return;
+
+    Menu menu = new Menu(BuyItemConfirmMenuHandle);
+    if (FloatCompare(1.0, item.discount) == 1)
+        menu.SetTitle("购买确认 - %s\n现有软妹币: %d\n价格: %d(%1.1f折)\n \n%s\n ", item.name, playerMoney[client], item.price, item.discount * 10.0, item.description);
+    else
+        menu.SetTitle("购买确认 - %s\n现有软妹币: %d\n价格: %d\n \n%s\n ", item.name, playerMoney[client], item.price, item.description);
+
+    char info[8];
+    IntToString(item.id, info, sizeof(info));
+    menu.AddItem(info, "确认购买");
+
+    menu.ExitBackButton = true;
+    menu.Display(client, MENU_TIME_FOREVER);
+}
+
+public int BuyItemConfirmMenuHandle(Menu menu, MenuAction action, int client, int slot)
+{
+    if (action == MenuAction_End)
+        delete menu;
+    else if (action == MenuAction_Cancel && slot == MenuCancel_ExitBack)
+    {
+        char itemID[8];
+        menu.GetItem(slot, itemID, sizeof(itemID), _, _, _);
+
+        Item item;
+        if (!playerStoreList[client].CGet(itemID, item))
+            return 0;
+
+        BuyItemMenu(client, item);
+    }
+    else if (action == MenuAction_Select)
+    {
+        Menu lastMenu = playerLastMenu[client];
+        int lastPage = (playerLastItem[client]/lastMenu.Pagination)*lastMenu.Pagination;
+        char itemID[8];
+        menu.GetItem(slot, itemID, sizeof(itemID), _, _, _);
+
+        Item item;
+        if (!playerStoreList[client].CGet(itemID, item))
+            return 0;
+
+        BuyItem(client, item);
+        lastMenu.DisplayAt(client, lastPage, MENU_TIME_FOREVER);
     }
     return 0;
 }

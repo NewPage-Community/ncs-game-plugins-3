@@ -2,6 +2,7 @@
 #define MAX_ITEM_DESC_LENGTH 64
 #define NEWLINE "#"
 #define Store_Service "game/store"
+#define PASSBOX_ID 1000
 
 enum struct Item
 {
@@ -46,7 +47,7 @@ methodmap Items < StringMap
             item.price = data.GetInt("price");
             item.discount = data.GetFloatEx("discount");
             item.available = data.GetBool("available");
-            item.alreadyHave = data.GetBool("already_have");
+            item.alreadyHave = item.id == PASSBOX_ID ? false : data.GetBool("already_have");
             
             // New line
             ReplaceString(item.description, MAX_ITEM_DESC_LENGTH, NEWLINE, "\n");

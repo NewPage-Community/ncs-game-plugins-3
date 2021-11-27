@@ -197,8 +197,16 @@ public int BuyItemHandle(Menu menu, MenuAction action, int client, int slot)
         }
         else
         {
-            BuyItemConfirmMenu(client, item);
-            lastMenu.DisplayAt(client, lastPage, MENU_TIME_FOREVER);
+            // Pass box do not need to confirm
+            if (item.id == PASSBOX_ID)
+            {
+                BuyItem(client, item);
+                lastMenu.DisplayAt(client, lastPage, MENU_TIME_FOREVER);
+            }
+            else
+            {
+                BuyItemConfirmMenu(client, item);
+            }
         }
     }
     return 0;

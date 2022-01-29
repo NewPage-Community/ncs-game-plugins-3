@@ -86,7 +86,7 @@ public void HaveUserItemCallback(HTTPResponse response, DataPack dp, const char[
     JSONObject item = view_as<JSONObject>(data.Get("item"));
     int itemID = item.GetInt("id");
     int amount = item.GetInt("amount");
-    int length = item.GetInt("length");
+    int length = item.GetString("length");
     delete item;
 
     Call_StartFunction(plugin, callback);

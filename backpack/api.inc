@@ -60,7 +60,7 @@ void HaveUserItem(int client, int itemID, Handle plugin, Function callback, any 
     dp.WriteCell(data);
 
     char path[128];
-    Format(path, sizeof(path), "%s/has/%s/%d", Backpack_Service, uid, itemID);
+    Format(path, sizeof(path), "%s/have/%s/%d", Backpack_Service, uid, itemID);
     NewNCSAPI(path).Get(HaveUserItemCallback, dp);
 }
 

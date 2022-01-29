@@ -45,3 +45,56 @@ public void AddItemsCallback(HTTPResponse response, any value, const char[] erro
 {
     CheckAPIError("Backpack", "AddItemsCallback", response, error);
 }
+
+void HaveUserItem(int client, int itemID, Handle plugin, Function callback, any data)
+{
+    char uid[MAX_UID_LENGTH];
+    if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
+        return;
+
+    // Datapack to pass to callback
+    DataPack dp = new DataPack();
+    dp.WriteCell(client);
+    dp.WriteCell(plugin);
+    dp.WriteFunction(callback);
+    dp.WriteCell(data);
+
+    char path[128];
+    Format(path, sizeof(path), "%s/has/%s/%d", Backpack_Service, uid, itemID);
+    NewNCSAPI(path).Get(HaveUserItemCallback, dp);
+}
+
+public void HaveUserItemCallback(HTTPResponse response, DataPack dp, const char[] error)
+{
+    // DataPack
+    dp.Reset();
+    int client = dp.ReadCell();
+    Handle plugin = dp.ReadCell();
+    Function callback = dp.ReadFunction();
+    any cdata = dp.ReadCell();
+    dp.Close();
+
+    if (CheckAPIError("Backpack", "HaveUserItemCallback", response, error))
+        return;
+
+    if (!IsValidClient(client))
+        return;
+
+    // JSON
+    JSONObject data = view_as<JSONObject>(response.Data);
+    bool have = data.GetBool("have");
+    JSONObject item = view_as<JSONObject>(data.Get("item"));
+    int itemID = item.GetInt("id");
+    int amount = item.GetInt("amount");
+    int length = item.GetInt("length");
+    delete item;
+
+    Call_StartFunction(plugin, callback);
+    Call_PushCell(client);
+    Call_PushCell(itemID);
+    Call_PushCell(have);
+    Call_PushCell(amount);
+    Call_PushCell(length);
+    Call_PushCell(cdata);
+    Call_Finish();
+}

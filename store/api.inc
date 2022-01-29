@@ -98,7 +98,7 @@ public void BuyItemCallback(HTTPResponse response, DataPack dp, const char[] err
     dp.ReadString(itemName, sizeof(itemName));
     int item_id = dp.ReadCell();
     int item_price = dp.ReadCell();
-    dp.Close()
+    dp.Close();
 
     if (CheckAPIError("Store", "BuyItemCallback", response, error))
     {
@@ -160,7 +160,7 @@ public void BuyPassCallback(HTTPResponse response, DataPack dp, const char[] err
     char uid[MAX_UID_LENGTH];
     dp.ReadString(uid, sizeof(uid));
     int type = dp.ReadCell();
-    dp.Close()
+    dp.Close();
 
     if (CheckAPIError("Store", "BuyPassCallback", response, error))
     {
@@ -219,7 +219,7 @@ public void BuyVIPCallback(HTTPResponse response, DataPack dp, const char[] erro
     char uid[MAX_UID_LENGTH];
     dp.ReadString(uid, sizeof(uid));
     int month = dp.ReadCell();
-    dp.Close()
+    dp.Close();
 
     if (CheckAPIError("Store", "BuyVIPCallback", response, error))
     {

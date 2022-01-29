@@ -37,7 +37,7 @@ public void LoadVIPInfo(HTTPResponse response, DataPack dp, const char[] error)
     char uid[MAX_UID_LENGTH];
     dp.ReadString(uid, sizeof(uid));
     bool reload = dp.ReadCell();
-    dp.Close()
+    dp.Close();
 
     // JSON
     char iUID[MAX_UID_LENGTH], expireDate[INT64_LENGTH];
@@ -94,7 +94,7 @@ public void AddPointCallback(HTTPResponse response, DataPack dp, const char[] er
     char uid[MAX_UID_LENGTH];
     dp.ReadString(uid, sizeof(uid));
     int addPoint = dp.ReadCell();
-    dp.Close()
+    dp.Close();
 
     if (CheckAPIError("VIP", "AddPointCallback", response, error))
     {
@@ -139,7 +139,7 @@ public void RenewalCallback(HTTPResponse response, DataPack dp, const char[] err
     char uid[MAX_UID_LENGTH];
     dp.ReadString(uid, sizeof(uid));
     int length = dp.ReadCell();
-    dp.Close()
+    dp.Close();
 
     if (CheckAPIError("VIP", "RenewalCallback", response, error))
     {

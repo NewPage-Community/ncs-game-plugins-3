@@ -97,7 +97,7 @@ public void UsePointBoxCallback(HTTPResponse response, DataPack dp, const char[]
     char uid[MAX_UID_LENGTH];
     dp.ReadString(uid, sizeof(uid));
     bool all = dp.ReadCell();
-    dp.Close()
+    dp.Close();
 
     if (CheckAPIError("Pass", "UsePointBoxCallback", response, error))
     {

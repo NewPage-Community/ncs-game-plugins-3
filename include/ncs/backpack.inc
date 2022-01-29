@@ -29,7 +29,14 @@ methodmap Items < ArrayList
     }
 }
 
+typeset BackpackHaveItemCallback
+{
+    function void (int client, int itemID, bool have, int amount, int length);
+    function void (int client, int itemID, bool have, int amount, int length, any data);
+};
+
 native void NCS_Backpack_AddItems(int client, Items items);
+native void NCS_Backpack_HaveItem(int client, int itemID, BackpackHaveItemCallback callback, any data = 0);
 
 public SharedPlugin __pl_ncs_backpack = 
 {

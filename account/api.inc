@@ -61,7 +61,7 @@ public void LoadAccountUID(HTTPResponse response, DataPack dp, const char[] erro
 	dp.Reset();
 	dp.ReadString(steamid, sizeof(steamid));
 	bool notify = dp.ReadCell();
-	dp.Close()
+	dp.Close();
 	JSONObject data = view_as<JSONObject>(response.Data);
 	
 	int client = FindClientBySteamId(AuthId_SteamID64, steamid);

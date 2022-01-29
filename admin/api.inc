@@ -32,7 +32,7 @@ public void LoadAdminInfo(HTTPResponse response, DataPack dp, const char[] error
     int client = dp.ReadCell();
     char uid[MAX_UID_LENGTH];
     dp.ReadString(uid, sizeof(uid));
-    dp.Close()
+    dp.Close();
 
     // JSON
     char iUID[MAX_UID_LENGTH];

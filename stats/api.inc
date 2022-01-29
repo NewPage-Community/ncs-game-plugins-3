@@ -73,7 +73,7 @@ public void GetStatsDataCallback(HTTPResponse response, DataPack dp, const char[
     Handle plugin = dp.ReadCell();
     Function callback = dp.ReadFunction();
     any cdata = dp.ReadCell();
-    dp.Close()
+    dp.Close();
 
     if (CheckAPIError("Stats", "GetStatsDataCallback", response, error))
         return;

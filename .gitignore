@@ -24,6 +24,7 @@ include/core.inc
 include/cstrike.inc
 include/datapack.inc
 include/dbi.inc
+include/dhooks.inc
 include/entity.inc
 include/entity_prop_stocks.inc
 include/events.inc

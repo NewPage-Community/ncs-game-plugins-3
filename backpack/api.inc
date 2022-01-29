@@ -87,8 +87,8 @@ public void HaveUserItemCallback(HTTPResponse response, DataPack dp, const char[
     JSONObject item = view_as<JSONObject>(data.Get("item"));
     int itemID = item.GetInt("id");
     int amount = item.GetInt("amount");
-    item.GetString("length", buffer , sizeof(buffer));
-    int length = StringToInt(buffer);
+    item.GetString("expr_time", buffer , sizeof(buffer));
+    int exprTime = StringToInt(buffer);
     delete item;
 
     Call_StartFunction(plugin, callback);
@@ -96,7 +96,7 @@ public void HaveUserItemCallback(HTTPResponse response, DataPack dp, const char[
     Call_PushCell(itemID);
     Call_PushCell(have);
     Call_PushCell(amount);
-    Call_PushCell(length);
+    Call_PushCell(exprTime);
     Call_PushCell(cdata);
     Call_Finish();
 }

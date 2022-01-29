@@ -31,8 +31,8 @@ methodmap Items < ArrayList
 
 typeset BackpackHaveItemCallback
 {
-    function void (int client, int itemID, bool have, int amount, int length);
-    function void (int client, int itemID, bool have, int amount, int length, any data);
+    function void (int client, int itemID, bool have, int amount, int exprTime);
+    function void (int client, int itemID, bool have, int amount, int exprTime, any data);
 };
 
 native void NCS_Backpack_AddItems(int client, Items items);

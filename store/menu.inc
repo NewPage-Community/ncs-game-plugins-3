@@ -94,7 +94,7 @@ public int ItemMenuHandle(Menu menu, MenuAction action, int client, int slot)
     }
     else if (action == MenuAction_Select)
     {
-        playerLastItem[client] = slot;
+        playerLastItem[client] = menu.Selection;
 
         char itemID[8];
         menu.GetItem(slot, itemID, sizeof(itemID), _, _, _);
@@ -165,13 +165,11 @@ public int BuyItemHandle(Menu menu, MenuAction action, int client, int slot)
     else if (action == MenuAction_Cancel && slot == MenuCancel_ExitBack)
     {
         Menu lastMenu = playerLastMenu[client];
-        int lastPage = (playerLastItem[client]/lastMenu.Pagination)*lastMenu.Pagination;
-        lastMenu.DisplayAt(client, lastPage, MENU_TIME_FOREVER);
+        lastMenu.DisplayAt(client, playerLastItem[client], MENU_TIME_FOREVER);
     }
     else if (action == MenuAction_Select)
     {
         Menu lastMenu = playerLastMenu[client];
-        int lastPage = (playerLastItem[client]/lastMenu.Pagination)*lastMenu.Pagination;
         char itemID[8];
         menu.GetItem(slot, itemID, sizeof(itemID), _, _, _);
 
@@ -201,7 +199,7 @@ public int BuyItemHandle(Menu menu, MenuAction action, int client, int slot)
             if (item.id == PASSBOX_ID)
             {
                 BuyItem(client, item);
-                lastMenu.DisplayAt(client, lastPage, MENU_TIME_FOREVER);
+                lastMenu.DisplayAt(client, playerLastItem[client], MENU_TIME_FOREVER);
             }
             else
             {
@@ -332,8 +330,7 @@ public int BuyAdvPassConfirmHandle(Menu menu, MenuAction action, int client, int
     else if (action == MenuAction_Cancel && slot == MenuCancel_ExitBack)
     {
         Menu lastMenu = playerLastMenu[client];
-        int lastPage = (playerLastItem[client]/lastMenu.Pagination)*lastMenu.Pagination;
-        lastMenu.DisplayAt(client, lastPage, MENU_TIME_FOREVER);
+        lastMenu.DisplayAt(client, playerLastItem[client], MENU_TIME_FOREVER);
     }
     else if (action == MenuAction_Select)
     {
@@ -416,8 +413,7 @@ public int BuyVIPConfirmHandle(Menu menu, MenuAction action, int client, int slo
     else if (action == MenuAction_Cancel && slot == MenuCancel_ExitBack)
     {
         Menu lastMenu = playerLastMenu[client];
-        int lastPage = (playerLastItem[client]/lastMenu.Pagination)*lastMenu.Pagination;
-        lastMenu.DisplayAt(client, lastPage, MENU_TIME_FOREVER);
+        lastMenu.DisplayAt(client, playerLastItem[client], MENU_TIME_FOREVER);
     }
     else if (action == MenuAction_Select)
     {
@@ -466,7 +462,6 @@ public int BuyItemConfirmMenuHandle(Menu menu, MenuAction action, int client, in
     else if (action == MenuAction_Select)
     {
         Menu lastMenu = playerLastMenu[client];
-        int lastPage = (playerLastItem[client]/lastMenu.Pagination)*lastMenu.Pagination;
         char itemID[8];
         menu.GetItem(slot, itemID, sizeof(itemID), _, _, _);
 
@@ -475,7 +470,7 @@ public int BuyItemConfirmMenuHandle(Menu menu, MenuAction action, int client, in
             return 0;
 
         BuyItem(client, item);
-        lastMenu.DisplayAt(client, lastPage, MENU_TIME_FOREVER);
+        lastMenu.DisplayAt(client, playerLastItem[client], MENU_TIME_FOREVER);
     }
     return 0;
 }

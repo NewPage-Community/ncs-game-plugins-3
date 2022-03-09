@@ -117,7 +117,7 @@ void DisplayRewards(int client)
     char desc[512];
     char name[MAX_ITEM_NAME_LENGTH];
 
-    for (int i = 0; i < MAX_LEVEL; i++)
+    for (int i = 1; i < MAX_LEVEL; i++)
     {
         Format(desc, sizeof(desc), "等级 %d\n免费版: ", i);
         if (rewards[i][FreeReward].IsValid())

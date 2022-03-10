@@ -157,7 +157,7 @@ public int Menu_Skin(Menu menu, MenuAction action, int client, int slot)
             }
             else if (slot == 1)
             {
-                SetPlayerModelExt(client, skinID);
+                SkinBodyMenu(client, skinID);
             }
         }
     }

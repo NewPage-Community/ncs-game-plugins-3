@@ -177,9 +177,11 @@ void SkinBodyMenu(int client, int skinID)
     menu.AddItem("", "重置");
     for (int i = 0; i < skin.bodys.Length; i++) {
         if (!skin.bodys.GetArray(i, body)) ThrowError("GetArray");
+#if defined GAME_INSURGENCY
         CBaseAnimating animating = CBaseAnimating(client);
         int value = animating.GetBodyGroup(GetEntProp(client, Prop_Send, "m_nBody"), body.index);
         Format(info, sizeof(info), "%s: 形态%d", body.name, value + 1);
+#endif
         menu.AddItem("", info);
     }
     if (playerLast[client]) menu.DisplayAt(client, playerLast[client], MENU_TIME_FOREVER);

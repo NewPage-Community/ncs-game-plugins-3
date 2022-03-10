@@ -143,12 +143,13 @@ void InitSkin()
     engine = GetEngineVersion();
 }
 
-#include "skin/api"
 #if defined GAME_INSURGENCY
 #include "skin/player.ins"
 #else
 #include "skin/player"
 #endif
+
+#include "skin/api"
 #include "skin/preview"
 #include "skin/menu"
 #include "skin/cmd"

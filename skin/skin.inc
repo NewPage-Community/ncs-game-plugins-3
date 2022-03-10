@@ -20,8 +20,8 @@ enum struct Skin
 
     bool Init(JSONObject data)
     {
-        if (this.bodys != INVALID_HANDLE) 
-            this.bodys = new ArrayList(sizeof(BodysData));
+        if (this.bodys != INVALID_HANDLE) delete this.bodys;
+        this.bodys = new ArrayList(sizeof(BodysData));
 
         this.id = data.GetInt("id");
         data.GetString("name", this.name, MAX_SKIN_NAME_LENGTH);

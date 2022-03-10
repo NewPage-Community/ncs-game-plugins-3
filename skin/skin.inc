@@ -3,6 +3,11 @@
 
 EngineVersion engine;
 
+enum struct BodysData {
+	char name[32];
+	int index;
+}
+
 enum struct Skin
 {
     int id;
@@ -10,6 +15,8 @@ enum struct Skin
     char skinPath[PLATFORM_MAX_PATH];
     char armPath[PLATFORM_MAX_PATH];
     char deathSound[PLATFORM_MAX_PATH];
+    ArrayList bodys;
+    ArrayList sounds;
 
     bool Init(JSONObject data)
     {
@@ -21,13 +28,31 @@ enum struct Skin
         attr.GetString("skin_path", this.skinPath, PLATFORM_MAX_PATH);
         attr.GetString("arm_path", this.armPath, PLATFORM_MAX_PATH);
         attr.GetString("skin_death_sound", this.deathSound, PLATFORM_MAX_PATH);
+
+        if (this.bodys != INVALID_HANDLE) this.bodys = new ArrayList(sizeof(BodysData));
+
+        static BodysData tmp_body;
+        JSONObject bodys = view_as<JSONObject>(data.Get("bodys"));
+        JSONObjectKeys bodysKeys = bodys.Keys();
+        while (bodysKeys.ReadKey(tmp_body.name, sizeof(BodysData::name)))
+        {
+            tmp_body.index = bodys.GetInt(tmp_body.name);
+            this.bodys.PushArray(tmp_body);
+        }
+        delete bodysKeys;
+        delete bodys;
+
         delete attr;
 
         // Precache model
         if (this.skinPath[0] != '\0')
         {
             if (FileExists(this.skinPath, true))
+            {
+#if !defined GAME_INSURGENCY
                 PrecacheModel(this.skinPath, IsSDK2013Mod() ? true : false);
+#endif
+            }
             else
             {
                 NCS_LogError("Skin", "SkinInit", "File is not exists (%s)", this.skinPath);
@@ -38,7 +63,11 @@ enum struct Skin
         if (this.armPath[0] != '\0' && engine == Engine_CSGO)
         {
             if (FileExists(this.armPath, true))
+            {
+#if !defined GAME_INSURGENCY
                 PrecacheModel(this.armPath, IsSDK2013Mod() ? true : false);
+#endif
+            }
             else
             {
                 NCS_LogError("Skin", "SkinInit", "File is not exists (%s)", this.armPath);
@@ -66,6 +95,7 @@ enum struct Skin
         this.skinPath[0] = '\0';
         this.armPath[0] = '\0';
         this.deathSound[0] = '\0';
+        delete this.bodys;
     }
 }
 
@@ -99,12 +129,14 @@ SkinIndex g_Skins;
 int g_UsersUsedSkin[MAXPLAYERS+1];
 
 // Library
+#if !defined GAME_INSURGENCY
 bool isZombieReloadedLoaded = false;
 
 void InitLibrary()
 {
     isZombieReloadedLoaded = LibraryExists("zombiereloaded");
 }
+#endif
 
 void InitSkin()
 {
@@ -112,7 +144,11 @@ void InitSkin()
 }
 
 #include "skin/api"
+#if defined GAME_INSURGENCY
+#include "skin/player.ins"
+#else
 #include "skin/player"
+#endif
 #include "skin/preview"
 #include "skin/menu"
 #include "skin/cmd"

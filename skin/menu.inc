@@ -1,5 +1,8 @@
 #define Backpack_Service "backpack/user"
 
+int playerLast[MAXPLAYERS + 1];
+int playerLastSkin[MAXPLAYERS + 1];
+
 void DisplayUserSkins(int client)
 {
     char uid[MAX_UID_LENGTH];
@@ -79,7 +82,9 @@ public void UserSkinsCallback(HTTPResponse response, DataPack dp, const char[] e
             Format(desc, sizeof(desc), "(使用中)%s", desc);
         menu.AddItem(skinID, desc, used ? ITEMDRAW_DISABLED : ITEMDRAW_DEFAULT);
     }
-    menu.Display(client, MENU_TIME_FOREVER);
+
+    if (playerLast[client]) menu.DisplayAt(client, playerLast[client], MENU_TIME_FOREVER);
+    else menu.Display(client, MENU_TIME_FOREVER);
 
     delete items;
 }
@@ -98,13 +103,124 @@ public int Menu_SkinSelected(Menu menu, MenuAction action, int client, int slot)
     {
         if (IsValidClient(client))
         {
-            char skinID[32], skinName[32];
-            menu.GetItem(slot, skinID, sizeof(skinID), _, skinName, sizeof(skinName));
-
-            SetUsedSkin(client, skinID);
-            if (engine == Engine_CSGO) SetModel(client);
-            NCS_Chat(client, _, "已成功更换为 {lime}%s{default}，可通过 {olive}!tp{default} 查看模型", skinName);
+            playerLast[client] = menu.Selection;
+            char skinID[32];
+            menu.GetItem(slot, skinID, sizeof(skinID));
+            DisplaySkinMenu(client, StringToInt(skinID));
         }
+    }
+    return 0;
+}
+
+void DisplaySkinMenu(int client, int skinID)
+{
+    if (!skinID) return;
+    playerLastSkin[client] = skinID;
+
+    static Skin skin;
+    if (!g_Skins.Get(skinID, skin)) return;
+
+    bool used = g_UsersUsedSkin[client] == skin.id
+    MenuEx menu = new MenuEx(Menu_Skin);
+    menu.SetTitle("%s - 皮肤设置\n", skin.name);
+    menu.AddItemEx(used ? ITEMDRAW_DISABLED : ITEMDRAW_DEFAULT, "", "装备皮肤%s", used ? "(使用中)" : "");
+    menu.AddItem("", "组件设置", !skin.bodys.Length ? ITEMDRAW_DISABLED : ITEMDRAW_DEFAULT);
+    menu.Display(client, MENU_TIME_FOREVER);
+}
+
+public int Menu_Skin(Menu menu, MenuAction action, int client, int slot)
+{
+    if (action == MenuAction_End)
+    {
+        delete menu;
+    }
+    else if (action == MenuAction_Cancel && slot == MenuCancel_ExitBack)
+    {
+        delete menu;
+    }
+    else if (action == MenuAction_Select)
+    {
+        if (IsValidClient(client))
+        {
+            int skinID = playerLastSkin[client];
+            if (slot == 0)
+            {
+                static Skin skin;
+                if (!g_Skins.Get(skinID, skin)) return 0;
+                SetUsedSkin(client, skinID);
+#if defined GAME_INSURGENCY
+                SetPlayerModelExt(client, skinID);
+#else
+                SetModel(client);
+#endif
+                NCS_Chat(client, _, "已成功更换为 {lime}%s{default}，可通过 {olive}!tp{default} 查看模型", skin.name);
+            }
+            else if (slot == 1)
+            {
+                SetPlayerModelExt(client, skinID);
+            }
+        }
+    }
+    return 0;
+}
+
+void SkinBodyMenu(int client, int skinID)
+{
+    static BodysData body;
+    Skin skin;
+    if (!g_Skins.Get(skinID, skin)) return;
+
+    Menu menu = CreateMenu(SkinBodyMenuHandler);
+    menu.SetTitle("%s - 组件设置", skin.name);
+
+    static char info[128];
+    menu.AddItem("", "重置");
+    for (int i = 0; i < skin.bodys.Length; i++) {
+        if (!skin.bodys.GetArray(i, body)) ThrowError("GetArray");
+        CBaseAnimating animating = CBaseAnimating(client);
+        int value = animating.GetBodyGroup(GetEntProp(client, Prop_Send, "m_nBody"), body.index);
+        Format(info, sizeof(info), "%s: 形态%d", body.name, value + 1);
+        menu.AddItem("", info);
+    }
+    if (playerLast[client]) menu.DisplayAt(client, playerLast[client], MENU_TIME_FOREVER);
+    else menu.Display(client, MENU_TIME_FOREVER);
+}
+
+int SkinBodyMenuHandler(Menu menu, MenuAction action, int client, int param) {
+    if (action == MenuAction_End) menu.Close();
+    else if (action == MenuAction_Select)
+    {
+        if (param == MenuCancel_ExitBack)
+        {
+            DisplayUserSkins(client);
+            return 0;
+        }
+
+        playerLast[client] = menu.Selection;
+        static Skin skin;
+        if (!g_Skins.Get(playerLastSkin[client], skin)) return 0;
+        if (param == 0)
+        {
+            NCS_Chat(client, _, "组件已重置");
+            SetUserSkinBody(client, playerLastSkin[client], 0);
+        }
+        else 
+        {
+            static BodysData body;
+            if (!skin.bodys.GetArray(param - 1, body)) ThrowError("GetArray");
+
+            CBaseAnimating animating = CBaseAnimating(client);
+            int value = animating.GetBodyGroup(GetEntProp(client, Prop_Send, "m_nBody"), body.index) + 1;
+            value %= animating.GetBodyGroupCount(body.index);
+            animating.SetBodyGroup(body.index, value);
+
+            SetUserSkinBody(client, playerLastSkin[client], GetEntProp(client, Prop_Send, "m_nBody"));
+#if defined GAME_INSURGENCY
+            SetPlayerModelExt(client, playerLastSkin[client]);
+#endif
+            NCS_Chat(client, _, "组件 {lime}%s{default} 已设置为 {lime}形态%d", body.name, value + 1);
+        }
+        SkinBodyMenu(client, playerLastSkin[client]);
     }
     return 0;
 }

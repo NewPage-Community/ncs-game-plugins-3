@@ -208,16 +208,14 @@ int SkinBodyMenuHandler(Menu menu, MenuAction action, int client, int param) {
         {
             static BodysData body;
             if (!skin.bodys.GetArray(param - 1, body)) ThrowError("GetArray");
-
+#if defined GAME_INSURGENCY
             CBaseAnimating animating = CBaseAnimating(client);
             int value = animating.GetBodyGroup(GetEntProp(client, Prop_Send, "m_nBody"), body.index) + 1;
             value %= animating.GetBodyGroupCount(body.index);
             animating.SetBodyGroup(body.index, value);
-
-            SetUserSkinBody(client, playerLastSkin[client], GetEntProp(client, Prop_Send, "m_nBody"));
-#if defined GAME_INSURGENCY
             SetPlayerModelExt(client, playerLastSkin[client]);
 #endif
+            SetUserSkinBody(client, playerLastSkin[client], GetEntProp(client, Prop_Send, "m_nBody"));
             NCS_Chat(client, _, "组件 {lime}%s{default} 已设置为 {lime}形态%d", body.name, value + 1);
         }
         SkinBodyMenu(client, playerLastSkin[client]);

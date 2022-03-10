@@ -14,7 +14,7 @@ void SetUsedSkin(int client, int id)
     g_UsersUsedSkin[client] = id;
 }
 
-int GetUserSkinBody(int client, int id)
+stock int GetUserSkinBody(int client, int id)
 {
     static char buffer[16];
     Format(buffer, sizeof(buffer), "skin_body:%d", id);
@@ -22,7 +22,7 @@ int GetUserSkinBody(int client, int id)
     return StringToInt(buffer);
 }
 
-void SetUserSkinBody(int client, int id, int value)
+stock void SetUserSkinBody(int client, int id, int value)
 {
     static char buffer[16], val[16];
     Format(buffer, sizeof(buffer), "skin_body:%d", id);

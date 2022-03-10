@@ -20,27 +20,34 @@ enum struct Skin
 
     bool Init(JSONObject data)
     {
+        if (this.bodys != INVALID_HANDLE) 
+            this.bodys = new ArrayList(sizeof(BodysData));
+
         this.id = data.GetInt("id");
         data.GetString("name", this.name, MAX_SKIN_NAME_LENGTH);
 
         // attr
         JSONObject attr = view_as<JSONObject>(data.Get("attributes"));
-        attr.GetString("skin_path", this.skinPath, PLATFORM_MAX_PATH);
-        attr.GetString("arm_path", this.armPath, PLATFORM_MAX_PATH);
-        attr.GetString("skin_death_sound", this.deathSound, PLATFORM_MAX_PATH);
+        if (data.HasKey("skin_death_sound"))
+            attr.GetString("skin_path", this.skinPath, PLATFORM_MAX_PATH);
+        if (data.HasKey("skin_death_sound"))
+            attr.GetString("arm_path", this.armPath, PLATFORM_MAX_PATH);
+        if (data.HasKey("skin_death_sound"))
+            attr.GetString("skin_death_sound", this.deathSound, PLATFORM_MAX_PATH);
 
-        if (this.bodys != INVALID_HANDLE) this.bodys = new ArrayList(sizeof(BodysData));
-
-        static BodysData tmp_body;
-        JSONObject bodys = view_as<JSONObject>(data.Get("bodys"));
-        JSONObjectKeys bodysKeys = bodys.Keys();
-        while (bodysKeys.ReadKey(tmp_body.name, sizeof(BodysData::name)))
+        if (data.HasKey("bodys"))
         {
-            tmp_body.index = bodys.GetInt(tmp_body.name);
-            this.bodys.PushArray(tmp_body);
+            static BodysData tmp_body;
+            JSONObject bodys = view_as<JSONObject>(data.Get("bodys"));
+            JSONObjectKeys bodysKeys = bodys.Keys();
+            while (bodysKeys.ReadKey(tmp_body.name, sizeof(BodysData::name)))
+            {
+                tmp_body.index = bodys.GetInt(tmp_body.name);
+                this.bodys.PushArray(tmp_body);
+            }
+            delete bodysKeys;
+            delete bodys;
         }
-        delete bodysKeys;
-        delete bodys;
 
         delete attr;
 

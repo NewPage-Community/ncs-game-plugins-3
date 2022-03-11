@@ -25,8 +25,6 @@ build:
 ifdef CI
 	@printf "\nPipeline id $(CI_PIPELINE_IID)"
 	@sed -i "s%<pipeline_iid>%$(CI_PIPELINE_IID)%g" include/ncs.inc
-	@sed -i "s%<api_url>%$(API_URL)%g" include/ncs/api.inc
-	@sed -i "s%<api_token>%$(API_TOKEN)%g" include/ncs/api.inc
 endif
 	@test -e compiled || mkdir compiled
 	@test -e compiled/newpage || mkdir compiled/newpage

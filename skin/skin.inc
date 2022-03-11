@@ -3,6 +3,11 @@
 
 EngineVersion engine;
 
+enum struct BodysData {
+	char name[32];
+	int index;
+}
+
 enum struct Skin
 {
     int id;
@@ -10,24 +15,50 @@ enum struct Skin
     char skinPath[PLATFORM_MAX_PATH];
     char armPath[PLATFORM_MAX_PATH];
     char deathSound[PLATFORM_MAX_PATH];
+    ArrayList bodys;
+    ArrayList sounds;
 
     bool Init(JSONObject data)
     {
+        if (this.bodys != INVALID_HANDLE) delete this.bodys;
+        this.bodys = new ArrayList(sizeof(BodysData));
+
         this.id = data.GetInt("id");
         data.GetString("name", this.name, MAX_SKIN_NAME_LENGTH);
 
         // attr
         JSONObject attr = view_as<JSONObject>(data.Get("attributes"));
         attr.GetString("skin_path", this.skinPath, PLATFORM_MAX_PATH);
-        attr.GetString("arm_path", this.armPath, PLATFORM_MAX_PATH);
-        attr.GetString("skin_death_sound", this.deathSound, PLATFORM_MAX_PATH);
+        if (attr.HasKey("arm_path"))
+            attr.GetString("arm_path", this.armPath, PLATFORM_MAX_PATH);
+        if (attr.HasKey("skin_death_sound"))
+            attr.GetString("skin_death_sound", this.deathSound, PLATFORM_MAX_PATH);
+
+        if (attr.HasKey("bodys"))
+        {
+            static BodysData tmp_body;
+            JSONObject bodys = view_as<JSONObject>(attr.Get("bodys"));
+            JSONObjectKeys bodysKeys = bodys.Keys();
+            while (bodysKeys.ReadKey(tmp_body.name, sizeof(BodysData::name)))
+            {
+                tmp_body.index = bodys.GetInt(tmp_body.name);
+                this.bodys.PushArray(tmp_body);
+            }
+            delete bodysKeys;
+            delete bodys;
+        }
+
         delete attr;
 
         // Precache model
         if (this.skinPath[0] != '\0')
         {
             if (FileExists(this.skinPath, true))
+            {
+#if !defined GAME_INSURGENCY
                 PrecacheModel(this.skinPath, IsSDK2013Mod() ? true : false);
+#endif
+            }
             else
             {
                 NCS_LogError("Skin", "SkinInit", "File is not exists (%s)", this.skinPath);
@@ -38,7 +69,11 @@ enum struct Skin
         if (this.armPath[0] != '\0' && engine == Engine_CSGO)
         {
             if (FileExists(this.armPath, true))
+            {
+#if !defined GAME_INSURGENCY
                 PrecacheModel(this.armPath, IsSDK2013Mod() ? true : false);
+#endif
+            }
             else
             {
                 NCS_LogError("Skin", "SkinInit", "File is not exists (%s)", this.armPath);
@@ -66,6 +101,7 @@ enum struct Skin
         this.skinPath[0] = '\0';
         this.armPath[0] = '\0';
         this.deathSound[0] = '\0';
+        delete this.bodys;
     }
 }
 
@@ -99,20 +135,27 @@ SkinIndex g_Skins;
 int g_UsersUsedSkin[MAXPLAYERS+1];
 
 // Library
+#if !defined GAME_INSURGENCY
 bool isZombieReloadedLoaded = false;
 
 void InitLibrary()
 {
     isZombieReloadedLoaded = LibraryExists("zombiereloaded");
 }
+#endif
 
 void InitSkin()
 {
     engine = GetEngineVersion();
 }
 
-#include "skin/api"
+#if defined GAME_INSURGENCY
+#include "skin/player.ins"
+#else
 #include "skin/player"
+#endif
+
+#include "skin/api"
 #include "skin/preview"
 #include "skin/menu"
 #include "skin/cmd"

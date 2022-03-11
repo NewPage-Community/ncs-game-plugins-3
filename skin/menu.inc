@@ -80,7 +80,7 @@ public void UserSkinsCallback(HTTPResponse response, DataPack dp, const char[] e
         bool used = g_UsersUsedSkin[client] == s.id;
         if (used)
             Format(desc, sizeof(desc), "(使用中)%s", desc);
-        menu.AddItem(skinID, desc, used ? ITEMDRAW_DISABLED : ITEMDRAW_DEFAULT);
+        menu.AddItem(skinID, desc);
     }
 
     if (playerLast[client]) menu.DisplayAt(client, playerLast[client], MENU_TIME_FOREVER);
@@ -95,14 +95,15 @@ public int Menu_SkinSelected(Menu menu, MenuAction action, int client, int slot)
     {
         delete menu;
     }
-    else if (action == MenuAction_Cancel && slot == MenuCancel_ExitBack)
-    {
-        delete menu;
-    }
     else if (action == MenuAction_Select)
     {
+        if (slot == MenuEnd_Exit) return 0;
         if (IsValidClient(client))
         {
+            if (slot == 0) {
+                SetUsedSkin(client, 0);
+                return 0;
+            }
             playerLast[client] = menu.Selection;
             char skinID[32];
             menu.GetItem(slot, skinID, sizeof(skinID));
@@ -125,19 +126,14 @@ void DisplaySkinMenu(int client, int skinID)
     menu.SetTitle("%s - 皮肤设置\n", skin.name);
     menu.AddItemEx(used ? ITEMDRAW_DISABLED : ITEMDRAW_DEFAULT, "", "装备皮肤%s", used ? "(使用中)" : "");
     menu.AddItem("", "组件设置", !skin.bodys.Length ? ITEMDRAW_DISABLED : ITEMDRAW_DEFAULT);
+    menu.ExitBackButton = true;
     menu.Display(client, MENU_TIME_FOREVER);
 }
 
 public int Menu_Skin(Menu menu, MenuAction action, int client, int slot)
 {
-    if (action == MenuAction_End)
-    {
-        delete menu;
-    }
-    else if (action == MenuAction_Cancel && slot == MenuCancel_ExitBack)
-    {
-        delete menu;
-    }
+    if (action == MenuAction_End) delete menu;
+    else if (slot == MenuCancel_ExitBack) DisplayUserSkins(client);
     else if (action == MenuAction_Select)
     {
         if (IsValidClient(client))
@@ -149,7 +145,7 @@ public int Menu_Skin(Menu menu, MenuAction action, int client, int slot)
                 if (!g_Skins.Get(skinID, skin)) return 0;
                 SetUsedSkin(client, skinID);
 #if defined GAME_INSURGENCY
-                SetPlayerModelExt(client, skinID);
+                SetPlayerModelExt(client, skinID, true);
 #else
                 SetModel(client);
 #endif
@@ -185,12 +181,14 @@ void SkinBodyMenu(int client, int skinID)
         Format(info, sizeof(info), "%s: 形态%d", body.name, value + 1);
         menu.AddItem("", info);
     }
+    menu.ExitBackButton = true;
     if (playerLast[client]) menu.DisplayAt(client, playerLast[client], MENU_TIME_FOREVER);
     else menu.Display(client, MENU_TIME_FOREVER);
 }
 
 int SkinBodyMenuHandler(Menu menu, MenuAction action, int client, int param) {
-    if (action == MenuAction_End) menu.Close();
+    if (action == MenuAction_End) delete menu;
+    else if (param == MenuCancel_ExitBack) DisplayUserSkins(client);
     else if (action == MenuAction_Select)
     {
         if (param == MenuCancel_ExitBack)
@@ -217,9 +215,9 @@ int SkinBodyMenuHandler(Menu menu, MenuAction action, int client, int param) {
             value = animating.GetBodyGroup(GetEntProp(client, Prop_Send, "m_nBody"), body.index) + 1;
             value %= animating.GetBodyGroupCount(body.index);
             animating.SetBodyGroup(body.index, value);
-            SetPlayerModelExt(client, playerLastSkin[client]);
-#endif
             SetUserSkinBody(client, playerLastSkin[client], GetEntProp(client, Prop_Send, "m_nBody"));
+            SetPlayerModelExt(client, playerLastSkin[client], true);
+#endif
             NCS_Chat(client, _, "组件 {lime}%s{default} 已设置为 {lime}形态%d", body.name, value + 1);
         }
         SkinBodyMenu(client, playerLastSkin[client]);

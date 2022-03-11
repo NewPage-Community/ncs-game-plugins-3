@@ -28,17 +28,16 @@ enum struct Skin
 
         // attr
         JSONObject attr = view_as<JSONObject>(data.Get("attributes"));
-        if (data.HasKey("skin_death_sound"))
-            attr.GetString("skin_path", this.skinPath, PLATFORM_MAX_PATH);
-        if (data.HasKey("skin_death_sound"))
+        attr.GetString("skin_path", this.skinPath, PLATFORM_MAX_PATH);
+        if (attr.HasKey("arm_path"))
             attr.GetString("arm_path", this.armPath, PLATFORM_MAX_PATH);
-        if (data.HasKey("skin_death_sound"))
+        if (attr.HasKey("skin_death_sound"))
             attr.GetString("skin_death_sound", this.deathSound, PLATFORM_MAX_PATH);
 
-        if (data.HasKey("bodys"))
+        if (attr.HasKey("bodys"))
         {
             static BodysData tmp_body;
-            JSONObject bodys = view_as<JSONObject>(data.Get("bodys"));
+            JSONObject bodys = view_as<JSONObject>(attr.Get("bodys"));
             JSONObjectKeys bodysKeys = bodys.Keys();
             while (bodysKeys.ReadKey(tmp_body.name, sizeof(BodysData::name)))
             {

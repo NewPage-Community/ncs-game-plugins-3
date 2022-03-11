@@ -46,7 +46,7 @@ int SpawnSpeakerEntity(float fPos[3], float fAgl[3], int source, float removeDel
     return speaker;
 }
 
-void SetPlayerModelExt(int client, int skinID)
+void SetPlayerModelExt(int client, int skinID, bool immediately = false)
 {
     if (skinID <= 0)
         return;
@@ -56,7 +56,7 @@ void SetPlayerModelExt(int client, int skinID)
         return;
     
     int body = GetUserSkinBody(client, skinID);
-    SetPlayerModel(client, skin.skinPath, body, true);
+    SetPlayerModel(client, skin.skinPath, body, immediately);
 }
 
 void ClearPlayerModel(int client)

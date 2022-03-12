@@ -51,7 +51,7 @@ enum struct Skin
             delete bodysKeys;
             delete bodys;
 
-            if (attr.HasKey("initBody")) this.initBody = attr.GetInt("initBody");
+            if (attr.HasKey("init_body")) this.initBody = attr.GetInt("init_body");
         }
 
         delete attr;

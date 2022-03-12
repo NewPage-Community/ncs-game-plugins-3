@@ -160,7 +160,7 @@ public int Menu_Skin(Menu menu, MenuAction action, int client, int slot)
     return 0;
 }
 
-void SkinBodyMenu(int client, int skinID)
+void SkinBodyMenu(int client, int skinID, int selection = 0)
 {
     static BodysData body;
     Skin skin;
@@ -182,7 +182,7 @@ void SkinBodyMenu(int client, int skinID)
         menu.AddItem("", info);
     }
     menu.ExitBackButton = true;
-    if (playerLast[client]) menu.DisplayAt(client, playerLast[client], MENU_TIME_FOREVER);
+    if (selection) menu.DisplayAt(client, selection, MENU_TIME_FOREVER);
     else menu.Display(client, MENU_TIME_FOREVER);
 }
 
@@ -224,7 +224,7 @@ int SkinBodyMenuHandler(Menu menu, MenuAction action, int client, int param) {
             if (GetUserFlagBits(client) & ADMFLAG_ROOT)
                 PrintToConsole(client, "[BodyGroup] %s: %d", skin.uid, GetEntProp(client, Prop_Send, "m_nBody"));
         }
-        menu.DisplayAt(client, menu.Selection, MENU_TIME_FOREVER);
+        SkinBodyMenu(client, playerLastSkin[client], menu.Selection);
     }
     return 0;
 }

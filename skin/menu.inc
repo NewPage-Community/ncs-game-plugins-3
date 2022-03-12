@@ -197,13 +197,15 @@ int SkinBodyMenuHandler(Menu menu, MenuAction action, int client, int param) {
             return 0;
         }
 
-        playerLast[client] = menu.Selection;
         static Skin skin;
         if (!g_Skins.Get(playerLastSkin[client], skin)) return 0;
         if (param == 0)
         {
             NCS_Chat(client, _, "组件已重置");
-            SetUserSkinBody(client, playerLastSkin[client], 0);
+            SetUserSkinBody(client, playerLastSkin[client], skin.initBody);
+#if defined GAME_INSURGENCY
+            SetPlayerModelExt(client, playerLastSkin[client], true);
+#endif
         }
         else 
         {
@@ -219,8 +221,9 @@ int SkinBodyMenuHandler(Menu menu, MenuAction action, int client, int param) {
             SetPlayerModelExt(client, playerLastSkin[client], true);
 #endif
             NCS_Chat(client, _, "组件 {lime}%s{default} 已设置为 {lime}形态%d", body.name, value + 1);
+            PrintToConsole(client, "[BodyGroup] %s: %d", skin.uid, GetEntProp(client, Prop_Send, "m_nBody"));
         }
-        SkinBodyMenu(client, playerLastSkin[client]);
+        menu.DisplayAt(client, menu.Selection, MENU_TIME_FOREVER);
     }
     return 0;
 }

@@ -4,6 +4,7 @@
 #include <ncs/game>
 #include <sdkhooks>
 #include <sdktools>
+#include <regex>
 #include <InsExt>
 
 #undef REQUIRE_PLUGIN
@@ -44,6 +45,7 @@ public void OnPluginStart()
     InitSkin();
     HookEvent("player_spawn", Event_PlayerSpawn, EventHookMode_Post);
     HookEvent("player_death", Event_PlayerDeath_Pre, EventHookMode_Pre);
+    RegConsoleCmd("InsRadial", RadialCommand);
 }
 
 public void OnPluginEnd()
@@ -54,6 +56,11 @@ public void OnPluginEnd()
 public void OnConfigsExecuted()
 {
     LoadSkins();
+}
+
+public void OnClientConnected(int client)
+{
+    SkinSoundOnClientConnected(client);
 }
 
 public void OnClientDisconnect(int client)
@@ -68,6 +75,7 @@ public Action Event_PlayerSpawn(Event event, const char[] name1, bool dontBroadc
         return Plugin_Continue;
 
     Preview_PlayerSpawn(client);
+    SkinSoundOnPlayerSpawn(client);
 
     return Plugin_Continue;
 }
@@ -82,6 +90,15 @@ public Action Event_PlayerDeath_Pre(Event event, const char[] name, bool dontBro
     int client = GetClientOfUserId(event.GetInt("userid"));
     if (IsFakeClient(client))
         return Plugin_Continue;
-    RequestFrame(Broadcast_DeathSound, client);
+    SkinSoundOnPlayerDeath(client);
     return Plugin_Continue;
+}
+
+public Action RadialCommand(int client, int args) {
+    if (!IsClientInGame(client))
+        return Plugin_Handled;
+    static char arg[32];
+    GetCmdArg(1, arg, sizeof(arg));
+    bool block = SkinSoundOnPlayerRadio(client, arg);
+    return block ? Plugin_Handled : Plugin_Continue;
 }

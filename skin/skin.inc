@@ -51,7 +51,7 @@ enum struct Skin
             delete bodysKeys;
             delete bodys;
 
-            this.initBody = attr.GetInt("initBody");
+            if (attr.HasKey("initBody")) this.initBody = attr.GetInt("initBody");
         }
 
         delete attr;
@@ -169,7 +169,7 @@ enum struct Skin
 
         // Get random files
         int index = GetURandomInt() % length;
-        if (index > 0) Format(buffer, size, "%d%s", index, buffer);
+        if (index > 0) Format(buffer, size, "%d%s", indexs[index], buffer);
         Format(buffer, size, "newpage/models/%s/%s%s", this.uid, key, buffer);
         return true;
     }
@@ -219,6 +219,9 @@ void InitSkin()
     engine = GetEngineVersion();
 }
 
+#if defined GAME_INSURGENCY
+#include "skin/cmd.ins"
+#endif
 #include "skin/sound"
 
 #if defined GAME_INSURGENCY

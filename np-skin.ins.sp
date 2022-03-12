@@ -88,7 +88,7 @@ public void NCS_Cookie_OnUserCached(int client)
 public Action Event_PlayerDeath_Pre(Event event, const char[] name, bool dontBroadcast)
 {
     int client = GetClientOfUserId(event.GetInt("userid"));
-    if (IsFakeClient(client))
+    if (IsFakeClient(client) || !IsClientInGame(client))
         return Plugin_Continue;
     SkinSoundOnPlayerDeath(client);
     return Plugin_Continue;

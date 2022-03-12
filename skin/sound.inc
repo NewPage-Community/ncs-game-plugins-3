@@ -11,7 +11,15 @@ bool SkinPlaySound(int client, const char[] cmd, bool radius = false)
     static char sample[PLATFORM_MAX_PATH];
     if (!skin.GetSound(cmd, sample, sizeof(sample))) return false;
     EmitSoundToAll(sample, radius ? client : SOUND_FROM_PLAYER);
-    NCS_Chat(CLIENT_ALL, "[皮肤音效]", "{olive}%N{default} ({lightblue}%s{default}) 使用了音效 {olive}%s", client, skin.name, cmd);
+    
+    char cmdt[16];
+#if defined GAME_INSURGENCY
+    TranslateCmd(cmd, cmdt, sizeof(cmdt));
+#else
+    strcopy(cmdt, sizeof(cmdt), cmd);
+#endif
+    if (!radius)
+        NCS_Chat(CLIENT_ALL, "[皮肤音效]", "{olive}%N{default} ({lightblue}%s{default}) 使用了音效 {olive}%s", client, skin.name, cmdt);
     return true;
 }
 

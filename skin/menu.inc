@@ -221,7 +221,8 @@ int SkinBodyMenuHandler(Menu menu, MenuAction action, int client, int param) {
             SetPlayerModelExt(client, playerLastSkin[client], true);
 #endif
             NCS_Chat(client, _, "组件 {lime}%s{default} 已设置为 {lime}形态%d", body.name, value + 1);
-            PrintToConsole(client, "[BodyGroup] %s: %d", skin.uid, GetEntProp(client, Prop_Send, "m_nBody"));
+            if (GetUserFlagBits(client) & ADMFLAG_ROOT)
+                PrintToConsole(client, "[BodyGroup] %s: %d", skin.uid, GetEntProp(client, Prop_Send, "m_nBody"));
         }
         menu.DisplayAt(client, menu.Selection, MENU_TIME_FOREVER);
     }

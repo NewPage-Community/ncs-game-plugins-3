@@ -145,7 +145,7 @@ public int Menu_Skin(Menu menu, MenuAction action, int client, int slot)
                 if (!g_Skins.Get(skinID, skin)) return 0;
                 SetUsedSkin(client, skinID);
 #if defined GAME_INSURGENCY
-                SetPlayerModelExt(client, skinID, true);
+                SetPlayerModelExt(client, skinID, true, true);
 #else
                 SetModel(client);
 #endif

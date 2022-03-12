@@ -10,7 +10,7 @@ bool SkinPlaySound(int client, const char[] cmd, bool radius = false)
 
     static char sample[PLATFORM_MAX_PATH];
     if (!skin.GetSound(cmd, sample, sizeof(sample))) return false;
-    EmitSoundToAll(sample, radius ? client : SOUND_FROM_PLAYER);
+    EmitSoundToAll(sample, radius ? client : SOUND_FROM_PLAYER, _, _, _, 0.8);
     
     char cmdt[16];
 #if defined GAME_INSURGENCY
@@ -37,9 +37,8 @@ bool SkinSoundOnPlayerRadio(int client, const char[] cmd)
 {
     if (playerRadioTimer[client]) return true;
     bool success = SkinPlaySound(client, cmd);
-    // Root skip timer
-    if (!(GetUserFlagBits(client) & ADMFLAG_ROOT) && success)
-        CreateTimer(30.0, SkinTimer, client, TIMER_FLAG_NO_MAPCHANGE);
+    if (success)
+        playerRadioTimer[client] = CreateTimer(10.0, SkinTimer, client, TIMER_FLAG_NO_MAPCHANGE);
     return success;
 }
 

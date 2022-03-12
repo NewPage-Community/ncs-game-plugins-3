@@ -33,6 +33,7 @@ void PreviewSkin(int client, int skinID)
     DispatchSpawn(m_iViewModel);
     
     SetEntProp(m_iViewModel, Prop_Send, "m_CollisionGroup", 11);
+    SetEntProp(m_iViewModel, Prop_Send, "m_nBody", s.initBody);
     
     AcceptEntityInput(m_iViewModel, "Enable");
     

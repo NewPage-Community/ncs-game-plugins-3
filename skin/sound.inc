@@ -10,7 +10,7 @@ bool SkinPlaySound(int client, const char[] cmd, bool radius = false)
 
     static char sample[PLATFORM_MAX_PATH];
     if (!skin.GetSound(cmd, sample, sizeof(sample))) return false;
-    EmitSoundToAll(sample, radius ? client : SOUND_FROM_PLAYER, _, _, _, 0.8);
+    EmitSoundToAll(sample, radius ? client : SOUND_FROM_PLAYER, _, _, _, 0.7);
     
     char cmdt[16];
 #if defined GAME_INSURGENCY

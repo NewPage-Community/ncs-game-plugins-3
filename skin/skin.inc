@@ -118,7 +118,7 @@ enum struct Skin
     {
         static char path[PLATFORM_MAX_PATH];
         Format(path, sizeof(path), "sound/newpage/models/%s", this.uid);
-        DirectoryListing dir = OpenDirectory(path);
+        DirectoryListing dir = OpenDirectory(path, true);
         if (dir)
         {
             FileType type;

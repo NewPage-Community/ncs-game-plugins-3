@@ -1,6 +1,6 @@
 static Handle playerRadioTimer[MAXPLAYERS + 1];
 
-bool SkinPlaySound(int client, const char[] cmd, bool radius = false)
+bool SkinPlaySound(int client, const char[] cmd, bool radius = false, bool myself = false, bool broadcast = false)
 {
     int skinID = g_UsersUsedSkin[client];
     if (!skinID) return false;
@@ -9,9 +9,12 @@ bool SkinPlaySound(int client, const char[] cmd, bool radius = false)
     if (!g_Skins.Get(skinID, skin)) return false;
 
     static char sample[PLATFORM_MAX_PATH];
-    if (!skin.GetSound(cmd, sample, sizeof(sample))) return false;
-    EmitSoundToAll(sample, radius ? client : SOUND_FROM_PLAYER, _, _, _, radius ? 1.0 : 0.7);
-    
+    if (!skin.GetSound(cmd, sample)) return false;
+    if (myself) EmitSoundToAll(sample, radius ? client : SOUND_FROM_PLAYER, _, _, _, radius ? 1.0 : 0.7);
+    else EmitSoundToAll(sample, radius ? client : SOUND_FROM_PLAYER, _, _, _, radius ? 1.0 : 0.7);
+
+    if (!broadcast) return true;
+
     char cmdt[16];
 #if defined GAME_INSURGENCY
     TranslateCmd(cmd, cmdt, sizeof(cmdt));
@@ -25,18 +28,21 @@ bool SkinPlaySound(int client, const char[] cmd, bool radius = false)
 
 void SkinSoundOnPlayerSpawn(int client)
 {
-    SkinPlaySound(client, "spawn", true);
+    if (!IsPlayerAlive(client)) return;
+    SkinPlaySound(client, "spawn", _, true);
 }
 
 void SkinSoundOnPlayerDeath(int client)
 {
+#if !defined GAME_INSURGENCY
     SkinPlaySound(client, "death", true);
+#endif
 }
 
 bool SkinSoundOnPlayerRadio(int client, const char[] cmd)
 {
     if (playerRadioTimer[client]) return true;
-    bool success = SkinPlaySound(client, cmd);
+    bool success = SkinPlaySound(client, cmd, false, false, true);
     if (success)
         playerRadioTimer[client] = CreateTimer(10.0, SkinTimer, client, TIMER_FLAG_NO_MAPCHANGE);
     return success;
@@ -59,16 +65,18 @@ void SkinSoundOnRoundEnd(int winner)
     {
         if (!IsClientInGame(client)) continue;
         if (IsFakeClient(client)) continue;
-        int skinID = g_UsersUsedSkin[client];
-        if (!skinID) continue;
-
-        Skin skin;
-        if (!g_Skins.Get(skinID, skin)) continue;
-
-        static char sample[PLATFORM_MAX_PATH];
-        if (GetClientTeam(client) == winner) sample = "win";
-        else sample = "lose";
-        if (!skin.GetSound(sample, sample, sizeof(sample))) continue;
-        EmitSoundToClient(client, sample);
+        if (GetClientTeam(client) == winner)
+            SkinPlaySound(client, "win", true);
+        else
+            SkinPlaySound(client, "lose", true);
     }
+}
+
+bool SkinGetSound(int client, const char[] cmd, char sample[PLATFORM_MAX_PATH])
+{
+    int skinID = g_UsersUsedSkin[client];
+    if (!skinID) return false;
+    Skin skin;
+    if (!g_Skins.Get(skinID, skin)) return false;
+    return skin.GetSound(cmd, sample);
 }

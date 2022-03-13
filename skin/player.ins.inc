@@ -10,7 +10,10 @@ void SetPlayerModelExt(int client, int skinID, bool immediately = false, bool so
     int body = GetUserSkinBody(client, skinID);
     if (!body) body = skin.initBody;
     SetPlayerModel(client, skin.skinPath, body, immediately);
-    if (IsClientInGame(client) && sound) SkinSoundOnPlayerSpawn(client);
+    if (IsClientInGame(client) && sound)
+    {
+        SkinSoundOnPlayerSpawn(client);
+    }
 }
 
 void ClearPlayerModel(int client)

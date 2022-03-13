@@ -47,6 +47,7 @@ public void OnPluginStart()
     HookEvent("player_death", Event_PlayerDeath_Pre, EventHookMode_Pre);
     HookEvent("round_end", Event_RoundEnd, EventHookMode_Post);
     RegConsoleCmd("InsRadial", RadialCommand);
+    AddNormalSoundHook(InsSoundHook);
 }
 
 public void OnPluginEnd()

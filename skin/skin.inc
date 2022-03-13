@@ -158,22 +158,23 @@ enum struct Skin
     }
 
     // Get sound randomly 
-    bool GetSound(const char[] key, char[] buffer, int size)
+    bool GetSound(const char[] key, char sample[PLATFORM_MAX_PATH])
     {
+        static char buffer[PLATFORM_MAX_PATH];
         int indexs[8], length;
-        Format(buffer, size, "%s_files", key);
+        Format(buffer, PLATFORM_MAX_PATH, "%s_files", key);
         this.sounds.GetArray(buffer, indexs, sizeof(indexs), length);
         if (!length) return false;
 
         // Get extension
-        Format(buffer, size, "%s_ext", key);
-        this.sounds.GetString(buffer, buffer, size);
-        Format(buffer, size, ".%s", buffer);
+        Format(buffer, PLATFORM_MAX_PATH, "%s_ext", key);
+        this.sounds.GetString(buffer, buffer, PLATFORM_MAX_PATH);
+        Format(buffer, PLATFORM_MAX_PATH, ".%s", buffer);
 
         // Get random files
         int index = GetURandomInt() % length;
-        if (index > 0) Format(buffer, size, "%d%s", indexs[index], buffer);
-        Format(buffer, size, "newpage/models/%s/%s%s", !this.soundOverride[0] ? this.uid : this.soundOverride, key, buffer);
+        if (index > 0) Format(buffer, PLATFORM_MAX_PATH, "%d%s", indexs[index], buffer);
+        Format(sample, PLATFORM_MAX_PATH, "newpage/models/%s/%s%s", !this.soundOverride[0] ? this.uid : this.soundOverride, key, buffer);
         return true;
     }
 }
@@ -224,6 +225,7 @@ void InitSkin()
 
 #if defined GAME_INSURGENCY
 #include "skin/cmd.ins"
+#include "skin/sound.ins"
 #endif
 #include "skin/sound"
 

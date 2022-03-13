@@ -52,6 +52,7 @@ public void OnPluginStart()
     InitSkin();
     HookEvent("player_spawn", Event_PlayerSpawn, EventHookMode_Post);
     HookEvent("player_death", Event_PlayerDeath_Pre, EventHookMode_Pre);
+    HookEvent("round_end", Event_RoundEnd, EventHookMode_Post);
     RegConsoleCmd("InsRadial", RadialCommand);
 
     cv_skin_only_team = CreateConVar("skin_only_team", "0", "", 0, true, 0.0, true, 3.0);
@@ -106,4 +107,11 @@ public Action RadialCommand(int client, int args) {
     GetCmdArg(1, arg, sizeof(arg));
     SkinSoundOnPlayerRadio(client, arg);
     return Plugin_Handled;
+}
+
+public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast)
+{
+    int winner = GetEventInt(event, "winner");
+    SkinSoundOnRoundEnd(winner);
+    return Plugin_Continue;
 }

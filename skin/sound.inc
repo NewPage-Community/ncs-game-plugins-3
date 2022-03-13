@@ -70,7 +70,7 @@ void SkinSoundOnRoundEnd(int winner)
     }
 }
 
-bool SkinGetSound(int client, const char[] cmd, char sample[PLATFORM_MAX_PATH])
+stock bool SkinGetSound(int client, const char[] cmd, char sample[PLATFORM_MAX_PATH])
 {
     int skinID = g_UsersUsedSkin[client];
     if (!skinID) return false;

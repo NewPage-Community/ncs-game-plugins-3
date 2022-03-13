@@ -10,7 +10,7 @@ bool SkinPlaySound(int client, const char[] cmd, bool radius = false, bool mysel
 
     static char sample[PLATFORM_MAX_PATH];
     if (!skin.GetSound(cmd, sample)) return false;
-    if (myself) EmitSoundToAll(sample, radius ? client : SOUND_FROM_PLAYER, _, _, _, radius ? 1.0 : 0.7);
+    if (myself) EmitSoundToClient(client, sample, radius ? client : SOUND_FROM_PLAYER, _, _, _, 1.0);
     else EmitSoundToAll(sample, radius ? client : SOUND_FROM_PLAYER, _, _, _, radius ? 1.0 : 0.7);
 
     if (!broadcast) return true;

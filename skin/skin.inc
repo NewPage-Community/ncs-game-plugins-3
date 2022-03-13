@@ -19,6 +19,7 @@ enum struct Skin
     ArrayList bodys;
     StringMap sounds;
     int initBody;
+    char soundOverride[MAX_SKIN_NAME_LENGTH];
 
     bool Init(JSONObject data)
     {
@@ -37,6 +38,8 @@ enum struct Skin
             attr.GetString("arm_path", this.armPath, PLATFORM_MAX_PATH);
         // if (attr.HasKey("skin_death_sound"))
         //     attr.GetString("skin_death_sound", this.deathSound, PLATFORM_MAX_PATH);
+        if (attr.HasKey("sound_override"))
+            attr.GetString("sound_override", this.soundOverride, MAX_SKIN_NAME_LENGTH);
 
         if (attr.HasKey("bodys"))
         {
@@ -170,7 +173,7 @@ enum struct Skin
         // Get random files
         int index = GetURandomInt() % length;
         if (index > 0) Format(buffer, size, "%d%s", indexs[index], buffer);
-        Format(buffer, size, "newpage/models/%s/%s%s", this.uid, key, buffer);
+        Format(buffer, size, "newpage/models/%s/%s%s", !this.soundOverride[0] ? this.uid : this.soundOverride, key, buffer);
         return true;
     }
 }

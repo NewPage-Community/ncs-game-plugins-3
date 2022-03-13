@@ -52,3 +52,23 @@ public Action SkinTimer(Handle timer, int client)
     playerRadioTimer[client] = INVALID_HANDLE;
     return Plugin_Stop;
 }
+
+void SkinSoundOnRoundEnd(int winner)
+{
+    for (int client = 1; client <= MaxClients; client++)
+    {
+        if (!IsClientInGame(client)) continue;
+        if (IsFakeClient(client)) continue;
+        int skinID = g_UsersUsedSkin[client];
+        if (!skinID) continue;
+
+        Skin skin;
+        if (!g_Skins.Get(skinID, skin)) continue;
+
+        static char sample[PLATFORM_MAX_PATH];
+        if (GetClientTeam(client) == winner) sample = "win";
+        else sample = "lose";
+        if (!skin.GetSound(sample, sample, sizeof(sample))) continue;
+        EmitSoundToClient(client, sample);
+    }
+}

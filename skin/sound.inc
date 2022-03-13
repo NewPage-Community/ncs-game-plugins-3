@@ -32,11 +32,9 @@ void SkinSoundOnPlayerSpawn(int client)
     SkinPlaySound(client, "spawn", _, true);
 }
 
-void SkinSoundOnPlayerDeath(int client)
+stock void SkinSoundOnPlayerDeath(int client)
 {
-#if !defined GAME_INSURGENCY
     SkinPlaySound(client, "death", true);
-#endif
 }
 
 bool SkinSoundOnPlayerRadio(int client, const char[] cmd)

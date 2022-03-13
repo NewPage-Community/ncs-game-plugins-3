@@ -44,7 +44,6 @@ public void OnPluginStart()
     InitCmd();
     InitSkin();
     HookEvent("player_spawn", Event_PlayerSpawn, EventHookMode_Post);
-    HookEvent("player_death", Event_PlayerDeath_Pre, EventHookMode_Pre);
     HookEvent("round_end", Event_RoundEnd, EventHookMode_Post);
     RegConsoleCmd("InsRadial", RadialCommand);
     AddNormalSoundHook(InsSoundHook);
@@ -85,15 +84,6 @@ public Action Event_PlayerSpawn(Event event, const char[] name1, bool dontBroadc
 public void NCS_Cookie_OnUserCached(int client)
 {
     GetUsedSkin(client);
-}
-
-public Action Event_PlayerDeath_Pre(Event event, const char[] name, bool dontBroadcast)
-{
-    int client = GetClientOfUserId(event.GetInt("userid"));
-    if (IsFakeClient(client) || !IsClientInGame(client))
-        return Plugin_Continue;
-    SkinSoundOnPlayerDeath(client);
-    return Plugin_Continue;
 }
 
 public Action RadialCommand(int client, int args) {

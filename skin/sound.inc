@@ -29,7 +29,7 @@ bool SkinPlaySound(int client, const char[] cmd, bool radius = false, bool mysel
 void SkinSoundOnPlayerSpawn(int client)
 {
     if (!IsPlayerAlive(client)) return;
-    SkinPlaySound(client, "spawn", _, true);
+    SkinPlaySound(client, "spawn", false, true);
 }
 
 stock void SkinSoundOnPlayerDeath(int client)
@@ -64,9 +64,9 @@ void SkinSoundOnRoundEnd(int winner)
         if (!IsClientInGame(client)) continue;
         if (IsFakeClient(client)) continue;
         if (GetClientTeam(client) == winner)
-            SkinPlaySound(client, "win", true);
+            SkinPlaySound(client, "win", false, true);
         else
-            SkinPlaySound(client, "lose", true);
+            SkinPlaySound(client, "lose", false, true);
     }
 }
 

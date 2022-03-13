@@ -18,7 +18,8 @@ stock int GetUserSkinBody(int client, int id)
 {
     static char buffer[16];
     Format(buffer, sizeof(buffer), "skin_body:%d", id);
-    NCS_Cookie_Get(client, buffer, buffer, sizeof(buffer));
+    if (!NCS_Cookie_Get(client, buffer, buffer, sizeof(buffer)))
+        return -1;
     return StringToInt(buffer);
 }
 

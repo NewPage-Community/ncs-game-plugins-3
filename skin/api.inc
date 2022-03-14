@@ -31,9 +31,9 @@ public void LoadSkinsInfo(HTTPResponse response, DataPack dp, const char[] error
     int length = skins.Length;
 
     // Loading skins
-    if (g_Skins != INVALID_HANDLE)
-        delete g_Skins;
-    g_Skins = new SkinIndex();
+    if (g_Skins == INVALID_HANDLE)
+        g_Skins = new SkinIndex();
+    g_Skins.Clear();
 
     for (int i = 0; i < length; i++)
     {

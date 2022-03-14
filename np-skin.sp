@@ -49,7 +49,6 @@ public void OnPluginStart()
 {
     InitAPI();
     InitCmd();
-    InitSkin();
     HookEvent("player_spawn", Event_PlayerSpawn, EventHookMode_Post);
     HookEvent("player_death", Event_PlayerDeath_Pre, EventHookMode_Pre);
     HookEvent("round_end", Event_RoundEnd, EventHookMode_Post);

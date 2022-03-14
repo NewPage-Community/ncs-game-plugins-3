@@ -42,7 +42,6 @@ public void OnPluginStart()
 {
     InitAPI();
     InitCmd();
-    InitSkin();
     HookEvent("player_spawn", Event_PlayerSpawn, EventHookMode_Post);
     HookEvent("round_end", Event_RoundEnd, EventHookMode_Post);
     RegConsoleCmd("InsRadial", RadialCommand);

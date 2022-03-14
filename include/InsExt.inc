@@ -22,3 +22,5 @@ methodmap CBaseAnimating {
 }
 
 native bool SetPlayerModel(int client, const char[] name, int body, bool immediately = false);
+native void SetPlayerHands(int client, const char[] name);
+native int GetHandsGearID(char[] name);

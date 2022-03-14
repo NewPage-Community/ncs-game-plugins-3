@@ -1,8 +1,6 @@
 #define MAX_SKINS_NUM 1024
 #define MAX_SKIN_NAME_LENGTH 64
 
-EngineVersion engine;
-
 enum struct BodysData {
 	char name[32];
 	int index;
@@ -75,13 +73,12 @@ enum struct Skin
             }
         }
 
-        if (this.armPath[0] != '\0' && engine == Engine_CSGO)
+#if !defined GAME_INSURGENCY
+        if (this.armPath[0] != '\0')
         {
             if (FileExists(this.armPath, true))
             {
-#if !defined GAME_INSURGENCY
                 PrecacheModel(this.armPath, IsSDK2013Mod() ? true : false);
-#endif
             }
             else
             {
@@ -89,6 +86,7 @@ enum struct Skin
                 return false;
             }
         }
+#endif
 
         // if (this.deathSound[0] != '\0')
         // {
@@ -106,7 +104,7 @@ enum struct Skin
         return true;
     }
 
-    void Clean()
+    void Clear()
     {
         this.id = 0;
         this.name[0] = '\0';
@@ -203,6 +201,20 @@ methodmap SkinIndex < StringMap
         return this.GetArray(key, ref, sizeof(ref));
     }
 
+    public void Clear()
+    {
+        static char buffer[8]
+        static Skin skin;
+        StringMapSnapshot snapshot = this.Snapshot();
+        for (int i = 0; i < snapshot.Length; i++)
+        {
+            snapshot.GetKey(i, buffer, sizeof(buffer));
+            this.GetArray(buffer, skin, sizeof(skin));
+            skin.Clear();
+            this.Remove(buffer);
+        }
+        delete snapshot;
+    }
 }
 
 SkinIndex g_Skins;
@@ -217,11 +229,6 @@ void InitLibrary()
     isZombieReloadedLoaded = LibraryExists("zombiereloaded");
 }
 #endif
-
-void InitSkin()
-{
-    engine = GetEngineVersion();
-}
 
 #if defined GAME_INSURGENCY
 #include "skin/cmd.ins"

@@ -24,7 +24,7 @@ void SetModel(int client)
         SetEntityModel(client, s.skinPath);
         SetEntityRenderColor(client, 255, 255, 255, 255);
 
-        if (IsModelPrecached(s.armPath) && s.armPath[0] != '\0' && engine == Engine_CSGO)
+        if (IsModelPrecached(s.armPath) && s.armPath[0] != '\0')
             SetEntPropString(client, Prop_Send, "m_szArmsModel", s.armPath);
     }
 
@@ -33,14 +33,7 @@ void SetModel(int client)
 
 void Model_PlayerSpawn(int client)
 {
-    // Engine
-    int flag;
-    switch (engine)
-    {
-        case Engine_CSGO: flag = TIMER_FLAG_NO_MAPCHANGE;
-        default: flag = TIMER_FLAG_NO_MAPCHANGE|TIMER_REPEAT;
-    }
-    CreateTimer(1.0, ModelCheck, client, flag);
+    CreateTimer(1.0, ModelCheck, client, TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public Action ModelCheck(Handle timer, int client)

@@ -113,12 +113,13 @@ enum struct Skin
         // this.deathSound[0] = '\0';
         delete this.bodys;
         delete this.sounds;
+        this.soundOverride[0] = '\0';
     }
 
     void LoadSounds()
     {
         static char path[PLATFORM_MAX_PATH];
-        Format(path, sizeof(path), "sound/newpage/models/%s", this.uid);
+        Format(path, sizeof(path), "sound/newpage/models/%s", !this.soundOverride[0] ? this.uid : this.soundOverride);
         DirectoryListing dir = OpenDirectory(path, true);
         if (dir)
         {

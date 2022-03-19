@@ -2,8 +2,8 @@
 #define MAX_SKIN_NAME_LENGTH 64
 
 enum struct BodysData {
-	char name[32];
-	int index;
+    char name[32];
+    int index;
 }
 
 enum struct Skin
@@ -230,6 +230,11 @@ void InitLibrary()
     isZombieReloadedLoaded = LibraryExists("zombiereloaded");
 }
 #endif
+
+#include "skin/block"
+#include "skin/arms"
+#include "skin/radio"
+#include "skin/volume"
 
 #if defined GAME_INSURGENCY
 #include "skin/cmd.ins"

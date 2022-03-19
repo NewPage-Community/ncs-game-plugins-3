@@ -44,7 +44,7 @@ endif
 			then \
 				smxfile="test/$$smxfile"; \
 			fi; \
-			./spcomp -E $$sourcefile -ocompiled/$$smxfile; \
+			./spcomp -t0 -E $$sourcefile -ocompiled/$$smxfile; \
 			if [[ $$? -ne 0 ]]; \
 			then \
 				exit 1; \

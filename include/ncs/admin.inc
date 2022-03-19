@@ -1,5 +1,5 @@
 #if defined _NCS_Admin_
-	#endinput
+    #endinput
 #endif
 #define _NCS_Admin_
 

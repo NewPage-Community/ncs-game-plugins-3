@@ -1,5 +1,5 @@
 #if defined _NCS_Stats_
-	#endinput
+    #endinput
 #endif
 #define _NCS_Stats_
 

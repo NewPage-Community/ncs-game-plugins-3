@@ -1,5 +1,5 @@
 #if defined _NCS_Sign_
-	#endinput
+    #endinput
 #endif
 #define _NCS_Sign_
 

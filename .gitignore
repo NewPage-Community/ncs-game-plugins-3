@@ -1,4 +1,5 @@
 # SourceMod
+*.smx
 compile.sh
 spcomp
 spcomp.exe

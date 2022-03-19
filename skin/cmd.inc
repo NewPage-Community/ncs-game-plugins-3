@@ -13,6 +13,6 @@ void RegCmd()
 
 public Action Command_Skin(int client, int args)
 {
-    DisplayUserSkins(client);
+    SkinMainMenu(client);
     return Plugin_Handled;
 }

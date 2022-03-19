@@ -12,11 +12,11 @@
 
 public Plugin myinfo = 
 {
-	name        = P_NAME,
-	author      = P_AUTHOR,
-	description = P_DESC,
-	version     = P_VERSION,
-	url         = P_URLS
+    name        = P_NAME,
+    author      = P_AUTHOR,
+    description = P_DESC,
+    version     = P_VERSION,
+    url         = P_URLS
 };
 
 // Module
@@ -24,38 +24,38 @@ public Plugin myinfo =
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
-	// core
-	InitNative();
+    // core
+    InitNative();
 
-	// lib
-	RegPluginLibrary("NCS-VIP");
+    // lib
+    RegPluginLibrary("NCS-VIP");
 
-	return APLRes_Success;
+    return APLRes_Success;
 }
 
 public void OnPluginStart()
 {
-	LoadTranslations("common.phrases");
-	LoadTranslations("basevotes.phrases");
-	LoadTranslations("plugin.basecommands");
-	
-	InitAPI();
-	InitCmd();
+    LoadTranslations("common.phrases");
+    LoadTranslations("basevotes.phrases");
+    LoadTranslations("plugin.basecommands");
+    
+    InitAPI();
+    InitCmd();
 }
 
 public void OnPluginEnd()
 {
-	CloseAPI();
+    CloseAPI();
 }
 
 public void NCS_Account_OnUserLoaded(int client, const char[] uid)
 {
-	ReqVIPInfo(client, uid);
+    ReqVIPInfo(client, uid);
 }
 
 public void OnClientDisconnect(int client)
 {
-	g_VIPs[client].Clean();
+    g_VIPs[client].Clean();
 }
 
 public void NCS_Cookie_OnUserCached(int client)

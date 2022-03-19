@@ -1,5 +1,5 @@
 #if defined _NCS_Skin_
-	#endinput
+    #endinput
 #endif
 #define _NCS_Skin_
 

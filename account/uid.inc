@@ -1,23 +1,23 @@
 methodmap UIDMap < StringMap
 {
-	public UIDMap()
-	{
-		return view_as<UIDMap>(new StringMap());
-	}
+    public UIDMap()
+    {
+        return view_as<UIDMap>(new StringMap());
+    }
 
-	public bool Set(const char[] uid, int index)
-	{
-		return this.SetValue(uid, index, true);
-	}
+    public bool Set(const char[] uid, int index)
+    {
+        return this.SetValue(uid, index, true);
+    }
 
-	// not found return 0
-	public int Get(const char[] uid)
-	{
-		int client;
-		if (!this.GetValue(uid, client))
-			client = 0;
-		return client;
-	}
+    // not found return 0
+    public int Get(const char[] uid)
+    {
+        int client;
+        if (!this.GetValue(uid, client))
+            client = 0;
+        return client;
+    }
 }
 
 static UIDMap uidMap;

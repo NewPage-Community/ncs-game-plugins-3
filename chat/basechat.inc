@@ -1,6 +1,6 @@
-#define MAX_LENGTH_FLAG		32
-#define MAX_LENGTH_MESSAGE	128
-#define MAX_LENGTH_BUFFER	255
+#define MAX_LENGTH_FLAG        32
+#define MAX_LENGTH_MESSAGE    128
+#define MAX_LENGTH_BUFFER    255
 #define MAX_NAME_LENGTH_FIX 512
 
 static bool proto;
@@ -46,7 +46,7 @@ public Action OnSayText2(UserMsg msg_id, BfRead msg, const int[] players, int pl
     //Stops double messages in-general.
     if (newMSG[iSender])
         newMSG[iSender] = false;
-    else if (reliable)	//Fix for other plugins that use SayText2 I guess?
+    else if (reliable)    //Fix for other plugins that use SayText2 I guess?
         return Plugin_Stop;
 
     //Retrieve the name of template name to use when getting the format.

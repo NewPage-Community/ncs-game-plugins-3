@@ -10,7 +10,7 @@ void SetPlayerModelExt(int client, int skinID, bool immediately = false, bool so
     int body = GetUserSkinBody(client, skinID);
     if (body == -1) body = skin.initBody;
     SetPlayerModel(client, skin.skinPath, body, immediately);
-    if (skin.armPath[0]) SetPlayerHands(client, skin.armPath);
+    if (skin.armPath[0] && !SkinArmsOff(client)) SetPlayerHands(client, skin.armPath);
     if (IsClientInGame(client) && sound)
     {
         SkinSoundOnPlayerSpawn(client);

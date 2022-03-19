@@ -1,5 +1,5 @@
 #if defined _NCS_Aura_
-	#endinput
+    #endinput
 #endif
 #define _NCS_Aura_
 

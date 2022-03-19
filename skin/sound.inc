@@ -2,6 +2,8 @@ static Handle playerRadioTimer[MAXPLAYERS + 1];
 
 bool SkinPlaySound(int client, const char[] cmd, bool radius = false, bool myself = false, bool broadcast = false)
 {
+    if (IsFakeClient(client)) return false;
+
     int skinID = g_UsersUsedSkin[client];
     if (!skinID) return false;
 
@@ -10,8 +12,27 @@ bool SkinPlaySound(int client, const char[] cmd, bool radius = false, bool mysel
 
     static char sample[PLATFORM_MAX_PATH];
     if (!skin.GetSound(cmd, sample)) return false;
-    if (myself) EmitSoundToClient(client, sample, radius ? client : SOUND_FROM_PLAYER, _, _, _, 1.0);
-    else EmitSoundToAll(sample, radius ? client : SOUND_FROM_PLAYER, _, _, _, radius ? 1.0 : 0.7);
+    if (myself)
+    {
+        float volume = SkinRadioVolumeGet(client, client) / 100.0;
+        if (volume) EmitSoundToClient(client, sample, radius ? client : SOUND_FROM_PLAYER, _, _, _, volume);
+    }
+    else
+    {
+        for (int i = 1; i <= MaxClients; i++)
+        {
+            if (!IsClientConnected(i)) continue;
+            if (IsFakeClient(i)) continue;
+            PlayerRadioBlock blocker;
+            blocker = g_PlayerRadioBlock[i];
+            if (blocker.Mode == 1 && i != client) continue;
+            if (blocker.Mode == 2 && blocker.BlackList.FindValue(skin.id) != -1) continue;
+            if (blocker.Mode == 3 && blocker.WhiteList.FindValue(skin.id) == -1) continue;
+            float volume = SkinRadioVolumeGet(client, i) / 100.0;
+            if (radius) volume = 1.0;
+            if (volume) EmitSoundToClient(client, sample, radius ? client : SOUND_FROM_PLAYER, _, _, _, volume);
+        }
+    }
 
     if (!broadcast) return true;
 
@@ -39,9 +60,10 @@ stock void SkinSoundOnPlayerDeath(int client)
 
 bool SkinSoundOnPlayerRadio(int client, const char[] cmd)
 {
+    if (SkinRadioOff(client)) return false;
     if (playerRadioTimer[client]) return true;
     bool success = SkinPlaySound(client, cmd, false, false, true);
-    if (success)
+    if (success && !(GetUserFlagBits(client) & ADMFLAG_ROOT))
         playerRadioTimer[client] = CreateTimer(10.0, SkinTimer, client, TIMER_FLAG_NO_MAPCHANGE);
     return success;
 }

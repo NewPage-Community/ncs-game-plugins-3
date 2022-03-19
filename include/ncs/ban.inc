@@ -1,5 +1,5 @@
 #if defined _NCS_Ban_
-	#endinput
+    #endinput
 #endif
 #define _NCS_Ban_
 

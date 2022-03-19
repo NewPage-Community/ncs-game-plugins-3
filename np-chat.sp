@@ -50,10 +50,10 @@ public void OnConfigsExecuted()
 
 public void OnClientConnected(int client)
 {
-	player[client].index = client;
+    player[client].index = client;
 }
 
 public void OnClientDisconnect(int client)
 {
-	player[client].Clear();
+    player[client].Clear();
 }

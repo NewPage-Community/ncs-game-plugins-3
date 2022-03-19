@@ -1,5 +1,5 @@
 #if defined _NCS_Cookie_
-	#endinput
+    #endinput
 #endif
 #define _NCS_Cookie_
 
@@ -61,6 +61,6 @@ public SharedPlugin __pl_ncs_cookie =
 public void __pl_ncs_cookie_SetNTVOptional()
 {
     MarkNativeAsOptional("NCS_Cookie_Get");
-	MarkNativeAsOptional("NCS_Cookie_Set");
+    MarkNativeAsOptional("NCS_Cookie_Set");
 }
 #endif

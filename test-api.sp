@@ -15,11 +15,11 @@
 
 public Plugin myinfo = 
 {
-	name        = P_NAME,
-	author      = P_AUTHOR,
-	description = P_DESC,
-	version     = P_VERSION,
-	url         = P_URLS
+    name        = P_NAME,
+    author      = P_AUTHOR,
+    description = P_DESC,
+    version     = P_VERSION,
+    url         = P_URLS
 };
 
 public void OnPluginStart()

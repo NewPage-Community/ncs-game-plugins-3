@@ -9,10 +9,10 @@ enum struct PlayerInfo
 
     bool IsValid()
     {
-		if (this.index == 0)
-			return false;
-		return IsValidClient(this.index);
-	}
+        if (this.index == 0)
+            return false;
+        return IsValidClient(this.index);
+    }
 
     void GetChatName(char[] buffer, int size)
     {

@@ -208,3 +208,15 @@ stock int GetGameAppID()
     delete file;
     return -1;
 }
+
+stock any Min(any a, any b) {
+    return a > b ? b : a;
+}
+
+stock any Max(any a, any b) {
+    return a > b ? a : b;
+}
+
+stock any Mid(any a, any b, any c) {
+    return Max(a, Min(b, c));
+}

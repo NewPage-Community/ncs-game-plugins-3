@@ -1,6 +1,6 @@
 public Action InsSoundHook(int clients[MAXPLAYERS], int &numClients, char sample[PLATFORM_MAX_PATH],
-	  int &entity, int &channel, float &volume, int &level, int &pitch, int &flags,
-	  char soundEntry[PLATFORM_MAX_PATH], int &seed)
+      int &entity, int &channel, float &volume, int &level, int &pitch, int &flags,
+      char soundEntry[PLATFORM_MAX_PATH], int &seed)
 {
     static char buffer[PLATFORM_MAX_PATH];
     if (entity < 1 || entity >= MaxClients) return Plugin_Continue;

@@ -82,6 +82,10 @@ public Action Event_PlayerSpawn(Event event, const char[] name1, bool dontBroadc
 
 public void NCS_Cookie_OnUserCached(int client)
 {
+    SkinRadioBlockGetCookie(client);
+    SkinRadioVolumeGetCookie(client);
+    SkinRadioOffGetCookie(client);
+    SkinArmsOffGetCookie(client);
     GetUsedSkin(client);
 }
 

@@ -1,5 +1,5 @@
 #if defined _NCS_Spray_
-	#endinput
+    #endinput
 #endif
 #define _NCS_Spray_
 

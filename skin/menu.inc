@@ -3,6 +3,35 @@
 int playerLast[MAXPLAYERS + 1];
 int playerLastSkin[MAXPLAYERS + 1];
 
+void SkinMainMenu(int client)
+{
+    int skinID = g_UsersUsedSkin[client];
+    Skin skin;
+    if (skinID) g_Skins.Get(skinID, skin);
+
+    MenuEx menu = new MenuEx(SkinMainMenuHandler);
+    menu.SetTitle("皮肤系统");
+    menu.AddItemEx(ITEMDRAW_DEFAULT, "", "装备皮肤: %s", skin.name);
+    menu.AddItemEx(ITEMDRAW_DEFAULT, "", "装备手模: %s", SkinArmsOff(client) ? "原版" : "跟随皮肤");
+    menu.AddItemEx(ITEMDRAW_DEFAULT, "", "装备无线电语音: %s", SkinRadioOff(client) ? "原版" : "跟随皮肤");
+    menu.AddItem("", "无线电语音设置");
+    menu.Display(client, MENU_TIME_FOREVER);
+}
+
+public int SkinMainMenuHandler(Menu menu, MenuAction action, int client, int slot)
+{
+    if (action == MenuAction_End) delete menu;
+    else if (action == MenuAction_Select)
+    {
+        if (slot == 0) DisplayUserSkins(client);
+        else if (slot == 1) SkinArmsOffSet(client, !SkinArmsOff(client));
+        else if (slot == 2) SkinRadioOffSet(client, !SkinRadioOff(client));
+        else if (slot == 3) SkinRadioMenu(client);
+        if (slot == 1 || slot == 2) SkinMainMenu(client);
+    }
+    return 0;
+}
+
 void DisplayUserSkins(int client)
 {
     char uid[MAX_UID_LENGTH];
@@ -47,14 +76,16 @@ public void UserSkinsCallback(HTTPResponse response, DataPack dp, const char[] e
         delete items;
         return;
     }
-    
+
     // Menu
 
     Menu menu = new Menu(Menu_SkinSelected);
-    menu.ExitButton = true;
-    menu.SetTitle("选择你要使用的皮肤");
+    menu.ExitBackButton = true;
+    menu.SetTitle("皮肤系统 - 装备皮肤");
     menu.AddItem("0", "默认皮肤");
 
+    int mySkinCount;
+    int usedSkin = g_UsersUsedSkin[client];
     for (int i = 0; i < length; i++)
     {
         JSONObject item = view_as<JSONObject>(items.Get(i));
@@ -70,20 +101,22 @@ public void UserSkinsCallback(HTTPResponse response, DataPack dp, const char[] e
             continue;
         }
         delete item;
-        
+
         char desc[64];
         int left = StringToInt(exprTime) - GetTime();
         if (left > 0)
             Format(desc, sizeof(desc), "%s(%d天%d小时)", s.name, left / 86400, (left % 86400) / 3600);
         else
             Format(desc, sizeof(desc), "%s", s.name);
-        bool used = g_UsersUsedSkin[client] == s.id;
+        bool used = usedSkin == s.id;
         if (used)
             Format(desc, sizeof(desc), "(使用中)%s", desc);
         menu.AddItem(skinID, desc);
+        if (used) mySkinCount = menu.ItemCount - 1;
     }
 
     if (playerLast[client]) menu.DisplayAt(client, playerLast[client], MENU_TIME_FOREVER);
+    else if (mySkinCount) menu.DisplayAt(client, mySkinCount - (mySkinCount % menu.Pagination), MENU_TIME_FOREVER);
     else menu.Display(client, MENU_TIME_FOREVER);
 
     delete items;
@@ -95,6 +128,7 @@ public int Menu_SkinSelected(Menu menu, MenuAction action, int client, int slot)
     {
         delete menu;
     }
+    else if (slot == MenuCancel_ExitBack) SkinMainMenu(client);
     else if (action == MenuAction_Select)
     {
         if (slot == MenuEnd_Exit) return 0;
@@ -121,7 +155,7 @@ void DisplaySkinMenu(int client, int skinID)
     static Skin skin;
     if (!g_Skins.Get(skinID, skin)) return;
 
-    bool used = g_UsersUsedSkin[client] == skin.id
+    bool used = g_UsersUsedSkin[client] == skin.id;
     MenuEx menu = new MenuEx(Menu_Skin);
     menu.SetTitle("%s - 皮肤设置\n", skin.name);
     menu.AddItemEx(used ? ITEMDRAW_DISABLED : ITEMDRAW_DEFAULT, "", "装备皮肤%s", used ? "(使用中)" : "");
@@ -207,7 +241,7 @@ int SkinBodyMenuHandler(Menu menu, MenuAction action, int client, int param) {
             SetPlayerModelExt(client, playerLastSkin[client], true);
 #endif
         }
-        else 
+        else
         {
             static BodysData body;
             if (!skin.bodys.GetArray(param - 1, body)) ThrowError("GetArray");
@@ -228,3 +262,125 @@ int SkinBodyMenuHandler(Menu menu, MenuAction action, int client, int param) {
     }
     return 0;
 }
+
+void SkinRadioMenu(int client)
+{
+    int skinID = g_UsersUsedSkin[client];
+    Skin skin;
+    if (skinID) g_Skins.Get(skinID, skin);
+
+    MenuEx menu = new MenuEx(SkinRadioMenuHandler);
+    menu.ExitBackButton = true;
+    menu.SetTitle("皮肤系统 - 语音设置");
+    menu.AddItemEx(ITEMDRAW_DEFAULT, "", "屏蔽模式: %s", SkinRadioBlockModeSelection[g_PlayerRadioBlock[client].Mode]);
+    menu.AddItem("", "黑名单设置");
+    menu.AddItem("", "白名单设置");
+    menu.AddItemEx(ITEMDRAW_DEFAULT, "", "聆听自己音量: %d%", SkinRadioVolumeGet(client, client));
+    menu.AddItemEx(ITEMDRAW_DEFAULT, "", "聆听他人音量: %d%", SkinRadioVolumeGet(client, 0));
+    menu.Display(client, MENU_TIME_FOREVER);
+}
+
+public int SkinRadioMenuHandler(Menu menu, MenuAction action, int client, int slot)
+{
+    if (action == MenuAction_End) delete menu;
+    else if (slot == MenuCancel_ExitBack) SkinMainMenu(client);
+    else if (action == MenuAction_Select)
+    {
+        if (slot == 0)
+        {
+            g_PlayerRadioBlock[client].Mode = (g_PlayerRadioBlock[client].Mode + 1) % sizeof(SkinRadioBlockModeSelection);
+            SkinRadioMenu(client);
+        }
+        else if (slot == 1) SkinRadioListMenu(client, 0);
+        else if (slot == 2) SkinRadioListMenu(client, 1);
+        else if (slot == 3) SkinRadioVolumeMenu(client, 0);
+        else if (slot == 4) SkinRadioVolumeMenu(client, 1);
+    }
+    return 0;
+}
+
+void SkinRadioListMenu(int client, int white, int slot = 0)
+{
+    MenuEx menu = new MenuEx(white ? SkinRadioListMenuWhiteHandler : SkinRadioListMenuBlackHandler);
+    menu.ExitBackButton = true;
+    menu.SetTitle("皮肤系统 - 语音%s名单", white ? "黑" : "白");
+
+    static Skin skin;
+    static char buffer[128];
+    StringMapSnapshot snapshot = g_Skins.Snapshot();
+    for (int i = 0; i < snapshot.Length; i++)
+    {
+        snapshot.GetKey(i, buffer, sizeof(buffer));
+        g_Skins.GetArray(buffer, skin, sizeof(skin));
+
+        // Buffer -> id
+        ArrayList list;
+        if (white) list = g_PlayerRadioBlock[client].WhiteList;
+        else list = g_PlayerRadioBlock[client].BlackList;
+        IntToString(skin.id, buffer, sizeof(buffer));
+        if (list.FindValue(skin.id) != -1)
+            menu.AddItemEx(ITEMDRAW_DEFAULT, buffer, "[%s]", skin.name);
+        else
+            menu.AddItem(buffer, skin.name);
+    }
+    delete snapshot;
+
+    menu.DisplayAt(client, slot, MENU_TIME_FOREVER);
+}
+
+#define SKIN_RADIOLIST_HANDLER(%0,%1) \
+public int %0(Menu menu, MenuAction action, int client, int slot) \
+{ \
+    if (action == MenuAction_End) delete menu; \
+    else if (slot == MenuCancel_ExitBack) SkinRadioMenu(client); \
+    else if (action == MenuAction_Select) \
+    { \
+        static char buffer[8]; \
+        menu.GetItem(slot, buffer, sizeof(buffer)); \
+        SkinRadioBlockListSet(client, %1, StringToInt(buffer)); \
+        SkinRadioListMenu(client, %1, menu.Selection); \
+    } \
+    return 0; \
+}
+
+SKIN_RADIOLIST_HANDLER(SkinRadioListMenuWhiteHandler, 1)
+SKIN_RADIOLIST_HANDLER(SkinRadioListMenuBlackHandler, 0)
+
+void SkinRadioVolumeMenu(int client, int other)
+{
+    int volume = SkinRadioVolumeGet(client, other ? 0 : client);
+    Menu menu = new Menu(other ? SkinRadioVolumeMenuOtherHandler : SkinRadioVolumeMenuMyselfHandler);
+    menu.ExitBackButton = true;
+    menu.SetTitle("皮肤系统 - 聆听%s音量\n当前音量: %d%", other ? "他人" : "自己", volume);
+    menu.AddItem("", "-10", volume > 0 ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
+    menu.AddItem("", "-5", volume > 0 ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
+    menu.AddItem("", "-1", volume > 0 ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
+    menu.AddItem("", "+1", volume < 100 ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
+    menu.AddItem("", "+5", volume < 100 ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
+    menu.AddItem("", "+10", volume < 100 ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
+    menu.Display(client, MENU_TIME_FOREVER);
+}
+
+#define SKIN_RADIOVOLUME_HANDLER(%0,%1) \
+public int %0(Menu menu, MenuAction action, int client, int slot) \
+{ \
+    if (action == MenuAction_End) delete menu; \
+    else if (slot == MenuCancel_ExitBack) SkinRadioMenu(client); \
+    else if (action == MenuAction_Select) \
+    { \
+        int target = %1; \
+        int volume = SkinRadioVolumeGet(client, target ? 0 : client); \
+        if (slot == 0) volume = Max(0, volume - 10); \
+        else if (slot == 1) volume = Max(0, volume - 5); \
+        else if (slot == 2) volume = Max(0, volume - 1); \
+        else if (slot == 3) volume = Min(100, volume + 1); \
+        else if (slot == 4) volume = Min(100, volume + 5); \
+        else if (slot == 5) volume = Min(100, volume + 10); \
+        SkinRadioVolumeSet(client, volume, %1); \
+        SkinRadioVolumeMenu(client, %1); \
+    } \
+    return 0; \
+}
+
+SKIN_RADIOVOLUME_HANDLER(SkinRadioVolumeMenuOtherHandler, 1)
+SKIN_RADIOVOLUME_HANDLER(SkinRadioVolumeMenuMyselfHandler, 0)

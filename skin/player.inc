@@ -24,7 +24,7 @@ void SetModel(int client)
         SetEntityModel(client, s.skinPath);
         SetEntityRenderColor(client, 255, 255, 255, 255);
 
-        if (IsModelPrecached(s.armPath) && s.armPath[0] != '\0')
+        if (IsModelPrecached(s.armPath) && s.armPath[0] != '\0' && !SkinArmsOff(client))
             SetEntPropString(client, Prop_Send, "m_szArmsModel", s.armPath);
     }
 

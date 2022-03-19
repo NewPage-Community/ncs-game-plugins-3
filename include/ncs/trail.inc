@@ -1,5 +1,5 @@
 #if defined _NCS_Trail_
-	#endinput
+    #endinput
 #endif
 #define _NCS_Trail_
 

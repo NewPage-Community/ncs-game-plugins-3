@@ -11,8 +11,8 @@ void InitPlayerTitle(int client)
 
 public Action SetTitleFirst(Handle timer, int client)
 {
-	SetPlayerTitle(client);
-	return Plugin_Stop;
+    SetPlayerTitle(client);
+    return Plugin_Stop;
 }
 
 void SetPlayerTitle(int client)

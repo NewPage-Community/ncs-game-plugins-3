@@ -24,7 +24,7 @@ void SkinRadioVolumeSet(int client, int volume, int other)
     else NCS_Cookie_Set(client, "skin_radio_volume_myself", buffer);
 }
 
-int SkinRadioVolumeGet(int client, int target)
+int SkinRadioVolumeGet(int client, int other)
 {
-    return g_PlayerRadioVolume[client][client == target ? 0 : 1];
+    return g_PlayerRadioVolume[client][client == other ? 0 : 1];
 }

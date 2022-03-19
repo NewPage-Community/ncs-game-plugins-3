@@ -11,7 +11,7 @@ void SkinMainMenu(int client)
 
     MenuEx menu = new MenuEx(SkinMainMenuHandler);
     menu.SetTitle("皮肤系统");
-    menu.AddItemEx(ITEMDRAW_DEFAULT, "", "装备皮肤: %s", skin.name);
+    menu.AddItemEx(ITEMDRAW_DEFAULT, "", "装备皮肤: %s", skinID ? skin.name : "默认皮肤");
     menu.AddItemEx(ITEMDRAW_DEFAULT, "", "装备手模: %s", SkinArmsOff(client) ? "原版" : "跟随皮肤");
     menu.AddItemEx(ITEMDRAW_DEFAULT, "", "装备无线电语音: %s", SkinRadioOff(client) ? "原版" : "跟随皮肤");
     menu.AddItem("", "无线电语音设置");

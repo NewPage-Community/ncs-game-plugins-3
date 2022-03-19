@@ -172,7 +172,7 @@ enum struct Skin
 
         // Get random files
         int index = GetURandomInt() % length;
-        if (index > 0) Format(buffer, PLATFORM_MAX_PATH, "%d%s", indexs[index], buffer);
+        if (indexs[index] > 0) Format(buffer, PLATFORM_MAX_PATH, "%d%s", indexs[index], buffer);
         Format(sample, PLATFORM_MAX_PATH, "newpage/models/%s/%s%s", !this.soundOverride[0] ? this.uid : this.soundOverride, key, buffer);
         return true;
     }

@@ -299,11 +299,20 @@ public int SkinRadioMenuHandler(Menu menu, MenuAction action, int client, int sl
     return 0;
 }
 
-void SkinRadioListMenu(int client, int white, int slot = 0)
+void SkinRadioListMenu(int client, int type, int slot = 0)
 {
-    MenuEx menu = new MenuEx(white ? SkinRadioListMenuWhiteHandler : SkinRadioListMenuBlackHandler);
+    MenuEx menu;
+    if (type == SKIN_RADIO_BLOCK_BLACK)
+    {
+        menu = new MenuEx(SkinRadioListMenuBlackHandler);
+        menu.SetTitle("皮肤系统 - 语音黑名单");
+    }
+    else // SKIN_RADIO_BLOCK_WHITE
+    {
+        menu = new MenuEx(SkinRadioListMenuWhiteHandler);
+        menu.SetTitle("皮肤系统 - 语音白名单");
+    }
     menu.ExitBackButton = true;
-    menu.SetTitle("皮肤系统 - 语音%s名单", white ? "黑" : "白");
 
     static Skin skin;
     static char buffer[128];
@@ -315,8 +324,10 @@ void SkinRadioListMenu(int client, int white, int slot = 0)
 
         // Buffer -> id
         ArrayList list;
-        if (white) list = g_PlayerRadioBlock[client].WhiteList;
-        else list = g_PlayerRadioBlock[client].BlackList;
+        if (type == SKIN_RADIO_BLOCK_BLACK)
+            list = g_PlayerRadioBlock[client].BlackList
+        else // SKIN_RADIO_BLOCK_WHITE
+            list = g_PlayerRadioBlock[client].WhiteList;
         IntToString(skin.id, buffer, sizeof(buffer));
         if (list.FindValue(skin.id) != -1)
             menu.AddItemEx(ITEMDRAW_DEFAULT, buffer, "[%s]", skin.name);

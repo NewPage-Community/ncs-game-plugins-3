@@ -1,3 +1,6 @@
+#define SKIN_RADIO_BLOCK_BLACK 0
+#define SKIN_RADIO_BLOCK_WHITE 1
+
 enum struct PlayerRadioBlock
 {
     ArrayList BlackList;
@@ -48,12 +51,14 @@ static void ArrayListToString(ArrayList list, char[] buffer, int size)
     strcopy(buffer, size, buffer[1]);
 }
 
-void SkinRadioBlockListSet(int client, int white, int id)
+void SkinRadioBlockListSet(int client, int type, int id)
 {
     char buffer[2048];
     ArrayList list;
-    if (white) list = g_PlayerRadioBlock[client].WhiteList;
-    else list = g_PlayerRadioBlock[client].BlackList;
+    if (type == SKIN_RADIO_BLOCK_BLACK)
+        list = g_PlayerRadioBlock[client].BlackList;
+    else // SKIN_RADIO_BLOCK_WHITE
+        list = g_PlayerRadioBlock[client].WhiteList;
 
     int index = list.FindValue(id);
     if (index == -1) list.Push(id);
@@ -61,6 +66,16 @@ void SkinRadioBlockListSet(int client, int white, int id)
 
     ArrayListToString(list, buffer, sizeof(buffer));
 
-    if (white) NCS_Cookie_Set(client, "skin_radio_block_white", buffer);
-    else NCS_Cookie_Set(client, "skin_radio_block_black", buffer);
+    if (type == SKIN_RADIO_BLOCK_BLACK)
+        NCS_Cookie_Set(client, "skin_radio_block_black", buffer);
+    else // SKIN_RADIO_BLOCK_WHITE
+        NCS_Cookie_Set(client, "skin_radio_block_white", buffer);
+}
+
+void SkinRadioBlockModeSet(int client)
+{
+    static char buffer[8];
+    g_PlayerRadioBlock[client].Mode = (g_PlayerRadioBlock[client].Mode + 1) % sizeof(SkinRadioBlockModeSelection);
+    IntToString(g_PlayerRadioBlock[client].Mode, buffer, sizeof(buffer));
+    NCS_Cookie_Set(client, "skin_radio_block_mode", buffer);
 }

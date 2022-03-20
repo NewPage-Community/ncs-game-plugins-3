@@ -275,8 +275,8 @@ void SkinRadioMenu(int client)
     menu.AddItemEx(ITEMDRAW_DEFAULT, "", "屏蔽模式: %s", SkinRadioBlockModeSelection[g_PlayerRadioBlock[client].Mode]);
     menu.AddItem("", "黑名单设置");
     menu.AddItem("", "白名单设置");
-    menu.AddItemEx(ITEMDRAW_DEFAULT, "", "聆听自己音量: %d%", SkinRadioVolumeGet(client, client));
-    menu.AddItemEx(ITEMDRAW_DEFAULT, "", "聆听他人音量: %d%", SkinRadioVolumeGet(client, 0));
+    menu.AddItemEx(ITEMDRAW_DEFAULT, "", "聆听自己音量: %d%", g_PlayerRadioVolume[client][SKIN_RADIO_VOL_MYSELF]);
+    menu.AddItemEx(ITEMDRAW_DEFAULT, "", "聆听他人音量: %d%", g_PlayerRadioVolume[client][SKIN_RADIO_VOL_OTHER]);
     menu.Display(client, MENU_TIME_FOREVER);
 }
 
@@ -288,13 +288,13 @@ public int SkinRadioMenuHandler(Menu menu, MenuAction action, int client, int sl
     {
         if (slot == 0)
         {
-            g_PlayerRadioBlock[client].Mode = (g_PlayerRadioBlock[client].Mode + 1) % sizeof(SkinRadioBlockModeSelection);
+            SkinRadioBlockModeSet(client);
             SkinRadioMenu(client);
         }
-        else if (slot == 1) SkinRadioListMenu(client, 0);
-        else if (slot == 2) SkinRadioListMenu(client, 1);
-        else if (slot == 3) SkinRadioVolumeMenu(client, 0);
-        else if (slot == 4) SkinRadioVolumeMenu(client, 1);
+        else if (slot == 1) SkinRadioListMenu(client, SKIN_RADIO_BLOCK_BLACK);
+        else if (slot == 2) SkinRadioListMenu(client, SKIN_RADIO_BLOCK_WHITE);
+        else if (slot == 3) SkinRadioVolumeMenu(client, SKIN_RADIO_VOL_MYSELF);
+        else if (slot == 4) SkinRadioVolumeMenu(client, SKIN_RADIO_VOL_OTHER);
     }
     return 0;
 }
@@ -328,6 +328,7 @@ void SkinRadioListMenu(int client, int white, int slot = 0)
     menu.DisplayAt(client, slot, MENU_TIME_FOREVER);
 }
 
+// %0 function %1 type
 #define SKIN_RADIOLIST_HANDLER(%0,%1) \
 public int %0(Menu menu, MenuAction action, int client, int slot) \
 { \
@@ -343,15 +344,24 @@ public int %0(Menu menu, MenuAction action, int client, int slot) \
     return 0; \
 }
 
-SKIN_RADIOLIST_HANDLER(SkinRadioListMenuWhiteHandler, 1)
-SKIN_RADIOLIST_HANDLER(SkinRadioListMenuBlackHandler, 0)
+SKIN_RADIOLIST_HANDLER(SkinRadioListMenuBlackHandler, SKIN_RADIO_BLOCK_BLACK)
+SKIN_RADIOLIST_HANDLER(SkinRadioListMenuWhiteHandler, SKIN_RADIO_BLOCK_WHITE)
 
-void SkinRadioVolumeMenu(int client, int other)
+void SkinRadioVolumeMenu(int client, int type)
 {
-    int volume = SkinRadioVolumeGet(client, other ? 0 : client);
-    Menu menu = new Menu(other ? SkinRadioVolumeMenuOtherHandler : SkinRadioVolumeMenuMyselfHandler);
+    int volume = g_PlayerRadioVolume[client][type];
+    Menu menu;
+    if (type == SKIN_RADIO_VOL_MYSELF)
+    {
+        menu = new Menu(SkinRadioVolumeMenuMyselfHandler);
+        menu.SetTitle("皮肤系统 - 聆听自己音量\n当前音量: %d%", volume);
+    }
+    else // SKIN_RADIO_VOL_OTHER
+    {
+        menu = new Menu(SkinRadioVolumeMenuOtherHandler);
+        menu.SetTitle("皮肤系统 - 聆听他人音量\n当前音量: %d%", volume);
+    }
     menu.ExitBackButton = true;
-    menu.SetTitle("皮肤系统 - 聆听%s音量\n当前音量: %d%", other ? "他人" : "自己", volume);
     menu.AddItem("", "-10", volume > 0 ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
     menu.AddItem("", "-5", volume > 0 ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
     menu.AddItem("", "-1", volume > 0 ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
@@ -361,6 +371,8 @@ void SkinRadioVolumeMenu(int client, int other)
     menu.Display(client, MENU_TIME_FOREVER);
 }
 
+
+// %0 function %1 type
 #define SKIN_RADIOVOLUME_HANDLER(%0,%1) \
 public int %0(Menu menu, MenuAction action, int client, int slot) \
 { \
@@ -368,19 +380,18 @@ public int %0(Menu menu, MenuAction action, int client, int slot) \
     else if (slot == MenuCancel_ExitBack) SkinRadioMenu(client); \
     else if (action == MenuAction_Select) \
     { \
-        int target = %1; \
-        int volume = SkinRadioVolumeGet(client, target ? 0 : client); \
+        int volume = SkinRadioVolumeGet(client, %1); \
         if (slot == 0) volume = Max(0, volume - 10); \
         else if (slot == 1) volume = Max(0, volume - 5); \
         else if (slot == 2) volume = Max(0, volume - 1); \
         else if (slot == 3) volume = Min(100, volume + 1); \
         else if (slot == 4) volume = Min(100, volume + 5); \
         else if (slot == 5) volume = Min(100, volume + 10); \
-        SkinRadioVolumeSet(client, volume, %1); \
+        SkinRadioVolumeSet(client, %1, volume); \
         SkinRadioVolumeMenu(client, %1); \
     } \
     return 0; \
 }
 
-SKIN_RADIOVOLUME_HANDLER(SkinRadioVolumeMenuOtherHandler, 1)
-SKIN_RADIOVOLUME_HANDLER(SkinRadioVolumeMenuMyselfHandler, 0)
+SKIN_RADIOVOLUME_HANDLER(SkinRadioVolumeMenuMyselfHandler, SKIN_RADIO_VOL_MYSELF)
+SKIN_RADIOVOLUME_HANDLER(SkinRadioVolumeMenuOtherHandler, SKIN_RADIO_VOL_OTHER)

@@ -14,7 +14,7 @@ bool SkinPlaySound(int client, const char[] cmd, bool radius = false, bool mysel
     if (!skin.GetSound(cmd, sample)) return false;
     if (myself)
     {
-        float volume = SkinRadioVolumeGet(client, client) / 100.0;
+        float volume = SkinRadioVolumeGet(client, SKIN_RADIO_VOL_MYSELF) / 100.0;
         if (volume) EmitSoundToClient(client, sample, radius ? client : SOUND_FROM_PLAYER, _, _, _, volume);
     }
     else
@@ -22,13 +22,13 @@ bool SkinPlaySound(int client, const char[] cmd, bool radius = false, bool mysel
         for (int i = 1; i <= MaxClients; i++)
         {
             if (!IsClientConnected(i)) continue;
-            if (IsFakeClient(i)) continue;
+            if (IsFakeClient(i) || !IsClientInGame(i)) continue;
             PlayerRadioBlock blocker;
             blocker = g_PlayerRadioBlock[i];
             if (blocker.Mode == 1 && i != client) continue;
             if (blocker.Mode == 2 && blocker.BlackList.FindValue(skin.id) != -1) continue;
             if (blocker.Mode == 3 && blocker.WhiteList.FindValue(skin.id) == -1) continue;
-            float volume = SkinRadioVolumeGet(i, client) / 100.0;
+            float volume = SkinRadioVolumeGet(i, client == i ? SKIN_RADIO_VOL_MYSELF : SKIN_RADIO_VOL_OTHER) / 100.0;
             if (radius) volume = 1.0;
             if (volume) EmitSoundToClient(i, sample, radius ? client : SOUND_FROM_PLAYER, _, _, _, volume);
         }

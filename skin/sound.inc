@@ -30,7 +30,7 @@ bool SkinPlaySound(int client, const char[] cmd, bool radius = false, bool mysel
             if (blocker.Mode == 3 && blocker.WhiteList.FindValue(skin.id) == -1) continue;
             float volume = SkinRadioVolumeGet(i, client) / 100.0;
             if (radius) volume = 1.0;
-            if (volume) EmitSoundToClient(client, sample, radius ? client : SOUND_FROM_PLAYER, _, _, _, volume);
+            if (volume) EmitSoundToClient(i, sample, radius ? client : SOUND_FROM_PLAYER, _, _, _, volume);
         }
     }
 

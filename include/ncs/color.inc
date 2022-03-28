@@ -10,7 +10,7 @@
 
 stock void ProcessColorString(char[] message, int maxLen, int team = 0)
 {
-    char game[32];
+    static char game[32];
     GetGameFolderName(game, 32);
 
     if (!strcmp(game, "insurgency") || !strcmp(game, "doi"))
@@ -169,7 +169,7 @@ stock void CPrintToChat(int client, const char[] format, any...)
     if (!IsClientInGame(client))
         return;
     
-    char buffer[MAX_CHAT_MESSAGE_LENGTH];
+    static char buffer[MAX_CHAT_MESSAGE_LENGTH];
     SetGlobalTransTarget(client);
     VFormat(buffer, sizeof(buffer), format, 3);
     ProcessColorString(buffer, sizeof(buffer));
@@ -178,7 +178,7 @@ stock void CPrintToChat(int client, const char[] format, any...)
 
 stock void CPrintToChatAll(const char[] format, any...)
 {
-    char buffer[MAX_CHAT_MESSAGE_LENGTH];
+    static char buffer[MAX_CHAT_MESSAGE_LENGTH];
     for (int i = 1; i <= MaxClients; i++)
     {
         if (IsClientInGame(i))

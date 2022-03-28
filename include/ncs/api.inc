@@ -19,7 +19,7 @@ stock void InitNCSAPI()
 
 stock HTTPRequest NewNCSAPI(const char[] path)
 {
-    char buffer[128];
+    static char buffer[128];
 
     // New Client
     url.GetString(buffer, sizeof(buffer));

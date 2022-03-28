@@ -5,7 +5,7 @@
 
 #include <ncs/color>
 
-#define MAX_NAME_LENGTH_FIX 512
+#define MAX_NAME_LENGTH_FIX 128
 #define MAX_TITLE_LENGTH 32
 #define CHAT_SYS_PREFIX "[系统提示]"
 #define CLIENT_ALL 0
@@ -13,7 +13,7 @@
 // Send a message with prefix (For plugin notification)
 stock void NCS_Chat(int client = CLIENT_ALL, char[] prefix = CHAT_SYS_PREFIX, char[] msg, any ...)
 {
-    char buffer[MAX_CHAT_MESSAGE_LENGTH];
+    static char buffer[MAX_CHAT_MESSAGE_LENGTH];
     VFormat(buffer, sizeof(buffer), msg, 4);
     Format(buffer, sizeof(buffer), "%s %s", prefix, buffer);
 

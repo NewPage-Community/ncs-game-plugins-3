@@ -127,7 +127,7 @@ enum struct Skin
             FileType type;
             while (dir.GetNext(path, sizeof(path), type))
             {
-                int indexs[MAX_SKIN_SOUND_NUM], size;
+                static int indexs[MAX_SKIN_SOUND_NUM], size;
                 char key[16], num[4], ext[6];
 
                 // Not found
@@ -143,7 +143,8 @@ enum struct Skin
 
                 static char buffer[32];
                 Format(buffer, sizeof(buffer), "%s_files", key);
-                this.sounds.GetArray(buffer, indexs, sizeof(indexs), size);
+                if (!this.sounds.GetArray(buffer, indexs, sizeof(indexs), size))
+                    size = 0;
                 if (size >= sizeof(indexs)) {
                     NCS_LogError("Skin", "Skin.LoadSounds", "%s has too many sound files %d/%d", this.uid, size, sizeof(indexs));
                     continue;
@@ -163,12 +164,14 @@ enum struct Skin
         static char buffer[PLATFORM_MAX_PATH];
         static int indexs[MAX_SKIN_SOUND_NUM], length;
         Format(buffer, PLATFORM_MAX_PATH, "%s_files", key);
-        this.sounds.GetArray(buffer, indexs, sizeof(indexs), length);
+        if (!this.sounds.GetArray(buffer, indexs, sizeof(indexs), length))
+            return false;
         if (!length) return false;
 
         // Get extension
         Format(buffer, PLATFORM_MAX_PATH, "%s_ext", key);
-        this.sounds.GetString(buffer, buffer, PLATFORM_MAX_PATH);
+        if (!this.sounds.GetString(buffer, buffer, PLATFORM_MAX_PATH))
+            return false;
         Format(buffer, PLATFORM_MAX_PATH, ".%s", buffer);
 
         // Get random files

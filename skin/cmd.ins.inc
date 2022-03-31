@@ -20,4 +20,5 @@ void TranslateCmd(const char[] cmd, char[] buffer, int size)
     else if (!strcmp(cmd, "spread_out")) strcopy(buffer, size, "散开");
     else if (!strcmp(cmd, "hold_position")) strcopy(buffer, size, "坚守阵地");
     else if (!strcmp(cmd, "cheer")) strcopy(buffer, size, "欢呼");
+    else strcopy(buffer, size, cmd);
 }

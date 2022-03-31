@@ -1,5 +1,6 @@
 #define MAX_SKINS_NUM 1024
 #define MAX_SKIN_NAME_LENGTH 64
+#define MAX_SKIN_SOUND_NUM 64
 
 enum struct BodysData {
     char name[32];
@@ -126,7 +127,7 @@ enum struct Skin
             FileType type;
             while (dir.GetNext(path, sizeof(path), type))
             {
-                int indexs[8], size;
+                int indexs[MAX_SKIN_SOUND_NUM], size;
                 char key[16], num[4], ext[6];
 
                 // Not found
@@ -144,7 +145,7 @@ enum struct Skin
                 Format(buffer, sizeof(buffer), "%s_files", key);
                 this.sounds.GetArray(buffer, indexs, sizeof(indexs), size);
                 if (size >= sizeof(indexs)) {
-                    NCS_LogError("Skin", "Skin.LoadSounds", "%s has too many sound files", this.uid);
+                    NCS_LogError("Skin", "Skin.LoadSounds", "%s has too many sound files %d/%d", this.uid, size, sizeof(indexs));
                     continue;
                 }
                 indexs[size] = StringToInt(num);
@@ -160,7 +161,7 @@ enum struct Skin
     bool GetSound(const char[] key, char sample[PLATFORM_MAX_PATH])
     {
         static char buffer[PLATFORM_MAX_PATH];
-        int indexs[8], length;
+        static int indexs[MAX_SKIN_SOUND_NUM], length;
         Format(buffer, PLATFORM_MAX_PATH, "%s_files", key);
         this.sounds.GetArray(buffer, indexs, sizeof(indexs), length);
         if (!length) return false;

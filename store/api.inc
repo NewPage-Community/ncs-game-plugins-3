@@ -20,7 +20,7 @@ void LoadUserStoreList(int client, bool openMenu = false)
     dp.WriteCell(client, false);
     dp.WriteCell(openMenu, false);
 
-    static static char path[128];
+    static char path[128];
     Format(path, sizeof(path), "%s/list/%s", Store_Service, uid);
     NewNCSAPI(path).Get(LoadUserStoreListCallback, dp);
 }
@@ -81,7 +81,7 @@ void BuyItem(int client, Item item)
     data.SetInt("item_id", item.id);
     data.SetInt("price", item.GetPrice());
     
-    static static char path[128];
+    static char path[128];
     Format(path, sizeof(path), "%s/buy", Store_Service);
     NewNCSAPI(path).Post(data, BuyItemCallback, dp);
 }
@@ -145,7 +145,7 @@ void BuyAdvPass(int client, int type)
     data.SetInt64("uid", uid);
     data.SetInt("type", type);
     
-    static static char path[128];
+    static char path[128];
     Format(path, sizeof(path), "%s/buy/pass", Store_Service);
     NewNCSAPI(path).Post(data, BuyPassCallback, dp);
 }
@@ -204,7 +204,7 @@ void BuyVIP(int client, int month)
     data.SetInt64("uid", uid);
     data.SetInt("month", month);
     
-    static static char path[128];
+    static char path[128];
     Format(path, sizeof(path), "%s/buy/vip", Store_Service);
     NewNCSAPI(path).Post(data, BuyVIPCallback, dp);
 }

@@ -96,10 +96,15 @@ public void GiftMoneyCallback(HTTPResponse response, DataPack dp, const char[] e
     {
         if (IsValidClient(client))
         {
-            if (IsError(response.Data, ErrNoEnoughMoney))
+            if (IsError(response.Data, ErrNoEnoughMoney, 15))
                 NCS_Chat(client, _, "您的软妹币余额不足");
-            else if (IsError(response.Data, ErrReachGiftLimit))
-                NCS_Chat(client, _, "今日赠送已达到 {green}200{default} 软妹币限制");
+            else if (IsError(response.Data, ErrReachGiftLimit, 16))
+            {
+                static char err[32];
+                JSONObject json = view_as<JSONObject>(response.Data);
+                json.GetString("error", err, sizeof(err));
+                NCS_Chat(client, _, "超过今日赠送软妹币上限 {green}%s/200", err[17]);
+            }
             else
                 NCS_Chat(client, _, "赠送失败");
         }
@@ -117,7 +122,7 @@ public void GiftMoneyCallback(HTTPResponse response, DataPack dp, const char[] e
     }
 }
 
-bool IsError(JSON data, const char[] err)
+bool IsError(JSON data, const char[] err, int size)
 {
     if (data == null)
         return false;
@@ -125,5 +130,5 @@ bool IsError(JSON data, const char[] err)
     static char error[512];
     JSONObject json = view_as<JSONObject>(data);
     json.GetString("error", error, sizeof(error));
-    return StrEqual(error, err);
+    return !strncmp(error, err, size);
 }

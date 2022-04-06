@@ -21,7 +21,7 @@ void ReqVIPInfo(int client, const char[] uid, bool reload = false)
     dp.WriteString(uid, false);
     dp.WriteCell(reload, false);
 
-    char path[128];
+    static char path[128];
     Format(path, sizeof(path), "%s/%s", VIP_Service, uid);
     NewNCSAPI(path).Get(LoadVIPInfo, dp);
 }
@@ -67,7 +67,7 @@ public void LoadVIPInfo(HTTPResponse response, DataPack dp, const char[] error)
 
 void AddPoint(int client, int addPoint)
 {
-    char uid[MAX_UID_LENGTH];
+    static char uid[MAX_UID_LENGTH];
     if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
         return;
 
@@ -81,7 +81,7 @@ void AddPoint(int client, int addPoint)
     JSONObject data = new JSONObject();
     data.SetInt("add_point", addPoint);
 
-    char path[128];
+    static char path[128];
     Format(path, sizeof(path), "%s/%s/addpoint", VIP_Service, uid);
     NewNCSAPI(path).Put(data, AddPointCallback, dp);
 }
@@ -111,7 +111,7 @@ public void AddPointCallback(HTTPResponse response, DataPack dp, const char[] er
 
 void Renewal(int client, int length)
 {
-    char uid[MAX_UID_LENGTH];
+    static char uid[MAX_UID_LENGTH];
     if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
         return;
 
@@ -126,7 +126,7 @@ void Renewal(int client, int length)
     data.SetInt64("uid", uid);
     data.SetInt("length", length);
 
-    char path[128];
+    static char path[128];
     Format(path, sizeof(path), "%s/renewal", VIP_Service);
     NewNCSAPI(path).Post(data, RenewalCallback, dp);
 }

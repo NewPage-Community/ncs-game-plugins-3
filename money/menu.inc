@@ -1,11 +1,11 @@
 void DisplayMoneyRecord(int client)
 {
-    char uid[MAX_UID_LENGTH];
+    static char uid[MAX_UID_LENGTH];
     if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
         return;
     
-    char path[128];
-    Format(path, sizeof(path), "%s/%s/records", Money_Service, uid);
+    static char path[128];
+    Format(path, sizeof(path), "%s/%s/records/90", Money_Service, uid);
     NewNCSAPI(path).Get(LoadMoneyRecord, client);
 }
 
@@ -15,7 +15,7 @@ public void LoadMoneyRecord(HTTPResponse response, int client, const char[] erro
         return;
 
     MenuEx menu = new MenuEx(MoneyRecordHandle);
-    menu.SetTitle("软妹币流水帐(近10天)");
+    menu.SetTitle("软妹币流水帐(近90天)");
 
     JSONObject data = view_as<JSONObject>(response.Data);
     JSONArray records = view_as<JSONArray>(data.Get("records"));

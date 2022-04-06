@@ -15,7 +15,7 @@ void CloseAPI()
 
 void LoadSkins()
 {
-    char path[128];
+    static char path[128];
     Format(path, sizeof(path), "%s/type/1", BackpackItems_Service);
     NewNCSAPI(path).Get(LoadSkinsInfo);
 }
@@ -47,7 +47,7 @@ public void LoadSkinsInfo(HTTPResponse response, DataPack dp, const char[] error
 
 void CheckUserHaveSkin(int client)
 {
-    char uid[MAX_UID_LENGTH];
+    static char uid[MAX_UID_LENGTH];
     if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
         return;
 
@@ -58,7 +58,7 @@ void CheckUserHaveSkin(int client)
     dp.WriteCell(client, false);
     dp.WriteCell(id, false);
     
-    char path[128];
+    static char path[128];
     Format(path, sizeof(path), "%s/have/%s/%d", BackpackUser_Service, uid, id);
     NewNCSAPI(path).Get(CheckUserHaveItemCallback, dp);
 }

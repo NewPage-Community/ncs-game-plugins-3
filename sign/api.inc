@@ -27,7 +27,7 @@ void CloseAPIForward()
 
 void Sign(int client)
 {
-    char uid[MAX_UID_LENGTH];
+    static char uid[MAX_UID_LENGTH];
     if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
     {
         NCS_Chat(client, _, "您的用户数据尚未加载，请重试");
@@ -43,7 +43,7 @@ void Sign(int client)
     JSONObject data = new JSONObject();
     data.SetInt64("uid", uid);
 
-    char path[128];
+    static char path[128];
     Format(path, sizeof(path), "%s", Sign_Service);
     NewNCSAPI(path).Post(data, SignCallback, dp);
 }

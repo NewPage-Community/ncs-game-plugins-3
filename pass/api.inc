@@ -52,7 +52,7 @@ public Action Timer_UpdatePoint(Handle timer, int client)
     // Do not send empty data
     if (count > 0)
     {
-        char path[128];
+        static char path[128];
         Format(path, sizeof(path), "%s/addpoints", PassUser_Service);
         NewNCSAPI(path).Post(data, UpdatePointCallback);
     }
@@ -69,7 +69,7 @@ public void UpdatePointCallback(HTTPResponse response, any value, const char[] e
 
 void UsePointBox(int client, bool all = false)
 {
-    char uid[MAX_UID_LENGTH];
+    static char uid[MAX_UID_LENGTH];
     if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
         return;
 
@@ -84,7 +84,7 @@ void UsePointBox(int client, bool all = false)
     data.SetInt64("uid", uid);
     data.SetBool("all", all);
     
-    char path[128];
+    static char path[128];
     Format(path, sizeof(path), "%s/pointbox", GamePass_Service);
     NewNCSAPI(path).Post(data, UsePointBoxCallback, dp);
 }

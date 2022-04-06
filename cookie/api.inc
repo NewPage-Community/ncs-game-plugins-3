@@ -19,7 +19,7 @@ void LoadUserCookie(int client, const char[] uid)
 {
     player[client].Clear();
     
-    char path[128];
+    static char path[128];
     Format(path, sizeof(path), "%s/all/%s", Cookie_Service, uid);
     NewNCSAPI(path).Get(LoadUserCookieCallback, client);
 }
@@ -48,7 +48,7 @@ public void LoadUserCookieCallback(HTTPResponse response, int client, const char
 
 bool SetUserCookie(int client, const char[] key, const char[] value)
 {
-    char uid[MAX_UID_LENGTH];
+    static char uid[MAX_UID_LENGTH];
     if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
         return false;
 
@@ -60,7 +60,7 @@ bool SetUserCookie(int client, const char[] key, const char[] value)
     data.SetString("key", key);
     data.SetString("value", value);
 
-    char path[128];
+    static char path[128];
     Format(path, sizeof(path), "%s/set", Cookie_Service);
     NewNCSAPI(path).Post(data, SetUserCookieCallback);
     return ok;

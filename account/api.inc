@@ -46,7 +46,7 @@ void ReqAccountUID(const char[] steamid, bool notify = false)
     data.SetInt64("steam_id", steamid);
     data.SetString("username", username);
 
-    char path[128];
+    static char path[128];
     Format(path, sizeof(path), "%s/game/playerconnect", Account_Service);
     NewNCSAPI(path).Post(data, LoadAccountUID, dp);
 }
@@ -69,7 +69,7 @@ public void LoadAccountUID(HTTPResponse response, DataPack dp, const char[] erro
     if (!IsValidClient(client))
         return;
 
-    char uid[MAX_UID_LENGTH];
+    static char uid[MAX_UID_LENGTH];
     data.GetString("uid", uid, sizeof(uid));
 
     // Init user
@@ -95,7 +95,7 @@ void UpdateAccountName(int client)
     JSONObject data = new JSONObject();
     data.SetString("username", g_Accounts[client].name);
 
-    char path[128];
+    static char path[128];
     Format(path, sizeof(path), "%s/%s", Account_Service, g_Accounts[client].uid);
     NewNCSAPI(path).Put(data, UpdateAccountNameCallback);
 }

@@ -1,7 +1,5 @@
 #define NoEnoughMoneyErr "no enough money"
 
-
-
 void InitAPI()
 {
     InitNCSAPI();
@@ -14,7 +12,7 @@ void CloseAPI()
 
 void LoadUserStoreList(int client, bool openMenu = false)
 {
-    char uid[MAX_UID_LENGTH];
+    static char uid[MAX_UID_LENGTH];
     if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
         return;
     
@@ -22,7 +20,7 @@ void LoadUserStoreList(int client, bool openMenu = false)
     dp.WriteCell(client, false);
     dp.WriteCell(openMenu, false);
 
-    char path[128];
+    static static char path[128];
     Format(path, sizeof(path), "%s/list/%s", Store_Service, uid);
     NewNCSAPI(path).Get(LoadUserStoreListCallback, dp);
 }
@@ -58,7 +56,7 @@ public void LoadUserStoreListCallback(HTTPResponse response, DataPack dp, const 
 
 void BuyItem(int client, Item item)
 {
-    char uid[MAX_UID_LENGTH];
+    static char uid[MAX_UID_LENGTH];
     if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
         return;
 
@@ -83,7 +81,7 @@ void BuyItem(int client, Item item)
     data.SetInt("item_id", item.id);
     data.SetInt("price", item.GetPrice());
     
-    char path[128];
+    static static char path[128];
     Format(path, sizeof(path), "%s/buy", Store_Service);
     NewNCSAPI(path).Post(data, BuyItemCallback, dp);
 }
@@ -93,7 +91,7 @@ public void BuyItemCallback(HTTPResponse response, DataPack dp, const char[] err
     // DataPack
     dp.Reset();
     int client = dp.ReadCell();
-    char uid[MAX_UID_LENGTH], itemName[MAX_ITEM_NAME_LENGTH];
+    static char uid[MAX_UID_LENGTH], itemName[MAX_ITEM_NAME_LENGTH];
     dp.ReadString(uid, sizeof(uid));
     dp.ReadString(itemName, sizeof(itemName));
     int item_id = dp.ReadCell();
@@ -122,7 +120,7 @@ public void BuyItemCallback(HTTPResponse response, DataPack dp, const char[] err
 
 void BuyAdvPass(int client, int type)
 {
-    char uid[MAX_UID_LENGTH];
+    static char uid[MAX_UID_LENGTH];
     if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
         return;
 
@@ -147,7 +145,7 @@ void BuyAdvPass(int client, int type)
     data.SetInt64("uid", uid);
     data.SetInt("type", type);
     
-    char path[128];
+    static static char path[128];
     Format(path, sizeof(path), "%s/buy/pass", Store_Service);
     NewNCSAPI(path).Post(data, BuyPassCallback, dp);
 }
@@ -157,7 +155,7 @@ public void BuyPassCallback(HTTPResponse response, DataPack dp, const char[] err
     // DataPack
     dp.Reset();
     int client = dp.ReadCell();
-    char uid[MAX_UID_LENGTH];
+    static char uid[MAX_UID_LENGTH];
     dp.ReadString(uid, sizeof(uid));
     int type = dp.ReadCell();
     dp.Close();
@@ -184,7 +182,7 @@ public void BuyPassCallback(HTTPResponse response, DataPack dp, const char[] err
 
 void BuyVIP(int client, int month)
 {
-    char uid[MAX_UID_LENGTH];
+    static char uid[MAX_UID_LENGTH];
     if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
         return;
 
@@ -206,7 +204,7 @@ void BuyVIP(int client, int month)
     data.SetInt64("uid", uid);
     data.SetInt("month", month);
     
-    char path[128];
+    static static char path[128];
     Format(path, sizeof(path), "%s/buy/vip", Store_Service);
     NewNCSAPI(path).Post(data, BuyVIPCallback, dp);
 }
@@ -216,7 +214,7 @@ public void BuyVIPCallback(HTTPResponse response, DataPack dp, const char[] erro
     // DataPack
     dp.Reset();
     int client = dp.ReadCell();
-    char uid[MAX_UID_LENGTH];
+    static char uid[MAX_UID_LENGTH];
     dp.ReadString(uid, sizeof(uid));
     int month = dp.ReadCell();
     dp.Close();
@@ -247,7 +245,7 @@ bool NoEnoughMoney(JSON data)
     if (data == null)
         return false;
 
-    char error[512];
+    static char error[512];
     JSONObject json = view_as<JSONObject>(data);
     json.GetString("error", error, sizeof(error));
     return StrEqual(error, NoEnoughMoneyErr);

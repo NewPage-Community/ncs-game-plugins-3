@@ -28,7 +28,7 @@ void UpdateStatsData()
     JSONObject data = StatsList.JSON();
     StatsList.Clear();
 
-    char path[128];
+    static char path[128];
     Format(path, sizeof(path), "%s/user/incrs", Stats_Service);
     NewNCSAPI(path).Post(data, UpdateStatsDataCallback);
 }
@@ -46,7 +46,7 @@ public Action Timer_UpdateStats(Handle timer)
 
 void GetStatsData(int client, Handle plugin, Function callback, const char[] range, const char[] statsName, const char[] version, any data)
 {
-    char uid[MAX_UID_LENGTH];
+    static char uid[MAX_UID_LENGTH];
     if (!NCS_Account_GetUID(client, uid, MAX_UID_LENGTH))
         return;
 
@@ -58,7 +58,7 @@ void GetStatsData(int client, Handle plugin, Function callback, const char[] ran
     dp.WriteFunction(callback);
     dp.WriteCell(data);
 
-    char path[128];
+    static char path[128];
     Format(path, sizeof(path), "%s/user/%s/%s/%s/%s", Stats_Service, uid, statsName, version, range);
     NewNCSAPI(path).Get(GetStatsDataCallback, dp);
 }

@@ -41,7 +41,7 @@ public int Native_GetName(Handle plugin, int numParams)
 
 public int Native_GetClientOfUID(Handle plugin, int numParams)
 {
-    char uid[MAX_UID_LENGTH];
+    static char uid[MAX_UID_LENGTH];
     GetNativeString(1, uid, MAX_UID_LENGTH);
     return FindClient(uid);
 }

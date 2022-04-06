@@ -30,7 +30,7 @@ void ReqBanCheck(int client, const char[] uid)
     data.SetInt("app_id", gameAppID);
     data.SetString("ip", ip);
 
-    char path[128];
+    static char path[128];
     Format(path, sizeof(path), "%s/check/%s", Ban_Service, uid);
     NewNCSAPI(path).Post(data, LoadBanCheck, dp);
 }
@@ -83,7 +83,7 @@ public void LoadBanCheck(HTTPResponse response, DataPack dp, const char[] error)
 
 void ReqBanClient(int client, int type, int length, const char[] reason)
 {
-    char uid[MAX_UID_LENGTH];
+    static char uid[MAX_UID_LENGTH];
     if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
         return;
     
@@ -114,7 +114,7 @@ void ReqBanClient(int client, int type, int length, const char[] reason)
     data.Set("info", info);
     delete info;
 
-    char path[128];
+    static char path[128];
     Format(path, sizeof(path), "%s/add", Ban_Service);
     NewNCSAPI(path).Post(data, ReqBanClientCallback);
 }

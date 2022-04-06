@@ -12,7 +12,7 @@ void CloseAPI()
 
 void AllChat(int client, const char[] name, const char[] message)
 {
-    char uid[MAX_UID_LENGTH];
+    static char uid[MAX_UID_LENGTH];
     if (!NCS_Account_GetUID(client, uid, MAX_UID_LENGTH))
         return;
 
@@ -23,7 +23,7 @@ void AllChat(int client, const char[] name, const char[] message)
     data.SetInt("server_id", NCS_Server_GetID());
     data.SetInt64("uid", uid);
 
-    char path[128];
+    static char path[128];
     Format(path, sizeof(path), "%s/allchat", Chat_Service);
     NewNCSAPI(path).Post(data, AllChatCallback);
 }

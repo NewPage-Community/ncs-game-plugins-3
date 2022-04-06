@@ -12,7 +12,7 @@ void CloseAPI()
 
 void AddItems(int client, Items items)
 {
-    char uid[MAX_UID_LENGTH];
+    static char uid[MAX_UID_LENGTH];
     if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
         return;
 
@@ -36,7 +36,7 @@ void AddItems(int client, Items items)
     data.Set("items", array);
     delete array;
 
-    char path[128];
+    static char path[128];
     Format(path, sizeof(path), "%s/additem", Backpack_Service);
     NewNCSAPI(path).Post(data, AddItemsCallback);
 }
@@ -48,7 +48,7 @@ public void AddItemsCallback(HTTPResponse response, any value, const char[] erro
 
 void HaveUserItem(int client, int itemID, Handle plugin, Function callback, any data)
 {
-    char uid[MAX_UID_LENGTH];
+    static char uid[MAX_UID_LENGTH];
     if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
         return;
 
@@ -59,7 +59,7 @@ void HaveUserItem(int client, int itemID, Handle plugin, Function callback, any 
     dp.WriteFunction(callback);
     dp.WriteCell(data);
 
-    char path[128];
+    static char path[128];
     Format(path, sizeof(path), "%s/have/%s/%d", Backpack_Service, uid, itemID);
     NewNCSAPI(path).Get(HaveUserItemCallback, dp);
 }

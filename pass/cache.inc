@@ -22,7 +22,7 @@ void InitCache()
         if (json[0] == '{')
         {
             JSONObject data = JSONObject.FromString(json);
-            char path[128];
+            static char path[128];
             Format(path, sizeof(path), "%s/addpoints", PassUser_Service);
             NewNCSAPI(path).Post(data, InitCacheCallback);
         }

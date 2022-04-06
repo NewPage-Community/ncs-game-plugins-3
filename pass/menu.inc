@@ -3,11 +3,11 @@ static PassInfo playerCached[MAXPLAYERS + 1];
 
 void DisplayPassInfo(int client)
 {
-    char uid[MAX_UID_LENGTH];
+    static char uid[MAX_UID_LENGTH];
     if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
         return;
     
-    char path[128];
+    static char path[128];
     Format(path, sizeof(path), "%s/info/%s", GamePass_Service, uid);
     NewNCSAPI(path).Get(LoadPassInfo, client);
 }

@@ -20,7 +20,7 @@ void UpdateCVars()
     data.SetInt("mod_id", NCS_Server_GetModID());
     data.SetInt("server_id", NCS_Server_GetID());
 
-    char path[128];
+    static char path[128];
     Format(path, sizeof(path), "%s/update", CVar_Service);
     NewNCSAPI(path).Post(data, LoadCVars);
 }

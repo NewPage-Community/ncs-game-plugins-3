@@ -10,7 +10,7 @@ void RegCmd()
 
 public Action CookieNotifyCallback(int args)
 {
-    char uid[MAX_UID_LENGTH];
+    static char uid[MAX_UID_LENGTH];
     GetCmdArg(1, uid, sizeof(uid));
 
     int client = NCS_Account_GetClientOfUID(uid);

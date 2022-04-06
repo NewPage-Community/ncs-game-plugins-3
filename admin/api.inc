@@ -17,7 +17,7 @@ void ReqAdmin(int client, const char[] uid)
     dp.WriteCell(client, false);
     dp.WriteString(uid, false);
 
-    char path[128];
+    static char path[128];
     Format(path, sizeof(path), "%s/%s", Admin_Service, uid);
     NewNCSAPI(path).Get(LoadAdminInfo, dp);
 }
@@ -30,7 +30,7 @@ public void LoadAdminInfo(HTTPResponse response, DataPack dp, const char[] error
     // DataPack
     dp.Reset();
     int client = dp.ReadCell();
-    char uid[MAX_UID_LENGTH];
+    static char uid[MAX_UID_LENGTH];
     dp.ReadString(uid, sizeof(uid));
     dp.Close();
 
@@ -60,7 +60,7 @@ void ReloadAllAdmins()
 {
     for (int i = 0; i <= MAXPLAYERS; i++)
     {
-        char uid[MAX_UID_LENGTH];
+        static char uid[MAX_UID_LENGTH];
         if (!NCS_Account_GetUID(i, uid, sizeof(uid)))
             continue;
         ReqAdmin(i, uid);

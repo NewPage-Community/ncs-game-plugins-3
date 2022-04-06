@@ -2,7 +2,7 @@ void LoadRewards()
 {
     ClearRewards();
     
-    char path[128];
+    static char path[128];
     Format(path, sizeof(path), "%s/rewards", GamePass_Service);
     NewNCSAPI(path).Get(LoadRewardsCallback);
 }

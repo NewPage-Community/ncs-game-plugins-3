@@ -1,4 +1,5 @@
 #include "money/api"
 #include "money/native"
+#include "money/gift"
 #include "money/cmd"
 #include "money/menu"

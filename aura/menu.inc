@@ -1,6 +1,6 @@
 void DisplayUserAuras(int client)
 {
-    char uid[MAX_UID_LENGTH];
+    static char uid[MAX_UID_LENGTH];
     if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
     {
         NCS_Chat(client, _, "您的用户数据尚未加载，请重试");
@@ -12,7 +12,7 @@ void DisplayUserAuras(int client)
     dp.WriteCell(client, false);
     dp.WriteString(uid, false);
 
-    char path[128];
+    static char path[128];
     Format(path, sizeof(path), "%s/%s", BackpackUser_Service, uid);
     NewNCSAPI(path).Get(UserAurasCallback, dp);
 }

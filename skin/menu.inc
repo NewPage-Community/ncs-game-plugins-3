@@ -34,7 +34,7 @@ public int SkinMainMenuHandler(Menu menu, MenuAction action, int client, int slo
 
 void DisplayUserSkins(int client)
 {
-    char uid[MAX_UID_LENGTH];
+    static char uid[MAX_UID_LENGTH];
     if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
     {
         NCS_Chat(client, _, "您的用户数据尚未加载，请重试");
@@ -46,7 +46,7 @@ void DisplayUserSkins(int client)
     dp.WriteCell(client, false);
     dp.WriteString(uid, false);
 
-    char path[128];
+    static char path[128];
     Format(path, sizeof(path), "%s/%s", Backpack_Service, uid);
     NewNCSAPI(path).Get(UserSkinsCallback, dp);
 }

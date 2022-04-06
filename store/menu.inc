@@ -212,7 +212,7 @@ public int BuyItemHandle(Menu menu, MenuAction action, int client, int slot)
 
 void HotSaleListMenu(int client)
 {
-    char path[128];
+    static char path[128];
     Format(path, sizeof(path), "%s/hotsale", Store_Service);
     NewNCSAPI(path).Get(LoadHotSaleList, client);
 }

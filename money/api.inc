@@ -103,7 +103,7 @@ public void GiftMoneyCallback(HTTPResponse response, DataPack dp, const char[] e
                 static char err[32];
                 JSONObject json = view_as<JSONObject>(response.Data);
                 json.GetString("error", err, sizeof(err));
-                NCS_Chat(client, _, "超过今日赠送软妹币上限 {green}%s/200", err[17]);
+                NCS_Chat(client, _, "超出今日赠送软妹币上限 {green}200/%s", err[17]);
             }
             else
                 NCS_Chat(client, _, "赠送失败");
@@ -114,11 +114,13 @@ public void GiftMoneyCallback(HTTPResponse response, DataPack dp, const char[] e
 
     if (IsValidClient(client))
     {
+        JSONObject json = view_as<JSONObject>(response.Data);
+        int remaining = json.GetInt("remaining");
         int target = NCS_Account_GetClientOfUID(target_uid);
         if (target)
-            NCS_Chat(client, _, "成功赠送 %N %d 软妹币", target, money);
+            NCS_Chat(client, _, "成功赠送 %N %d 软妹币, 今天剩余额度: %d 软妹币", target, money, remaining);
         else
-            NCS_Chat(client, _, "成功赠送 UID:%d %d 软妹币", target_uid, money);
+            NCS_Chat(client, _, "成功赠送 UID:%d %d 软妹币, 今天剩余额度: %d 软妹币", target_uid, money, remaining);
     }
 }
 

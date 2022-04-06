@@ -9,10 +9,10 @@ void GiftMoneyMenu(int client, int money)
     for (int i = 1; i <= MaxClients; i++)
     {
         static char index[4], name[64];
-		if (client == i) continue;
+        if (client == i) continue;
         if (!IsValidClient(i)) continue;
         IntToString(i, index, sizeof(index));
-        GetClientName(client, name, sizeof(name));
+        GetClientName(i, name, sizeof(name));
         menu.AddItem(index, name);
     }
     menu.Display(client, MENU_TIME_FOREVER);

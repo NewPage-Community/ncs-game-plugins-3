@@ -51,7 +51,7 @@ public int PassInfoMenuHandle(Menu menu, MenuAction action, int client, int slot
     {
         switch (slot)
         {
-            case 0: FakeClientCommandEx(client, "sm_store");
+            case 0: FakeClientCommandEx(client, "sm_store_pass");
             case 1: UsePassPointBox(client);
             case 2: DisplayRewards(client);
         }

@@ -439,6 +439,7 @@ void BuyItemConfirmMenu(int client, Item item)
     char info[8];
     IntToString(item.id, info, sizeof(info));
     menu.AddItem(info, "确认购买");
+    menu.AddItem(info, "算了");
 
     menu.ExitBackButton = true;
     menu.Display(client, MENU_TIME_FOREVER);
@@ -451,7 +452,7 @@ public int BuyItemConfirmMenuHandle(Menu menu, MenuAction action, int client, in
     else if (action == MenuAction_Cancel && slot == MenuCancel_ExitBack)
     {
         char itemID[8];
-        menu.GetItem(slot, itemID, sizeof(itemID), _, _, _);
+        menu.GetItem(0, itemID, sizeof(itemID), _, _, _);
 
         Item item;
         if (!playerStoreList[client].CGet(itemID, item))
@@ -469,8 +470,15 @@ public int BuyItemConfirmMenuHandle(Menu menu, MenuAction action, int client, in
         if (!playerStoreList[client].CGet(itemID, item))
             return 0;
 
-        BuyItem(client, item);
-        lastMenu.DisplayAt(client, playerLastItem[client], MENU_TIME_FOREVER);
+        if (slot == 0)
+        {
+            BuyItem(client, item);
+            lastMenu.DisplayAt(client, playerLastItem[client], MENU_TIME_FOREVER);
+        }
+        else if (slot == 1)
+        {
+            BuyItemMenu(client, item);
+        }
     }
     return 0;
 }

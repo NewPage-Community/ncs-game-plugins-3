@@ -13,6 +13,7 @@ public Action Command_Store(int client, int args)
 
 public Action Command_StorePass(int client, int args)
 {
+    LoadUserStoreList(client);
     BuyAdvPassMenu(client);
     return Plugin_Handled;
 }

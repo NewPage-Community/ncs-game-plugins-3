@@ -19,12 +19,13 @@ enum struct Skin
     StringMap sounds;
     int initBody;
     char soundOverride[MAX_SKIN_NAME_LENGTH];
+    ArrayList skins;
 
     bool Init(JSONObject data)
     {
-        if (this.bodys != INVALID_HANDLE) delete this.bodys;
         this.bodys = new ArrayList(sizeof(BodysData));
         this.sounds = new StringMap();
+        this.skins = new ArrayList(sizeof(BodysData));
 
         this.id = data.GetInt("id");
         data.GetString("name", this.name, MAX_SKIN_NAME_LENGTH);
@@ -54,6 +55,20 @@ enum struct Skin
             delete bodys;
 
             if (attr.HasKey("init_body")) this.initBody = attr.GetInt("init_body");
+        }
+
+        if (attr.HasKey("skins"))
+        {
+            static BodysData tmp_skin;
+            JSONObject skins = view_as<JSONObject>(attr.Get("skins"));
+            JSONObjectKeys skinsKeys = skins.Keys();
+            while (skinsKeys.ReadKey(tmp_skin.name, sizeof(BodysData::name)))
+            {
+                tmp_skin.index = skins.GetInt(tmp_skin.name);
+                this.skins.PushArray(tmp_skin);
+            }
+            delete skinsKeys;
+            delete skins;
         }
 
         delete attr;
@@ -115,6 +130,7 @@ enum struct Skin
         delete this.bodys;
         delete this.sounds;
         this.soundOverride[0] = '\0';
+        delete this.skins;
     }
 
     void LoadSounds()

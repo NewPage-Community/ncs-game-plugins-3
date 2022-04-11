@@ -72,17 +72,17 @@ public void OnClientConnected(int client)
     SkinSoundOnClientConnected(client);
 }
 
-public Action Event_PlayerSpawn(Event event, const char[] name1, bool dontBroadcast)
+public void Event_PlayerSpawn(Event event, const char[] name1, bool dontBroadcast)
 {
     int client = GetClientOfUserId(GetEventInt(event, "userid"));
     if (client < 1 || client > MaxClients || !IsClientInGame(client) || IsFakeClient(client))
-        return Plugin_Continue;
+        return;
 
     Model_PlayerSpawn(client);
     Preview_PlayerSpawn(client);
     SkinSoundOnPlayerSpawn(client);
 
-    return Plugin_Continue;
+    return;
 }
 
 public void NCS_Cookie_OnUserCached(int client)

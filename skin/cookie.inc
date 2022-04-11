@@ -30,3 +30,20 @@ stock void SetUserSkinBody(int client, int id, int value)
     IntToString(value, val, sizeof(val));
     NCS_Cookie_Set(client, buffer, val);
 }
+
+stock int GetUserSkinSkin(int client, int id)
+{
+    static char buffer[16];
+    Format(buffer, sizeof(buffer), "skin_skin:%d", id);
+    if (!NCS_Cookie_Get(client, buffer, buffer, sizeof(buffer)))
+        return -1;
+    return StringToInt(buffer);
+}
+
+stock void SetUserSkinSkin(int client, int id, int value)
+{
+    static char buffer[16], val[16];
+    Format(buffer, sizeof(buffer), "skin_skin:%d", id);
+    IntToString(value, val, sizeof(val));
+    NCS_Cookie_Set(client, buffer, val);
+}

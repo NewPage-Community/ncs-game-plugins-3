@@ -21,6 +21,6 @@ methodmap CBaseAnimating {
 	public native bool SetBodyGroup(int body, int iGroup);
 }
 
-native bool SetPlayerModel(int client, const char[] name, int body, bool immediately = false);
+native bool SetPlayerModel(int client, const char[] name, int body, int skin, bool immediately = false);
 native void SetPlayerHands(int client, const char[] name);
 native int GetHandsGearID(char[] name);

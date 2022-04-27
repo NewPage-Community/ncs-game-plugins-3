@@ -31,7 +31,7 @@ native void NCS_Stats_Add(int client, const char[] range, const char[] statsName
 native void NCS_Stats_Get(int client, StatsDataCallback callback, const char[] range, const char[] statsName, const char[] version, any data = 0);
 
 native void NCS_Stats_Global_Add(const char[] range, const char[] statsName, const char[] version, float increment);
-native void NCS_Stats_Global_Get(StatsDataCallback callback, const char[] range, const char[] statsName, const char[] version, any data = 0);
+native void NCS_Stats_Global_Get(GlobalStatsDataCallback callback, const char[] range, const char[] statsName, const char[] version, any data = 0);
 
 public SharedPlugin __pl_ncs_stats = 
 {

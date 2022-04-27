@@ -21,8 +21,17 @@ typeset StatsDataCallback
     function void (int client, float score, int rank, int total, any data);
 };
 
+typeset GlobalStatsDataCallback
+{
+    function void (float score);
+    function void (float score, any data);
+};
+
 native void NCS_Stats_Add(int client, const char[] range, const char[] statsName, const char[] version, float increment);
 native void NCS_Stats_Get(int client, StatsDataCallback callback, const char[] range, const char[] statsName, const char[] version, any data = 0);
+
+native void NCS_Stats_Global_Add(const char[] range, const char[] statsName, const char[] version, float increment);
+native void NCS_Stats_Global_Get(StatsDataCallback callback, const char[] range, const char[] statsName, const char[] version, any data = 0);
 
 public SharedPlugin __pl_ncs_stats = 
 {

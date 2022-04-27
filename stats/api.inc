@@ -92,3 +92,54 @@ public void GetStatsDataCallback(HTTPResponse response, DataPack dp, const char[
     Call_PushCell(cdata);
     Call_Finish();
 }
+
+void GetGlobalStatsData(Handle plugin, Function callback, const char[] range, const char[] statsName, const char[] version, any data)
+{
+    // Datapack to pass to callback
+    DataPack dp = new DataPack();
+    dp.WriteCell(plugin);
+    dp.WriteFunction(callback);
+    dp.WriteCell(data);
+
+    static char path[128];
+    Format(path, sizeof(path), "%s/global/%s/%s/%s", Stats_Service, statsName, version, range);
+    NewNCSAPI(path).Get(GetGlobalStatsDataCallback, dp);
+}
+
+public void GetGlobalStatsDataCallback(HTTPResponse response, DataPack dp, const char[] error)
+{
+    // DataPack
+    dp.Reset();
+    Handle plugin = dp.ReadCell();
+    Function callback = dp.ReadFunction();
+    any cdata = dp.ReadCell();
+    dp.Close();
+
+    if (CheckAPIError("Stats", "GetGlobalStatsDataCallback", response, error))
+        return;
+
+    // JSON
+    JSONObject data = view_as<JSONObject>(response.Data);
+    float score = data.GetFloatEx("score");
+
+    Call_StartFunction(plugin, callback);
+    Call_PushCell(score);
+    Call_PushCell(cdata);
+    Call_Finish();
+}
+
+void AddGlobalStatsData(const char[] range, const char[] statsName, const char[] version, float increment)
+{
+    // JSON data
+    JSONObject data = new JSONObject();
+    data.SetFloat("increment", increment);
+
+    static char path[128];
+    Format(path, sizeof(path), "%s/global/incr/%s/%s/%s", Stats_Service, statsName, version, range);
+    NewNCSAPI(path).Post(data, AddGlobalStatsDataCallback);
+}
+
+public void AddGlobalStatsDataCallback(HTTPResponse response, any value, const char[] error)
+{
+    CheckAPIError("Stats", "AddGlobalStatsDataCallback", response, error);
+}

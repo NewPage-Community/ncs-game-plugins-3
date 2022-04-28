@@ -90,9 +90,9 @@ void VIPFeatureMenu(int client)
 
     Menu menu = new Menu(VIPFeatureMenuHandle);
     menu.SetTitle("VIP权限");
-    menu.AddItem("", "名字颜色（40级）", level >= 40 && LibraryExists("NCS-Chat") ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
+    menu.AddItem("", "名字颜色（20级）", level >= 20 && LibraryExists("NCS-Chat") ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
     menu.AddItem("", "投票踢人（60级）", level >= 60 ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
-    menu.AddItem("", "自定义头衔（100级）", level >= 100 && LibraryExists("NCS-Chat") ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
+    menu.AddItem("", "自定义头衔（40级）", level >= 40 && LibraryExists("NCS-Chat") ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
     menu.ExitButton = true;
     menu.Display(client, MENU_TIME_FOREVER);
 }

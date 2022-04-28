@@ -15,7 +15,7 @@ public Action Command_Prefix(int client, int args)
     menu.SetTitle("请选择你显示的头衔");
 
     menu.AddItemEx(0, "0", "不显示");
-    if (NCS_VIP_IsVIP(client) && NCS_VIP_Level(client) >= 100)
+    if (NCS_VIP_IsVIP(client) && NCS_VIP_Level(client) >= 40)
     {
         menu.AddItemEx(0, "-1", "设置自定义头衔");
         if (player[client].title[0] != '\0')

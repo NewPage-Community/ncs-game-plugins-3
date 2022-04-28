@@ -8,6 +8,7 @@ enum struct Item
     int id;
     int amount;
     int length;
+    char name[32];
 }
 
 methodmap Items < ArrayList

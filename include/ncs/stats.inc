@@ -3,7 +3,7 @@
 #endif
 #define _NCS_Stats_
 
-#define NCS_STATS_KEY_LENGTH 16
+#define NCS_STATS_KEY_LENGTH 32
 
 enum struct StatsData
 {

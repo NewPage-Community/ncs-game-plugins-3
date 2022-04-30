@@ -9,7 +9,7 @@
 forward void NCS_Cookie_OnUserCached(int client);
 
 native bool NCS_Cookie_Get(int client, const char[] key, char[] value, int maxlen);
-native void NCS_Cookie_Set(int client, const char[] key, const char[] value);
+native bool NCS_Cookie_Set(int client, const char[] key, const char[] value);
 
 native void NCS_Cookie_IsCached(int client);
 

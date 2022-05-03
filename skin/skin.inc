@@ -1,6 +1,6 @@
 #define MAX_SKINS_NUM 1024
 #define MAX_SKIN_NAME_LENGTH 64
-#define MAX_SKIN_SOUND_NUM 64
+#define MAX_SKIN_SOUND_NUM 256
 
 enum struct BodysData {
     char name[32];

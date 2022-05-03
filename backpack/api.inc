@@ -39,6 +39,7 @@ void AddItems(int client, Items items)
     static char path[128];
     Format(path, sizeof(path), "%s/additem", Backpack_Service);
     NewNCSAPI(path).Post(data, AddItemsCallback);
+	delete data;
 }
 
 public void AddItemsCallback(HTTPResponse response, any value, const char[] error)

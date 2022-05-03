@@ -49,6 +49,7 @@ void ReqAccountUID(const char[] steamid, bool notify = false)
     static char path[128];
     Format(path, sizeof(path), "%s/game/playerconnect", Account_Service);
     NewNCSAPI(path).Post(data, LoadAccountUID, dp);
+	delete data;
 }
 
 public void LoadAccountUID(HTTPResponse response, DataPack dp, const char[] error)
@@ -98,6 +99,7 @@ void UpdateAccountName(int client)
     static char path[128];
     Format(path, sizeof(path), "%s/%s", Account_Service, g_Accounts[client].uid);
     NewNCSAPI(path).Put(data, UpdateAccountNameCallback);
+	delete data;
 }
 
 public void UpdateAccountNameCallback(HTTPResponse response, any value, const char[] error)

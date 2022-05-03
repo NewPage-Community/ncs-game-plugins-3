@@ -137,6 +137,7 @@ void AddGlobalStatsData(const char[] range, const char[] statsName, const char[]
     static char path[128];
     Format(path, sizeof(path), "%s/global/incr/%s/%s/%s", Stats_Service, statsName, version, range);
     NewNCSAPI(path).Post(data, AddGlobalStatsDataCallback);
+	delete data;
 }
 
 public void AddGlobalStatsDataCallback(HTTPResponse response, any value, const char[] error)

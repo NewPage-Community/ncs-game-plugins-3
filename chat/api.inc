@@ -26,6 +26,7 @@ void AllChat(int client, const char[] name, const char[] message)
     static char path[128];
     Format(path, sizeof(path), "%s/allchat", Chat_Service);
     NewNCSAPI(path).Post(data, AllChatCallback);
+	delete data;
 }
 
 public void AllChatCallback(HTTPResponse response, any value, const char[] error)

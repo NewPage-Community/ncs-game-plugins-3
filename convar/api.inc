@@ -23,6 +23,7 @@ void UpdateCVars()
     static char path[128];
     Format(path, sizeof(path), "%s/update", CVar_Service);
     NewNCSAPI(path).Post(data, LoadCVars);
+	delete data;
 }
 
 public void LoadCVars(HTTPResponse response, any v, const char[] error)

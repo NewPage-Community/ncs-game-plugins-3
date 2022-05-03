@@ -56,8 +56,7 @@ public Action Timer_UpdatePoint(Handle timer, int client)
         Format(path, sizeof(path), "%s/addpoints", PassUser_Service);
         NewNCSAPI(path).Post(data, UpdatePointCallback);
     }
-    else
-        delete data;
+    delete data;
     
     return Plugin_Continue;
 }
@@ -87,6 +86,7 @@ void UsePointBox(int client, bool all = false)
     static char path[128];
     Format(path, sizeof(path), "%s/pointbox", GamePass_Service);
     NewNCSAPI(path).Post(data, UsePointBoxCallback, dp);
+	delete data;
 }
 
 public void UsePointBoxCallback(HTTPResponse response, DataPack dp, const char[] error)

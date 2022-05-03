@@ -85,6 +85,7 @@ void ReqServerInfo()
     char path[64];
     Format(path, sizeof(path), "%s/init", Server_Service);
     NewNCSAPI(path).Post(data, LoadServerInfo);
+	delete data;
     delete hostip;
     delete hostport;
 }
@@ -143,6 +144,7 @@ void ReqMapNotify(int serverID, const char[] map)
     char path[64];
     Format(path, sizeof(path), "%s/changemap", Server_Service);
     NewNCSAPI(path).Post(data, ReqMapNotifyCallback);
+	delete data;
 }
 
 public void ReqMapNotifyCallback(HTTPResponse response, any value, const char[] error)

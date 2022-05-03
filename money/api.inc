@@ -35,6 +35,7 @@ void GiveMoney(int client, int money, const char[] reason)
     static char path[128];
     Format(path, sizeof(path), "%s/%s/give", Money_Service, uid);
     NewNCSAPI(path).Post(data, GiveMoneyCallback, dp);
+	delete data;
 }
 
 public void GiveMoneyCallback(HTTPResponse response, DataPack dp, const char[] error)
@@ -79,6 +80,7 @@ void GiftMoney(int client, int target, int money)
     static char path[128];
     Format(path, sizeof(path), "%s/%s/gift", Money_Service, uid);
     NewNCSAPI(path).Post(data, GiftMoneyCallback, dp);
+	delete data;
 }
 
 public void GiftMoneyCallback(HTTPResponse response, DataPack dp, const char[] error)

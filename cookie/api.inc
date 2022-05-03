@@ -63,6 +63,7 @@ bool SetUserCookie(int client, const char[] key, const char[] value)
     static char path[128];
     Format(path, sizeof(path), "%s/set", Cookie_Service);
     NewNCSAPI(path).Post(data, SetUserCookieCallback);
+	delete data;
     return ok;
 }
 

@@ -33,6 +33,7 @@ void ReqBanCheck(int client, const char[] uid)
     static char path[128];
     Format(path, sizeof(path), "%s/check/%s", Ban_Service, uid);
     NewNCSAPI(path).Post(data, LoadBanCheck, dp);
+	delete data;
 }
 
 public void LoadBanCheck(HTTPResponse response, DataPack dp, const char[] error)
@@ -117,6 +118,7 @@ void ReqBanClient(int client, int type, int length, const char[] reason)
     static char path[128];
     Format(path, sizeof(path), "%s/add", Ban_Service);
     NewNCSAPI(path).Post(data, ReqBanClientCallback);
+	delete data;
 }
 
 public void ReqBanClientCallback(HTTPResponse response, any value, const char[] error)

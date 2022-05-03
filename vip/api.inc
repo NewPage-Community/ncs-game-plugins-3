@@ -84,6 +84,7 @@ void AddPoint(int client, int addPoint)
     static char path[128];
     Format(path, sizeof(path), "%s/%s/addpoint", VIP_Service, uid);
     NewNCSAPI(path).Put(data, AddPointCallback, dp);
+	delete data;
 }
 
 public void AddPointCallback(HTTPResponse response, DataPack dp, const char[] error)
@@ -129,6 +130,7 @@ void Renewal(int client, int length)
     static char path[128];
     Format(path, sizeof(path), "%s/renewal", VIP_Service);
     NewNCSAPI(path).Post(data, RenewalCallback, dp);
+	delete data;
 }
 
 public void RenewalCallback(HTTPResponse response, DataPack dp, const char[] error)

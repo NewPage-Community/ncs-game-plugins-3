@@ -46,6 +46,7 @@ void Sign(int client)
     static char path[128];
     Format(path, sizeof(path), "%s", Sign_Service);
     NewNCSAPI(path).Post(data, SignCallback, dp);
+	delete data;
 }
 
 public void SignCallback(HTTPResponse response, DataPack dp, const char[] error)

@@ -84,6 +84,7 @@ void BuyItem(int client, Item item)
     static char path[128];
     Format(path, sizeof(path), "%s/buy", Store_Service);
     NewNCSAPI(path).Post(data, BuyItemCallback, dp);
+	delete data;
 }
 
 public void BuyItemCallback(HTTPResponse response, DataPack dp, const char[] error)
@@ -148,6 +149,7 @@ void BuyAdvPass(int client, int type)
     static char path[128];
     Format(path, sizeof(path), "%s/buy/pass", Store_Service);
     NewNCSAPI(path).Post(data, BuyPassCallback, dp);
+	delete data;
 }
 
 public void BuyPassCallback(HTTPResponse response, DataPack dp, const char[] error)
@@ -207,6 +209,7 @@ void BuyVIP(int client, int month)
     static char path[128];
     Format(path, sizeof(path), "%s/buy/vip", Store_Service);
     NewNCSAPI(path).Post(data, BuyVIPCallback, dp);
+	delete data;
 }
 
 public void BuyVIPCallback(HTTPResponse response, DataPack dp, const char[] error)

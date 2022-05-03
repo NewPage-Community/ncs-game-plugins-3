@@ -25,6 +25,7 @@ void InitCache()
             static char path[128];
             Format(path, sizeof(path), "%s/user/incrs", Stats_Service);
             NewNCSAPI(path).Post(data, InitCacheCallback);
+            delete data;
         }
     }
     

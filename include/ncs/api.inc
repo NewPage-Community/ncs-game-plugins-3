@@ -31,6 +31,9 @@ stock HTTPRequest NewNCSAPI(const char[] path)
     Format(buffer, sizeof(buffer), "Basic %s", buffer);
     client.SetHeader("Authorization", buffer);
 
+	client.ConnectTimeout = 3;
+	client.Timeout = 5;
+
     // tracing
     //c.SetHeader("X-B3-Sampled", "1");
     return client;

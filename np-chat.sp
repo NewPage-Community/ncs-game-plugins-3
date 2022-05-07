@@ -12,11 +12,11 @@
 
 public Plugin myinfo = 
 {
-    name        = P_NAME,
-    author      = P_AUTHOR,
-    description = P_DESC,
-    version     = P_VERSION,
-    url         = P_URLS
+	name		= P_NAME,
+	author	  = P_AUTHOR,
+	description = P_DESC,
+	version	 = P_VERSION,
+	url		 = P_URLS
 };
 
 // Module
@@ -24,36 +24,36 @@ public Plugin myinfo =
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
-    InitNative();
+	InitNative();
 
-    // lib
-    RegPluginLibrary("NCS-Chat");
+	// lib
+	RegPluginLibrary("NCS-Chat");
 
-    return APLRes_Success;
+	return APLRes_Success;
 }
 
 public void OnPluginStart()
 {
-    InitAPI();
-    InitCmd();
+	InitAPI();
+	InitCmd();
 }
 
 public void OnPluginEnd()
 {
-    CloseAPI();
+	CloseAPI();
 }
 
 public void OnConfigsExecuted()
 {
-    ChatConfig();
+	ChatConfig();
 }
 
 public void OnClientConnected(int client)
 {
-    player[client].index = client;
+	player[client].index = client;
 }
 
 public void OnClientDisconnect(int client)
 {
-    player[client].Clear();
+	player[client].Clear();
 }

@@ -1,5 +1,5 @@
 #if defined _NCS_Account_
-    #endinput
+	#endinput
 #endif
 #define _NCS_Account_
 
@@ -25,21 +25,21 @@ native int NCS_Account_GetClientOfUID(const char[] uid);
 
 public SharedPlugin __pl_ncs_account = 
 {
-    name = "NCS-Account",
-    file = "np-account.smx",
+	name = "NCS-Account",
+	file = "np-account.smx",
 #if defined REQUIRE_PLUGIN
-    required = 1,
+	required = 1,
 #else
-    required = 0,
+	required = 0,
 #endif
 };
 
 #if !defined REQUIRE_PLUGIN
 public void __pl_ncs_account_SetNTVOptional()
 {
-    MarkNativeAsOptional("NCS_Account_GetUID");
-    MarkNativeAsOptional("NCS_Account_ChangeName");
-    MarkNativeAsOptional("NCS_Account_GetName");
-    MarkNativeAsOptional("NCS_Account_GetClientOfUID");
+	MarkNativeAsOptional("NCS_Account_GetUID");
+	MarkNativeAsOptional("NCS_Account_ChangeName");
+	MarkNativeAsOptional("NCS_Account_GetName");
+	MarkNativeAsOptional("NCS_Account_GetClientOfUID");
 }
 #endif

@@ -5,11 +5,11 @@
 
 public Plugin myinfo = 
 {
-    name        = P_NAME,
-    author      = P_AUTHOR,
-    description = P_DESC,
-    version     = P_VERSION,
-    url         = P_URLS
+	name		= P_NAME,
+	author	  = P_AUTHOR,
+	description = P_DESC,
+	version	 = P_VERSION,
+	url		 = P_URLS
 };
 
 // Module
@@ -17,53 +17,53 @@ public Plugin myinfo =
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
-    // core
-    RegNative();
+	// core
+	RegNative();
 
-    // lib
-    RegPluginLibrary("NCS-Account");
+	// lib
+	RegPluginLibrary("NCS-Account");
 
-    return APLRes_Success;
+	return APLRes_Success;
 }
 
 public void OnPluginStart()
 {
-    InitAPI();
-    InitCmd();
-    InitName();
-    InitUID();
+	InitAPI();
+	InitCmd();
+	InitName();
+	InitUID();
 }
 
 public void OnPluginEnd()
 {
-    CloseAPI();
+	CloseAPI();
 }
 
 public void OnClientAuthorized(int client, const char[] auth)
 {
-    if(strcmp(auth, "BOT") == 0 || IsFakeClient(client) || IsClientSourceTV(client))
-        return;
+	if(strcmp(auth, "BOT") == 0 || IsFakeClient(client) || IsClientSourceTV(client))
+		return;
 
-    // Init
-    ResetIgnoreChangeName(client);
+	// Init
+	ResetIgnoreChangeName(client);
 
-    char steamid[32];
-    if (!GetClientAuthId(client, AuthId_SteamID64, steamid, sizeof(steamid)))
-    {
-        NCS_LogError("Account", "OnClientAuthorized", "Can not verify client SteamID64 -> \"%L\"", client);
-        KickClient(client, "无效SteamID，请重启Steam客户端\nInvalid Steam ID, please restart Steam client");
-        return;
-    }
-    
-    ReqAccountUID(steamid);
+	char steamid[32];
+	if (!GetClientAuthId(client, AuthId_SteamID64, steamid, sizeof(steamid)))
+	{
+		NCS_LogError("Account", "OnClientAuthorized", "Can not verify client SteamID64 -> \"%L\"", client);
+		KickClient(client, "无效SteamID，请重启Steam客户端\nInvalid Steam ID, please restart Steam client");
+		return;
+	}
+	
+	ReqAccountUID(steamid);
 
-    // Check loaded
-    StartCheck(client);
+	// Check loaded
+	StartCheck(client);
 }
 
 public void OnClientDisconnect(int client)
 {
-    UserDisconnectForward(client, g_Accounts[client].uid);
-    RemoveClient(client);
-    g_Accounts[client].Clean();
+	UserDisconnectForward(client, g_Accounts[client].uid);
+	RemoveClient(client);
+	g_Accounts[client].Clean();
 }

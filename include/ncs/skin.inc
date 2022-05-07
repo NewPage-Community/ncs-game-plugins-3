@@ -1,5 +1,5 @@
 #if defined _NCS_Skin_
-    #endinput
+	#endinput
 #endif
 #define _NCS_Skin_
 
@@ -7,18 +7,18 @@ native void NCS_Skin_Preview(int client, int skinID);
 
 public SharedPlugin __pl_ncs_skin = 
 {
-    name = "NCS-Skin",
-    file = "np-skin.smx",
+	name = "NCS-Skin",
+	file = "np-skin.smx",
 #if defined REQUIRE_PLUGIN
-    required = 1,
+	required = 1,
 #else
-    required = 0,
+	required = 0,
 #endif
 };
 
 #if !defined REQUIRE_PLUGIN
 public void __pl_ncs_skin_SetNTVOptional()
 {
-    MarkNativeAsOptional("NCS_Skin_Preview");
+	MarkNativeAsOptional("NCS_Skin_Preview");
 }
 #endif

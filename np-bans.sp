@@ -10,11 +10,11 @@
 
 public Plugin myinfo = 
 {
-    name        = P_NAME,
-    author      = P_AUTHOR,
-    description = P_DESC,
-    version     = P_VERSION,
-    url         = P_URLS
+	name		= P_NAME,
+	author	  = P_AUTHOR,
+	description = P_DESC,
+	version	 = P_VERSION,
+	url		 = P_URLS
 };
 
 // Module
@@ -22,27 +22,27 @@ public Plugin myinfo =
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
-    InitNative();
+	InitNative();
 
-    // lib
-    RegPluginLibrary("NCS-Bans");
+	// lib
+	RegPluginLibrary("NCS-Bans");
 
-    return APLRes_Success;
+	return APLRes_Success;
 }
 
 public void OnPluginStart()
 {
-    InitAPI();
-    InitCmd();
+	InitAPI();
+	InitCmd();
 }
 
 public void OnPluginEnd()
 {
-    CloseAPI();
+	CloseAPI();
 }
 
 public void NCS_Account_OnUserLoaded(int client, const char[] uid)
 {
-    // Check ban information when player loaded
-    ReqBanCheck(client, uid);
+	// Check ban information when player loaded
+	ReqBanCheck(client, uid);
 }

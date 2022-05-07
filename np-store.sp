@@ -15,11 +15,11 @@
 
 public Plugin myinfo = 
 {
-    name        = P_NAME,
-    author      = P_AUTHOR,
-    description = P_DESC,
-    version     = P_VERSION,
-    url         = P_URLS
+	name		= P_NAME,
+	author	  = P_AUTHOR,
+	description = P_DESC,
+	version	 = P_VERSION,
+	url		 = P_URLS
 };
 
 // Module
@@ -27,19 +27,19 @@ public Plugin myinfo =
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
-    // lib
-    RegPluginLibrary("NCS-Store");
+	// lib
+	RegPluginLibrary("NCS-Store");
 
-    return APLRes_Success;
+	return APLRes_Success;
 }
 
 public void OnPluginStart()
 {
-    InitAPI();
-    InitCmd();
+	InitAPI();
+	InitCmd();
 }
 
 public void OnPluginEnd()
 {
-    CloseAPI();
+	CloseAPI();
 }

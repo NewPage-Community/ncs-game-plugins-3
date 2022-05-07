@@ -8,15 +8,15 @@
 
 public Plugin myinfo = 
 {
-    name        = P_NAME,
-    author      = P_AUTHOR,
-    description = P_DESC,
-    version     = P_VERSION,
-    url         = P_URLS
+	name		= P_NAME,
+	author	  = P_AUTHOR,
+	description = P_DESC,
+	version	 = P_VERSION,
+	url		 = P_URLS
 };
 
 public void NCS_Sign_OnUserSigned(int client)
 {
-    NCS_Money_Give(client, 100000, "签到奖励");
-    NCS_Chat(client, _, "感谢参与测试，奖励你 {green}100000软妹币");
+	NCS_Money_Give(client, 100000, "签到奖励");
+	NCS_Chat(client, _, "感谢参与测试，奖励你 {green}100000软妹币");
 }

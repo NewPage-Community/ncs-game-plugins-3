@@ -6,11 +6,11 @@
 
 public Plugin myinfo = 
 {
-    name        = P_NAME,
-    author      = P_AUTHOR,
-    description = P_DESC,
-    version     = P_VERSION,
-    url         = P_URLS
+	name		= P_NAME,
+	author	  = P_AUTHOR,
+	description = P_DESC,
+	version	 = P_VERSION,
+	url		 = P_URLS
 };
 
 // Module
@@ -18,28 +18,28 @@ public Plugin myinfo =
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
-    // lib
-    RegPluginLibrary("NCS-Admin");
+	// lib
+	RegPluginLibrary("NCS-Admin");
 
-    return APLRes_Success;
+	return APLRes_Success;
 }
 
 public void OnPluginStart()
 {
-    InitAPI();
+	InitAPI();
 }
 
 public void OnPluginEnd()
 {
-    CloseAPI();
+	CloseAPI();
 }
 
 public void NCS_Account_OnUserLoaded(int client, const char[] uid)
 {
-    ReqAdmin(client, uid);
+	ReqAdmin(client, uid);
 }
 
 public void OnRebuildAdminCache(AdminCachePart part)
 {
-    ReloadAllAdmins();
+	ReloadAllAdmins();
 }

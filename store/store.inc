@@ -6,71 +6,71 @@
 
 enum struct Item
 {
-    int id;
-    char name[MAX_ITEM_NAME_LENGTH];
-    char description[MAX_ITEM_DESC_LENGTH];
-    int type;
-    int price;
-    float discount;
-    bool available;
-    bool alreadyHave;
+	int id;
+	char name[MAX_ITEM_NAME_LENGTH];
+	char description[MAX_ITEM_DESC_LENGTH];
+	int type;
+	int price;
+	float discount;
+	bool available;
+	bool alreadyHave;
 
-    int GetPrice()
-    {
-        return RoundToNearest(this.price * this.discount);
-    }
+	int GetPrice()
+	{
+		return RoundToNearest(this.price * this.discount);
+	}
 
-    void GetMenuItem(char[] info, int info_size, char[] desc, int desc_size)
-    {
-        IntToString(this.id, info, info_size);
-        if (FloatCompare(1.0, this.discount) == 1)
-            Format(desc, desc_size, "%s (%1.1f折)", this.name, this.discount * 10.0);
-        else
-            Format(desc, desc_size, "%s", this.name);
-    }
+	void GetMenuItem(char[] info, int info_size, char[] desc, int desc_size)
+	{
+		IntToString(this.id, info, info_size);
+		if (FloatCompare(1.0, this.discount) == 1)
+			Format(desc, desc_size, "%s (%1.1f折)", this.name, this.discount * 10.0);
+		else
+			Format(desc, desc_size, "%s", this.name);
+	}
 }
 
 methodmap Items < StringMap
 {
-    public Items(JSONArray items)
-    {
-        StringMap list = new StringMap();
-        int length = items.Length;
-        for (int i = 0; i < length; i++)
-        {
-            Item item;
-            JSONObject data = view_as<JSONObject>(items.Get(i));
-            item.id = data.GetInt("item_id");
-            data.GetString("name", item.name, MAX_ITEM_NAME_LENGTH);
-            data.GetString("description", item.description, MAX_ITEM_DESC_LENGTH);
-            item.type = data.GetInt("type");
-            item.price = data.GetInt("price");
-            item.discount = data.GetFloatEx("discount");
-            item.available = data.GetBool("available");
-            item.alreadyHave = item.id == PASSBOX_ID ? false : data.GetBool("already_have");
-            
-            // New line
-            ReplaceString(item.description, MAX_ITEM_DESC_LENGTH, NEWLINE, "\n");
+	public Items(JSONArray items)
+	{
+		StringMap list = new StringMap();
+		int length = items.Length;
+		for (int i = 0; i < length; i++)
+		{
+			Item item;
+			JSONObject data = view_as<JSONObject>(items.Get(i));
+			item.id = data.GetInt("item_id");
+			data.GetString("name", item.name, MAX_ITEM_NAME_LENGTH);
+			data.GetString("description", item.description, MAX_ITEM_DESC_LENGTH);
+			item.type = data.GetInt("type");
+			item.price = data.GetInt("price");
+			item.discount = data.GetFloatEx("discount");
+			item.available = data.GetBool("available");
+			item.alreadyHave = item.id == PASSBOX_ID ? false : data.GetBool("already_have");
+			
+			// New line
+			ReplaceString(item.description, MAX_ITEM_DESC_LENGTH, NEWLINE, "\n");
 
-            char id[8];
-            IntToString(item.id, id, sizeof(id));
-            list.SetArray(id, item, sizeof(item), true);
-            delete data;
-        }
-        return view_as<Items>(list);
-    }
+			char id[8];
+			IntToString(item.id, id, sizeof(id));
+			list.SetArray(id, item, sizeof(item), true);
+			delete data;
+		}
+		return view_as<Items>(list);
+	}
 
-    public bool Get(int id, Item buffer)
-    {
-        char cid[8];
-        IntToString(id, cid, sizeof(cid));
-        return this.GetArray(cid, buffer, sizeof(buffer));
-    }
+	public bool Get(int id, Item buffer)
+	{
+		char cid[8];
+		IntToString(id, cid, sizeof(cid));
+		return this.GetArray(cid, buffer, sizeof(buffer));
+	}
 
-    public bool CGet(const char[] id, Item buffer)
-    {
-        return this.GetArray(id, buffer, sizeof(buffer));
-    }
+	public bool CGet(const char[] id, Item buffer)
+	{
+		return this.GetArray(id, buffer, sizeof(buffer));
+	}
 }
 
 Items playerStoreList[MAXPLAYERS+1];

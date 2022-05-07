@@ -1,5 +1,5 @@
 #if defined _NCS_Cookie_
-    #endinput
+	#endinput
 #endif
 #define _NCS_Cookie_
 
@@ -18,49 +18,49 @@ native int NCS_Cookie_GetTime(int client);
 
 stock bool NCS_Cookie_GetBool(int client, const char[] key, bool def)
 {
-    static char v[2];
-    if (NCS_Cookie_Get(client, key, v, sizeof(v)))
-        return StringToInt(v) == 1;
-    return def;
+	static char v[2];
+	if (NCS_Cookie_Get(client, key, v, sizeof(v)))
+		return StringToInt(v) == 1;
+	return def;
 }
 
 stock void NCS_Cookie_SetBool(int client, const char[] key, bool value)
 {
-    static char v[2];
-    IntToString(value, v, sizeof(v));
-    NCS_Cookie_Set(client, key, v);
+	static char v[2];
+	IntToString(value, v, sizeof(v));
+	NCS_Cookie_Set(client, key, v);
 }
 
 stock int NCS_Cookie_GetInteger(int client, const char[] key, int def)
 {
-    static char v[20];
-    if (NCS_Cookie_Get(client, key, v, sizeof(v)))
-        return StringToInt(v);
-    return def;
+	static char v[20];
+	if (NCS_Cookie_Get(client, key, v, sizeof(v)))
+		return StringToInt(v);
+	return def;
 }
 
 stock void NCS_Cookie_SetInteger(int client, const char[] key, int value)
 {
-    static char v[20];
-    IntToString(value, v, sizeof(v));
-    NCS_Cookie_Set(client, key, v);
+	static char v[20];
+	IntToString(value, v, sizeof(v));
+	NCS_Cookie_Set(client, key, v);
 }
 
 public SharedPlugin __pl_ncs_cookie = 
 {
-    name = "NCS-Cookie",
-    file = "np-cookie.smx",
+	name = "NCS-Cookie",
+	file = "np-cookie.smx",
 #if defined REQUIRE_PLUGIN
-    required = 1,
+	required = 1,
 #else
-    required = 0,
+	required = 0,
 #endif
 };
 
 #if !defined REQUIRE_PLUGIN
 public void __pl_ncs_cookie_SetNTVOptional()
 {
-    MarkNativeAsOptional("NCS_Cookie_Get");
-    MarkNativeAsOptional("NCS_Cookie_Set");
+	MarkNativeAsOptional("NCS_Cookie_Get");
+	MarkNativeAsOptional("NCS_Cookie_Set");
 }
 #endif

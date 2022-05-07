@@ -10,11 +10,11 @@
 
 public Plugin myinfo = 
 {
-    name        = P_NAME,
-    author      = P_AUTHOR,
-    description = P_DESC,
-    version     = P_VERSION,
-    url         = P_URLS
+	name		= P_NAME,
+	author	  = P_AUTHOR,
+	description = P_DESC,
+	version	 = P_VERSION,
+	url		 = P_URLS
 };
 
 // Module
@@ -22,39 +22,39 @@ public Plugin myinfo =
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
-    InitNative();
-    
-    // lib
-    RegPluginLibrary("NCS-Pass");
+	InitNative();
+	
+	// lib
+	RegPluginLibrary("NCS-Pass");
 
-    return APLRes_Success;
+	return APLRes_Success;
 }
 
 public void OnPluginStart()
 {
-    InitAPI();
-    InitCmd();
-    InitConVar();
+	InitAPI();
+	InitCmd();
+	InitConVar();
 }
 
 public void OnPluginEnd()
 {
-    CloseAPI();
-    CloseCache();
+	CloseAPI();
+	CloseCache();
 }
 
 public void OnConfigsExecuted()
 {
-    InitCache();
-    LoadRewards();
+	InitCache();
+	LoadRewards();
 }
 
 public void NCS_Account_OnUserLoaded(int client, const char[] uid)
 {
-    InitPlayer(client, uid);
+	InitPlayer(client, uid);
 }
 
 public void OnClientDisconnect(int client)
 {
-    PlayerDisconnect(client);
+	PlayerDisconnect(client);
 }

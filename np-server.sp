@@ -7,11 +7,11 @@
 
 public Plugin myinfo = 
 {
-    name        = P_NAME,
-    author      = P_AUTHOR,
-    description = P_DESC,
-    version     = P_VERSION,
-    url         = P_URLS
+	name		= P_NAME,
+	author	  = P_AUTHOR,
+	description = P_DESC,
+	version	 = P_VERSION,
+	url		 = P_URLS
 };
 
 // Module
@@ -19,30 +19,30 @@ public Plugin myinfo =
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
-    // core
-    RegNative();
+	// core
+	RegNative();
 
-    // lib
-    RegPluginLibrary("NCS-Server");
+	// lib
+	RegPluginLibrary("NCS-Server");
 
-    return APLRes_Success;
+	return APLRes_Success;
 }
 
 public void OnPluginStart()
 {
-    InitAPI();
-    RegCmd();
-    RegForward();
-    InitMap();
+	InitAPI();
+	RegCmd();
+	RegForward();
+	InitMap();
 }
 
 public void OnPluginEnd()
 {
-    CloseAPI();
+	CloseAPI();
 }
 
 public void OnConfigsExecuted()
 {
-    ReqServerInfo();
-    MapNotify();
+	ReqServerInfo();
+	MapNotify();
 }

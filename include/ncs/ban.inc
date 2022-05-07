@@ -1,5 +1,5 @@
 #if defined _NCS_Ban_
-    #endinput
+	#endinput
 #endif
 #define _NCS_Ban_
 
@@ -8,18 +8,18 @@ native void NCS_Ban_BanClient(int client, int type, int length, const char[] rea
 
 public SharedPlugin __pl_ncs_ban = 
 {
-    name = "NCS-Bans",
-    file = "np-bans.smx",
+	name = "NCS-Bans",
+	file = "np-bans.smx",
 #if defined REQUIRE_PLUGIN
-    required = 1,
+	required = 1,
 #else
-    required = 0,
+	required = 0,
 #endif
 };
 
 #if !defined REQUIRE_PLUGIN
 public void __pl_ncs_ban_SetNTVOptional()
 {
-    MarkNativeAsOptional("NCS_Ban_BanClient");
+	MarkNativeAsOptional("NCS_Ban_BanClient");
 }
 #endif

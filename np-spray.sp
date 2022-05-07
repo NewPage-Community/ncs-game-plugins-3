@@ -15,11 +15,11 @@
 
 public Plugin myinfo = 
 {
-    name        = P_NAME,
-    author      = P_AUTHOR,
-    description = P_DESC,
-    version     = P_VERSION,
-    url         = P_URLS
+	name		= P_NAME,
+	author	  = P_AUTHOR,
+	description = P_DESC,
+	version	 = P_VERSION,
+	url		 = P_URLS
 };
 
 // Module
@@ -27,41 +27,41 @@ public Plugin myinfo =
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
-    InitNative();
+	InitNative();
 
-    // lib
-    RegPluginLibrary("NCS-Spray");
+	// lib
+	RegPluginLibrary("NCS-Spray");
 
-    return APLRes_Success;
+	return APLRes_Success;
 }
 
 public void OnPluginStart()
 {
-    InitAPI();
-    InitCmd();
+	InitAPI();
+	InitCmd();
 }
 
 public void OnPluginEnd()
 {
-    CloseAPI();
+	CloseAPI();
 }
 
 public void OnMapStart()
 {
-    PrecacheSound(SPRAY_SOUND);
+	PrecacheSound(SPRAY_SOUND);
 }
 
 public void OnConfigsExecuted()
 {
-    LoadSpray();
+	LoadSpray();
 }
 
 public void NCS_Cookie_OnUserCached(int client)
 {
-    GetUsedSpray(client);
+	GetUsedSpray(client);
 }
 
 public void OnPlayerRunCmdPost(int client, int buttons, int impulse, const float vel[3], const float angles[3], int weapon, int subtype, int cmdnum, int tickcount, int seed, const int mouse[2])
 {
-    PlayerOnRunCmd(client, impulse);
+	PlayerOnRunCmd(client, impulse);
 }

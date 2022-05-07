@@ -1,5 +1,5 @@
 #if defined _NCS_VIP_
-    #endinput
+	#endinput
 #endif
 #define _NCS_VIP_
 
@@ -12,23 +12,23 @@ native void NCS_VIP_ReloadClient(int client);
 
 public SharedPlugin __pl_ncs_vip = 
 {
-    name = "NCS-VIP",
-    file = "np-vip.smx",
+	name = "NCS-VIP",
+	file = "np-vip.smx",
 #if defined REQUIRE_PLUGIN
-    required = 1,
+	required = 1,
 #else
-    required = 0,
+	required = 0,
 #endif
 };
 
 #if !defined REQUIRE_PLUGIN
 public void __pl_ncs_vip_SetNTVOptional()
 {
-    MarkNativeAsOptional("NCS_VIP_IsVIP");
-    MarkNativeAsOptional("NCS_VIP_Level");
-    MarkNativeAsOptional("NCS_VIP_AddPoint");
-    MarkNativeAsOptional("NCS_VIP_Renewal");
-    MarkNativeAsOptional("NCS_VIP_ExpireTime");
-    MarkNativeAsOptional("NCS_VIP_ReloadClient");
+	MarkNativeAsOptional("NCS_VIP_IsVIP");
+	MarkNativeAsOptional("NCS_VIP_Level");
+	MarkNativeAsOptional("NCS_VIP_AddPoint");
+	MarkNativeAsOptional("NCS_VIP_Renewal");
+	MarkNativeAsOptional("NCS_VIP_ExpireTime");
+	MarkNativeAsOptional("NCS_VIP_ReloadClient");
 }
 #endif

@@ -1,5 +1,5 @@
 #if defined _NCS_Include_
-    #endinput
+	#endinput
 #endif
 #define _NCS_Include_
 

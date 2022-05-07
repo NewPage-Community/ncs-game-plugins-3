@@ -1,5 +1,5 @@
 #if defined _NCS_Money_
-    #endinput
+	#endinput
 #endif
 #define _NCS_Money_
 
@@ -7,18 +7,18 @@ native void NCS_Money_Give(int client, int money, const char[] reason);
 
 public SharedPlugin __pl_ncs_money = 
 {
-    name = "NCS-Money",
-    file = "np-money.smx",
+	name = "NCS-Money",
+	file = "np-money.smx",
 #if defined REQUIRE_PLUGIN
-    required = 1,
+	required = 1,
 #else
-    required = 0,
+	required = 0,
 #endif
 };
 
 #if !defined REQUIRE_PLUGIN
 public void __pl_ncs_money_SetNTVOptional()
 {
-    MarkNativeAsOptional("NCS_Money_Give");
+	MarkNativeAsOptional("NCS_Money_Give");
 }
 #endif

@@ -6,8 +6,10 @@ void GetUsedSkin(int client)
 
 	if (!CheckUserInSkinGroup(client, g_UsersUsedSkin[client]) && !IsSkinAdmin(client))
 		CheckUserHaveSkin(client);
+#if defined GAME_INSURGENCY
 	else
 		SetPlayerModelExt(client, g_UsersUsedSkin[client]);
+#endif
 }
 
 void SetUsedSkin(int client, int id)

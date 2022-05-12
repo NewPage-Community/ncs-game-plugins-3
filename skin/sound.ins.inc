@@ -7,8 +7,7 @@ public Action InsSoundHook(int clients[MAXPLAYERS], int &numClients, char sample
 	if (!strncmp(sample, "newpage/models", 14)) return Plugin_Continue;
 	if (StrContains(sample, "pl_deathshout_") != -1)
 	{
-		if (IsFakeClient(entity)) return Plugin_Stop;
-		if (SkinGetSound(entity, "death", sample)) return Plugin_Changed;
+		return Plugin_Stop;
 	}
 	if (!strncmp(sample, "player/voice/responses", 22))
 	{

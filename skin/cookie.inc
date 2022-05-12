@@ -4,8 +4,10 @@ void GetUsedSkin(int client)
 	NCS_Cookie_Get(client, "skin_used", id, sizeof(id));
 	g_UsersUsedSkin[client] = StringToInt(id);
 
-	if (!CheckUserInSkinGroup(client, g_UsersUsedSkin[client]))
+	if (!CheckUserInSkinGroup(client, g_UsersUsedSkin[client]) && !IsSkinAdmin(client))
 		CheckUserHaveSkin(client);
+	else
+		SetPlayerModelExt(client, g_UsersUsedSkin[client]);
 }
 
 void SetUsedSkin(int client, int id)

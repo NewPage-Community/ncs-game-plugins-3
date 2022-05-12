@@ -4,6 +4,7 @@ void RegNative()
 	CreateNative("NCS_Account_ChangeName", Native_ChangeName);
 	CreateNative("NCS_Account_GetName", Native_GetName);
 	CreateNative("NCS_Account_GetClientOfUID", Native_GetClientOfUID);
+	CreateNative("NCS_Account_InSteamGroup", Native_InSteamGroup);
 }
 
 public int Native_GetUID(Handle plugin, int numParams)
@@ -44,4 +45,11 @@ public int Native_GetClientOfUID(Handle plugin, int numParams)
 	static char uid[MAX_UID_LENGTH];
 	GetNativeString(1, uid, MAX_UID_LENGTH);
 	return FindClient(uid);
+}
+
+public int Native_InSteamGroup(Handle plugin, int numParams)
+{
+	static char gid[MAX_GID_LENGTH];
+	GetNativeString(2, gid, sizeof(gid));
+	return g_Accounts[GetNativeCell(1)].groups.FindString(gid) != -1;
 }

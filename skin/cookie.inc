@@ -3,7 +3,9 @@ void GetUsedSkin(int client)
 	static char id[8];
 	NCS_Cookie_Get(client, "skin_used", id, sizeof(id));
 	g_UsersUsedSkin[client] = StringToInt(id);
-	CheckUserHaveSkin(client);
+
+	if (!CheckUserInSkinGroup(client, g_UsersUsedSkin[client]))
+		CheckUserHaveSkin(client);
 }
 
 void SetUsedSkin(int client, int id)

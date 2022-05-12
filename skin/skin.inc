@@ -20,12 +20,14 @@ enum struct Skin
 	int initBody;
 	char soundOverride[MAX_SKIN_NAME_LENGTH];
 	ArrayList skins;
+	ArrayList groupIDs;
 
 	bool Init(JSONObject data)
 	{
 		this.bodys = new ArrayList(sizeof(BodysData));
 		this.sounds = new StringMap();
 		this.skins = new ArrayList(sizeof(BodysData));
+		this.groupIDs = new ArrayList(20);
 
 		this.id = data.GetInt("id");
 		data.GetString("name", this.name, MAX_SKIN_NAME_LENGTH);
@@ -40,6 +42,20 @@ enum struct Skin
 		//	 attr.GetString("skin_death_sound", this.deathSound, PLATFORM_MAX_PATH);
 		if (attr.HasKey("sound_override"))
 			attr.GetString("sound_override", this.soundOverride, MAX_SKIN_NAME_LENGTH);
+
+		// groups
+		if (attr.HasKey("group_ids"))
+		{
+			JSONArray groups = view_as<JSONArray>(attr.Get("group_ids"));
+			int length = groups.Length;
+			char gid[20];
+			for (int i = 0; i < length; i++)
+			{
+				groups.GetString(i, gid, sizeof(gid));
+				this.groupIDs.PushString(gid);
+			}
+			delete groups;
+		}
 
 		if (attr.HasKey("bodys"))
 		{
@@ -131,6 +147,7 @@ enum struct Skin
 		delete this.sounds;
 		this.soundOverride[0] = '\0';
 		delete this.skins;
+		delete this.groupIDs;
 	}
 
 	void LoadSounds()
@@ -251,6 +268,8 @@ void InitLibrary()
 }
 #endif
 
+#include "skin/admin"
+#include "skin/group"
 #include "skin/block"
 #include "skin/arms"
 #include "skin/radio"

@@ -86,6 +86,7 @@ public void UserSkinsCallback(HTTPResponse response, DataPack dp, const char[] e
 
 	int mySkinCount;
 	int usedSkin = g_UsersUsedSkin[client];
+
 	for (int i = 0; i < length; i++)
 	{
 		JSONObject item = view_as<JSONObject>(items.Get(i));
@@ -114,6 +115,8 @@ public void UserSkinsCallback(HTTPResponse response, DataPack dp, const char[] e
 		menu.AddItem(skinID, desc);
 		if (used) mySkinCount = menu.ItemCount - 1;
 	}
+
+	AddUserGroupSkinMenu(menu, client, mySkinCount);
 
 	if (playerLast[client]) menu.DisplayAt(client, playerLast[client], MENU_TIME_FOREVER);
 	else if (mySkinCount) menu.DisplayAt(client, mySkinCount - (mySkinCount % menu.Pagination), MENU_TIME_FOREVER);

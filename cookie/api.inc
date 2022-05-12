@@ -17,8 +17,6 @@ void CloseAPI()
 
 void LoadUserCookie(int client, const char[] uid)
 {
-	player[client].Clear();
-	
 	static char path[128];
 	Format(path, sizeof(path), "%s/all/%s", Cookie_Service, uid);
 	NewNCSAPI(path).Get(LoadUserCookieCallback, client);

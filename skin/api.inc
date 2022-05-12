@@ -81,7 +81,6 @@ public void CheckUserHaveItemCallback(HTTPResponse response, DataPack dp, const 
 	JSONObject data = view_as<JSONObject>(response.Data);
 	bool have = data.GetBool("have");
 
-
 	if (g_UsersUsedSkin[client] == id && have)
 	{
 #if defined GAME_INSURGENCY

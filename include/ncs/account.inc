@@ -22,6 +22,7 @@ native void NCS_Account_GetName(int client, char[] buffer, int size);
 // NCS_Account_GetClientOfUID faster way to get uid
 // not found return 0
 native int NCS_Account_GetClientOfUID(const char[] uid);
+native bool NCS_Account_InSteamGroup(int client, const char[] gid);
 
 public SharedPlugin __pl_ncs_account = 
 {

@@ -41,3 +41,9 @@ public void NCS_Account_OnUserLoaded(int client, const char[] uid)
 {
 	LoadUserCookie(client, uid);
 }
+
+public void OnClientDisconnect(int client)
+{
+	if (IsFakeClient(client)) return;
+	player[client].Clear();
+}

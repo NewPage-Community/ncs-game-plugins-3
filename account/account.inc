@@ -1,5 +1,6 @@
 #define MAX_STEAMID_LENGTH INT64_LENGTH
 #define MAX_UID_LENGTH INT64_LENGTH
+#define MAX_GID_LENGTH INT64_LENGTH
 
 enum struct account
 {
@@ -7,6 +8,7 @@ enum struct account
 	char uid[MAX_UID_LENGTH];
 	char steamid[MAX_STEAMID_LENGTH];
 	char name[MAX_NAME_LENGTH];
+	ArrayList groups;
 
 	bool Valid() {
 		if (this.index == 0 || this.uid[0] == '\0')
@@ -24,6 +26,7 @@ enum struct account
 		GetClientName(index, this.name, MAX_NAME_LENGTH);
 		// avoid color tag hack
 		RemoveColorString(this.name, MAX_NAME_LENGTH);
+		this.groups = new ArrayList(MAX_GID_LENGTH);
 	}
 
 	void UpdateName(const char[] username) {
@@ -39,6 +42,7 @@ enum struct account
 		this.uid[0] = '\0';
 		this.steamid[0] = '\0';
 		this.name[0] = '\0';
+		delete this.groups;
 	}
 }
 

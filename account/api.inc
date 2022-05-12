@@ -58,7 +58,7 @@ public void LoadAccountUID(HTTPResponse response, DataPack dp, const char[] erro
 		return;
 
 	// Load data
-	char steamid[32];
+	static char steamid[32];
 	dp.Reset();
 	dp.ReadString(steamid, sizeof(steamid));
 	bool notify = dp.ReadCell();
@@ -77,6 +77,17 @@ public void LoadAccountUID(HTTPResponse response, DataPack dp, const char[] erro
 	g_Accounts[client].Init(client, uid, steamid);
 	// UIDMap
 	InitClient(client, uid);
+
+	// Load groups
+	JSONArray groups = view_as<JSONArray>(data.Get("groups"));
+	int length = groups.Length;
+	static char gid[MAX_GID_LENGTH];
+	for (int i = 0; i < length; i++)
+	{
+		groups.GetString(i, gid, sizeof(gid));
+		g_Accounts[client].groups.PushString(gid);
+	}
+	delete groups;
 
 	// Call global forward
 	Call_StartForward(onUserLoaded);

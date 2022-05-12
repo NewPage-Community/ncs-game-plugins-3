@@ -63,7 +63,7 @@ bool SkinSoundOnPlayerRadio(int client, const char[] cmd)
 	if (SkinRadioOff(client)) return false;
 	if (playerRadioTimer[client]) return true;
 	bool success = SkinPlaySound(client, cmd, false, false, true);
-	if (success && !(GetUserFlagBits(client) & ADMFLAG_ROOT))
+	if (success && !IsSkinAdmin(client))
 		playerRadioTimer[client] = CreateTimer(10.0, SkinTimer, client, TIMER_FLAG_NO_MAPCHANGE);
 	return success;
 }

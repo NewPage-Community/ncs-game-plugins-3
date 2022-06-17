@@ -101,7 +101,7 @@ bool SkinSoundIsBlock(int client, int target, Skin skin)
 {
 	PlayerRadioBlock blocker;
 	blocker = g_PlayerRadioBlock[target];
-	if (target == client) return true;
+	if (target == client) return false;
 	if (blocker.Mode == 1 && target != client) return true;
 	if (blocker.Mode == 2 && blocker.BlackList.FindValue(skin.id) != -1) return true;
 	if (blocker.Mode == 3 && blocker.WhiteList.FindValue(skin.id) == -1) return true;

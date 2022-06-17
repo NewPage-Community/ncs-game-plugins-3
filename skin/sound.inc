@@ -23,11 +23,7 @@ bool SkinPlaySound(int client, const char[] cmd, bool radius = false, bool mysel
 		{
 			if (!IsClientConnected(i)) continue;
 			if (IsFakeClient(i) || !IsClientInGame(i)) continue;
-			PlayerRadioBlock blocker;
-			blocker = g_PlayerRadioBlock[i];
-			if (blocker.Mode == 1 && i != client) continue;
-			if (blocker.Mode == 2 && blocker.BlackList.FindValue(skin.id) != -1) continue;
-			if (blocker.Mode == 3 && blocker.WhiteList.FindValue(skin.id) == -1) continue;
+			if (SkinSoundIsBlock(client, i, skin)) continue;
 			float volume = SkinRadioVolumeGet(i, client == i ? SKIN_RADIO_VOL_MYSELF : SKIN_RADIO_VOL_OTHER) / 100.0;
 			if (radius) volume = 1.0;
 			if (volume) EmitSoundToClient(i, sample, radius ? client : SOUND_FROM_PLAYER, _, _, _, volume);
@@ -99,4 +95,14 @@ stock bool SkinGetSound(int client, const char[] cmd, char sample[PLATFORM_MAX_P
 	Skin skin;
 	if (!g_Skins.Get(skinID, skin)) return false;
 	return skin.GetSound(cmd, sample);
+}
+
+bool SkinSoundIsBlock(int client, int target, Skin skin)
+{
+	PlayerRadioBlock blocker;
+	blocker = g_PlayerRadioBlock[target];
+	if (blocker.Mode == 1 && target != client) return true;
+	if (blocker.Mode == 2 && blocker.BlackList.FindValue(skin.id) != -1) return true;
+	if (blocker.Mode == 3 && blocker.WhiteList.FindValue(skin.id) == -1) return true;
+	return false;
 }

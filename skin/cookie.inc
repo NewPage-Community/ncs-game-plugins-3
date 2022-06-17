@@ -53,3 +53,18 @@ stock void SetUserSkinSkin(int client, int id, int value)
 	IntToString(value, val, sizeof(val));
 	NCS_Cookie_Set(client, buffer, val);
 }
+
+stock int GetUserSkinSound(int client, int value)
+{
+	static char buffer[16];
+	if (!NCS_Cookie_Get(client, "skin_sound", buffer, sizeof(buffer)))
+		return -1;
+	return StringToInt(buffer);
+}
+
+stock void SetUserSkinSound(int client, int value)
+{
+	static char val[16];
+	IntToString(value, val, sizeof(val));
+	NCS_Cookie_Set(client, "skin_sound", val);
+}

@@ -4,77 +4,68 @@ public Action InsSoundHook(int clients[MAXPLAYERS], int &numClients, char sample
 {
 	static int overrideClients[MAXPLAYERS], overrideNumClients;
 	static char buffer[PLATFORM_MAX_PATH], overrideSample[PLATFORM_MAX_PATH];
+	bool overrideSound = false;
 	if (entity < 1 || entity >= MaxClients) return Plugin_Continue;
 	if (!strncmp(sample, "newpage/models", 14)) return Plugin_Continue;
-	if (StrContains(sample, "pl_deathshout_") != -1)
-	{
-		return Plugin_Stop;
-	}
+	if (StrContains(sample, "pl_deathshout_") != -1) return Plugin_Stop;
 	if (!strncmp(sample, "player/voice/responses", 22))
 	{
 		if (IsFakeClient(entity)) return Plugin_Continue;
 		strcopy(buffer, PLATFORM_MAX_PATH, sample[22]);
 		if (StrContains(buffer, "rpg") != -1)
 		{
-			if (!SkinSoundPlay(entity, "rpg", overrideSample, clients, numClients, overrideClients, overrideNumClients))
-				return Plugin_Continue;
+			overrideSound = SkinSoundGetPlay(entity, "rpg", overrideSample, clients, numClients, overrideClients, overrideNumClients)
 		}
-		if (StrContains(buffer, "molotov_incendiary_detonated_close") != -1)
+		else if (StrContains(buffer, "molotov_incendiary_detonated_close") != -1)
 		{
-			if (!SkinSoundPlay(entity, "hurt", overrideSample, clients, numClients, overrideClients, overrideNumClients))
-				return Plugin_Continue;
+			overrideSound = SkinSoundGetPlay(entity, "hurt", overrideSample, clients, numClients, overrideClients, overrideNumClients)
 		}
-		if (StrContains(buffer, "molotov_incendiary_pain_light") != -1)
+		else if (StrContains(buffer, "molotov_incendiary_pain_light") != -1)
 		{
-			if (!SkinSoundPlay(entity, "hurt", overrideSample, clients, numClients, overrideClients, overrideNumClients))
-				return Plugin_Continue;
+			overrideSound = SkinSoundGetPlay(entity, "hurt", overrideSample, clients, numClients, overrideClients, overrideNumClients)
 		}
-		if (StrContains(buffer, "wounded") != -1)
+		else if (StrContains(buffer, "wounded") != -1)
 		{
-			if (!SkinSoundPlay(entity, "hurt", overrideSample, clients, numClients, overrideClients, overrideNumClients))
-				return Plugin_Continue;
+			overrideSound = SkinSoundGetPlay(entity, "hurt", overrideSample, clients, numClients, overrideClients, overrideNumClients)
 		}
-		if (StrContains(buffer, "suppressed/suppressed") != -1)
+		else if (StrContains(buffer, "suppressed/suppressed") != -1)
 		{
-			if (!SkinSoundPlay(entity, "suppress", overrideSample, clients, numClients, overrideClients, overrideNumClients))
-				return Plugin_Continue;
+			overrideSound = SkinSoundGetPlay(entity, "suppress", overrideSample, clients, numClients, overrideClients, overrideNumClients)
 		}
-		if (StrContains(buffer, "reloading") != -1)
+		else if (StrContains(buffer, "reloading") != -1)
 		{
-			if (!SkinSoundPlay(entity, "reload", overrideSample, clients, numClients, overrideClients, overrideNumClients))
-				return Plugin_Continue;
+			overrideSound = SkinSoundGetPlay(entity, "reload", overrideSample, clients, numClients, overrideClients, overrideNumClients)
 		}
-		if (StrContains(buffer, "smoke") != -1)
+		else if (StrContains(buffer, "smoke") != -1)
 		{
-			if (!SkinSoundPlay(entity, "grenade", overrideSample, clients, numClients, overrideClients, overrideNumClients))
-				return Plugin_Continue;
+			overrideSound = SkinSoundGetPlay(entity, "grenade", overrideSample, clients, numClients, overrideClients, overrideNumClients)
 		}
-		if (StrContains(buffer, "flash") != -1)
+		else if (StrContains(buffer, "flash") != -1)
 		{
-			if (!SkinSoundPlay(entity, "grenade", overrideSample, clients, numClients, overrideClients, overrideNumClients))
-				return Plugin_Continue;
+			overrideSound = SkinSoundGetPlay(entity, "grenade", overrideSample, clients, numClients, overrideClients, overrideNumClients)
 		}
-		if (StrContains(buffer, "frag") != -1)
+		else if (StrContains(buffer, "frag") != -1)
 		{
-			if (!SkinSoundPlay(entity, "grenade", overrideSample, clients, numClients, overrideClients, overrideNumClients))
-				return Plugin_Continue;
+			overrideSound = SkinSoundGetPlay(entity, "grenade", overrideSample, clients, numClients, overrideClients, overrideNumClients)
 		}
-		if (StrContains(buffer, "incendiarythrow") != -1)
+		else if (StrContains(buffer, "incendiarythrow") != -1)
 		{
-			if (!SkinSoundPlay(entity, "grenade", overrideSample, clients, numClients, overrideClients, overrideNumClients))
-				return Plugin_Continue;
+			overrideSound = SkinSoundGetPlay(entity, "grenade", overrideSample, clients, numClients, overrideClients, overrideNumClients)
 		}
-		if (StrContains(buffer, "molotovthrow") != -1)
+		else if (StrContains(buffer, "molotovthrow") != -1)
 		{
-			if (!SkinSoundPlay(entity, "grenade", overrideSample, clients, numClients, overrideClients, overrideNumClients))
-				return Plugin_Continue;
+			overrideSound = SkinSoundGetPlay(entity, "grenade", overrideSample, clients, numClients, overrideClients, overrideNumClients)
 		}
 	}
-	EmitSound(overrideClients, overrideNumClients, overrideSample, entity, channel, level, flags, volume, pitch);
-	return Plugin_Changed;
+	if (overrideSound)
+	{
+		EmitSound(overrideClients, overrideNumClients, overrideSample, entity, channel, level, flags, volume, pitch);
+		return Plugin_Changed;
+	}
+	return Plugin_Continue;
 }
 
-bool SkinSoundPlay(int client, const char[] cmd, char overrideSample[PLATFORM_MAX_PATH], int clients[MAXPLAYERS], int &numClients, int overrideClients[MAXPLAYERS], int &overrideNumClients)
+bool SkinSoundGetPlay(int client, const char[] cmd, char overrideSample[PLATFORM_MAX_PATH], int clients[MAXPLAYERS], int &numClients, int overrideClients[MAXPLAYERS], int &overrideNumClients)
 {
 	int skinID = g_UsersUsedSkin[client];
 	if (!skinID) return false;

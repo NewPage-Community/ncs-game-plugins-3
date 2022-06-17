@@ -74,7 +74,7 @@ bool SkinSoundGetPlay(int client, const char[] cmd, char overrideSample[PLATFORM
 	if (!skin.GetSound(cmd, overrideSample)) return false;
 	numClients = 0;
 	overrideNumClients = 0;
-	for (int i = 1; i <= MAXPLAYERS; i++)
+	for (int i = 1; i <= MaxClients; i++)
 	{
 		if (!IsClientConnected(i)) continue;
 		if (IsFakeClient(i) || !IsClientInGame(i)) continue;

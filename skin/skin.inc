@@ -271,8 +271,8 @@ void InitLibrary()
 #include "skin/admin"
 #include "skin/group"
 #include "skin/block"
-#include "skin/arms"
-#include "skin/radio"
+//#include "skin/arms"
+//#include "skin/radio"
 #include "skin/volume"
 
 #if defined GAME_INSURGENCY

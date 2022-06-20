@@ -67,11 +67,8 @@ public Action InsSoundHook(int clients[MAXPLAYERS], int &numClients, char sample
 
 bool SkinSoundGetPlay(int client, const char[] cmd, char overrideSample[PLATFORM_MAX_PATH], int clients[MAXPLAYERS], int &numClients, int overrideClients[MAXPLAYERS], int &overrideNumClients)
 {
-	int skinID = g_UsersUsedSkin[client];
-	if (!skinID) return false;
 	Skin skin;
-	if (!g_Skins.Get(skinID, skin)) return false;
-	if (!skin.GetSound(cmd, overrideSample)) return false;
+	if (!SkinGetSound(client, cmd, overrideSample, skin)) return false;
 	numClients = 0;
 	overrideNumClients = 0;
 	for (int i = 1; i <= MaxClients; i++)

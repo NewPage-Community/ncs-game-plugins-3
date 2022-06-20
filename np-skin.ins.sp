@@ -95,8 +95,8 @@ public void NCS_Cookie_OnUserCached(int client)
 {
 	SkinRadioBlockGetCookie(client);
 	SkinRadioVolumeGetCookie(client);
-	SkinRadioOffGetCookie(client);
-	SkinArmsOffGetCookie(client);
+	// SkinRadioOffGetCookie(client);
+	// SkinArmsOffGetCookie(client);
 	GetUsedSkin(client);
 }
 

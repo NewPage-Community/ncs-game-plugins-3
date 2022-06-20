@@ -12,7 +12,16 @@ void SetPlayerModelExt(int client, int skinID, bool immediately = false, bool so
 	int skinSkin = GetUserSkinSkin(client, skinID);
 	if (skinSkin == -1) skinSkin = 0;
 	SetPlayerModel(client, skin.skinPath, body, skinSkin, immediately);
-	if (skin.armPath[0] && !SkinArmsOff(client)) SetPlayerHands(client, skin.armPath);
+	int arm = GetUserSkinArm(client);
+	if (arm)
+	{
+		if (arm == -1 && skin.armPath[0]) SetPlayerHands(client, skin.armPath);
+		else
+		{
+			g_Skins.Get(arm, skin)
+			if (skin.armPath[0]) SetPlayerHands(client, skin.armPath);
+		}
+	}
 	if (IsClientInGame(client) && sound)
 	{
 		SkinSoundOnPlayerSpawn(client);

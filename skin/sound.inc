@@ -4,14 +4,9 @@ bool SkinPlaySound(int client, const char[] cmd, bool radius = false, bool mysel
 {
 	if (IsFakeClient(client)) return false;
 
-	int skinID = g_UsersUsedSkin[client];
-	if (!skinID) return false;
-
 	Skin skin;
-	if (!g_Skins.Get(skinID, skin)) return false;
-
 	static char sample[PLATFORM_MAX_PATH];
-	if (!skin.GetSound(cmd, sample)) return false;
+	if (!SkinGetSound(client, cmd, sample, skin)) return false;
 	if (myself)
 	{
 		float volume = SkinRadioVolumeGet(client, SKIN_RADIO_VOL_MYSELF) / 100.0;
@@ -56,7 +51,7 @@ stock void SkinSoundOnPlayerDeath(int client)
 
 bool SkinSoundOnPlayerRadio(int client, const char[] cmd)
 {
-	if (SkinRadioOff(client)) return false;
+	if (!GetUserSkinSound(client)) return false;
 	if (playerRadioTimer[client]) return true;
 	bool success = SkinPlaySound(client, cmd, false, false, true);
 	if (success && !IsSkinAdmin(client))
@@ -88,11 +83,11 @@ void SkinSoundOnRoundEnd(int winner)
 	}
 }
 
-stock bool SkinGetSound(int client, const char[] cmd, char sample[PLATFORM_MAX_PATH])
+bool SkinGetSound(int client, const char[] cmd, char sample[PLATFORM_MAX_PATH], Skin skin)
 {
-	int skinID = g_UsersUsedSkin[client];
+	int skinID = GetUserSkinSound(client);
 	if (!skinID) return false;
-	Skin skin;
+	if (skinID == -1) skinID = g_UsersUsedSkin[client];
 	if (!g_Skins.Get(skinID, skin)) return false;
 	return skin.GetSound(cmd, sample);
 }

@@ -24,8 +24,20 @@ void SetModel(int client)
 		SetEntityModel(client, s.skinPath);
 		SetEntityRenderColor(client, 255, 255, 255, 255);
 
-		if (IsModelPrecached(s.armPath) && s.armPath[0] != '\0' && !SkinArmsOff(client))
-			SetEntPropString(client, Prop_Send, "m_szArmsModel", s.armPath);
+		int arm = GetUserSkinArm(client);
+		if (arm)
+		{
+			if (arm == -1 && IsModelPrecached(s.armPath) && s.armPath[0])
+			{
+				SetEntPropString(client, Prop_Send, "m_szArmsModel", s.armPath);
+			}
+			else
+			{
+				g_Skins.Get(arm, s)
+				if (IsModelPrecached(s.armPath) && s.armPath[0])
+				SetEntPropString(client, Prop_Send, "m_szArmsModel", s.armPath);
+			}
+		}
 	}
 
 	SkinSoundOnPlayerSpawn(client);

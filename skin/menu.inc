@@ -219,7 +219,9 @@ public int Menu_ArmSelected(Menu menu, MenuAction action, int client, int slot)
 			char skinID[32];
 			menu.GetItem(slot, skinID, sizeof(skinID));
 			SetUserSkinArm(client, StringToInt(skinID));
+#if defined GAME_INSURGENCY
 			SetPlayerModelExt(client, g_UsersUsedSkin[client]);
+#endif
 		}
 		SkinMainMenu(client);
 	}

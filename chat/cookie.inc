@@ -3,7 +3,7 @@
 bool GetCookieAllChatDisabled(int client)
 {
 	char type[8];
-	if (!NCS_Cookie_IsCached(i)) return true;
+	if (!NCS_Cookie_IsCached(client)) return true;
 	// not set return false
 	if (!NCS_Cookie_Get(client, COOKIE_ALLCHAT_DISABLED_KEY, type, sizeof(type)))
 		return false;

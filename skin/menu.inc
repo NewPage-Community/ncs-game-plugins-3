@@ -139,8 +139,10 @@ public void %0(HTTPResponse response, DataPack dp, const char[] error) \
 	if (type == 1) menu.SetTitle("皮肤系统 - 自定义手模"); \
 	if (type == 2) menu.SetTitle("皮肤系统 - 自定义语音"); \
 	if (type == 0) menu.AddItem("0", "默认皮肤"); \
-	int mySkinCount; \
-	int usedSkin = g_UsersUsedSkin[client]; \
+	int mySkinCount, usedSkin ; \
+	if (type == 0) usedSkin = g_UsersUsedSkin[client]; \
+	if (type == 1) usedSkin = GetUserSkinArm(client); \
+	if (type == 2) usedSkin = GetUserSkinSound(client); \
 	for (int i = 0; i < length; i++) \
 	{ \
 		JSONObject item = view_as<JSONObject>(items.Get(i)); \
@@ -169,7 +171,7 @@ public void %0(HTTPResponse response, DataPack dp, const char[] error) \
 		menu.AddItem(skinID, desc); \
 		if (used) mySkinCount = menu.ItemCount - 1; \
 	} \
-	AddUserGroupSkinMenu(menu, client, mySkinCount); \
+	AddUserGroupSkinMenu(menu, client, mySkinCount, type); \
 	if (playerLast[client]) menu.DisplayAt(client, playerLast[client], MENU_TIME_FOREVER); \
 	else if (mySkinCount) menu.DisplayAt(client, mySkinCount - (mySkinCount % menu.Pagination), MENU_TIME_FOREVER); \
 	else menu.Display(client, MENU_TIME_FOREVER); \

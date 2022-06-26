@@ -49,6 +49,7 @@ bool SetUserCookie(int client, const char[] key, const char[] value)
 	static char uid[MAX_UID_LENGTH];
 	if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
 		return false;
+	if (!player[client].cached) return false
 
 	bool ok = player[client].Set(key, value);
 

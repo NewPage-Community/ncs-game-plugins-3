@@ -13,6 +13,7 @@ public int Native_GetClient(Handle plugin, int numParams)
 
 	char key[MAX_COOKIE_KEY_LENGTH], value[MAX_COOKIE_VALUE_LENGTH];
 	GetNativeString(2, key, sizeof(key));
+	if (!player[client].cached) return false;
 
 	bool ok = player[client].Get(key, value, sizeof(value));
 	SetNativeString(3, value, length);

@@ -1,7 +1,7 @@
 # This file is a template, and might need editing before it works on your project.
-image: registry.new-page.xyz/newpage/sourcemod-builder:latest
 
 .build_script: &build_script
+  - export HTTP_PROXY=$CI_PROXY HTTPS_PROXY=$CI_PROXY NO_PROXY=nexus3.nexus3,new-page.xyz
   - make all
 
 stages:
@@ -9,6 +9,8 @@ stages:
   - deploy
 
 dev-1.11:
+  tags:
+    - sourcemod
   stage: build
   variables:
     SOURCEMOD_VERSION: "1.11"
@@ -20,6 +22,8 @@ dev-1.11:
       - compiled/*
 
 merge-check:
+  tags:
+    - sourcemod
   stage: build
   variables:
     SOURCEMOD_VERSION: "1.11"
@@ -32,12 +36,11 @@ merge-check:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
 
 deploy:
-  image: alpine
+  tags:
+    - ftp
   stage: deploy
   script:
-    - sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
-    - apk add --no-cache --update lftp openssh
-    - lftp -c "set sftp:auto-confirm yes;open -u $SOURCEMOD_SFTP_USER,$SOURCEMOD_SFTP_PASS sftp://$SOURCEMOD_SFTP_HOST;mirror -Rv compiled plugins --ignore-time --transfer-all --parallel=50 --exclude-glob .git* --exclude .git/;bye"
+    - lftp -c "set sftp:connect-program 'ssh -o StrictHostKeyChecking=no';set sftp:auto-confirm yes;open -u $SOURCEMOD_SFTP_USER,$SOURCEMOD_SFTP_PASS sftp://$SOURCEMOD_SFTP_HOST;mirror -Rv compiled plugins --ignore-time --transfer-all --parallel=50 --exclude-glob .git* --exclude .git/;bye"
   only:
     - master
   needs:

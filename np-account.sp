@@ -39,7 +39,7 @@ public void OnPluginEnd()
 	CloseAPI();
 }
 
-public void OnClientPutInServer(int client)
+public void OnClientConnected()(int client)
 {
 	if(IsFakeClient(client) || IsClientSourceTV(client))
 		return;
@@ -48,10 +48,10 @@ public void OnClientPutInServer(int client)
 	ResetIgnoreChangeName(client);
 
 	char steamid[32];
-	if (!GetClientAuthId(client, AuthId_SteamID64, steamid, sizeof(steamid)))
+	if (!GetClientAuthId(client, AuthId_SteamID64, steamid, sizeof(steamid), false))
 	{
 		NCS_LogError("Account", "OnClientConnected", "Can not verify client SteamID64 -> \"%L\"", client);
-		KickClient(client, "无效SteamID，请重启Steam客户端\nInvalid Steam ID, please restart Steam client");
+		ClientCommand("retry");
 		return;
 	}
 	

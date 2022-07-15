@@ -39,7 +39,7 @@ public void OnPluginEnd()
 	CloseAPI();
 }
 
-public void OnClientConnected(int client)
+public void OnClientPutInServer(int client)
 {
 	if(IsFakeClient(client) || IsClientSourceTV(client))
 		return;

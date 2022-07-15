@@ -41,7 +41,7 @@ public void OnPluginEnd()
 
 public void OnClientConnected(int client)
 {
-	if(IsFakeClient(client) || IsClientSourceTV(client))
+	if(IsFakeClient(client))
 		return;
 
 	// Init
@@ -51,7 +51,7 @@ public void OnClientConnected(int client)
 	if (!GetClientAuthId(client, AuthId_SteamID64, steamid, sizeof(steamid), false))
 	{
 		NCS_LogError("Account", "OnClientConnected", "Can not verify client SteamID64 -> \"%L\"", client);
-		ClientCommand("retry");
+		ClientCommand(client, "retry");
 		return;
 	}
 	

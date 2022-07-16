@@ -25,7 +25,7 @@ void ReqAccountUID(const char[] steamid, bool notify = false)
 	if (strlen(steamid) <= 0)
 		return;
 
-	int client = FindClientBySteamId(AuthId_SteamID64, steamid);
+	int client = FindClientBySteamId(AuthId_SteamID64, steamid, false);
 	if (client == 0)
 		return;
 	
@@ -65,7 +65,7 @@ public void LoadAccountUID(HTTPResponse response, DataPack dp, const char[] erro
 	dp.Close();
 	JSONObject data = view_as<JSONObject>(response.Data);
 	
-	int client = FindClientBySteamId(AuthId_SteamID64, steamid);
+	int client = FindClientBySteamId(AuthId_SteamID64, steamid, false);
 	// Invalid
 	if (!IsValidClient(client))
 		return;

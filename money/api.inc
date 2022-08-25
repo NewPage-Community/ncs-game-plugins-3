@@ -104,7 +104,7 @@ public void GiftMoneyCallback(HTTPResponse response, DataPack dp, const char[] e
 			{
 				static char err[32];
 				JSONObject json = view_as<JSONObject>(response.Data);
-				json.GetString("error", err, sizeof(err));
+				json.GetString("message", err, sizeof(err));
 				NCS_Chat(client, _, "超出今日赠送软妹币上限 {green}200/%s", err[17]);
 			}
 			else
@@ -133,6 +133,6 @@ bool IsError(JSON data, const char[] err, int size)
 
 	static char error[512];
 	JSONObject json = view_as<JSONObject>(data);
-	json.GetString("error", error, sizeof(error));
+	json.GetString("message", error, sizeof(error));
 	return !strncmp(error, err, size);
 }

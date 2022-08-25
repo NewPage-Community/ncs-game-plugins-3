@@ -250,6 +250,6 @@ bool NoEnoughMoney(JSON data)
 
 	static char error[512];
 	JSONObject json = view_as<JSONObject>(data);
-	json.GetString("error", error, sizeof(error));
+	json.GetString("message", error, sizeof(error));
 	return StrEqual(error, NoEnoughMoneyErr);
 }

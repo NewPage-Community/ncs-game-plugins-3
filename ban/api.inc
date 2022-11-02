@@ -33,11 +33,11 @@ void ReqBanCheck(int client, const char[] uid)
 	static char path[128];
 	Format(path, sizeof(path), "%s/check/%s", Ban_Service, uid);
 	NewNCSAPI(path).Post(data, LoadBanCheck, dp);
-	delete data;
 
 	static char json[512];
 	data.ToString(json, sizeof(json));
 	NCS_LogMessage("Ban", "ReqBanCheck", "%L uid:%s request(%s)", client, uid, json);
+	delete data;
 }
 
 public void LoadBanCheck(HTTPResponse response, DataPack dp, const char[] error)

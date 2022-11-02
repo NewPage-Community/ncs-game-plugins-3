@@ -33,10 +33,6 @@ void ReqBanCheck(int client, const char[] uid)
 	static char path[128];
 	Format(path, sizeof(path), "%s/check/%s", Ban_Service, uid);
 	NewNCSAPI(path).Post(data, LoadBanCheck, dp);
-
-	static char json[512];
-	data.ToString(json, sizeof(json));
-	NCS_LogMessage("Ban", "ReqBanCheck", "%L uid:%s request(%s)", client, uid, json);
 	delete data;
 }
 
@@ -83,7 +79,7 @@ public void LoadBanCheck(HTTPResponse response, DataPack dp, const char[] error)
 	// Ban client
 	char kickReason[256];
 	FormatEx(kickReason, sizeof(kickReason), "您已被服务器封锁,禁止进入游戏! 请联系管理员\n封禁类型: %s 封禁原因: %s\n到期时间: %s", g_banType[banType], banReason, time);
-	BanClient(client, 10, BANFLAG_AUTHID, kickReason, kickReason);
+	KickClient(client, kickReason);
 }
 
 void ReqBanClient(int client, int type, int length, const char[] reason)

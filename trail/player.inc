@@ -37,6 +37,7 @@ void SetClientTrail(int client, int id = 0, bool preview = false)
 		case TrailType_Material: entity = CreateSpriteTrail(client, s.trailPath);
 		case TrailType_Particle: entity = CreateParticleTrail(client, s.particleName);
 	}
+	if (entity == -1) return;
 
 	playerTrail[client] = EntIndexToEntRef(entity);
 
@@ -52,6 +53,7 @@ void SetClientTrail(int client, int id = 0, bool preview = false)
 int CreateSpriteTrail(int client, const char[] path)
 {
 	int entity = CreateEntityByName("env_spritetrail");
+	if (entity == -1) return -1;
 	DispatchKeyValue(entity, "classname", "env_spritetrail");
 	DispatchKeyValue(entity, "renderamt", "255");
 	DispatchKeyValue(entity, "rendercolor", "255 255 255");
@@ -91,6 +93,7 @@ int CreateParticleTrail(int client, const char[] name)
 	GetClientAbsOrigin(client, clientOrigin);
 
 	int entity = CreateEntityByName("info_particle_system");
+	if (entity == -1) return -1;
 	DispatchKeyValue(entity, "start_active", "1");
 	DispatchKeyValue(entity, "effect_name", name);
 	DispatchSpawn(entity);

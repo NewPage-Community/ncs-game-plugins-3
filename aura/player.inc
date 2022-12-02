@@ -32,6 +32,7 @@ void SetClientAura(int client, int id = 0, bool preview = false)
 		return;
 
 	int entity = CreateAura(client, s.particleName);
+	if (entity == -1) return;
 
 	playerAura[client] = EntIndexToEntRef(entity);
 
@@ -50,6 +51,7 @@ int CreateAura(int client, const char[] name)
 	GetClientAbsOrigin(client, clientOrigin);
 
 	int entity = CreateEntityByName("info_particle_system");
+	if (entity == -1) return -1;
 	DispatchKeyValue(entity, "start_active", "1");
 	DispatchKeyValue(entity, "effect_name", name);
 	DispatchSpawn(entity);

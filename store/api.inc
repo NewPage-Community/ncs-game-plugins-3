@@ -1,5 +1,10 @@
 #define NoEnoughMoneyErr "no enough money"
 
+typeset OpenMenuFunc
+{
+	function void (int client);
+};
+
 void InitAPI()
 {
 	InitNCSAPI();
@@ -10,7 +15,7 @@ void CloseAPI()
 
 }
 
-void LoadUserStoreList(int client, bool openMenu = false)
+void LoadUserStoreList(int client, OpenMenuFunc openMenu = null)
 {
 	static char uid[MAX_UID_LENGTH];
 	if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
@@ -18,7 +23,7 @@ void LoadUserStoreList(int client, bool openMenu = false)
 	
 	DataPack dp = new DataPack();
 	dp.WriteCell(client, false);
-	dp.WriteCell(openMenu, false);
+	dp.WriteFunction(openMenu, false);
 
 	static char path[128];
 	Format(path, sizeof(path), "%s/list/%s", Store_Service, uid);
@@ -32,7 +37,7 @@ public void LoadUserStoreListCallback(HTTPResponse response, DataPack dp, const 
 
 	dp.Reset();
 	int client = dp.ReadCell();
-	bool openMenu = dp.ReadCell();
+	Function openMenu = dp.ReadFunction();
 	dp.Close();
 
 	if (!IsValidClient(client))
@@ -50,8 +55,12 @@ public void LoadUserStoreListCallback(HTTPResponse response, DataPack dp, const 
 	playerMoney[client] = data.GetInt("money");
 	playerPass[client] = data.GetInt("pass_type");
 
-	if (openMenu)
-		DisplayStoreMenu(client);
+	if (openMenu != null)
+	{
+		Call_StartFunction(INVALID_HANDLE, openMenu);
+		Call_PushCell(client);
+		Call_Finish();
+	}
 }
 
 void BuyItem(int client, Item item)

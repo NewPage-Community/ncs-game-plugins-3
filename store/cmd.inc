@@ -7,13 +7,13 @@ void InitCmd()
 
 public Action Command_Store(int client, int args)
 {
-	LoadUserStoreList(client, true);
+	LoadUserStoreList(client, DisplayStoreMenu);
 	return Plugin_Handled;
 }
 
 public Action Command_StorePass(int client, int args)
 {
 	LoadUserStoreList(client);
-	BuyAdvPassMenu(client);
+	BuyAdvPassMenu(client, BuyAdvPassMenu);
 	return Plugin_Handled;
 }

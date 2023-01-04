@@ -1,5 +1,10 @@
 #define NoEnoughMoneyErr "no enough money"
 
+typeset OpenMenuFunc
+{
+	function void (int client);
+};
+
 void InitAPI()
 {
 	InitNCSAPI();
@@ -10,7 +15,7 @@ void CloseAPI()
 
 }
 
-void LoadUserStoreList(int client, Function openMenu = null)
+void LoadUserStoreList(int client, OpenMenuFunc openMenu = INVALID_FUNCTION)
 {
 	static char uid[MAX_UID_LENGTH];
 	if (!NCS_Account_GetUID(client, uid, sizeof(uid)))

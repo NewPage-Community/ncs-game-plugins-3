@@ -15,7 +15,7 @@ void CloseAPI()
 
 }
 
-void LoadUserStoreList(int client)
+void LoadUserStoreList(int client, OpenMenuFunc openMenu = INVALID_FUNCTION)
 {
 	static char uid[MAX_UID_LENGTH];
 	if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
@@ -24,21 +24,6 @@ void LoadUserStoreList(int client)
 	DataPack dp = new DataPack();
 	dp.WriteCell(client, false);
 	dp.WriteFunction(INVALID_FUNCTION, false);
-
-	static char path[128];
-	Format(path, sizeof(path), "%s/list/%s", Store_Service, uid);
-	NewNCSAPI(path).Get(LoadUserStoreListCallback, dp);
-}
-
-void LoadUserStoreListOpenMenu(int client, OpenMenuFunc openMenu)
-{
-	static char uid[MAX_UID_LENGTH];
-	if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
-		return;
-	
-	DataPack dp = new DataPack();
-	dp.WriteCell(client, false);
-	dp.WriteFunction(openMenu, false);
 
 	static char path[128];
 	Format(path, sizeof(path), "%s/list/%s", Store_Service, uid);

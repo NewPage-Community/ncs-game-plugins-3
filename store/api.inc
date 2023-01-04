@@ -1,10 +1,5 @@
 #define NoEnoughMoneyErr "no enough money"
 
-typeset OpenMenuFunc
-{
-	function void (int client);
-};
-
 void InitAPI()
 {
 	InitNCSAPI();
@@ -15,7 +10,7 @@ void CloseAPI()
 
 }
 
-void LoadUserStoreList(int client, OpenMenuFunc openMenu = INVALID_FUNCTION)
+void LoadUserStoreList(int client, Function openMenu = INVALID_FUNCTION)
 {
 	static char uid[MAX_UID_LENGTH];
 	if (!NCS_Account_GetUID(client, uid, sizeof(uid)))
@@ -55,7 +50,7 @@ public void LoadUserStoreListCallback(HTTPResponse response, DataPack dp, const 
 	playerMoney[client] = data.GetInt("money");
 	playerPass[client] = data.GetInt("pass_type");
 
-	if (openMenu != null)
+	if (openMenu != INVALID_FUNCTION)
 	{
 		Call_StartFunction(INVALID_HANDLE, openMenu);
 		Call_PushCell(client);

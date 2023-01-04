@@ -23,7 +23,7 @@ void LoadUserStoreList(int client)
 	
 	DataPack dp = new DataPack();
 	dp.WriteCell(client, false);
-	dp.WriteFunction(0, false);
+	dp.WriteFunction(INVALID_FUNCTION, false);
 
 	static char path[128];
 	Format(path, sizeof(path), "%s/list/%s", Store_Service, uid);

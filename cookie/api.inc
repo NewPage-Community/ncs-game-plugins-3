@@ -58,6 +58,7 @@ bool SetUserCookie(int client, const char[] key, const char[] value)
 	data.SetInt64("uid", uid);
 	data.SetString("key", key);
 	data.SetString("value", value);
+	data.SetInt("timestamp", GetTime());
 
 	static char path[128];
 	Format(path, sizeof(path), "%s/set", Cookie_Service);

@@ -55,7 +55,7 @@ public void LoadUserStoreListCallback(HTTPResponse response, DataPack dp, const 
 	playerMoney[client] = data.GetInt("money");
 	playerPass[client] = data.GetInt("pass_type");
 
-	if (openMenu)
+	if (openMenu != INVALID_FUNCTION)
 	{
 		Call_StartFunction(INVALID_HANDLE, openMenu);
 		Call_PushCell(client);
